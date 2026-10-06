@@ -1,0 +1,9 @@
+.git
+.venv
+data
+models
+__pycache__
+.pytest_cache
+.env*
+tests
+public-demo

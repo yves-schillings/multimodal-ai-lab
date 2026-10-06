@@ -1,0 +1,10 @@
+import assert from 'node:assert/strict';
+import {seedCases,trainClassifier,predict,retrieve} from '../static/core.js';
+const strong=trainClassifier(),weak=trainClassifier(true);
+assert.equal(strong.gate_passed,true);assert.equal(weak.gate_passed,false);
+assert.equal(predict(strong.model,'Dear colleague, please reply to this email.').label,'correspondence');
+const cases=seedCases();assert.equal(retrieve(cases[0],'Where was the bicycle left?').abstained,true);
+cases[0].segments[0].reviewed=true;
+const result=retrieve(cases[0],'Where was the bicycle left?');assert.equal(result.abstained,false);assert.ok(result.sources.every(s=>!s.case_id||s.case_id===cases[0].id));
+assert.equal(retrieve(cases[0],"What colour was the suspect's jacket?").abstained,true);
+console.log('Browser classification gates, reviewed-source search and missing-evidence checks passed.');
