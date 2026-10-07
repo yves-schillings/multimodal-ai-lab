@@ -56,12 +56,13 @@ flowchart LR
   Identity[Scoped access tokens] --> Gateway
   Gateway --> Primary[Primary AI Lab / Red Hat OpenShift AI]
   Gateway -. Approved cloud burst .-> Secondary[Secondary GPU Data Center]
-  Gateway -. Approved cloud burst .-> Sovereign[Cloud Souverain]
-  Secondary -. Separately approved onward transfer .-> Sovereign
+  Secondary -. Separately approved cloud burst .-> Sovereign[Sovereign Cloud]
   Gateway --> Meter[Inference tokens / audio duration / GPU time]
 ```
 
-Start with the AI Lab and measured model services. A secondary GPU data center and Cloud Souverain are future resource pools, not active integrations. GPU generations and available capacity must be confirmed with the resource owner. No protected operator or provider identity is published.
+Start with the AI Lab and measured model services. A secondary GPU data center and Sovereign Cloud are future resource pools, not active integrations. GPU generations and available capacity must be confirmed with the resource owner. No protected operator or provider identity is published.
+
+The extension is a service chain: **Primary AI Lab → Secondary GPU Data Center → Sovereign Cloud**. The primary lab calls the secondary data center's approved AI service. The secondary service either executes on its own GPU pool or, when onward processing is explicitly permitted, calls the sovereign-cloud service. There is no direct primary-lab-to-sovereign-cloud route in this design. The secondary service preserves the original case restrictions, evaluates its own onward-transfer policy and uses a separately scoped workload identity. Results return through the same service chain.
 
 Classify every case and derived source before routing: synthetic, internal or restricted. A resource catalogue records permitted processing regions, data classes, model services and approval references. Geography means the permitted processing and storage locations; it is not a proxy for case sensitivity. Audio, transcripts, scans, extracted text, embeddings and logs inherit the source restrictions unless a reviewed transformation explicitly changes their classification.
 
@@ -71,4 +72,4 @@ Separate short-lived, audience-bound access tokens from model input/output token
 
 A **Controlled Project Environment (CPE)** is a governed, isolated environment selected by the case risk and access requirements. It is not mandatory for every workload. Speech transcription can use an approved shared service without a dedicated CPE where the case policy permits it; confidentiality, access control, encryption, retention and routing rules still apply. Restricted projects can require separate namespaces, identities, storage, network policy, quotas and model endpoints. CPE activation includes approval, provisioning, configuration, tests and accountable ownership.
 
-Cloud Souverain is an architectural resource category. Sovereignty and eligibility require validation of the exact service, region, contract, operational controls and applicable certification. The label alone never authorises a dataset transfer. Azure remains a separate later preparation with explicit authorisation for real data.
+Sovereign Cloud is an architectural resource category. Sovereignty and eligibility require validation of the exact service, region, contract, operational controls and applicable certification. The label alone never authorises a dataset transfer. Azure remains a separate later preparation with explicit authorisation for real data.

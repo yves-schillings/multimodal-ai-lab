@@ -1,0 +1,17 @@
+# DO NOT APPLY while actors are simulated identities. This overlay documents the shape of a Route
+# behind a future trusted OpenID Connect front end. The application also refuses any Host header
+# that is not loopback or listed in LAB_ALLOWED_HOSTS, so the route host must be added there first.
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: lab-app
+spec:
+  host: lab.example.invalid
+  to:
+    kind: Service
+    name: lab-app
+  port:
+    targetPort: http
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect

@@ -1,6 +1,7 @@
 """Real local sklearn training on separated synthetic splits; explicit quality gate."""
 import importlib.util
 import json
+import os
 import pickle
 import threading
 import uuid
@@ -55,20 +56,28 @@ class ModelRegistry:
         version='classifier-'+uuid.uuid4().hex[:12]
         metadata={'version':version,'accuracy':accuracy,'macro_f1':macro,'gate_passed':accuracy>=0.85 and macro>=0.85,'training_samples':len(x),'test_samples':len(test_x),'data_scope':'synthetic_only','created_at':_now(),'mlflow_run_id':None,'mlflow_status':'unavailable'}
         tracking=self.store.root/'mlflow'; tracking.mkdir(exist_ok=True)
+        # MLFLOW_TRACKING_URI selects a tracking server (Docker Compose / OpenShift);
+        # without it, metrics stay in the local SQLite file under the runtime directory.
+        server_uri=os.environ.get('MLFLOW_TRACKING_URI','').strip()
         try:
             from mlflow.tracking import MlflowClient
-            client=MlflowClient(tracking_uri='sqlite:///'+(tracking/'mlflow.db').resolve().as_posix())
+            client=MlflowClient(tracking_uri=server_uri or 'sqlite:///'+(tracking/'mlflow.db').resolve().as_posix())
             experiment=client.get_experiment_by_name('synthetic-document-classification')
-            experiment_id=experiment.experiment_id if experiment else client.create_experiment('synthetic-document-classification',artifact_location=tracking.resolve().as_uri())
+            if experiment:
+                experiment_id=experiment.experiment_id
+            elif server_uri:
+                experiment_id=client.create_experiment('synthetic-document-classification')
+            else:
+                experiment_id=client.create_experiment('synthetic-document-classification',artifact_location=tracking.resolve().as_uri())
             run=client.create_run(experiment_id,tags={'data_scope':'synthetic_only','mlflow.runName':version})
             for name in ('accuracy','macro_f1','training_samples','test_samples'):
                 client.log_metric(run.info.run_id,name,float(metadata[name]))
             client.log_param(run.info.run_id,'algorithm','tfidf_logistic_regression')
             client.log_param(run.info.run_id,'gate_passed',str(metadata['gate_passed']))
             client.set_terminated(run.info.run_id,'FINISHED')
-            metadata.update(mlflow_run_id=run.info.run_id,mlflow_status='recorded_locally')
+            metadata.update(mlflow_run_id=run.info.run_id,mlflow_status='recorded_on_server' if server_uri else 'recorded_locally')
         except Exception:
-            metadata['mlflow_status']='local_logging_failed'
+            metadata['mlflow_status']='server_logging_failed' if server_uri else 'local_logging_failed'
         with self.lock:
             with open(self.root/(version+'.pkl'),'wb') as file:
                 pickle.dump(model,file)

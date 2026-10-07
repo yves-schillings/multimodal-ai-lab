@@ -1,0 +1,80 @@
+# Reproducible local deployment: application, MLflow tracking server, PostgreSQL, persistent volumes.
+# Usage (from the repository root):
+#   docker compose -f deploy/docker/compose.yaml up -d --build
+#   python scripts/demo_e2e.py --phase before      # synthetic dossier, denial, model gate
+#   docker compose -f deploy/docker/compose.yaml restart app
+#   python scripts/demo_e2e.py --phase after       # data survived the restart
+# Ports are published on the host loopback only. Actors remain simulated identities.
+name: multimodal-ai-lab
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: mlflow
+      POSTGRES_USER: mlflow
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-local-only-change-me}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U mlflow -d mlflow"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    restart: unless-stopped
+
+  mlflow:
+    build:
+      context: .
+      dockerfile: mlflow.Dockerfile
+    command: >
+      mlflow server
+      --backend-store-uri postgresql+psycopg2://mlflow:${POSTGRES_PASSWORD:-local-only-change-me}@postgres:5432/mlflow
+      --artifacts-destination /mlflow/artifacts
+      --serve-artifacts
+      --allowed-hosts "mlflow:5000,localhost:5000,127.0.0.1:5000"
+      --host 0.0.0.0 --port 5000
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - mlflow-artifacts:/mlflow/artifacts
+    ports:
+      - "127.0.0.1:5000:5000"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:5000/health')"]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+    restart: unless-stopped
+
+  app:
+    build:
+      context: ../..
+      dockerfile: Dockerfile
+    environment:
+      LAB_BIND_HOST: 0.0.0.0
+      LAB_PORT: "8770"
+      LAB_NETWORK_MODE: container
+      LAB_ALLOWED_HOSTS: ""
+      LAB_DATA_DIR: /app/data
+      LAB_WHISPER_MODEL_DIR: /app/models/whisper-base
+      MLFLOW_TRACKING_URI: http://mlflow:5000
+      MLFLOW_DISABLE_AGENT_HINT: "1"
+      HF_HUB_DISABLE_TELEMETRY: "1"
+    volumes:
+      - lab-data:/app/data
+      # Prepared speech weights from scripts/prepare_speech.py on the host, mounted read-only.
+      - ../../models:/app/models:ro
+    ports:
+      # Host port is configurable so the Compose stack can run beside the Start.cmd instance on 8770.
+      - "127.0.0.1:${LAB_HOST_PORT:-8770}:8770"
+    depends_on:
+      mlflow:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  postgres-data:
+  mlflow-artifacts:
+  lab-data:

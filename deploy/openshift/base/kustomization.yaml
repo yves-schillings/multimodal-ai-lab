@@ -1,0 +1,14 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+# Prepared configuration. Not applied to any cluster by this repository's authors.
+namespace: multimodal-ai-lab
+labels:
+  - pairs:
+      app.kubernetes.io/part-of: multimodal-ai-lab
+    includeSelectors: false
+resources:
+  - configmap.yaml
+  - postgres.yaml
+  - mlflow.yaml
+  - app.yaml
+  - networkpolicy.yaml

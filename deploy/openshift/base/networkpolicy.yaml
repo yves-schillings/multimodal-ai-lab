@@ -1,0 +1,71 @@
+# Default-deny ingress for the namespace; the application and MLflow are reached only through
+# port-forward or an explicitly added Route overlay. Egress limited to DNS and in-namespace services.
+# Prepared, not tested on a cluster.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: lab-default-deny-ingress
+spec:
+  podSelector: {}
+  policyTypes: ["Ingress"]
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: lab-app-egress
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: lab-app
+  policyTypes: ["Egress"]
+  egress:
+    - to:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: lab-mlflow
+      ports:
+        - port: 5000
+    - to:
+        - namespaceSelector: {}
+          podSelector:
+            matchLabels:
+              dns.operator.openshift.io/daemonset-dns: default
+      ports:
+        - port: 5353
+          protocol: UDP
+        - port: 5353
+          protocol: TCP
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: lab-mlflow-ingress
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: lab-mlflow
+  policyTypes: ["Ingress"]
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: lab-app
+      ports:
+        - port: 5000
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: lab-postgres-ingress
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: lab-postgres
+  policyTypes: ["Ingress"]
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: lab-mlflow
+      ports:
+        - port: 5432

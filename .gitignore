@@ -21,3 +21,7 @@ mlruns/
 .sites-runtime/
 .openai/
 .validation/
+
+# Private coordination context (never published)
+.Codex/
+.codex/

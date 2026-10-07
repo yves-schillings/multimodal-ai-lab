@@ -28,6 +28,17 @@ Speech recognition executes locally through faster-whisper. Model acquisition is
 
 This downloads the public `base` model weights to the ignored `models/whisper-base` directory. Afterwards, import a synthetic recording of at most five minutes and 25 MiB. English, French and Dutch are supported by the adapter; actual quality depends on the recording and requires review.
 
+## Run with Docker Compose
+
+`deploy/docker/compose.yaml` starts the application, an MLflow tracking server and PostgreSQL (MLflow backend store) with persistent volumes, published on the host loopback only:
+
+```bash
+LAB_HOST_PORT=8780 docker compose -f deploy/docker/compose.yaml up -d --build
+python scripts/demo_e2e.py --phase before --base http://127.0.0.1:8780
+```
+
+`scripts/demo_e2e.py` runs a synthetic dossier end to end (upload, review, draft, separate approval, question, denied access for another actor, training, promotion, rollback) and `--phase after` verifies that everything survived a restart. The case store remains SQLite on a volume; actors remain simulated identities. Details, verified results and limits: [docs/deployment.md](docs/deployment.md). OpenShift manifests are prepared, not tested: [deploy/openshift/README.md](deploy/openshift/README.md).
+
 ## Document input
 
 Import UTF-8 TXT/MD/CSV or an unencrypted text PDF. Image OCR requires a separately installed local Tesseract executable. Scanned PDFs are not silently treated as extracted text: the first release asks for local OCR preparation. Uploaded source text, extraction and review remain separate.

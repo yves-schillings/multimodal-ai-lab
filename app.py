@@ -1,4 +1,4 @@
-"""Loopback-only synthetic Secure Case AI Lab. Actor selection is not authentication."""
+"""Loopback-only synthetic Multimodal AI Lab. Actor selection is not authentication."""
 import hashlib
 import importlib.util
 import os
@@ -51,7 +51,23 @@ class PredictInput(BaseModel):
     text: str=Field(min_length=1,max_length=300000)
 
 
+def network_settings():
+    """Fail-closed network mode. 'loopback' (default) accepts loopback clients only.
+
+    'container' accepts clients from the container network (published port), but
+    still requires the Host header to be loopback or listed in LAB_ALLOWED_HOSTS.
+    Neither mode adds authentication: actors remain simulated identities.
+    """
+    mode=os.environ.get('LAB_NETWORK_MODE','loopback').strip().lower() or 'loopback'
+    if mode not in {'loopback','container'}:
+        raise RuntimeError("LAB_NETWORK_MODE must be 'loopback' or 'container'.")
+    allowed=set(LOOPBACK)
+    allowed.update(h.strip().lower() for h in os.environ.get('LAB_ALLOWED_HOSTS','').split(',') if h.strip())
+    return mode,allowed
+
+
 def create_app(data_dir=None):
+    network_mode,allowed_hosts=network_settings()
     store=LabStore(Path(data_dir or os.environ.get('LAB_DATA_DIR',BASE/'data')))
     registry=ModelRegistry(store)
     speech=SpeechEngine(model_dir=Path(os.environ.get('LAB_WHISPER_MODEL_DIR',BASE/'models'/'whisper-base')))
@@ -75,9 +91,9 @@ def create_app(data_dir=None):
         host=request.url.hostname
         # Starlette's in-process TestClient is the only testserver exception.
         test_client=request.client and request.client.host=='testclient' and host=='testserver'
-        if host not in LOOPBACK and not test_client:
-            return JSONResponse({'detail':'This synthetic demonstration only accepts loopback hosts.'},status_code=403)
-        if request.client and request.client.host not in LOOPBACK and not test_client:
+        if (host or '').lower() not in allowed_hosts and not test_client:
+            return JSONResponse({'detail':'This synthetic demonstration only accepts loopback or explicitly allowed hosts.'},status_code=403)
+        if network_mode=='loopback' and request.client and request.client.host not in LOOPBACK and not test_client:
             return JSONResponse({'detail':'Remote clients are disabled in synthetic identity mode.'},status_code=403)
         origin=request.headers.get('origin')
         if origin:
@@ -140,13 +156,15 @@ def create_app(data_dir=None):
     def ready():
         with store._connection() as db:
             db.execute('SELECT 1').fetchone()
-        return {'status':'ready','mode':'synthetic_loopback'}
+        return {'status':'ready','mode':'synthetic_loopback' if network_mode=='loopback' else 'synthetic_container','network_mode':network_mode}
 
     @app.get('/api/status')
     def status():
         tesseract=shutil.which('tesseract') is not None
         whisper_ready=speech.model_dir.is_dir() and (speech.model_dir/'model.bin').is_file()
-        return {'name':'Multimodal AI Lab','identity_mode':'simulated_loopback_only','simulated_identity':True,
+        return {'name':'Multimodal AI Lab','identity_mode':'simulated_loopback_only' if network_mode=='loopback' else 'simulated_container_network','simulated_identity':True,
+                'network_mode':network_mode,'allowed_hosts':sorted(allowed_hosts),
+                'mlflow_tracking':'server' if os.environ.get('MLFLOW_TRACKING_URI') else 'local_sqlite',
                 'production_ready':False,'data_notice':'Synthetic demonstration only. Caller-selected actors are not real authentication.',
                 'capabilities':{'document_extraction':True,'classification':registry.state()['active_version'] is not None,
                                 'model_training':importlib.util.find_spec('sklearn') is not None,'speech_recognition':whisper_ready and importlib.util.find_spec('faster_whisper') is not None,

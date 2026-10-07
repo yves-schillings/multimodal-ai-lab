@@ -1,20 +1,105 @@
 # Deployment stages
 
+Status vocabulary used in this document and in the architecture deck: **Implemented** (runs and is
+tested), **Prepared** (code or configuration exists, not verified), **Target** (design only).
+
 ## Running today
 
 The public synthetic sandbox is available at https://secloudis-case-ai-lab.subllings.chatgpt.site. It executes in the browser and has no operational case connection, file intake, cloud inference or MLflow server. Its simulated personas are teaching aids.
 
-The Python application runs locally at http://127.0.0.1:8770. Use `Start.cmd` on Windows. Runtime databases, model weights, audio and logs are ignored by Git. The Dockerfile is an unverified development build recipe: its loopback binding and simulated identities intentionally do not expose a shared case service. Docker engine and Kubernetes deployment were not verified on the development machine.
+The Python application runs locally at http://127.0.0.1:8770. Use `Start.cmd` on Windows. Runtime databases, model weights, audio and logs are ignored by Git.
+
+## Docker Compose on a local host (Implemented, verified on 7 October 2026)
+
+`deploy/docker/compose.yaml` starts three services with persistent named volumes:
+
+| Service | Image | Persistent volume | Role |
+| --- | --- | --- | --- |
+| `app` | built from the repository `Dockerfile` | `lab-data` (SQLite case store, uploads, model pickles); `../../models` mounted read-only for the prepared speech weights | Case API, browser workspace, durable job runner, in-process adapters |
+| `mlflow` | built from `deploy/docker/mlflow.Dockerfile` (MLflow 3.16.1 + psycopg2) | `mlflow-artifacts` | Tracking server; the application logs runs to it when `MLFLOW_TRACKING_URI` is set |
+| `postgres` | `postgres:16-alpine` | `postgres-data` | MLflow backend store (experiments, runs, metrics, params) |
+
+Network behaviour is fail-closed. The image defaults to `LAB_BIND_HOST=127.0.0.1` and
+`LAB_NETWORK_MODE=loopback`; Compose sets `0.0.0.0` and `container` explicitly. In `container` mode
+the application accepts clients from the container network but still refuses any `Host` header that
+is not loopback or listed in `LAB_ALLOWED_HOSTS`. Ports are published on the host loopback only.
+Actors remain simulated identities: nothing here adds authentication.
+
+### Commands
+
+```bash
+# from the repository root; host port 8780 leaves 8770 to the Start.cmd instance
+LAB_HOST_PORT=8780 docker compose -f deploy/docker/compose.yaml up -d --build
+python scripts/demo_e2e.py --phase before --base http://127.0.0.1:8780 --state data/reports/compose-state.json
+docker compose -f deploy/docker/compose.yaml down          # containers removed, volumes kept
+LAB_HOST_PORT=8780 docker compose -f deploy/docker/compose.yaml up -d
+python scripts/demo_e2e.py --phase after  --base http://127.0.0.1:8780 --state data/reports/compose-state.json
+docker compose -f deploy/docker/compose.yaml down -v       # only when the volumes must be discarded
+```
+
+On PowerShell, set the variable first: `$env:LAB_HOST_PORT = "8780"`. The MLflow user interface is
+at http://127.0.0.1:5000 while the stack runs. Copy `deploy/docker/.env.example` to
+`deploy/docker/.env` and change the PostgreSQL password before any use beyond a local demonstration.
+
+### Verified results (development machine, Docker Engine 28.2.2, 7 October 2026)
+
+`scripts/demo_e2e.py --phase before` against the container, 25 checks passed, 0 failed:
+
+- synthetic dossier created by officer A; `samples/evidence-inventory.txt` uploaded, extracted through the durable job runner; classification is unavailable until an active model exists;
+- source reviewed by officer A; draft prepared from reviewed sources only; officer A refused approval (403); the separate reviewer approved; a supported question returned one cited source; an unsupported question abstained;
+- officer B refused on officer A's dossier (403) for read and for question; officer A refused on `demo-case-b` (403); unknown actor refused (403);
+- two training jobs completed with metrics recorded on the MLflow server (`recorded_on_server`); officer promotion refused (403); unknown candidate refused (422); reviewer promoted candidate 1, then candidate 2; rollback restored candidate 1; the active model classifies and flags `requires_human_validation`.
+
+`docker compose down` then `up -d` (containers and network recreated, volumes kept), then
+`scripts/demo_e2e.py --phase after`, 8 checks passed, 0 failed: the case, its reviewed document,
+the draft and its approval, the denial, the four model versions and the active model all survived.
+The two MLflow runs were still listed by the server and counted by `select count(*) from runs` in
+PostgreSQL.
+
+Unit tests at the same commit: 53 passed and 15 subtests passed with pytest (49 before this change
+plus 4 network-mode tests). The browser check passed.
+
+### Remaining limits of the Compose deployment
+
+- The case store stays in SQLite on the `lab-data` volume; PostgreSQL serves MLflow only. See the migration checklist below.
+- One application replica only: the job runner is a single in-process worker and SQLite is file-based.
+- Speech works only if `scripts/prepare_speech.py` was run on the host before `up`; the container never downloads weights.
+- OCR remains Prepared: the Tesseract engine is not in the image.
+- Simulated actors, no TLS inside the stack, loopback-only publishing: a demonstration, not a shared service.
+- MLflow 3 rejects unknown `Host` headers; the server is started with `--allowed-hosts` for its service names. Add any other name there before reusing the stack elsewhere.
+
+## Moving the case store from SQLite to PostgreSQL (checklist, Target)
+
+`lab/store.py` and `lab/backend_store.py` use the `sqlite3` module directly. A migration without a
+general rewrite needs the following, in this order:
+
+1. **Connection factory.** Replace `sqlite3.connect` in `StatementStore._connection` by a factory selected from `LAB_DATABASE_URL`; keep the context-manager contract (`write=True` opens a transaction, commit on success, rollback on error).
+2. **Placeholders.** Every statement uses `?`; PostgreSQL drivers use `%s`. Route statements through one helper that rewrites placeholders, or adopt a thin adapter with named parameters.
+3. **Schema statements.** `executescript` with several statements, `INTEGER PRIMARY KEY AUTOINCREMENT` (audit table) and `PRAGMA foreign_keys=ON` are SQLite-specific. Use `GENERATED ALWAYS AS IDENTITY`, split the scripts, and drop the pragma.
+4. **Row access.** Code reads rows as `sqlite3.Row` (by name and by `dict(row)`); use a dictionary row factory on the PostgreSQL side.
+5. **Upserts and JSON.** `INSERT ... ON CONFLICT(key) DO UPDATE` is valid in both; JSON stays in `TEXT` columns, or moves to `JSONB` later.
+6. **Concurrency.** `BEGIN IMMEDIATE` serialises SQLite writers. With PostgreSQL, keep one application replica until the job runner claims jobs with `SELECT ... FOR UPDATE SKIP LOCKED`.
+7. **Data move.** Export cases, transcripts, segments, documents, jobs, settings, model versions and audit rows from `statements.sqlite3`; load them in dependency order; keep uploads and model pickles on object storage or a shared volume.
+8. **Tests.** Run the existing suite against both engines (the tests create the store on a temporary directory; add a PostgreSQL fixture gated by an environment variable).
+
+## Red Hat OpenShift manifests (Prepared, not tested)
+
+`deploy/openshift/base` contains the Kustomize equivalent of the Compose stack: ConfigMap with the
+same environment, PostgreSQL StatefulSet, MLflow Deployment, application Deployment with two
+PersistentVolumeClaims, Services, and NetworkPolicies (default-deny ingress, egress limited to
+MLflow and DNS). No Route is in the base; `overlays/exposed-route` documents the shape of a Route
+and must not be applied while actors are simulated. The manifests have not been applied to any
+cluster; the acceptance steps are listed in `deploy/openshift/README.md`.
 
 ## Primary AI Lab target
 
 Red Hat OpenShift AI is the shared deployment target. Before activating application routes, replace simulated identity with trusted OpenID Connect, implement project/case authorization at every service boundary, provision controlled storage and model-serving identities, and validate supported platform/model versions. Deploy model services and pipelines with resource limits, health checks, controlled egress, artifact provenance and measured release gates.
 
-The current local application is not suitable for exposure through an OpenShift Route. Merely changing the bind address does not establish authentication or isolation.
+The current application is not suitable for exposure through an OpenShift Route. Merely changing the bind address does not establish authentication or isolation; the `container` network mode exists for port-forward and in-cluster access only.
 
 ## Future resource pools
 
-Use only the neutral names **Primary AI Lab**, **Secondary GPU Data Center** and **Cloud Souverain**. A policy-approved private interconnect or VPN can extend capacity. Cloud bursting selects a compatible pool only after classification, permitted processing geography, destination approval, retention, CPE requirements and consumption quotas pass. Each onward transfer is independently governed.
+Use only the neutral names **Primary AI Lab**, **Secondary GPU Data Center** and **Sovereign Cloud**. A policy-approved private interconnect or VPN can extend capacity. The extension is a service chain: the primary lab requests approved AI services from the Secondary GPU Data Center, which may burst to the Sovereign Cloud only with explicit onward approval. There is no direct route from the primary lab to the cloud. Cloud bursting selects a compatible pool only after classification, permitted processing geography, destination approval, retention, CPE requirements and consumption quotas pass. Each onward transfer is independently governed.
 
 Case/source classification is distinct from geography. No actual hosting region, GPU capacity, sovereign certification or commercial rate is assumed. Unavailable eligible capacity queues or rejects work. Access tokens and inference consumption tokens serve different purposes.
 
@@ -25,3 +110,11 @@ A Controlled Project Environment is activated only for cases requiring enhanced 
 ## Later Azure preparation
 
 Use synthetic data for an initial Azure variant. Real source data and derived transcripts require explicit authorisation for the chosen service, region, identity, access, retention and transfer path. No Azure resources have been provisioned by this release.
+
+## Model tracking limits
+
+MLflow records parameters and metrics. Trained model files remain in the application volume; model artifact upload and shared registry publication are Target. Promotion is application-managed and checks reviewer authority and the quality gate. Successful MLflow recording is not yet a mandatory promotion condition.
+
+Verification on 7 October 2026: 53 Python tests and 15 subtests pass, plus the browser core check. The earlier Compose reports contain 25 checks before recreation and 8 afterwards. A subsequent Docker Desktop startup failed in its inference manager; these reports remain historical acceptance evidence, not a new Compose replay.
+
+The backend local replay also passed 25 checks before a process restart and 8 afterwards on 7 October 2026 (loopback port 8781, local MLflow SQLite). This is distinct from the earlier Compose evidence.
