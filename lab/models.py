@@ -1,9 +1,11 @@
 """Real local sklearn training on separated synthetic splits; explicit quality gate."""
 import importlib.util
+import hashlib
 import json
 import os
 import pickle
 import threading
+import tempfile
 import uuid
 from pathlib import Path
 from .store import _now
@@ -23,6 +25,8 @@ TEST = {
 
 
 class ModelRegistry:
+    registered_name = 'multimodal-document-classifier'
+
     def __init__(self,store):
         self.store=store
         self.root=store.root/'models'
@@ -55,13 +59,19 @@ class ModelRegistry:
         accuracy=float(accuracy_score(test_y,predictions)); macro=float(f1_score(test_y,predictions,average='macro'))
         version='classifier-'+uuid.uuid4().hex[:12]
         metadata={'version':version,'accuracy':accuracy,'macro_f1':macro,'gate_passed':accuracy>=0.85 and macro>=0.85,'training_samples':len(x),'test_samples':len(test_x),'data_scope':'synthetic_only','created_at':_now(),'mlflow_run_id':None,'mlflow_status':'unavailable'}
+        model_file=self.root/(version+'.pkl')
+        with model_file.open('wb') as file:
+            pickle.dump(model,file)
+        metadata['artifact_sha256']=hashlib.sha256(model_file.read_bytes()).hexdigest()
         tracking=self.store.root/'mlflow'; tracking.mkdir(exist_ok=True)
         # MLFLOW_TRACKING_URI selects a tracking server (Docker Compose / OpenShift);
         # without it, metrics stay in the local SQLite file under the runtime directory.
         server_uri=os.environ.get('MLFLOW_TRACKING_URI','').strip()
+        metadata['mlflow_tracking_uri']=server_uri or 'sqlite:///'+(tracking/'mlflow.db').resolve().as_posix()
+        run=None
         try:
-            from mlflow.tracking import MlflowClient
-            client=MlflowClient(tracking_uri=server_uri or 'sqlite:///'+(tracking/'mlflow.db').resolve().as_posix())
+            import mlflow.sklearn
+            client=self._client(metadata)
             experiment=client.get_experiment_by_name('synthetic-document-classification')
             if experiment:
                 experiment_id=experiment.experiment_id
@@ -74,13 +84,38 @@ class ModelRegistry:
                 client.log_metric(run.info.run_id,name,float(metadata[name]))
             client.log_param(run.info.run_id,'algorithm','tfidf_logistic_regression')
             client.log_param(run.info.run_id,'gate_passed',str(metadata['gate_passed']))
+            client.log_param(run.info.run_id,'artifact_sha256',metadata['artifact_sha256'])
+            # Publish a loadable MLflow model plus the exact local inference artifact.
+            # No recordings, case documents or source text enter this experiment.
+            with tempfile.TemporaryDirectory() as directory:
+                model_dir=Path(directory)/'model'
+                mlflow.sklearn.save_model(model,str(model_dir),pip_requirements=['scikit-learn=='+__import__('sklearn').__version__])
+                client.log_artifacts(run.info.run_id,str(model_dir),'model')
+            client.log_artifact(run.info.run_id,str(model_file),'release')
+            try:
+                client.get_registered_model(self.registered_name)
+            except Exception as error:
+                if getattr(error,'error_code',None) != 'RESOURCE_DOES_NOT_EXIST':
+                    raise
+                client.create_registered_model(self.registered_name)
+            registered=client.create_model_version(self.registered_name,
+                'runs:/'+run.info.run_id+'/model',run_id=run.info.run_id,
+                tags={'local_version':version,'data_scope':'synthetic_only','artifact_sha256':metadata['artifact_sha256']})
+            if registered.status != 'READY':
+                raise ValueError('MLflow model version is not ready.')
             client.set_terminated(run.info.run_id,'FINISHED')
-            metadata.update(mlflow_run_id=run.info.run_id,mlflow_status='recorded_on_server' if server_uri else 'recorded_locally')
+            metadata.update(mlflow_run_id=run.info.run_id,mlflow_status='recorded_on_server' if server_uri else 'recorded_locally',
+                mlflow_model_name=self.registered_name,mlflow_model_version=str(registered.version),
+                mlflow_model_uri='models:/'+self.registered_name+'/'+str(registered.version),artifact_published=True)
         except Exception:
             metadata['mlflow_status']='server_logging_failed' if server_uri else 'local_logging_failed'
+            metadata['artifact_published']=False
+            if run is not None:
+                try:
+                    client.set_terminated(run.info.run_id,'FAILED')
+                except Exception:
+                    pass
         with self.lock:
-            with open(self.root/(version+'.pkl'),'wb') as file:
-                pickle.dump(model,file)
             with self.store._connection(write=True) as db:
                 db.execute('INSERT INTO model_versions VALUES(?,?,?)',(version,json.dumps(metadata),metadata['created_at']))
         return metadata
@@ -97,6 +132,7 @@ class ModelRegistry:
             candidate=candidates[-1]
             if not candidate['gate_passed']:
                 raise ValueError('Candidate failed the held-out quality gate.')
+            self._verify_release(candidate)
             if candidate['version']==state['active_version']:
                 return state
             self._write_state({'active_version':candidate['version'],'previous_version':state['active_version']})
@@ -110,8 +146,34 @@ class ModelRegistry:
             state=self.state()
             if state['previous_version'] is None:
                 raise ValueError('No previous promoted model is available.')
+            candidate=next(v for v in state['versions'] if v['version']==state['previous_version'])
+            self._verify_release(candidate)
             self._write_state({'active_version':state['previous_version'],'previous_version':state['active_version']})
             return self.state()
+
+    def _client(self,metadata):
+        from mlflow.tracking import MlflowClient
+        return MlflowClient(tracking_uri=metadata['mlflow_tracking_uri'],registry_uri=metadata['mlflow_tracking_uri'])
+
+    def _verify_release(self,candidate):
+        if not candidate.get('artifact_published') or candidate.get('mlflow_status') not in {'recorded_locally','recorded_on_server'}:
+            raise ValueError('Release requires successful MLflow artifact publication and registration.')
+        local=self.root/(candidate['version']+'.pkl')
+        if not local.is_file() or hashlib.sha256(local.read_bytes()).hexdigest()!=candidate['artifact_sha256']:
+            raise ValueError('Local model artifact does not match its registered checksum.')
+        try:
+            client=self._client(candidate)
+            registered=client.get_model_version(candidate['mlflow_model_name'],candidate['mlflow_model_version'])
+            if registered.status!='READY' or registered.run_id!=candidate['mlflow_run_id'] or registered.tags.get('artifact_sha256')!=candidate['artifact_sha256']:
+                raise ValueError('Registry identity or artifact provenance mismatch.')
+            if client.get_run(candidate['mlflow_run_id']).info.status!='FINISHED':
+                raise ValueError('The MLflow training run did not finish successfully.')
+            with tempfile.TemporaryDirectory() as directory:
+                published=Path(client.download_artifacts(candidate['mlflow_run_id'],'release/'+local.name,directory))
+                if hashlib.sha256(published.read_bytes()).hexdigest()!=candidate['artifact_sha256']:
+                    raise ValueError('Published model artifact checksum mismatch.')
+        except Exception as error:
+            raise ValueError('Release blocked: MLflow provenance and published artifact must be verifiable.') from error
 
     def _write_state(self,state):
         with self.store._connection(write=True) as db:

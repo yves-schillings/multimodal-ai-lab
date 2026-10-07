@@ -56,6 +56,44 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
+  name: lab-mlflow-egress
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: lab-mlflow
+  policyTypes: ["Egress"]
+  egress:
+    - to:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: lab-postgres
+      ports:
+        - port: 5432
+    - to:
+        - namespaceSelector: {}
+          podSelector:
+            matchLabels:
+              dns.operator.openshift.io/daemonset-dns: default
+      ports:
+        - port: 5353
+          protocol: UDP
+        - port: 5353
+          protocol: TCP
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: lab-postgres-deny-egress
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: lab-postgres
+  policyTypes: ["Egress"]
+  egress: []
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
   name: lab-postgres-ingress
 spec:
   podSelector:

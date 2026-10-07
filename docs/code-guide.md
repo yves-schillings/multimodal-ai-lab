@@ -31,6 +31,15 @@ The bounded workflow endpoint is deterministic orchestration. It is not an auton
 
 ## Verification evidence
 
-On the development machine, 53 Python tests and 15 subtests passed with `pytest tests` on 7 October 2026 (49 earlier tests plus 4 network-mode tests; `python -m unittest discover` collects only the 37 unittest-style tests). Browser checks passed for classifier gates, source eligibility and abstention. The Docker Compose stack passed the end-to-end demonstration and the persistence check described in `docs/deployment.md`. Real CPU speech inference processed an approximately eleven-second synthetic English recording through the upload/job API and produced three unreviewed segments; another officer was denied case access. This is an integration smoke check, not a speech accuracy benchmark. French and Dutch quality remain to be evaluated.
+On the development machine, 58 Python tests and 15 subtests passed with `pytest tests` on 7 October 2026 (49 earlier tests plus 4 network-mode tests and 5 model-publication tests; `python -m unittest discover` collects only the 37 unittest-style tests). Browser checks passed for classifier gates, source eligibility and abstention. The Docker Compose stack passed the end-to-end demonstration and the persistence check described in `docs/deployment.md`. Real CPU speech inference processed an approximately eleven-second synthetic English recording through the upload/job API and produced three unreviewed segments; another officer was denied case access. This is an integration smoke check, not a speech accuracy benchmark. French and Dutch quality remain to be evaluated.
 
-The speech runtime pins PyAV 16.1.0 because the tested faster-whisper decoder uses an argument no longer accepted by PyAV 19.0.1. The pinned combination passed real decoding and inference. OCR, distributed queues, embedding RAG, generative assistants and trusted identity remain explicit future work.
+The speech runtime pins PyAV 16.1.0 because the tested faster-whisper decoder uses an argument no longer accepted by PyAV 19.0.1. The pinned combination passed real decoding and inference. Image OCR is verified in Docker. Scanned PDFs, distributed queues, embedding RAG, generative assistants and trusted identity remain future work.
+
+## Release and container acceptance
+
+`tests/test_model_publication.py` reloads a model downloaded from MLflow and compares its
+inference result, then checks that failed publication, altered artifacts, unavailable evidence
+and legacy unpublished candidates cannot be released. An unavailable registry also blocks rollback.
+`scripts/container_acceptance.py` exercises the application and synthetic image OCR with an
+arbitrary non-root UID and network disabled. `deploy/openshift/Check-LocalHost.ps1` reports local
+resources without installing software or changing the host.
