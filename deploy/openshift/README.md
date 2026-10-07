@@ -1,9 +1,14 @@
-# OpenShift manifests: prepared configuration, not a tested deployment
+# OpenShift deployment preparation
 
 Status: **Prepared**. These manifests were written from the Docker Compose deployment that was
 verified locally (see `docs/deployment.md`). They have **not** been applied to any OpenShift
 cluster by this repository's authors. No cluster, GPU pool, route host or image registry was used.
 Treat every file here as a blueprint to review with the platform team before a first `oc apply`.
+
+For a desktop first step, see [local.md](local.md) and run `Check-LocalHost.ps1`.
+The application and MLflow images support arbitrary non-root UIDs with the root group;
+this is a portability property tested with Docker, not an OpenShift AI installation.
+Health probes supply the allowed loopback Host header without weakening the application guard.
 
 The same three services as Docker Compose run in one namespace:
 
@@ -24,8 +29,9 @@ PostgreSQL is a separate change; the checklist is in `docs/deployment.md`.
   and case authorization at the boundary are implemented.
 - **No GPU scheduling, no model serving, no workbenches.** Speech runs on CPU inside the application
   container, as in Docker Compose. OpenShift AI model serving remains a target.
-- **No image build.** Build the image with the repository `Dockerfile` and push it to the cluster
-  registry, or create a BuildConfig; then set the image name in `app.yaml`.
+- **Image build:** build the application with the repository `Dockerfile`, and MLflow with
+  `deploy/docker/mlflow.Dockerfile`. Push them to the chosen cluster registry; set both the
+  application/init-container image and MLflow image references before deployment.
 
 ## Expected commands (to run by the platform team, not yet executed)
 

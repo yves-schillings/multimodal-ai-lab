@@ -114,6 +114,7 @@ def phase_before(api, report, state_file):
         meta = job["result"]
         versions.append(meta["version"])
         check(report, "metrics recorded", meta["mlflow_status"] in {"recorded_on_server", "recorded_locally"}, f"{meta['mlflow_status']} accuracy={meta['accuracy']} macro_f1={meta['macro_f1']} gate_passed={meta['gate_passed']}")
+        check(report, "model artifact published and registered", meta.get('artifact_published') is True and bool(meta.get('mlflow_model_version')), f"registry_version={meta.get('mlflow_model_version')}")
     status_code, _ = api.call("POST", "/api/models/promote", "officer-a", {"version": versions[0]}, expect=None)
     check(report, "officer cannot promote (reviewer only)", status_code == 403, f"http {status_code}")
     status_code, _ = api.call("POST", "/api/models/promote", "reviewer", {"version": "classifier-does-not-exist"}, expect=None)

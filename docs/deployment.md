@@ -5,7 +5,7 @@ tested), **Prepared** (code or configuration exists, not verified), **Target** (
 
 ## Running today
 
-The public synthetic sandbox is available at https://secloudis-case-ai-lab.subllings.chatgpt.site. It executes in the browser and has no operational case connection, file intake, cloud inference or MLflow server. Its simulated personas are teaching aids.
+The standalone synthetic browser exercise is separate from the local Python deployment. It executes in the browser and has no operational case connection, file intake, cloud inference or MLflow server. Its simulated personas are teaching aids.
 
 The Python application runs locally at http://127.0.0.1:8770. Use `Start.cmd` on Windows. Runtime databases, model weights, audio and logs are ignored by Git.
 
@@ -64,7 +64,7 @@ plus 4 network-mode tests). The browser check passed.
 - The case store stays in SQLite on the `lab-data` volume; PostgreSQL serves MLflow only. See the migration checklist below.
 - One application replica only: the job runner is a single in-process worker and SQLite is file-based.
 - Speech works only if `scripts/prepare_speech.py` was run on the host before `up`; the container never downloads weights.
-- OCR remains Prepared: the Tesseract engine is not in the image.
+- Image OCR runs through Tesseract in the Docker image. A synthetic English scan passed extraction with an arbitrary non-root UID; multilingual accuracy and scanned PDFs remain separate acceptance work.
 - Simulated actors, no TLS inside the stack, loopback-only publishing: a demonstration, not a shared service.
 - MLflow 3 rejects unknown `Host` headers; the server is started with `--allowed-hosts` for its service names. Add any other name there before reusing the stack elsewhere.
 
@@ -111,10 +111,28 @@ A Controlled Project Environment is activated only for cases requiring enhanced 
 
 Use synthetic data for an initial Azure variant. Real source data and derived transcripts require explicit authorisation for the chosen service, region, identity, access, retention and transfer path. No Azure resources have been provisioned by this release.
 
-## Model tracking limits
+## Model release evidence — 7 October 2026
 
-MLflow records parameters and metrics. Trained model files remain in the application volume; model artifact upload and shared registry publication are Target. Promotion is application-managed and checks reviewer authority and the quality gate. Successful MLflow recording is not yet a mandatory promotion condition.
+MLflow now stores the loadable sklearn model, the exact local inference artifact and registered
+model versions. The PostgreSQL backend stores registry metadata as well as experiments and runs.
+Application promotion and rollback require successful recording, a READY version linked to the
+finished training run, and matching SHA-256 checksums of local and downloaded model artifacts.
+The release decision is application-managed; no shared production model-serving deployment is claimed.
 
-Verification on 7 October 2026: 53 Python tests and 15 subtests pass, plus the browser core check. The earlier Compose reports contain 25 checks before recreation and 8 afterwards. A subsequent Docker Desktop startup failed in its inference manager; these reports remain historical acceptance evidence, not a new Compose replay.
+Fresh checks on this local revision:
 
-The backend local replay also passed 25 checks before a process restart and 8 afterwards on 7 October 2026 (loopback port 8781, local MLflow SQLite). This is distinct from the earlier Compose evidence.
+- 58 Python tests and 15 subtests passed; browser core checks passed.
+- Compose replay: 27 checks before application restart and 8 afterwards, all passed.
+- Two newly trained candidates were published and registered on the Compose MLflow server;
+  reviewer promotion, second promotion, rollback and persistent inference passed.
+- An isolated Docker run without network access, using UID 1000780000 and group 0,
+  passed application data-store creation, classifier imports and synthetic image OCR.
+- Older data volumes were retained; no runtime database or model directory was erased.
+
+OpenShift preparation now includes group-writable runtime directories, arbitrary UID compatibility,
+explicit probe Host headers and restricted application/MLflow/PostgreSQL network policies.
+These image checks do not substitute for actual cluster storage, security-policy or Operator acceptance.
+See [local OpenShift preparation](../deploy/openshift/local.md).
+
+Historical Compose evidence earlier in this document (25 checks before container recreation and 8
+afterwards) remains a separate run. The new 27-check replay adds model artifact publication checks.

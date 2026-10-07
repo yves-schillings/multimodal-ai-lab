@@ -64,10 +64,16 @@ spec:
             - name: artifacts
               mountPath: /mlflow/artifacts
           readinessProbe:
-            httpGet: {path: /health, port: 5000}
+            httpGet:
+              path: /health
+              port: 5000
+              httpHeaders: [{name: Host, value: "127.0.0.1:5000"}]
             periodSeconds: 10
           livenessProbe:
-            httpGet: {path: /health, port: 5000}
+            httpGet:
+              path: /health
+              port: 5000
+              httpHeaders: [{name: Host, value: "127.0.0.1:5000"}]
             periodSeconds: 30
           resources:
             requests: {cpu: "100m", memory: "512Mi"}
