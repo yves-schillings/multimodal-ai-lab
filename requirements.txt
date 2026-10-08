@@ -4,6 +4,7 @@ python-multipart==0.0.32
 scikit-learn==1.9.1
 joblib==1.6.0
 pypdf==6.19.0
+pypdfium2==5.14.0
 Pillow==12.3.0
 pytesseract==0.3.13
 mlflow==3.16.1

@@ -1,0 +1,22 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+# OpenShift Local (CRC) acceptance overlay. Same base as the shared deployment; only the image
+# references point to the cluster's internal registry (binary builds created by
+# scripts/openshift_local_acceptance.py) and PostgreSQL uses an image that supports the arbitrary
+# user ID assigned by the OpenShift restricted security context constraint.
+# No Route: the application is reached through `oc port-forward` only (simulated identities).
+namespace: multimodal-ai-lab
+resources:
+  - ../../base
+images:
+  - name: lab-app
+    newName: image-registry.openshift-image-registry.svc:5000/multimodal-ai-lab/lab-app
+    newTag: latest
+  - name: lab-mlflow
+    newName: image-registry.openshift-image-registry.svc:5000/multimodal-ai-lab/lab-mlflow
+    newTag: latest
+patches:
+  - path: postgres-sclorg-patch.yaml
+    target:
+      kind: StatefulSet
+      name: lab-postgres

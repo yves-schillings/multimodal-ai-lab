@@ -33,7 +33,11 @@ def main():
         image.save(source)
         extracted = extract_document(source)
         assert 'blue bicycle' in extracted['text'].lower(), extracted
-    print('PASS arbitrary non-root UID, writable data store, classifier imports and synthetic image OCR')
+        scanned_pdf = Path(temp) / 'synthetic-scanned.pdf'
+        image.save(scanned_pdf, 'PDF', resolution=150)
+        extracted_pdf = extract_document(scanned_pdf)
+        assert 'blue bicycle' in extracted_pdf['text'].lower(), extracted_pdf
+    print('PASS arbitrary non-root UID, writable data store, classifier imports, synthetic image OCR and scanned PDF OCR')
 
 
 if __name__ == '__main__':

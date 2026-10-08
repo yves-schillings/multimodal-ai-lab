@@ -24,3 +24,8 @@ export function retrieve(caseData,question){
  if(!ranked.length||(!words.length)||(/suspect|jacket|licence|license|guilty|guilt/.test(question.toLowerCase())&&!sources.some(s=>/suspect|jacket|licence|license|guilty|guilt/.test(s.text.toLowerCase()))))return {answer:'The reviewed sources do not support an answer to this question.',sources:[],abstained:true,mode:'extractive',retrieval_backend:'browser_lexical'};
  const selected=ranked.slice(0,3).map(r=>r.source);return {answer:selected.map(s=>s.text).join('\n\n'),sources:selected,abstained:false,mode:'extractive',retrieval_backend:'browser_lexical'};
 }
+
+export function isLocalBackend(status){
+ return status?.name==='Multimodal AI Lab' && status.simulated_identity===true &&
+  ['simulated_loopback_only','simulated_container_network'].includes(status.identity_mode);
+}

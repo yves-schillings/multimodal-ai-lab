@@ -9,9 +9,9 @@ Fixed component names used in the architecture and article. Status: Implemented,
 | C03 | Job runner | JobRunner, durable SQLite job state, single worker, recovery | Implemented | workers + broker/outbox on OpenShift | `lab/jobs.py` |
 | C04 | Deployment policy | Fail-closed planning policy (routing decisions, no provisioning) | Implemented (planning only) | feeds C05 | `lab/deployment_policy.py` |
 | C05 | Inference gateway | Case policy, model catalogue, quota, route | Target | OpenShift service in front of model endpoints | none yet |
-| M01 | Speech-to-text | faster-whisper 1.2.1, PyAV 16.1.0, CPU int8, prepared local weights | Implemented (synthetic English smoke check) | OpenShift AI endpoint, GPU/CPU | `lab/speech.py` |
+| M01 | Speech-to-text | faster-whisper 1.2.1, PyAV 16.1.0, CPU int8, prepared local weights | Implemented (English smoke check and synthetic French/Dutch measurement; representative human quality not accepted) | OpenShift AI endpoint, GPU/CPU | `lab/speech.py` |
 | M02 | PDF text extraction | Python extraction adapter | Implemented | unchanged | `lab/documents.py` |
-| M03 | OCR | Tesseract adapter | Implemented in Docker (synthetic image OCR; scanned PDF remains Target) | OpenShift AI endpoint, pinned version | `lab/documents.py` |
+| M03 | OCR | Tesseract adapter | Implemented in Docker (synthetic image and bounded scanned-PDF extraction tested) | OpenShift AI endpoint, pinned version | `lab/documents.py` |
 | M04 | Document classifier | scikit-learn TF-IDF + logistic regression | Implemented (tiny synthetic dataset) | served pinned artifact | `lab/models.py` |
 | M05 | Retrieval | TF-IDF lexical retrieval on reviewed sources | Implemented | local embedding model + pgvector, measured against the lexical baseline | `lab/retrieval.py` |
 | M06 | LLM generation | none | Target | locally served LLM on OpenShift AI behind C05 | none yet |
@@ -30,8 +30,8 @@ Fixed component names used in the architecture and article. Status: Implemented,
 | H02 | Docker container | Application + MLflow + PostgreSQL; loopback-published ports | Implemented (fresh Compose acceptance) | trusted identity before shared exposure | `Dockerfile` |
 | H03 | On-site private hosts | Application VM, worker hosts, private data services, private GPU hosts | Target | n/a | `docs/deployment.md` |
 | H04 | Red Hat OpenShift + OpenShift AI | Application namespace, data services, model serving, workbenches, pipelines | Target | n/a | `docs/deployment.md` |
-| H05 | Secondary GPU Data Center | AI service + burst policy, H100/B300-class capacity to confirm | Target | n/a | `lab/deployment_policy.py` |
-| H06 | Sovereign Cloud | Approved cloud endpoint, B300-class capacity to confirm | Target | n/a | `lab/deployment_policy.py` |
+| H05 | Secondary GPU Data Center | AI service + burst policy; GPU inventory and compatible models to confirm | Target | n/a | `lab/deployment_policy.py` |
+| H06 | Sovereign Cloud | Approved cloud endpoint; GPU inventory and compatible models to confirm | Target | n/a | `lab/deployment_policy.py` |
 
 
 M08 publishes parameters, metrics, a loadable sklearn model and the exact inference artifact.
@@ -39,3 +39,5 @@ D04 persists inference files locally and publishes model artifacts through MLflo
 rollback require reviewer authority, successful tracking, a ready registered model version,
 matching run identity and artifact checksums. Missing evidence blocks release. H04 application
 manifests are Prepared; neither OpenShift nor OpenShift AI has been installed or accepted.
+
+Evidence update, 8 October 2026: [offline speech measurement](evidence/2026-10-07-closing/speech-fr-nl.json) recorded 67.11% French and 71.01% Dutch word error rates on ten synthetic clips per language. These are measured limitations, not acceptance of human speech quality. [Container portability evidence](evidence/2026-10-07-fresh-clone/container-portability.txt) exercised image OCR and bounded scanned-PDF extraction. No observed GPU inventory or shared CPE is claimed. NVIDIA H100, H200, B200 and B300 are comparison examples in the article, not installed hardware assertions.

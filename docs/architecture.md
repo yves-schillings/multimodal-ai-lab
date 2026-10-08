@@ -27,7 +27,7 @@ flowchart LR
 - The local application binds to loopback and rejects remote clients, foreign hosts and cross-origin requests. A selected persona is a demo fixture, not authentication.
 - Case access precedes retrieval, file processing and job metadata reads. Sources require review before draft or search use. Stale edits are rejected; relevant changes invalidate approval.
 - SQLite records job state. One worker replays pending work after restart, with idempotent document/transcript insertion. This is not distributed broker infrastructure.
-- The document classifier trains on a small synthetic corpus. MLflow stores numerical measurements locally; the application implements promotion and rollback authority.
+- The document classifier trains on a small synthetic corpus. The Compose MLflow server records numerical measurements, published artifacts and registry versions. Promotion and rollback remain application-controlled and require matching artifact checksums.
 - Speech inference reads a prepared local model. No application request calls a public transcription API or downloads model weights.
 - The browser sandbox implements its own synthetic review/search/classifier exercise without a server. Its role switching is a simulation and does not prove production access control.
 

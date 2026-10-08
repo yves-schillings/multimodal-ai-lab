@@ -1,5 +1,11 @@
 import assert from 'node:assert/strict';
-import {seedCases,trainClassifier,predict,retrieve} from '../static/core.js';
+import {seedCases,trainClassifier,predict,retrieve,isLocalBackend} from '../static/core.js';
+for(const identity_mode of ['simulated_loopback_only','simulated_container_network']){
+ assert.equal(isLocalBackend({name:'Multimodal AI Lab',simulated_identity:true,identity_mode}),true);
+}
+for(const status of [undefined,{}, {name:'Other service',simulated_identity:true,identity_mode:'simulated_container_network'}, {name:'Multimodal AI Lab',simulated_identity:false,identity_mode:'simulated_loopback_only'}, {name:'Multimodal AI Lab',simulated_identity:true,identity_mode:'unknown'}]){
+ assert.equal(isLocalBackend(status),false);
+}
 const strong=trainClassifier(),weak=trainClassifier(true);
 assert.equal(strong.gate_passed,true);assert.equal(weak.gate_passed,false);
 assert.equal(predict(strong.model,'Dear colleague, please reply to this email.').label,'correspondence');

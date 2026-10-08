@@ -1,0 +1,25 @@
+{
+  "scope": "Fictional machine-generated speech fixtures, not a representative human-speech benchmark",
+  "samples": [
+    {"id": "fr01", "language": "fr", "reference": "J'ai laissé mon vélo bleu devant la bibliothèque et il avait disparu quand je suis revenu", "speed": 145, "pitch": 45},
+    {"id": "fr02", "language": "fr", "reference": "Le reçu indique la date d'achat du vélo mais il ne permet pas d'identifier la personne qui l'a pris", "speed": 155, "pitch": 55},
+    {"id": "fr03", "language": "fr", "reference": "Je demande au réviseur de comparer la transcription avec l'enregistrement avant de valider le texte", "speed": 165, "pitch": 45},
+    {"id": "fr04", "language": "fr", "reference": "Le dossier contient un inventaire écrit une photographie et une déclaration enregistrée", "speed": 175, "pitch": 55},
+    {"id": "fr05", "language": "fr", "reference": "Aucun document ne mentionne une voiture ni une plaque d'immatriculation dans cet exemple fictif", "speed": 145, "pitch": 60},
+    {"id": "fr06", "language": "fr", "reference": "Seules les sources acceptées peuvent soutenir une réponse et chaque passage doit conserver sa référence", "speed": 155, "pitch": 40},
+    {"id": "fr07", "language": "fr", "reference": "Une modification du témoignage annule l'approbation précédente et impose une nouvelle vérification", "speed": 165, "pitch": 60},
+    {"id": "fr08", "language": "fr", "reference": "Le responsable du projet doit autoriser la région de traitement et les utilisateurs avant l'activation", "speed": 175, "pitch": 40},
+    {"id": "fr09", "language": "fr", "reference": "Le modèle candidat reste inactif lorsque les preuves de publication ne peuvent pas être vérifiées", "speed": 145, "pitch": 50},
+    {"id": "fr10", "language": "fr", "reference": "Le service fonctionne sur cette machine et les données de démonstration ne décrivent aucune personne réelle", "speed": 155, "pitch": 50},
+    {"id": "nl01", "language": "nl", "reference": "Ik liet mijn blauwe fiets voor de bibliotheek staan en bij mijn terugkomst was de fiets verdwenen", "speed": 145, "pitch": 45},
+    {"id": "nl02", "language": "nl", "reference": "Het aankoopbewijs vermeldt de aankoopdatum maar zegt niet wie de fiets heeft meegenomen", "speed": 155, "pitch": 55},
+    {"id": "nl03", "language": "nl", "reference": "De beoordelaar vergelijkt de transcriptie met de opname voordat de tekst wordt goedgekeurd", "speed": 165, "pitch": 45},
+    {"id": "nl04", "language": "nl", "reference": "Het dossier bevat een geschreven inventaris een foto en een opgenomen verklaring", "speed": 175, "pitch": 55},
+    {"id": "nl05", "language": "nl", "reference": "Geen enkel document noemt een auto of een kenteken in dit fictieve voorbeeld", "speed": 145, "pitch": 60},
+    {"id": "nl06", "language": "nl", "reference": "Alleen goedgekeurde bronnen mogen een antwoord ondersteunen en elke passage behoudt een bronverwijzing", "speed": 155, "pitch": 40},
+    {"id": "nl07", "language": "nl", "reference": "Een wijziging van de verklaring maakt de eerdere goedkeuring ongeldig en vereist een nieuwe controle", "speed": 165, "pitch": 60},
+    {"id": "nl08", "language": "nl", "reference": "De projectverantwoordelijke keurt de verwerkingsregio en de gebruikers goed voordat de omgeving actief wordt", "speed": 175, "pitch": 40},
+    {"id": "nl09", "language": "nl", "reference": "Het nieuwe model blijft inactief wanneer het bewijs van publicatie niet kan worden gecontroleerd", "speed": 145, "pitch": 50},
+    {"id": "nl10", "language": "nl", "reference": "Deze demonstratie draait op deze computer en gebruikt uitsluitend fictieve gegevens zonder echte persoonsgegevens", "speed": 155, "pitch": 50}
+  ]
+}

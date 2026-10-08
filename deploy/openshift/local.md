@@ -24,8 +24,14 @@ Run the read-only check from the repository root:
 
 Install the Windows OpenShift Local distribution on C: from the official Red Hat page.
 Sign in to your Red Hat account and obtain its pull secret. Keep that secret outside this
-repository. The installer and `crc setup` may need administrator access and host changes.
+repository. The guided installer requires approval for host changes. Run `crc setup` and
+`crc start` from the normal user account, not an administrator shell; allow CRC's required
+elevation prompts. The account must be able to elevate.
 Avoid simultaneously allocating all remaining RAM to CRC and Docker Desktop.
+
+A read-only host check on 8 October 2026 still found no `crc`, `oc` or user `.crc`
+directory. No running OpenShift Local cluster was verified. Manifests and this guide
+are preparation, not deployment acceptance.
 
 For application testing, start with 8 vCPUs and 16 GiB assigned to CRC. These are lab
 planning values, not OpenShift AI sizing or a guarantee of sufficient workload capacity.

@@ -3,6 +3,22 @@
 Status vocabulary used in this document and in the architecture deck: **Implemented** (runs and is
 tested), **Prepared** (code or configuration exists, not verified), **Target** (design only).
 
+## Latest retained verification
+
+The [7 October 2026 closing package](evidence/2026-10-07-closing/README.md) records
+63 Python tests and 15 subtests, 27 Compose checks before restart and 8 afterwards,
+bounded image/scanned-PDF OCR and model publication with checksum-verified release.
+The [fresh-checkout package](evidence/2026-10-07-fresh-clone/README.md) confirms these
+checks on a separate local checkout and fresh volumes, with warm caches on the same
+workstation. Neither package is hosted CI, a release tag or cluster acceptance.
+
+The 53-test/25-check and 58-test records below describe earlier implementation
+snapshots. They are preserved as dated history rather than the latest suite count.
+The original image report used a gate that rejected all HIGH/CRITICAL findings.
+The prepared workflow now blocks fixable HIGH/CRITICAL findings while retaining the
+full report; this policy change does not approve the remaining findings or establish
+a green hosted run. See the [security disposition](evidence/2026-10-07-security-review/README.md).
+
 ## Running today
 
 The standalone synthetic browser exercise is separate from the local Python deployment. It executes in the browser and has no operational case connection, file intake, cloud inference or MLflow server. Its simulated personas are teaching aids.
@@ -64,7 +80,7 @@ plus 4 network-mode tests). The browser check passed.
 - The case store stays in SQLite on the `lab-data` volume; PostgreSQL serves MLflow only. See the migration checklist below.
 - One application replica only: the job runner is a single in-process worker and SQLite is file-based.
 - Speech works only if `scripts/prepare_speech.py` was run on the host before `up`; the container never downloads weights.
-- Image OCR runs through Tesseract in the Docker image. A synthetic English scan passed extraction with an arbitrary non-root UID; multilingual accuracy and scanned PDFs remain separate acceptance work.
+- Image OCR runs through Tesseract in the Docker image. A synthetic English scan passed extraction with an arbitrary non-root UID; a later closing run also verifies scanned-PDF OCR, while multilingual accuracy remains separate acceptance work.
 - Simulated actors, no TLS inside the stack, loopback-only publishing: a demonstration, not a shared service.
 - MLflow 3 rejects unknown `Host` headers; the server is started with `--allowed-hosts` for its service names. Add any other name there before reusing the stack elsewhere.
 
@@ -136,3 +152,17 @@ See [local OpenShift preparation](../deploy/openshift/local.md).
 
 Historical Compose evidence earlier in this document (25 checks before container recreation and 8
 afterwards) remains a separate run. The new 27-check replay adds model artifact publication checks.
+
+## Closing snapshot verification — 7 October 2026
+
+The rebuilt application passed 63 Python tests plus 15 subtests, browser core checks, 27 Compose checks before an actual application restart and 8 after it. Registry versions 5 and 6 were published. A real image-only PDF passed the Tesseract fallback. The application image also passed image and scanned-PDF OCR as UID 1000780000 with network disabled, capabilities dropped and no-new-privileges.
+
+[The dated evidence package](evidence/2026-10-07-closing/README.md) retains reports and tested-source hashes. Its image audit records 76 HIGH and 1 CRITICAL package findings, with no fixed versions listed in that database snapshot. Python requirement auditing returned no known vulnerabilities. The prepared CI gate remains strict and has not run on GitHub. These checks do not prove a cluster deployment, a clean-machine reproduction or French and Dutch quality.
+
+Earlier 25/8, 53-test and 58-test results above describe prior snapshots. They are retained as history rather than substituted for the closing reports.
+
+## Fresh local clone and independent volumes — 7 October 2026
+
+A separate clone of the unpublished local snapshot was installed in a new virtual environment and run in a distinct Compose project with initially empty volumes. All 63 Python tests and 15 subtests, browser core checks, 27 pre-restart checks and 8 post-restart checks passed. The cloned image also passed image and scanned-PDF OCR under an arbitrary non-root UID with networking disabled. See the [timed reports and exact source hashes](evidence/2026-10-07-fresh-clone/README.md). The existing demonstration volumes were not reused.
+
+This narrows the local-reproduction gap; it does not establish cold-cache or other-machine reproduction. The [security disposition](evidence/2026-10-07-security-review/README.md) separately explains the current fixable-only automation gate and the retained unapproved findings. Neither a local test pass nor zero reported fixable findings substitutes for a hosted CI run or shared-platform acceptance.
