@@ -1,0 +1,820 @@
+{
+  "date": "2026-10-07",
+  "case_id": "case-6bcd77690bc9463d9e6bc5862dffc1cc",
+  "jobs": {
+    "audio": {
+      "job_id": "job-56059af0b13a4f24a4fa2a3e61f096e7",
+      "status": "completed",
+      "kind": "audio",
+      "result": {
+        "case_id": "case-6bcd77690bc9463d9e6bc5862dffc1cc",
+        "case_revision": 1,
+        "transcription": {
+          "provider": "faster-whisper",
+          "model": "base",
+          "language": "en",
+          "duration_seconds": 10.648,
+          "processing_seconds": 2.851,
+          "requires_human_validation": true,
+          "segments": [
+            {
+              "id": 0,
+              "start": 0.0,
+              "end": 3.44,
+              "text": "I left my blue bicycle beside the library at 9 in the morning.",
+              "review_required": false,
+              "review_reasons": [],
+              "words": [
+                {
+                  "start": 0.0,
+                  "end": 0.2,
+                  "text": "I",
+                  "probability": 0.9735
+                },
+                {
+                  "start": 0.2,
+                  "end": 0.4,
+                  "text": "left",
+                  "probability": 0.9966
+                },
+                {
+                  "start": 0.4,
+                  "end": 0.62,
+                  "text": "my",
+                  "probability": 0.9985
+                },
+                {
+                  "start": 0.62,
+                  "end": 0.86,
+                  "text": "blue",
+                  "probability": 0.9215
+                },
+                {
+                  "start": 0.86,
+                  "end": 1.22,
+                  "text": "bicycle",
+                  "probability": 0.9679
+                },
+                {
+                  "start": 1.22,
+                  "end": 1.72,
+                  "text": "beside",
+                  "probability": 0.9969
+                },
+                {
+                  "start": 1.72,
+                  "end": 1.96,
+                  "text": "the",
+                  "probability": 0.9969
+                },
+                {
+                  "start": 1.96,
+                  "end": 2.32,
+                  "text": "library",
+                  "probability": 0.9568
+                },
+                {
+                  "start": 2.32,
+                  "end": 2.66,
+                  "text": "at",
+                  "probability": 0.998
+                },
+                {
+                  "start": 2.66,
+                  "end": 2.82,
+                  "text": "9",
+                  "probability": 0.7559
+                },
+                {
+                  "start": 2.82,
+                  "end": 3.04,
+                  "text": "in",
+                  "probability": 0.9032
+                },
+                {
+                  "start": 3.04,
+                  "end": 3.12,
+                  "text": "the",
+                  "probability": 0.9988
+                },
+                {
+                  "start": 3.12,
+                  "end": 3.44,
+                  "text": "morning.",
+                  "probability": 0.9984
+                }
+              ]
+            },
+            {
+              "id": 1,
+              "start": 4.14,
+              "end": 7.36,
+              "text": "When I returned at 11, it was no longer there.",
+              "review_required": false,
+              "review_reasons": [],
+              "words": [
+                {
+                  "start": 4.14,
+                  "end": 4.58,
+                  "text": "When",
+                  "probability": 0.9628
+                },
+                {
+                  "start": 4.58,
+                  "end": 4.72,
+                  "text": "I",
+                  "probability": 0.9795
+                },
+                {
+                  "start": 4.72,
+                  "end": 5.04,
+                  "text": "returned",
+                  "probability": 0.9963
+                },
+                {
+                  "start": 5.04,
+                  "end": 5.34,
+                  "text": "at",
+                  "probability": 0.9988
+                },
+                {
+                  "start": 5.34,
+                  "end": 5.62,
+                  "text": "11,",
+                  "probability": 0.9633
+                },
+                {
+                  "start": 6.14,
+                  "end": 6.34,
+                  "text": "it",
+                  "probability": 0.9794
+                },
+                {
+                  "start": 6.34,
+                  "end": 6.52,
+                  "text": "was",
+                  "probability": 0.9991
+                },
+                {
+                  "start": 6.52,
+                  "end": 6.72,
+                  "text": "no",
+                  "probability": 0.997
+                },
+                {
+                  "start": 6.72,
+                  "end": 7.08,
+                  "text": "longer",
+                  "probability": 0.9998
+                },
+                {
+                  "start": 7.08,
+                  "end": 7.36,
+                  "text": "there.",
+                  "probability": 0.9991
+                }
+              ]
+            },
+            {
+              "id": 2,
+              "start": 8.18,
+              "end": 9.8,
+              "text": "I did not see who removed it.",
+              "review_required": false,
+              "review_reasons": [],
+              "words": [
+                {
+                  "start": 8.18,
+                  "end": 8.46,
+                  "text": "I",
+                  "probability": 0.9922
+                },
+                {
+                  "start": 8.46,
+                  "end": 8.62,
+                  "text": "did",
+                  "probability": 0.9948
+                },
+                {
+                  "start": 8.62,
+                  "end": 8.82,
+                  "text": "not",
+                  "probability": 0.9963
+                },
+                {
+                  "start": 8.82,
+                  "end": 9.08,
+                  "text": "see",
+                  "probability": 0.9995
+                },
+                {
+                  "start": 9.08,
+                  "end": 9.24,
+                  "text": "who",
+                  "probability": 0.9963
+                },
+                {
+                  "start": 9.24,
+                  "end": 9.58,
+                  "text": "removed",
+                  "probability": 0.9875
+                },
+                {
+                  "start": 9.58,
+                  "end": 9.8,
+                  "text": "it.",
+                  "probability": 0.9996
+                }
+              ]
+            }
+          ],
+          "engine": "faster-whisper-local"
+        }
+      },
+      "error": null
+    },
+    "inventory": {
+      "job_id": "job-21248a2ddad9485f9f2cdbc98c4c3721",
+      "status": "completed",
+      "kind": "document",
+      "result": {
+        "document_id": "document-f61dcd8d1e524c1586fbd81a5060582e",
+        "classification": {
+          "label": "witness_statement",
+          "confidence": 0.4168,
+          "model_version": "classifier-de0df58fdc14",
+          "status": "classified",
+          "requires_human_validation": true
+        },
+        "case_revision": 2
+      },
+      "error": null
+    },
+    "scan": {
+      "job_id": "job-fea7e323004047edb01dac21e509f76f",
+      "status": "completed",
+      "kind": "document",
+      "result": {
+        "document_id": "document-91e25d2a9d4b4b89957858e94cd70296",
+        "classification": {
+          "label": "witness_statement",
+          "confidence": 0.29,
+          "model_version": "classifier-de0df58fdc14",
+          "status": "classified",
+          "requires_human_validation": true
+        },
+        "case_revision": 3
+      },
+      "error": null
+    }
+  },
+  "case": {
+    "id": "case-6bcd77690bc9463d9e6bc5862dffc1cc",
+    "title": "Fictional bicycle dossier for article review",
+    "owner_actor": "officer-a",
+    "revision": 3,
+    "status": "in_review",
+    "active_transcript_id": "transcript-45d2a78306514ac7ac987f53e21a1e18",
+    "approved_revision": null,
+    "approved_by": null,
+    "last_editor": "officer-a",
+    "created_at": "2026-10-07T16:34:29.996962+00:00",
+    "updated_at": "2026-10-07T16:34:34.106520+00:00",
+    "segments": [
+      {
+        "id": "segment-d43d51b6557a485b940edc48d0aa5341",
+        "case_id": "case-6bcd77690bc9463d9e6bc5862dffc1cc",
+        "transcript_id": "transcript-45d2a78306514ac7ac987f53e21a1e18",
+        "position": 0,
+        "start": 0.0,
+        "end": 3.44,
+        "speaker": "Unverified speaker",
+        "text": "I left my blue bicycle beside the library at 9 in the morning.",
+        "reviewed": false,
+        "reviewed_by": null,
+        "reviewed_at": null,
+        "original_text": "I left my blue bicycle beside the library at 9 in the morning."
+      },
+      {
+        "id": "segment-345cbcb7dae14933975cda1d1f6bdb7e",
+        "case_id": "case-6bcd77690bc9463d9e6bc5862dffc1cc",
+        "transcript_id": "transcript-45d2a78306514ac7ac987f53e21a1e18",
+        "position": 1,
+        "start": 4.14,
+        "end": 7.36,
+        "speaker": "Unverified speaker",
+        "text": "When I returned at 11, it was no longer there.",
+        "reviewed": false,
+        "reviewed_by": null,
+        "reviewed_at": null,
+        "original_text": "When I returned at 11, it was no longer there."
+      },
+      {
+        "id": "segment-5f3d6e4037e4444994c5e5780838078f",
+        "case_id": "case-6bcd77690bc9463d9e6bc5862dffc1cc",
+        "transcript_id": "transcript-45d2a78306514ac7ac987f53e21a1e18",
+        "position": 2,
+        "start": 8.18,
+        "end": 9.8,
+        "speaker": "Unverified speaker",
+        "text": "I did not see who removed it.",
+        "reviewed": false,
+        "reviewed_by": null,
+        "reviewed_at": null,
+        "original_text": "I did not see who removed it."
+      }
+    ],
+    "draft": null,
+    "transcript_history": [
+      {
+        "id": "transcript-45d2a78306514ac7ac987f53e21a1e18",
+        "created_at": "2026-10-07T16:34:32.994537+00:00",
+        "actor": "officer-a",
+        "engine": "faster-whisper-local",
+        "language": "en",
+        "content_hash": "945539abd2e5f0eedf1317b7ddaa8936dfe1c3e4d5b71f73460db1f3a845ab56",
+        "case_revision": 1
+      }
+    ],
+    "audit": [
+      {
+        "id": 30,
+        "case_id": "case-6bcd77690bc9463d9e6bc5862dffc1cc",
+        "timestamp": "2026-10-07T16:34:29.997687+00:00",
+        "actor": "officer-a",
+        "action": "case_created",
+        "revision": 0,
+        "metadata": {
+          "title_hash": "0df7bc7777018112beccab1238ddf3a7515f51fdbc1f928f75f616715d784fff"
+        }
+      },
+      {
+        "id": 31,
+        "case_id": "case-6bcd77690bc9463d9e6bc5862dffc1cc",
+        "timestamp": "2026-10-07T16:34:32.995106+00:00",
+        "actor": "officer-a",
+        "action": "transcript_saved",
+        "revision": 1,
+        "metadata": {
+          "content_hash": "945539abd2e5f0eedf1317b7ddaa8936dfe1c3e4d5b71f73460db1f3a845ab56",
+          "invalidated_approval": false,
+          "segment_count": 3,
+          "transcript_id": "transcript-45d2a78306514ac7ac987f53e21a1e18"
+        }
+      },
+      {
+        "id": 32,
+        "case_id": "case-6bcd77690bc9463d9e6bc5862dffc1cc",
+        "timestamp": "2026-10-07T16:34:33.295001+00:00",
+        "actor": "officer-a",
+        "action": "document_extracted",
+        "revision": 2,
+        "metadata": {
+          "content_hash": "e643b66f7378ea4711ea35b110e049df6d2bffacabfe0bb2e4c5cf1c0edd0a0d",
+          "document_id": "document-f61dcd8d1e524c1586fbd81a5060582e",
+          "engine": "utf8"
+        }
+      },
+      {
+        "id": 33,
+        "case_id": "case-6bcd77690bc9463d9e6bc5862dffc1cc",
+        "timestamp": "2026-10-07T16:34:34.106603+00:00",
+        "actor": "officer-a",
+        "action": "document_extracted",
+        "revision": 3,
+        "metadata": {
+          "content_hash": "947a8b886ef7009108fd3d75851bfc4f3c8e2281c5799776636c22787d981c03",
+          "document_id": "document-91e25d2a9d4b4b89957858e94cd70296",
+          "engine": "pypdf-text+local-tesseract-ocr"
+        }
+      }
+    ],
+    "simulated_identity": true,
+    "documents": [
+      {
+        "id": "document-f61dcd8d1e524c1586fbd81a5060582e",
+        "case_id": "case-6bcd77690bc9463d9e6bc5862dffc1cc",
+        "name": "inventory.txt",
+        "original_text": "Synthetic evidence inventory. Item one: blue bicycle receipt. Item two: photograph of the bicycle beside the library. Item three: recorded statement. No witness identifies a person who removed the bicycle.",
+        "text": "Synthetic evidence inventory. Item one: blue bicycle receipt. Item two: photograph of the bicycle beside the library. Item three: recorded statement. No witness identifies a person who removed the bicycle.",
+        "engine": "utf8",
+        "reviewed": false,
+        "reviewed_by": null,
+        "created_at": "2026-10-07T16:34:33.294799+00:00",
+        "classification": {
+          "label": "witness_statement",
+          "confidence": 0.4168,
+          "model_version": "classifier-de0df58fdc14",
+          "status": "classified",
+          "requires_human_validation": true
+        }
+      },
+      {
+        "id": "document-91e25d2a9d4b4b89957858e94cd70296",
+        "case_id": "case-6bcd77690bc9463d9e6bc5862dffc1cc",
+        "name": "receipt-scanned.pdf",
+        "original_text": "SYNTHETIC RECEIPT\n\nBlue bicycle\n\nPurchase date 12 June 2026\n\nReceipt number DEMO 104\n\nFictional document for software testing",
+        "text": "SYNTHETIC RECEIPT\n\nBlue bicycle\n\nPurchase date 12 June 2026\n\nReceipt number DEMO 104\n\nFictional document for software testing",
+        "engine": "pypdf-text+local-tesseract-ocr",
+        "reviewed": false,
+        "reviewed_by": null,
+        "created_at": "2026-10-07T16:34:34.106402+00:00",
+        "classification": {
+          "label": "witness_statement",
+          "confidence": 0.29,
+          "model_version": "classifier-de0df58fdc14",
+          "status": "classified",
+          "requires_human_validation": true
+        }
+      }
+    ]
+  },
+  "audio_seconds": 10.647800453514739,
+  "audio_fixture": "Windows English TTS, smoke test only",
+  "policy_checks": [
+    {
+      "allowed": true,
+      "reason": "Planning policy passed; live connector is not implemented",
+      "destination": "Primary AI Lab"
+    },
+    {
+      "allowed": false,
+      "reason": "An approved CPE is required",
+      "destination": "Primary AI Lab"
+    },
+    {
+      "allowed": false,
+      "reason": "Processing region is not approved",
+      "destination": "Primary AI Lab"
+    }
+  ],
+  "supported_answer": {
+    "case_id": "case-6bcd77690bc9463d9e6bc5862dffc1cc",
+    "case_revision": 8,
+    "mode": "extractive",
+    "retrieval_backend": "tfidf_cosine",
+    "sources": [
+      {
+        "id": "segment-d43d51b6557a485b940edc48d0aa5341",
+        "title": "Reviewed transcript segment 1",
+        "text": "I left my blue bicycle beside the library at nine in the morning",
+        "start": 0.0,
+        "end": 3.44,
+        "case_id": "case-6bcd77690bc9463d9e6bc5862dffc1cc",
+        "kind": "reviewed_transcript",
+        "score": 0.528594
+      },
+      {
+        "id": "document-f61dcd8d1e524c1586fbd81a5060582e:0",
+        "document_id": "document-f61dcd8d1e524c1586fbd81a5060582e",
+        "title": "inventory.txt",
+        "text": "Synthetic evidence inventory. Item one: blue bicycle receipt. Item two: photograph of the bicycle beside the library. Item three: recorded statement. No witness identifies a person who removed the bicycle.",
+        "case_id": "case-6bcd77690bc9463d9e6bc5862dffc1cc",
+        "kind": "reviewed_document",
+        "start": null,
+        "end": null,
+        "score": 0.235496
+      },
+      {
+        "id": "document-91e25d2a9d4b4b89957858e94cd70296:0",
+        "document_id": "document-91e25d2a9d4b4b89957858e94cd70296",
+        "title": "receipt-scanned.pdf",
+        "text": "SYNTHETIC RECEIPT\n\nBlue bicycle\n\nPurchase date 12 June 2026\n\nReceipt number DEMO 104\n\nFictional document for software testing",
+        "case_id": "case-6bcd77690bc9463d9e6bc5862dffc1cc",
+        "kind": "reviewed_document",
+        "start": null,
+        "end": null,
+        "score": 0.105682
+      }
+    ],
+    "simulated_identity": true,
+    "notice": "Quoted source excerpts only. No LLM, embeddings, legal inference or cross-case search. Procedure cards are synthetic demo instructions.",
+    "answer": "Relevant source excerpts (these do not establish verified facts):\n\n[1] I left my blue bicycle beside the library at nine in the morning\n\n[2] Synthetic evidence inventory. Item one: blue bicycle receipt. Item two: photograph of the bicycle beside the library. Item three: recorded statement. No witness identifies a person who removed the bicycle.\n\n[3] SYNTHETIC RECEIPT\n\nBlue bicycle\n\nPurchase date 12 June 2026\n\nReceipt number DEMO 104\n\nFictional document for software testing",
+    "abstained": false
+  },
+  "unsupported_answer": {
+    "case_id": "case-6bcd77690bc9463d9e6bc5862dffc1cc",
+    "case_revision": 8,
+    "mode": "extractive",
+    "retrieval_backend": "tfidf_cosine",
+    "sources": [],
+    "simulated_identity": true,
+    "notice": "Quoted source excerpts only. No LLM, embeddings, legal inference or cross-case search. Procedure cards are synthetic demo instructions.",
+    "answer": "No relevant reviewed source was found in this case or the synthetic demo procedure cards. I cannot answer from the available evidence.",
+    "abstained": true
+  },
+  "reviewed_case": {
+    "id": "case-6bcd77690bc9463d9e6bc5862dffc1cc",
+    "title": "Fictional bicycle dossier for article review",
+    "owner_actor": "officer-a",
+    "revision": 10,
+    "status": "approved",
+    "active_transcript_id": "transcript-45d2a78306514ac7ac987f53e21a1e18",
+    "approved_revision": 9,
+    "approved_by": "reviewer",
+    "last_editor": "officer-a",
+    "created_at": "2026-10-07T16:34:29.996962+00:00",
+    "updated_at": "2026-10-07T16:40:02.261618+00:00",
+    "segments": [
+      {
+        "id": "segment-d43d51b6557a485b940edc48d0aa5341",
+        "case_id": "case-6bcd77690bc9463d9e6bc5862dffc1cc",
+        "transcript_id": "transcript-45d2a78306514ac7ac987f53e21a1e18",
+        "position": 0,
+        "start": 0.0,
+        "end": 3.44,
+        "speaker": "Unverified speaker",
+        "text": "I left my blue bicycle beside the library at nine in the morning",
+        "reviewed": true,
+        "reviewed_by": "officer-a",
+        "reviewed_at": "2026-10-07T16:36:14.601312+00:00",
+        "original_text": "I left my blue bicycle beside the library at 9 in the morning."
+      },
+      {
+        "id": "segment-345cbcb7dae14933975cda1d1f6bdb7e",
+        "case_id": "case-6bcd77690bc9463d9e6bc5862dffc1cc",
+        "transcript_id": "transcript-45d2a78306514ac7ac987f53e21a1e18",
+        "position": 1,
+        "start": 4.14,
+        "end": 7.36,
+        "speaker": "Unverified speaker",
+        "text": "When I returned at 11, it was no longer there.",
+        "reviewed": true,
+        "reviewed_by": "officer-a",
+        "reviewed_at": "2026-10-07T16:40:02.121334+00:00",
+        "original_text": "When I returned at 11, it was no longer there."
+      },
+      {
+        "id": "segment-5f3d6e4037e4444994c5e5780838078f",
+        "case_id": "case-6bcd77690bc9463d9e6bc5862dffc1cc",
+        "transcript_id": "transcript-45d2a78306514ac7ac987f53e21a1e18",
+        "position": 2,
+        "start": 8.18,
+        "end": 9.8,
+        "speaker": "Unverified speaker",
+        "text": "I did not see who removed it.",
+        "reviewed": true,
+        "reviewed_by": "officer-a",
+        "reviewed_at": "2026-10-07T16:40:02.138478+00:00",
+        "original_text": "I did not see who removed it."
+      }
+    ],
+    "draft": {
+      "text": "[00:00.000] I left my blue bicycle beside the library at nine in the morning\n\n[00:04.140] When I returned at 11, it was no longer there.\n\n[00:08.180] I did not see who removed it.\n\n[inventory.txt] Synthetic evidence inventory. Item one: blue bicycle receipt. Item two: photograph of the bicycle beside the library. Item three: recorded statement. No witness identifies a person who removed the bicycle.\n\n[receipt-scanned.pdf] SYNTHETIC RECEIPT\n\nBlue bicycle\n\nPurchase date 12 June 2026\n\nReceipt number DEMO 104\n\nFictional document for software testing",
+      "narrative": "[00:00.000] I left my blue bicycle beside the library at nine in the morning\n\n[00:04.140] When I returned at 11, it was no longer there.\n\n[00:08.180] I did not see who removed it.\n\n[inventory.txt] Synthetic evidence inventory. Item one: blue bicycle receipt. Item two: photograph of the bicycle beside the library. Item three: recorded statement. No witness identifies a person who removed the bicycle.\n\n[receipt-scanned.pdf] SYNTHETIC RECEIPT\n\nBlue bicycle\n\nPurchase date 12 June 2026\n\nReceipt number DEMO 104\n\nFictional document for software testing",
+      "sources": [
+        {
+          "id": "segment-d43d51b6557a485b940edc48d0aa5341",
+          "title": "Reviewed transcript",
+          "text": "I left my blue bicycle beside the library at nine in the morning",
+          "start": 0.0,
+          "end": 3.44,
+          "case_id": "case-6bcd77690bc9463d9e6bc5862dffc1cc"
+        },
+        {
+          "id": "segment-345cbcb7dae14933975cda1d1f6bdb7e",
+          "title": "Reviewed transcript",
+          "text": "When I returned at 11, it was no longer there.",
+          "start": 4.14,
+          "end": 7.36,
+          "case_id": "case-6bcd77690bc9463d9e6bc5862dffc1cc"
+        },
+        {
+          "id": "segment-5f3d6e4037e4444994c5e5780838078f",
+          "title": "Reviewed transcript",
+          "text": "I did not see who removed it.",
+          "start": 8.18,
+          "end": 9.8,
+          "case_id": "case-6bcd77690bc9463d9e6bc5862dffc1cc"
+        },
+        {
+          "id": "document-f61dcd8d1e524c1586fbd81a5060582e",
+          "title": "inventory.txt",
+          "text": "Synthetic evidence inventory. Item one: blue bicycle receipt. Item two: photograph of the bicycle beside the library. Item three: recorded statement. No witness identifies a person who removed the bicycle.",
+          "start": null,
+          "end": null,
+          "case_id": "case-6bcd77690bc9463d9e6bc5862dffc1cc"
+        },
+        {
+          "id": "document-91e25d2a9d4b4b89957858e94cd70296",
+          "title": "receipt-scanned.pdf",
+          "text": "SYNTHETIC RECEIPT\n\nBlue bicycle\n\nPurchase date 12 June 2026\n\nReceipt number DEMO 104\n\nFictional document for software testing",
+          "start": null,
+          "end": null,
+          "case_id": "case-6bcd77690bc9463d9e6bc5862dffc1cc"
+        }
+      ],
+      "revision": 9,
+      "based_on_revision": 8,
+      "created_at": "2026-10-07T16:40:02.242428+00:00",
+      "mode": "extractive",
+      "notice": "Reviewed source excerpts; not verified facts or an official record."
+    },
+    "transcript_history": [
+      {
+        "id": "transcript-45d2a78306514ac7ac987f53e21a1e18",
+        "created_at": "2026-10-07T16:34:32.994537+00:00",
+        "actor": "officer-a",
+        "engine": "faster-whisper-local",
+        "language": "en",
+        "content_hash": "945539abd2e5f0eedf1317b7ddaa8936dfe1c3e4d5b71f73460db1f3a845ab56",
+        "case_revision": 1
+      }
+    ],
+    "audit": [
+      {
+        "id": 30,
+        "case_id": "case-6bcd77690bc9463d9e6bc5862dffc1cc",
+        "timestamp": "2026-10-07T16:34:29.997687+00:00",
+        "actor": "officer-a",
+        "action": "case_created",
+        "revision": 0,
+        "metadata": {
+          "title_hash": "0df7bc7777018112beccab1238ddf3a7515f51fdbc1f928f75f616715d784fff"
+        }
+      },
+      {
+        "id": 31,
+        "case_id": "case-6bcd77690bc9463d9e6bc5862dffc1cc",
+        "timestamp": "2026-10-07T16:34:32.995106+00:00",
+        "actor": "officer-a",
+        "action": "transcript_saved",
+        "revision": 1,
+        "metadata": {
+          "content_hash": "945539abd2e5f0eedf1317b7ddaa8936dfe1c3e4d5b71f73460db1f3a845ab56",
+          "invalidated_approval": false,
+          "segment_count": 3,
+          "transcript_id": "transcript-45d2a78306514ac7ac987f53e21a1e18"
+        }
+      },
+      {
+        "id": 32,
+        "case_id": "case-6bcd77690bc9463d9e6bc5862dffc1cc",
+        "timestamp": "2026-10-07T16:34:33.295001+00:00",
+        "actor": "officer-a",
+        "action": "document_extracted",
+        "revision": 2,
+        "metadata": {
+          "content_hash": "e643b66f7378ea4711ea35b110e049df6d2bffacabfe0bb2e4c5cf1c0edd0a0d",
+          "document_id": "document-f61dcd8d1e524c1586fbd81a5060582e",
+          "engine": "utf8"
+        }
+      },
+      {
+        "id": 33,
+        "case_id": "case-6bcd77690bc9463d9e6bc5862dffc1cc",
+        "timestamp": "2026-10-07T16:34:34.106603+00:00",
+        "actor": "officer-a",
+        "action": "document_extracted",
+        "revision": 3,
+        "metadata": {
+          "content_hash": "947a8b886ef7009108fd3d75851bfc4f3c8e2281c5799776636c22787d981c03",
+          "document_id": "document-91e25d2a9d4b4b89957858e94cd70296",
+          "engine": "pypdf-text+local-tesseract-ocr"
+        }
+      },
+      {
+        "id": 39,
+        "case_id": "case-6bcd77690bc9463d9e6bc5862dffc1cc",
+        "timestamp": "2026-10-07T16:36:14.601597+00:00",
+        "actor": "officer-a",
+        "action": "segment_reviewed",
+        "revision": 4,
+        "metadata": {
+          "after_hash": "9789b1cc6ba4920efcbb0ebf8bfff7ff759b86641d285861c187e873b57b7574",
+          "before_hash": "e63b38d9d5502ea33f96f620b860ee326983ca0f69bff2e3ae00291452f289c1",
+          "invalidated_approval": false,
+          "segment_id": "segment-d43d51b6557a485b940edc48d0aa5341"
+        }
+      },
+      {
+        "id": 40,
+        "case_id": "case-6bcd77690bc9463d9e6bc5862dffc1cc",
+        "timestamp": "2026-10-07T16:36:38.993217+00:00",
+        "actor": "officer-a",
+        "action": "document_reviewed",
+        "revision": 5,
+        "metadata": {
+          "content_hash": "947a8b886ef7009108fd3d75851bfc4f3c8e2281c5799776636c22787d981c03",
+          "document_id": "document-91e25d2a9d4b4b89957858e94cd70296"
+        }
+      },
+      {
+        "id": 41,
+        "case_id": "case-6bcd77690bc9463d9e6bc5862dffc1cc",
+        "timestamp": "2026-10-07T16:40:02.121621+00:00",
+        "actor": "officer-a",
+        "action": "segment_reviewed",
+        "revision": 6,
+        "metadata": {
+          "after_hash": "c8d5826389fd52eb3138cc1a0a5aed068647596d0e234f3af557828f6f9fd5bd",
+          "before_hash": "c8d5826389fd52eb3138cc1a0a5aed068647596d0e234f3af557828f6f9fd5bd",
+          "invalidated_approval": false,
+          "segment_id": "segment-345cbcb7dae14933975cda1d1f6bdb7e"
+        }
+      },
+      {
+        "id": 42,
+        "case_id": "case-6bcd77690bc9463d9e6bc5862dffc1cc",
+        "timestamp": "2026-10-07T16:40:02.138638+00:00",
+        "actor": "officer-a",
+        "action": "segment_reviewed",
+        "revision": 7,
+        "metadata": {
+          "after_hash": "62e0ece540670fb5b38b70d6ba7a5732ab98a7369241046f69415fdd575386ca",
+          "before_hash": "62e0ece540670fb5b38b70d6ba7a5732ab98a7369241046f69415fdd575386ca",
+          "invalidated_approval": false,
+          "segment_id": "segment-5f3d6e4037e4444994c5e5780838078f"
+        }
+      },
+      {
+        "id": 43,
+        "case_id": "case-6bcd77690bc9463d9e6bc5862dffc1cc",
+        "timestamp": "2026-10-07T16:40:02.154048+00:00",
+        "actor": "officer-a",
+        "action": "document_reviewed",
+        "revision": 8,
+        "metadata": {
+          "content_hash": "e643b66f7378ea4711ea35b110e049df6d2bffacabfe0bb2e4c5cf1c0edd0a0d",
+          "document_id": "document-f61dcd8d1e524c1586fbd81a5060582e"
+        }
+      },
+      {
+        "id": 44,
+        "case_id": "case-6bcd77690bc9463d9e6bc5862dffc1cc",
+        "timestamp": "2026-10-07T16:40:02.242718+00:00",
+        "actor": "officer-a",
+        "action": "draft_created",
+        "revision": 9,
+        "metadata": {
+          "based_on_revision": 8,
+          "content_hash": "63c4d597c31403e4c06a1142529f144192b64ffc02073b4c4a2a66eaf21109eb",
+          "source_ids": [
+            "segment-d43d51b6557a485b940edc48d0aa5341",
+            "segment-345cbcb7dae14933975cda1d1f6bdb7e",
+            "segment-5f3d6e4037e4444994c5e5780838078f",
+            "document-f61dcd8d1e524c1586fbd81a5060582e",
+            "document-91e25d2a9d4b4b89957858e94cd70296"
+          ]
+        }
+      },
+      {
+        "id": 45,
+        "case_id": "case-6bcd77690bc9463d9e6bc5862dffc1cc",
+        "timestamp": "2026-10-07T16:40:02.261743+00:00",
+        "actor": "reviewer",
+        "action": "draft_approved",
+        "revision": 10,
+        "metadata": {
+          "content_hash": "63c4d597c31403e4c06a1142529f144192b64ffc02073b4c4a2a66eaf21109eb",
+          "draft_revision": 9
+        }
+      }
+    ],
+    "simulated_identity": true,
+    "documents": [
+      {
+        "id": "document-f61dcd8d1e524c1586fbd81a5060582e",
+        "case_id": "case-6bcd77690bc9463d9e6bc5862dffc1cc",
+        "name": "inventory.txt",
+        "original_text": "Synthetic evidence inventory. Item one: blue bicycle receipt. Item two: photograph of the bicycle beside the library. Item three: recorded statement. No witness identifies a person who removed the bicycle.",
+        "text": "Synthetic evidence inventory. Item one: blue bicycle receipt. Item two: photograph of the bicycle beside the library. Item three: recorded statement. No witness identifies a person who removed the bicycle.",
+        "engine": "utf8",
+        "reviewed": true,
+        "reviewed_by": "officer-a",
+        "created_at": "2026-10-07T16:34:33.294799+00:00",
+        "classification": {
+          "label": "witness_statement",
+          "confidence": 0.4168,
+          "model_version": "classifier-de0df58fdc14",
+          "status": "classified",
+          "requires_human_validation": true
+        }
+      },
+      {
+        "id": "document-91e25d2a9d4b4b89957858e94cd70296",
+        "case_id": "case-6bcd77690bc9463d9e6bc5862dffc1cc",
+        "name": "receipt-scanned.pdf",
+        "original_text": "SYNTHETIC RECEIPT\n\nBlue bicycle\n\nPurchase date 12 June 2026\n\nReceipt number DEMO 104\n\nFictional document for software testing",
+        "text": "SYNTHETIC RECEIPT\n\nBlue bicycle\n\nPurchase date 12 June 2026\n\nReceipt number DEMO 104\n\nFictional document for software testing",
+        "engine": "pypdf-text+local-tesseract-ocr",
+        "reviewed": true,
+        "reviewed_by": "officer-a",
+        "created_at": "2026-10-07T16:34:34.106402+00:00",
+        "classification": {
+          "label": "witness_statement",
+          "confidence": 0.29,
+          "model_version": "classifier-de0df58fdc14",
+          "status": "classified",
+          "requires_human_validation": true
+        }
+      }
+    ]
+  },
+  "invalidation": {
+    "before_revision": 10,
+    "after_revision": 11,
+    "approval_removed": true,
+    "draft_removed": true
+  }
+}

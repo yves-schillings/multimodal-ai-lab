@@ -1,0 +1,66 @@
+name: Tests and container security
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: sudo apt-get update && sudo apt-get install -y tesseract-ocr
+      - run: python -m pip install -r requirements.txt pip-audit==2.10.1
+      - run: python -m pytest tests -q --junitxml=test-results.xml
+      - run: node tests/browser_core.test.mjs
+      - run: python -m pip_audit -r requirements.txt -f json -o dependency-audit.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-and-dependency-evidence
+          path: |
+            test-results.xml
+            dependency-audit.json
+  container:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - run: docker build -t multimodal-ai-lab:ci .
+      - name: Verify arbitrary UID and OCR without network
+        run: >-
+          docker run --rm --network none --user 1000780000:0
+          --cap-drop ALL --security-opt no-new-privileges
+          -e LAB_DATA_DIR=/app/data
+          -v "${{ github.workspace }}/scripts/container_acceptance.py:/acceptance/container_acceptance.py:ro"
+          --entrypoint python multimodal-ai-lab:ci /acceptance/container_acceptance.py
+      # Full report (all findings, fixed or not) kept as evidence.
+      - uses: aquasecurity/trivy-action@v0.36.0
+        with:
+          image-ref: multimodal-ai-lab:ci
+          format: json
+          output: container-audit.json
+          severity: HIGH,CRITICAL
+          exit-code: '0'
+      # Gate: fail only on HIGH/CRITICAL findings that have a fixed version available.
+      # Findings without a vendor fix are reported above and reviewed, not silently accepted.
+      - uses: aquasecurity/trivy-action@v0.36.0
+        with:
+          image-ref: multimodal-ai-lab:ci
+          format: table
+          severity: HIGH,CRITICAL
+          ignore-unfixed: true
+          exit-code: '1'
+          skip-setup-trivy: true
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: container-security-evidence
+          path: container-audit.json

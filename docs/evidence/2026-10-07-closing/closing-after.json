@@ -1,0 +1,47 @@
+{
+  "phase": "after",
+  "base": "http://127.0.0.1:8780",
+  "checks": [
+    {
+      "check": "status reachable after restart",
+      "passed": true,
+      "detail": "network_mode=container"
+    },
+    {
+      "check": "case survived restart",
+      "passed": true,
+      "detail": "revision=4"
+    },
+    {
+      "check": "document and review survived restart",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "draft and approval survived restart",
+      "passed": true,
+      "detail": "status=approved"
+    },
+    {
+      "check": "denial still enforced after restart",
+      "passed": true,
+      "detail": "http 403"
+    },
+    {
+      "check": "model versions survived restart",
+      "passed": true,
+      "detail": "12 versions"
+    },
+    {
+      "check": "active model survived restart",
+      "passed": true,
+      "detail": "classifier-f8ad4fd4a6e8"
+    },
+    {
+      "check": "active model still classifies",
+      "passed": true,
+      "detail": "label=incident_report"
+    }
+  ],
+  "failed": 0
+}

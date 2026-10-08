@@ -1,0 +1,486 @@
+{
+  "date_utc": "2026-10-07T17:26:45.181635+00:00",
+  "scope": "Fictional machine-generated speech fixtures, not a representative human-speech benchmark",
+  "representative_human_speech_quality_claim": false,
+  "corpus_sha256": "df5956142cbb387cbe0665e7b71a4e11c8c07f447a6a73fb0880ff4c9b2a9692",
+  "generator": "eSpeak NG text-to-speech: 1.52.0  Data at: /usr/lib/x86_64-linux-gnu/espeak-ng-data",
+  "runtime": {
+    "faster_whisper": "1.2.1",
+    "pyav": "16.1.0",
+    "device": "cpu",
+    "precision": "int8",
+    "model": "Whisper base",
+    "model_file_hashes": {
+      "config.json": "56a6d8110d311f19c8f0471e562832c7527f146b567275bfca59fcf7c184da9a",
+      "model.bin": "d01c3014881c9c6f3133c182f3d2887eb6ca1c789a7538c5c007196857a0a6a9",
+      "tokenizer.json": "fb7b63191e9bb045082c79fd742a3106a12c99513ab30df4a0d47fa6cb6fd0ab",
+      "vocabulary.txt": "34ce3fe1c5041027b3f8d42912270993f986dbc4bb34cf27f951e34a1e453913"
+    },
+    "vad_filter": true,
+    "beam_size": 5,
+    "explicit_language": true
+  },
+  "network_disabled_for_run": true,
+  "aggregation": "Sum substitutions, deletions and insertions divided by total reference words",
+  "normalisation": "NFKC, casefold, punctuation ignored; accents and apostrophes retained",
+  "results": {
+    "sample_count": 20,
+    "reference_words": 287,
+    "hypothesis_words": 322,
+    "substitutions": 151,
+    "deletions": 6,
+    "insertions": 41,
+    "errors": 198,
+    "wer": 0.6898954703832753,
+    "by_language": {
+      "fr": {
+        "sample_count": 10,
+        "reference_words": 149,
+        "hypothesis_words": 162,
+        "substitutions": 77,
+        "deletions": 5,
+        "insertions": 18,
+        "errors": 100,
+        "wer": 0.6711409395973155,
+        "audio_seconds": 52.354,
+        "processing_seconds": 24.037,
+        "real_time_factor": 0.4591
+      },
+      "nl": {
+        "sample_count": 10,
+        "reference_words": 138,
+        "hypothesis_words": 160,
+        "substitutions": 74,
+        "deletions": 1,
+        "insertions": 23,
+        "errors": 98,
+        "wer": 0.7101449275362319,
+        "audio_seconds": 61.277,
+        "processing_seconds": 25.612,
+        "real_time_factor": 0.418
+      }
+    }
+  },
+  "samples": [
+    {
+      "id": "fr01",
+      "language": "fr",
+      "reference": "J'ai laissé mon vélo bleu devant la bibliothèque et il avait disparu quand je suis revenu",
+      "speed": 145,
+      "pitch": 45,
+      "hypothesis": "J'ai l'essai m'aumé l'oublier de mon abînement de l'hôtaque et la médecinue quand je suis humide.",
+      "metrics": {
+        "reference_words": 16,
+        "hypothesis_words": 16,
+        "substitutions": 12,
+        "deletions": 0,
+        "insertions": 0,
+        "errors": 12,
+        "wer": 0.75
+      },
+      "audio_sha256": "4be8ea56160ddabe5456d147770631cae2e1e5ac67c4a7c6d74d2b465c0feb92",
+      "duration_seconds": 4.945,
+      "processing_seconds": 2.66,
+      "segment_count": 1
+    },
+    {
+      "id": "fr02",
+      "language": "fr",
+      "reference": "Le reçu indique la date d'achat du vélo mais il ne permet pas d'identifier la personne qui l'a pris",
+      "speed": 155,
+      "pitch": 55,
+      "hypothesis": "Le sourdique là-bas, t'achat du mérôme, il me fait pas d'y non-difier là-penson, qu'il l'a fait.",
+      "metrics": {
+        "reference_words": 19,
+        "hypothesis_words": 19,
+        "substitutions": 12,
+        "deletions": 2,
+        "insertions": 2,
+        "errors": 16,
+        "wer": 0.8421052631578947
+      },
+      "audio_sha256": "8a973d6e612bc7df3af7d7b186d3390a6dde6f09f2ad2393453eb9b53ffd48c0",
+      "duration_seconds": 5.177,
+      "processing_seconds": 0.999,
+      "segment_count": 1
+    },
+    {
+      "id": "fr03",
+      "language": "fr",
+      "reference": "Je demande au réviseur de comparer la transcription avec l'enregistrement avant de valider le texte",
+      "speed": 165,
+      "pitch": 45,
+      "hypothesis": "Je demande aux milleux de coups paré la transmission avec l'angissement avant de m'aliver le texte.",
+      "metrics": {
+        "reference_words": 15,
+        "hypothesis_words": 16,
+        "substitutions": 6,
+        "deletions": 0,
+        "insertions": 1,
+        "errors": 7,
+        "wer": 0.4666666666666667
+      },
+      "audio_sha256": "77d7a449862c807ddcfb07f3b8375e24d3fc5b362c1c1a98dda097f1550f0fb2",
+      "duration_seconds": 5.196,
+      "processing_seconds": 0.889,
+      "segment_count": 1
+    },
+    {
+      "id": "fr04",
+      "language": "fr",
+      "reference": "Le dossier contient un inventaire écrit une photographie et une déclaration enregistrée",
+      "speed": 175,
+      "pitch": 55,
+      "hypothesis": "Le dossier contient un alimentaire écrit une photographie et une déclaration enregistrée.",
+      "metrics": {
+        "reference_words": 12,
+        "hypothesis_words": 12,
+        "substitutions": 1,
+        "deletions": 0,
+        "insertions": 0,
+        "errors": 1,
+        "wer": 0.08333333333333333
+      },
+      "audio_sha256": "493c0d73bf4fd8e4532ec32a7e371583d0009676ed92a93ce470b7e9eb0abfcb",
+      "duration_seconds": 4.164,
+      "processing_seconds": 0.778,
+      "segment_count": 1
+    },
+    {
+      "id": "fr05",
+      "language": "fr",
+      "reference": "Aucun document ne mentionne une voiture ni une plaque d'immatriculation dans cet exemple fictif",
+      "speed": 145,
+      "pitch": 60,
+      "hypothesis": "Ok, donc vous m'en demandez, non, non, on va tout dire une plaque de matéкуration, non, c'est un grand déficit.",
+      "metrics": {
+        "reference_words": 14,
+        "hypothesis_words": 20,
+        "substitutions": 12,
+        "deletions": 0,
+        "insertions": 6,
+        "errors": 18,
+        "wer": 1.2857142857142858
+      },
+      "audio_sha256": "d3d896a47dc8af3c3bb7a38c39e9b24401f9068138f687c4db9a60e81cc53b81",
+      "duration_seconds": 5.688,
+      "processing_seconds": 11.646,
+      "segment_count": 1
+    },
+    {
+      "id": "fr06",
+      "language": "fr",
+      "reference": "Seules les sources acceptées peuvent soutenir une réponse et chaque passage doit conserver sa référence",
+      "speed": 155,
+      "pitch": 40,
+      "hypothesis": "Surtez soon s'accepter bien soutenir une épouse et chaque passage va conserver sa défense.",
+      "metrics": {
+        "reference_words": 15,
+        "hypothesis_words": 14,
+        "substitutions": 7,
+        "deletions": 1,
+        "insertions": 0,
+        "errors": 8,
+        "wer": 0.5333333333333333
+      },
+      "audio_sha256": "5000b2a0a10e31c0f6f90d6ae0e862b95d87d718a308c80a042e198007f55fa8",
+      "duration_seconds": 5.485,
+      "processing_seconds": 0.786,
+      "segment_count": 1
+    },
+    {
+      "id": "fr07",
+      "language": "fr",
+      "reference": "Une modification du témoignage annule l'approbation précédente et impose une nouvelle vérification",
+      "speed": 165,
+      "pitch": 60,
+      "hypothesis": "Modification du témoignage à l'hôpothèse, et ce n'était pas une nouvelle vérification.",
+      "metrics": {
+        "reference_words": 12,
+        "hypothesis_words": 12,
+        "substitutions": 5,
+        "deletions": 1,
+        "insertions": 1,
+        "errors": 7,
+        "wer": 0.5833333333333334
+      },
+      "audio_sha256": "10324cd8cb0073927b43a2f9cf542f4dfe14aaac381842726394e3329f9a0582",
+      "duration_seconds": 5.372,
+      "processing_seconds": 0.912,
+      "segment_count": 1
+    },
+    {
+      "id": "fr08",
+      "language": "fr",
+      "reference": "Le responsable du projet doit autoriser la région de traitement et les utilisateurs avant l'activation",
+      "speed": 175,
+      "pitch": 40,
+      "hypothesis": "le responsable du projet doit tourner la région de traitement et les mutants de ma mandat d'activation.",
+      "metrics": {
+        "reference_words": 15,
+        "hypothesis_words": 17,
+        "substitutions": 4,
+        "deletions": 0,
+        "insertions": 2,
+        "errors": 6,
+        "wer": 0.4
+      },
+      "audio_sha256": "4056a136ff3a06891cda9c8209e8a34bc2afd0dd5c9cde844803142c3d4c9bf7",
+      "duration_seconds": 4.983,
+      "processing_seconds": 0.744,
+      "segment_count": 1
+    },
+    {
+      "id": "fr09",
+      "language": "fr",
+      "reference": "Le modèle candidat reste inactif lorsque les preuves de publication ne peuvent pas être vérifiées",
+      "speed": 145,
+      "pitch": 50,
+      "hypothesis": "Le modèle qu'on y n'est pas resté actif L'on se relève en public C'est une bonne panette à mes réfugiés",
+      "metrics": {
+        "reference_words": 15,
+        "hypothesis_words": 20,
+        "substitutions": 13,
+        "deletions": 0,
+        "insertions": 5,
+        "errors": 18,
+        "wer": 1.2
+      },
+      "audio_sha256": "281c123437c75f6325c06a41adff6ed0a0ff9170bff873e24b60bfa7e434a1e8",
+      "duration_seconds": 5.59,
+      "processing_seconds": 3.889,
+      "segment_count": 3
+    },
+    {
+      "id": "fr10",
+      "language": "fr",
+      "reference": "Le service fonctionne sur cette machine et les données de démonstration ne décrivent aucune personne réelle",
+      "speed": 155,
+      "pitch": 50,
+      "hypothesis": "le service fonctionne sur cette machine et l'adonnée de démonstration de la cline d'ocune pensonne réelle.",
+      "metrics": {
+        "reference_words": 16,
+        "hypothesis_words": 16,
+        "substitutions": 5,
+        "deletions": 1,
+        "insertions": 1,
+        "errors": 7,
+        "wer": 0.4375
+      },
+      "audio_sha256": "263d3b21aeaa5f0a4df562007cf9b740e03622d0e73e07d8167faa3e3336086a",
+      "duration_seconds": 5.754,
+      "processing_seconds": 0.734,
+      "segment_count": 1
+    },
+    {
+      "id": "nl01",
+      "language": "nl",
+      "reference": "Ik liet mijn blauwe fiets voor de bibliotheek staan en bij mijn terugkomst was de fiets verdwenen",
+      "speed": 145,
+      "pitch": 45,
+      "hypothesis": "Ik liet mijn blauwe fiets, voor de bibliotheek staan en mijn deur komt vaste fiets wordt menen.",
+      "metrics": {
+        "reference_words": 17,
+        "hypothesis_words": 17,
+        "substitutions": 4,
+        "deletions": 1,
+        "insertions": 1,
+        "errors": 6,
+        "wer": 0.35294117647058826
+      },
+      "audio_sha256": "f8492226711d4235391842ba170499350d0c1307265d477da1e6d1e1c0003840",
+      "duration_seconds": 6.657,
+      "processing_seconds": 0.747,
+      "segment_count": 1
+    },
+    {
+      "id": "nl02",
+      "language": "nl",
+      "reference": "Het aankoopbewijs vermeldt de aankoopdatum maar zegt niet wie de fiets heeft meegenomen",
+      "speed": 155,
+      "pitch": 55,
+      "hypothesis": "Het angok me meiswermel, het angok datum, maar net niet meer de fiets geeft meegenomen.",
+      "metrics": {
+        "reference_words": 13,
+        "hypothesis_words": 15,
+        "substitutions": 7,
+        "deletions": 0,
+        "insertions": 2,
+        "errors": 9,
+        "wer": 0.6923076923076923
+      },
+      "audio_sha256": "35f6a57c3795e5cbcf4c5b6ece06a768b5de5263ae6307ea8beb069ed65d69b8",
+      "duration_seconds": 5.522,
+      "processing_seconds": 0.752,
+      "segment_count": 1
+    },
+    {
+      "id": "nl03",
+      "language": "nl",
+      "reference": "De beoordelaar vergelijkt de transcriptie met de opname voordat de tekst wordt goedgekeurd",
+      "speed": 165,
+      "pitch": 45,
+      "hypothesis": "de bot, de lab met je lake.danskwipsie met de dame, vordat text moet, moet je koot.",
+      "metrics": {
+        "reference_words": 13,
+        "hypothesis_words": 17,
+        "substitutions": 10,
+        "deletions": 0,
+        "insertions": 4,
+        "errors": 14,
+        "wer": 1.0769230769230769
+      },
+      "audio_sha256": "904453f4f29f2de95962ef6f1ca2cfa88735878ce5ec3168ea420e8974d8fd16",
+      "duration_seconds": 5.477,
+      "processing_seconds": 7.979,
+      "segment_count": 2
+    },
+    {
+      "id": "nl04",
+      "language": "nl",
+      "reference": "Het dossier bevat een geschreven inventaris een foto en een opgenomen verklaring",
+      "speed": 175,
+      "pitch": 55,
+      "hypothesis": "Het was ieder maar een deskreimen in mentaris en foto en een opgenomen verklaring.",
+      "metrics": {
+        "reference_words": 12,
+        "hypothesis_words": 14,
+        "substitutions": 5,
+        "deletions": 0,
+        "insertions": 2,
+        "errors": 7,
+        "wer": 0.5833333333333334
+      },
+      "audio_sha256": "eb5618945687a4fd674466a4cf4dda04bf91abefa536bf512d826eda18a6e3ce",
+      "duration_seconds": 4.684,
+      "processing_seconds": 3.721,
+      "segment_count": 1
+    },
+    {
+      "id": "nl05",
+      "language": "nl",
+      "reference": "Geen enkel document noemt een auto of een kenteken in dit fictieve voorbeeld",
+      "speed": 145,
+      "pitch": 60,
+      "hypothesis": "Je enkel document noemt een auto of een kentaken in dit fik die we voorbeeld.",
+      "metrics": {
+        "reference_words": 13,
+        "hypothesis_words": 15,
+        "substitutions": 3,
+        "deletions": 0,
+        "insertions": 2,
+        "errors": 5,
+        "wer": 0.38461538461538464
+      },
+      "audio_sha256": "017ca8ce142858486476f9f8af8599b7bb9b46beaa86dafa8a4ad4bdcb8db40b",
+      "duration_seconds": 5.62,
+      "processing_seconds": 0.821,
+      "segment_count": 1
+    },
+    {
+      "id": "nl06",
+      "language": "nl",
+      "reference": "Alleen goedgekeurde bronnen mogen een antwoord ondersteunen en elke passage behoudt een bronverwijzing",
+      "speed": 155,
+      "pitch": 40,
+      "hypothesis": "Reindwoordgekooten bewonen mogen en ontmoord om de steunen in elke passage de houten overmijzing.",
+      "metrics": {
+        "reference_words": 13,
+        "hypothesis_words": 14,
+        "substitutions": 11,
+        "deletions": 0,
+        "insertions": 1,
+        "errors": 12,
+        "wer": 0.9230769230769231
+      },
+      "audio_sha256": "c15c2be6744e16d51c817a7779f576222eddaa28b516f4d8188ad5e019b5eff9",
+      "duration_seconds": 6.505,
+      "processing_seconds": 0.83,
+      "segment_count": 1
+    },
+    {
+      "id": "nl07",
+      "language": "nl",
+      "reference": "Een wijziging van de verklaring maakt de eerdere goedkeuring ongeldig en vereist een nieuwe controle",
+      "speed": 165,
+      "pitch": 60,
+      "hypothesis": "en mij niet jing van de begraving maakt het er een boek erin onweldig en we reizen nieuwe controle.",
+      "metrics": {
+        "reference_words": 15,
+        "hypothesis_words": 19,
+        "substitutions": 9,
+        "deletions": 0,
+        "insertions": 4,
+        "errors": 13,
+        "wer": 0.8666666666666667
+      },
+      "audio_sha256": "e33003243b0e55c804c50574a5b99849fd05830382d2bfdb6e69f49e17e62fc7",
+      "duration_seconds": 5.906,
+      "processing_seconds": 3.751,
+      "segment_count": 1
+    },
+    {
+      "id": "nl08",
+      "language": "nl",
+      "reference": "De projectverantwoordelijke keurt de verwerkingsregio en de gebruikers goed voordat de omgeving actief wordt",
+      "speed": 175,
+      "pitch": 40,
+      "hypothesis": "De projekte weer aan het mortelijke kote vermerkingsregio en de draakers moed wordt dat omgeving actief mot.",
+      "metrics": {
+        "reference_words": 14,
+        "hypothesis_words": 17,
+        "substitutions": 9,
+        "deletions": 0,
+        "insertions": 3,
+        "errors": 12,
+        "wer": 0.8571428571428571
+      },
+      "audio_sha256": "8c25c47f3b532a47b0d33242293220bd05c27afd74c7de8af887593f5bc65557",
+      "duration_seconds": 6.494,
+      "processing_seconds": 0.943,
+      "segment_count": 2
+    },
+    {
+      "id": "nl09",
+      "language": "nl",
+      "reference": "Het nieuwe model blijft inactief wanneer het bewijs van publicatie niet kan worden gecontroleerd",
+      "speed": 145,
+      "pitch": 50,
+      "hypothesis": "... dat nieuwe model blijft in actief, manier, dat de meisband publiekartie niet kan worden rekontroleerd.",
+      "metrics": {
+        "reference_words": 14,
+        "hypothesis_words": 15,
+        "substitutions": 8,
+        "deletions": 0,
+        "insertions": 1,
+        "errors": 9,
+        "wer": 0.6428571428571429
+      },
+      "audio_sha256": "78a61387cde61c1ece39c27a4ead2a6f3a81167819c683e1edfd5f3d0fad5147",
+      "duration_seconds": 6.571,
+      "processing_seconds": 0.84,
+      "segment_count": 1
+    },
+    {
+      "id": "nl10",
+      "language": "nl",
+      "reference": "Deze demonstratie draait op deze computer en gebruikt uitsluitend fictieve gegevens zonder echte persoonsgegevens",
+      "speed": 155,
+      "pitch": 50,
+      "hypothesis": "Deze dee monstrijd ziet uit of deze computer in de brak uitsluitend Fiktiveg even zonder echte persoonstvergevens",
+      "metrics": {
+        "reference_words": 14,
+        "hypothesis_words": 17,
+        "substitutions": 8,
+        "deletions": 0,
+        "insertions": 3,
+        "errors": 11,
+        "wer": 0.7857142857142857
+      },
+      "audio_sha256": "e0470e7b58484c7f541c9df1e15fd94d621612a36f28052e9b67d6bfad6d8b8c",
+      "duration_seconds": 7.841,
+      "processing_seconds": 5.228,
+      "segment_count": 2
+    }
+  ]
+}

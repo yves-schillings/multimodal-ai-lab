@@ -1,0 +1,15 @@
+{
+  "date": "2026-10-07",
+  "reports": {
+    "browser-tests.txt": "a914280e8d819ba5737e5dafe4575d0e0ab11736dbc454eaa3d87b0ace615fc8",
+    "compose-after.json": "b5e4043146d9ff023edcc55559ffe5178a922df1d7891c313c5b2409eb667bf2",
+    "compose-before.json": "4f31073a2f3adaf1146a1516f26f5b39428b5c3a420f477778d8419f370dc09b",
+    "container-portability.txt": "19f7d090c24af2ae0bff0c0ff72df31a018d593bef5f4e3db165f9a2ed66d177",
+    "README.md": "2ab3427b5f5a840bb930ce702e490b2c2350d8fd24292ca1ab2cd4a336cec181",
+    "reproduction-summary.json": "27de28ae67dddec2bc71aa40287afc7717fb17708fe4a20d0135754bd5638e09",
+    "runtime-source-files.json": "1b26d6570a2bf244b780186bce72acdcea2e69d77ed0cd5323a7632fb2336460",
+    "source-files.json": "1d4f749c517881cb3df2a2d47b2d38bb5c3180ab8eb261ef53348d4a0936b66d",
+    "test-results.xml": "16b4deb803e94b03daef2b9cb52a0aeaafd9d0ff40553c07db95b7f826e7f7b9"
+  },
+  "runtime_sources_verified": 50
+}

@@ -1,0 +1,41 @@
+# The docker.io postgres image expects to own its data directory. Under the OpenShift restricted
+# SCC the container runs with an arbitrary UID from the namespace range, so the Software
+# Collections PostgreSQL 16 image is used instead: it is built for arbitrary UIDs and uses
+# POSTGRESQL_* variables. Database name, user and port are unchanged for MLflow.
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: lab-postgres
+spec:
+  template:
+    spec:
+      containers:
+        - name: postgres
+          image: quay.io/sclorg/postgresql-16-c9s:latest
+          env:
+            - name: POSTGRESQL_DATABASE
+              value: mlflow
+            - name: POSTGRESQL_USER
+              value: mlflow
+            - name: POSTGRESQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: lab-postgres
+                  key: POSTGRES_PASSWORD
+            - name: POSTGRES_DB
+              $patch: delete
+            - name: POSTGRES_USER
+              $patch: delete
+            - name: POSTGRES_PASSWORD
+              $patch: delete
+            - name: PGDATA
+              $patch: delete
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/pgsql/data
+            - mountPath: /var/lib/postgresql/data
+              $patch: delete
+          readinessProbe:
+            exec:
+              command: ["pg_isready", "-U", "mlflow", "-d", "mlflow", "-h", "127.0.0.1"]
+            periodSeconds: 5

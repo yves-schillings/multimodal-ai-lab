@@ -1,0 +1,3 @@
+7 October 2026
+node tests/browser_core.test.mjs
+PASS classifier gates, reviewed-source eligibility and insufficient evidence

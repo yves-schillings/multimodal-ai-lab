@@ -1,13 +1,14 @@
 # Eight-layer responsibility model
 
-This eight-layer working model is applied to Multimodal AI Lab.
+This eight-layer working model (design by Yves Schillings) is applied to Multimodal AI Lab.
 It is an architectural decomposition for explaining responsibilities,
-not an official Red Hat standard or a claim that every layer is fully implemented.
+not an external standard or a claim that every layer is fully implemented.
+The design credit is an attribution, not a statement of legal ownership or an external standard endorsement.
 The numbering stays fixed across the deck, article and repository.
 
 | Layer | Responsibility | Components and technology | Current evidence / extension |
 | --- | --- | --- | --- |
-| **L1 Light Frontend** | Simple experimentation and review interface | C01 browser workspace, HTML/JavaScript | Implemented local interface and synthetic public browser sandbox |
+| **L1 Light Frontend** | Simple experimentation and review interface | C01 browser workspace, HTML/JavaScript | Implemented local interface and a separate browser-only synthetic demonstration; no hosted demonstration URL is asserted |
 | **L2 Industrial Frontend** | Shared user interface integrated with enterprise identity and services | C01 production interface variant | Target; the local browser interface does not establish enterprise identity |
 | **L3 Central API Layer** | Case access, bounded intake, job submission and service contracts | C02 FastAPI, C04 deployment planning policy, C05 inference gateway | Case API and planning rules Implemented; remote gateway Target |
 | **L4 AI Backend** | Speech, extraction, classification, retrieval and generation | C03 job runner; M01 faster-whisper; M02 pypdf; M03 Tesseract; M04 sklearn; M05 retrieval; M06 LLM; M07 assistant | Local adapters and extractive workflow Implemented; shared model serving and generative retrieval Target |
@@ -21,3 +22,8 @@ a responsibility map, not a requirement that every request traverse all eight la
 
 Read [the component register](components.md), [architecture](architecture.md) and
 [deployment evidence](deployment.md) for the exact scope of each current implementation.
+
+The [7 October 2026 closing evidence](evidence/2026-10-07-closing/README.md)
+includes bounded image and scanned-PDF OCR, local model publication and checksum-verified
+promotion/rollback. This evidence does not establish shared identity, a provisioned CPE,
+vector retrieval or an OpenShift AI deployment.

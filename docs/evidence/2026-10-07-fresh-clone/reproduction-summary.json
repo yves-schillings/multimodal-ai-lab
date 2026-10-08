@@ -1,0 +1,115 @@
+{
+  "date": "2026-10-07",
+  "base_commit": "64024289db705a830a0ccc597fc6ea7ca029e990",
+  "local_snapshot_commit": "b51f0aedb0308378aa8c9863d81d95534b42215e",
+  "publication": "Unpublished local snapshot; not a public release tag or hosted CI",
+  "source_scope": "Fresh local clone with separate virtual environment and fresh Compose volumes on the same Windows workstation. Warm package, Docker and model-download caches.",
+  "python_tests": 63,
+  "subtests": 15,
+  "local_install_and_test_seconds": 108.49,
+  "compose_seconds": 157.47,
+  "compose_before_checks": 27,
+  "compose_after_checks": 8,
+  "application_image_id": "7fe262d2e316529907d93bd8f1687393febc36f8e114c240827fea0cfd3a43e1",
+  "portability": "Arbitrary non-root UID, network disabled, image OCR and scanned-PDF OCR passed",
+  "ports": "App 127.0.0.1:8784 and MLflow 127.0.0.1:5004; verification-only Compose port override",
+  "test_steps": [
+    {
+      "name": "base-commit",
+      "exit_code": 0,
+      "seconds": 0.03
+    },
+    {
+      "name": "author",
+      "exit_code": 0,
+      "seconds": 0.05
+    },
+    {
+      "name": "clone-base",
+      "exit_code": 0,
+      "seconds": 0.59
+    },
+    {
+      "name": "stage",
+      "exit_code": 0,
+      "seconds": 0.44
+    },
+    {
+      "name": "snapshot-commit",
+      "exit_code": 0,
+      "seconds": 0.16
+    },
+    {
+      "name": "snapshot-hash",
+      "exit_code": 0,
+      "seconds": 0.03
+    },
+    {
+      "name": "clone-snapshot",
+      "exit_code": 0,
+      "seconds": 1.56
+    },
+    {
+      "name": "venv",
+      "exit_code": 0,
+      "seconds": 5.83
+    },
+    {
+      "name": "dependencies",
+      "exit_code": 0,
+      "seconds": 27.88
+    },
+    {
+      "name": "python-tests",
+      "exit_code": 0,
+      "seconds": 70.44
+    },
+    {
+      "name": "browser-tests",
+      "exit_code": 0,
+      "seconds": 0.95
+    }
+  ],
+  "compose_steps": [
+    {
+      "name": "prepare-speech",
+      "exit_code": 0,
+      "seconds": 7.24
+    },
+    {
+      "name": "compose-start",
+      "exit_code": 0,
+      "seconds": 80.5
+    },
+    {
+      "name": "compose-before",
+      "exit_code": 0,
+      "seconds": 6.61
+    },
+    {
+      "name": "compose-restart",
+      "exit_code": 0,
+      "seconds": 1.92
+    },
+    {
+      "name": "compose-ready",
+      "exit_code": 0,
+      "seconds": 56.67
+    },
+    {
+      "name": "compose-after",
+      "exit_code": 0,
+      "seconds": 0.38
+    },
+    {
+      "name": "app-image",
+      "exit_code": 0,
+      "seconds": 0.48
+    },
+    {
+      "name": "container-portability",
+      "exit_code": 0,
+      "seconds": 3.67
+    }
+  ]
+}
