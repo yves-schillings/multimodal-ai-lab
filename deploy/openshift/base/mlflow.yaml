@@ -1,5 +1,6 @@
 # MLflow tracking server (M08) with a PostgreSQL backend store and a PVC for artifacts.
-# Prepared, not tested on a cluster. Image: build deploy/docker/mlflow.Dockerfile and push it.
+# Accepted on local CRC/OKD through its overlay; shared hosting still requires acceptance.
+# Image: build deploy/docker/mlflow.Dockerfile and push it.
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -57,6 +58,7 @@ spec:
               --backend-store-uri "postgresql+psycopg2://mlflow:${POSTGRES_PASSWORD}@lab-postgres:5432/mlflow"
               --artifacts-destination /mlflow/artifacts --serve-artifacts
               --allowed-hosts "lab-mlflow:5000,localhost:5000,127.0.0.1:5000"
+              --workers 1
               --host 0.0.0.0 --port 5000
           ports:
             - containerPort: 5000
@@ -69,15 +71,25 @@ spec:
               port: 5000
               httpHeaders: [{name: Host, value: "127.0.0.1:5000"}]
             periodSeconds: 10
+            timeoutSeconds: 5
+          startupProbe:
+            httpGet:
+              path: /health
+              port: 5000
+              httpHeaders: [{name: Host, value: "127.0.0.1:5000"}]
+            periodSeconds: 5
+            timeoutSeconds: 5
+            failureThreshold: 36
           livenessProbe:
             httpGet:
               path: /health
               port: 5000
               httpHeaders: [{name: Host, value: "127.0.0.1:5000"}]
             periodSeconds: 30
+            timeoutSeconds: 5
           resources:
-            requests: {cpu: "100m", memory: "512Mi"}
-            limits: {cpu: "1", memory: "1Gi"}
+            requests: {cpu: "250m", memory: "1Gi"}
+            limits: {cpu: "1", memory: "2Gi"}
           securityContext:
             allowPrivilegeEscalation: false
             capabilities:

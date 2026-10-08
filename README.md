@@ -41,7 +41,7 @@ LAB_HOST_PORT=8780 docker compose -f deploy/docker/compose.yaml up -d --build
 python scripts/demo_e2e.py --phase before --base http://127.0.0.1:8780
 ```
 
-`scripts/demo_e2e.py` runs a synthetic dossier end to end (upload, review, draft, separate approval, question, denied access for another actor, training, promotion, rollback) and `--phase after` verifies that everything survived a restart. The case store remains SQLite on a volume; actors remain simulated identities. Details, verified results and limits: [docs/deployment.md](docs/deployment.md). OpenShift manifests are prepared, not tested: [deploy/openshift/README.md](deploy/openshift/README.md).
+`scripts/demo_e2e.py` runs a synthetic dossier end to end (upload, review, draft, separate approval, question, denied access for another actor, training, promotion, rollback) and `--phase after` verifies that everything survived a restart. The case store remains SQLite on a volume; actors remain simulated identities. Details, verified results and limits: [docs/deployment.md](docs/deployment.md). The application, MLflow and PostgreSQL are now accepted locally on CRC with the OKD preset: [deployment guide](deploy/openshift/README.md) and [9 October evidence](docs/evidence/2026-10-09-openshift-local/README.md). Shared hosting and OpenShift AI remain separate, unaccepted extensions.
 
 ## Document input
 
@@ -101,7 +101,7 @@ These captures show the actual local Compose application with a fictional bicycl
 
 [![Tests and container security](https://github.com/yves-schillings/multimodal-ai-lab/actions/workflows/ci.yml/badge.svg)](https://github.com/yves-schillings/multimodal-ai-lab/actions/workflows/ci.yml)
 
-The badge reports the hosted workflow status after publication. The retained image scan reports 76 HIGH and 1 CRITICAL package findings without a reported fixed version. The current workflow keeps the complete report and blocks on fixable HIGH/CRITICAL findings; zero fixable findings in that retained report does not establish a green hosted run or approve residual risk. See the [finding disposition and required follow-up](docs/evidence/2026-10-07-security-review/README.md). Representative human French and Dutch speech, clean-machine reproduction and cluster deployment still require their own acceptance runs.
+The badge reports the hosted workflow status after publication. The retained image scan reports 76 HIGH and 1 CRITICAL package findings without a reported fixed version. The current workflow keeps the complete report and blocks on fixable HIGH/CRITICAL findings; zero fixable findings in that retained report does not establish a green hosted run or approve residual risk. See the [finding disposition and required follow-up](docs/evidence/2026-10-07-security-review/README.md). Representative human French and Dutch speech, clean-machine reproduction and shared-cluster deployment still require their own acceptance runs. The local OKD application acceptance is recorded separately above.
 
 ## French and Dutch fixture results
 

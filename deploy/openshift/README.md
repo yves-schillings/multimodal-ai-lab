@@ -1,13 +1,15 @@
 # OpenShift deployment preparation
 
-Status: **Prepared**. These manifests were written from the Docker Compose deployment that was
-verified locally (see `docs/deployment.md`). They have **not** been applied to any OpenShift
-cluster by this repository's authors. No cluster, GPU pool, route host or image registry was used.
-Treat every file here as a blueprint to review with the platform team before a first `oc apply`.
+Status: **Accepted locally on CRC with the OKD preset on 9 October 2026**. The
+application, MLflow and PostgreSQL passed the local cluster workflow, restricted
+UID, NetworkPolicy and restart-persistence checks. See the
+[successful acceptance run](../../docs/evidence/2026-10-09-openshift-local/attempt-2/README.md).
+Shared deployments remain prepared; OpenShift AI, GPU serving and trusted identity
+are not installed or accepted by this run. No application Route is exposed.
 
 For a desktop first step, see [local.md](local.md) and run `Check-LocalHost.ps1`.
 The application and MLflow images support arbitrary non-root UIDs with the root group;
-this is a portability property tested with Docker, not an OpenShift AI installation.
+this was verified on Docker and the local OKD cluster, not an OpenShift AI installation.
 Health probes supply the allowed loopback Host header without weakening the application guard.
 
 The same three services as Docker Compose run in one namespace:
@@ -33,7 +35,7 @@ PostgreSQL is a separate change; the checklist is in `docs/deployment.md`.
   `deploy/docker/mlflow.Dockerfile`. Push them to the chosen cluster registry; set both the
   application/init-container image and MLflow image references before deployment.
 
-## Expected commands (to run by the platform team, not yet executed)
+## Commands for a separately reviewed deployment
 
 ```bash
 oc new-project multimodal-ai-lab
@@ -55,3 +57,19 @@ The port-forward keeps the Host header on `127.0.0.1`, which the application acc
 4. The NetworkPolicy denies any ingress to the namespace other than the port-forward path and
    limits egress to PostgreSQL, MLflow and DNS.
 5. Record platform version, storage class, resource limits and the image digest in `docs/deployment.md`.
+
+## Prepared local speech weights
+
+After building the images and binding the models PVC, copy the already prepared
+Whisper base files with no model download from the running application:
+
+```powershell
+crc oc-env --shell powershell | Invoke-Expression
+python scripts/copy_speech_to_cluster.py --report '<private-evidence-folder>/speech-weights.json'
+```
+
+The utility uses a temporary restricted pod and checks SHA-256 digests. It verifies
+existing files instead of overwriting them, then removes the temporary pod. The
+application retains its read-only models mount. Synthetic local CPU transcription,
+image OCR, scanned-PDF OCR and saved speech state after pod replacement were also
+verified; see the speech and OCR reports beside the successful acceptance run.
