@@ -2,7 +2,7 @@
 
 Version 1.1. Baseline reviewed on 7 October 2026.
 
-This guide covers the entire Multimodal AI Lab system, including vector retrieval. It accompanies the [enterprise architecture](../../docs/enterprise-implementation-architecture.md) and [implementation backlog](../../docs/system-implementation-backlog.md). The local Compose application is implemented. Shared identity, enterprise data services, gateway, vector retrieval, generative models, CPE provisioning and OpenShift AI serving still require implementation and acceptance.
+This guide covers the entire Multimodal AI Lab system, including vector retrieval. It accompanies the [enterprise architecture](../../docs/enterprise-implementation-architecture.md) and [public implementation roadmap](../../docs/system-implementation-backlog.md). The local Compose application is implemented. Shared identity, enterprise data services, gateway, vector retrieval, generative models, CPE provisioning and OpenShift AI serving still require implementation and acceptance.
 
 ## Deployment order and acceptance
 
@@ -54,7 +54,7 @@ oc api-resources
 
 When the selected release supplies the resources, inspect the OpenShift AI `DataScienceCluster` and the actual serving runtime/hardware profile objects. Use `oc api-resources` to confirm their names for that release rather than copying API kinds from a different version. Record Operator channel/version, enabled component Ready conditions, registry, storage access modes, GPU allocatable capacity, trusted identity provider and certificate chain. Do not export secret contents, user tokens or private endpoints into public evidence.
 
-The supported product pairing and enabled components must be selected in SYS-004 and observed in SYS-002/SYS-028. Installation instructions here refer to Red Hat product documentation as a capability reference, not an assertion that a specific version is installed. [OpenShift AI installation and component management](https://docs.redhat.com/en/documentation/red_hat_openshift_ai_self-managed/3.5/html-single/installing_and_uninstalling_openshift_ai_self-managed/index).
+The supported product pairing and enabled components must be selected for the deployment and verified against the actual installed inventory. Installation instructions here refer to Red Hat product documentation as a capability reference, not an assertion that a specific version is installed. [OpenShift AI installation and component management](https://docs.redhat.com/en/documentation/red_hat_openshift_ai_self-managed/3.5/html-single/installing_and_uninstalling_openshift_ai_self-managed/index).
 
 ## Adapt the prepared application manifests
 
