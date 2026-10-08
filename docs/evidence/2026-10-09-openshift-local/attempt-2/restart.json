@@ -1,0 +1,21 @@
+{
+  "timestamp": "2026-10-09T00:47:32",
+  "pods_before": {
+    "lab-app": "lab-app-6b5549cc4b-xlrkv",
+    "lab-mlflow": "lab-mlflow-58c9d979cc-rn5nt",
+    "lab-postgres": "lab-postgres-0"
+  },
+  "pods_after": {
+    "lab-app": "lab-app-6b5549cc4b-56w4f",
+    "lab-mlflow": "lab-mlflow-58c9d979cc-bxqkr",
+    "lab-postgres": "lab-postgres-0"
+  },
+  "all_pods_replaced": true,
+  "volumes_unchanged": true,
+  "pvc_volumes": {
+    "lab-data": "pvc-edda8122-c561-4034-9f37-07e4ce6b6009",
+    "lab-models": "pvc-d4bdb753-9ea9-4c02-92d6-7d5613d1e042",
+    "mlflow-artifacts": "pvc-5c892f94-1f78-498e-b9db-00407ca3bedf",
+    "postgres-data": "pvc-a11616de-b6eb-4065-ad28-cb0ae4cb2a7a"
+  }
+}

@@ -16,6 +16,33 @@ describe a smaller experimental installation as a supported OpenShift AI deploym
 
 ## Preparation sequence
 
+### Current host check: 9 October 2026
+
+CRC 2.64.0 is now installed and configured with the OKD community preset. The
+OKD preset does not require a Red Hat account or pull secret. The `openshift`
+preset is a separate option and requires the vendor's pull secret.
+
+After the user restarted Windows, the desktop process token includes both
+`crc-users` and Hyper-V Administrators. The CRC admin helper is accessible.
+The launcher checks these token memberships before attempting setup.
+
+The owned `crcDaemon` scheduled task is present and running, but its inspection
+through PowerShell/CIM still fails. Its executable, version, user and running
+state were independently checked with `schtasks` and process inspection.
+The two daemon-task checks were temporarily skipped for startup, with a
+`finally` block restoring the configuration. Other preflight checks remain enabled.
+
+Windows reserves TCP port 80. CRC uses its supported `ingress-http-port` setting
+on available port 8080; HTTP application routes must include `:8080`.
+HTTPS retains port 443. The CRC VM has started with 6 CPUs, 16 GiB RAM and a
+60 GiB disk. The cluster completed initialization and all operators became stable.
+The application deployment passed 27 workflow checks before pod replacement,
+8 persistence checks afterwards, and all 9 network paths in both phases.
+Containers use the arbitrary restricted UID; persistent volumes are unchanged.
+See the [successful local run](../../docs/evidence/2026-10-09-openshift-local/attempt-2/README.md).
+This accepts the local application deployment, not OpenShift AI or shared hosting.
+Earlier host checks below are historical.
+
 Run the read-only check from the repository root:
 
 ```powershell
@@ -42,7 +69,7 @@ crc setup
 crc config set cpus 8
 crc config set memory 16384
 crc start --pull-secret '<path-outside-repository>'
-crc oc-env | Invoke-Expression
+crc oc-env --shell powershell | Invoke-Expression
 crc console --credentials
 ```
 
@@ -58,7 +85,8 @@ Choose a compatible platform/version and an appropriate Red Hat entitlement or t
 then follow the vendor's Operator installation procedure. Confirm compute, storage,
 identity and model-serving prerequisites first. The Developer Sandbox provides another
 evaluation route when local capacity is inadequate; only fictional lab data may be used.
-No platform subscription, remote resource or cluster has been provisioned by these files.
+No platform subscription or remote resource has been provisioned. Only the local
+CRC/OKD application cluster described above has been provisioned and checked.
 
 ## References
 

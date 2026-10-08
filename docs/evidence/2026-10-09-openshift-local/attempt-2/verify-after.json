@@ -1,0 +1,128 @@
+{
+  "phase": "after",
+  "timestamp": "2026-10-09T00:48:19",
+  "pods": {
+    "lab-app": "lab-app-6b5549cc4b-56w4f",
+    "lab-mlflow": "lab-mlflow-58c9d979cc-bxqkr",
+    "lab-postgres": "lab-postgres-0"
+  },
+  "pvcs": {
+    "lab-data": "Bound",
+    "lab-models": "Bound",
+    "mlflow-artifacts": "Bound",
+    "postgres-data": "Bound"
+  },
+  "uids": {
+    "app": "1000650000",
+    "mlflow": "1000650000",
+    "postgres": "1000650000"
+  },
+  "network_matrix": [
+    {
+      "path": "app -> mlflow:5000 /health",
+      "expected": "allowed",
+      "observed": "open",
+      "passed": true,
+      "output": "OPEN"
+    },
+    {
+      "path": "app -> postgres:5432",
+      "expected": "denied",
+      "observed": "closed",
+      "passed": true,
+      "output": "CLOSED"
+    },
+    {
+      "path": "app -> internet 1.1.1.1:443",
+      "expected": "denied",
+      "observed": "closed",
+      "passed": true,
+      "output": "CLOSED"
+    },
+    {
+      "path": "mlflow -> postgres:5432",
+      "expected": "allowed",
+      "observed": "open",
+      "passed": true,
+      "output": "OPEN"
+    },
+    {
+      "path": "mlflow -> app:8770",
+      "expected": "denied",
+      "observed": "closed",
+      "passed": true,
+      "output": "CLOSED"
+    },
+    {
+      "path": "postgres -> mlflow:5000",
+      "expected": "denied",
+      "observed": "closed",
+      "passed": true,
+      "output": "CLOSED"
+    },
+    {
+      "path": "probe pod -> app:8770 (ingress default deny)",
+      "expected": "denied",
+      "observed": "closed",
+      "passed": true,
+      "output": "CLOSED"
+    },
+    {
+      "path": "probe pod -> mlflow:5000 (ingress only from app)",
+      "expected": "denied",
+      "observed": "closed",
+      "passed": true,
+      "output": "CLOSED"
+    },
+    {
+      "path": "probe pod -> postgres:5432 (ingress only from mlflow)",
+      "expected": "denied",
+      "observed": "closed",
+      "passed": true,
+      "output": "CLOSED"
+    }
+  ],
+  "checks": [
+    {
+      "check": "three pods Running and Ready",
+      "passed": true,
+      "detail": "lab-app, lab-mlflow, lab-postgres"
+    },
+    {
+      "check": "persistent volume claims Bound",
+      "passed": true,
+      "detail": "{\"lab-data\": \"Bound\", \"lab-models\": \"Bound\", \"mlflow-artifacts\": \"Bound\", \"postgres-data\": \"Bound\"}"
+    },
+    {
+      "check": "containers run as non-root UID",
+      "passed": true,
+      "detail": "{\"app\": \"1000650000\", \"mlflow\": \"1000650000\", \"postgres\": \"1000650000\"}"
+    },
+    {
+      "check": "app UID is the arbitrary OpenShift UID, not the image default 10001",
+      "passed": true,
+      "detail": "1000650000"
+    },
+    {
+      "check": "data volume writable by the arbitrary UID",
+      "passed": true,
+      "detail": "writable"
+    },
+    {
+      "check": "network matrix: every allowed path open and every denied path closed",
+      "passed": true,
+      "detail": "9/9"
+    },
+    {
+      "check": "/health/ready through port-forward",
+      "passed": true,
+      "detail": "{\"status\": \"ready\", \"mode\": \"synthetic_container\", \"network_mode\": \"container\"}"
+    },
+    {
+      "check": "synthetic end-to-end scenario (after)",
+      "passed": true,
+      "detail": "8 passed, 0 failed"
+    }
+  ],
+  "failed": 0
+}

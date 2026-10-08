@@ -29,6 +29,11 @@ if (-not (Get-Command crc -ErrorAction SilentlyContinue)) {
     throw 'crc is not on PATH. Install OpenShift Local with the MSI as administrator, then reopen the Windows session.'
 }
 if (-not $SkipStart) {
+    . (Join-Path $PSScriptRoot 'Get-CrcSessionReadiness.ps1')
+    $taskSession = Get-CrcSessionReadiness
+    if ($taskSession.CrcGroupExists -and -not $taskSession.Ready) {
+        throw $taskSession.NextAction
+    }
     if ($Preset -eq 'openshift' -and -not (Test-Path $PullSecret)) { throw "Pull secret not found at $PullSecret (path only; content is never read here)." }
     crc config set preset $Preset | Out-Null
     crc config set cpus $Cpus | Out-Null
@@ -42,7 +47,9 @@ if (-not $SkipStart) {
 }
 
 # oc on PATH for this process only.
-& crc oc-env | Invoke-Expression
+$taskOcEnv = & crc oc-env --shell powershell
+if ($LASTEXITCODE -ne 0) { throw 'Could not load the CRC OpenShift client environment.' }
+$taskOcEnv | Invoke-Expression
 
 if ($UseKubeadmin) {
     # The kubeadmin password is parsed from crc output and passed to oc login without being echoed.
@@ -54,6 +61,7 @@ if ($UseKubeadmin) {
 } else {
     & oc login -u developer -p developer https://api.crc.testing:6443 --insecure-skip-tls-verify=true | Out-Null
 }
+if ($LASTEXITCODE -ne 0) { throw 'OpenShift login failed; application deployment was not started.' }
 Write-Host ("Logged in as " + (oc whoami))
 
 $python = if (Test-Path "$repo\.venv\Scripts\python.exe") { "$repo\.venv\Scripts\python.exe" } else { 'python' }

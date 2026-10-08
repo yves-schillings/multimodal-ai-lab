@@ -1,0 +1,12 @@
+{
+  "passed": true,
+  "model": "Whisper base",
+  "checks": [
+    "local weights available after pod restart",
+    "transcript and audio job persisted",
+    "cross-actor denial retained"
+  ],
+  "case_id": "case-eefd0479dccd4070a036d23ce1e46950",
+  "job_id": "job-e2a56a0212ae4f60b114c742730065a0",
+  "segment_count": 3
+}

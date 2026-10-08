@@ -55,7 +55,11 @@ def write(evidence, name, payload):
     evidence.mkdir(parents=True, exist_ok=True)
     path = evidence / name
     path.write_text(json.dumps(payload, indent=2) if not isinstance(payload, str) else payload, encoding="utf-8")
-    print(f"  -> {path.relative_to(ROOT)}")
+    try:
+        display_path = path.resolve().relative_to(ROOT)
+    except ValueError:
+        display_path = path.resolve()
+    print(f"  -> {display_path}")
 
 
 def check(results, name, passed, detail=""):
@@ -69,7 +73,8 @@ def pod_exec(ns, selector, *command, timeout=60):
     if not pods:
         return 127, f"no running pod for {selector}"
     name = pods[0]["metadata"]["name"]
-    result = subprocess.run(["oc", "exec", "-n", ns, name, "--", *command], capture_output=True, text=True, timeout=timeout)
+    container = pods[0]["spec"]["containers"][0]["name"]
+    result = subprocess.run(["oc", "exec", "-n", ns, name, "-c", container, "--", *command], capture_output=True, text=True, timeout=timeout)
     return result.returncode, (result.stdout + result.stderr).strip()
 
 
@@ -194,7 +199,8 @@ def network_matrix(ns):
     py_connect = "import socket;s=socket.socket();s.settimeout(5);print('OPEN' if s.connect_ex(('{h}',{p}))==0 else 'CLOSED');s.close()"
     py_http = "import urllib.request;r=urllib.request.urlopen('http://{h}:{p}{path}',timeout=5);print('OPEN' if r.status==200 else 'ERROR')"
     sh_connect = "timeout 5 bash -c '</dev/tcp/{h}/{p}' 2>/dev/null; rc=$?; if [ $rc -eq 0 ]; then echo OPEN; elif [ $rc -eq 1 ] || [ $rc -eq 124 ]; then echo CLOSED; else exit $rc; fi"
-    app, mlflow, postgres, probe = "app.kubernetes.io/name=lab-app", "app.kubernetes.io/name=lab-mlflow", "app.kubernetes.io/name=lab-postgres", "run=lab-probe"
+    probe_name = "lab-probe-" + secrets.token_hex(4)
+    app, mlflow, postgres, probe = "app.kubernetes.io/name=lab-app", "app.kubernetes.io/name=lab-mlflow", "app.kubernetes.io/name=lab-postgres", f"run={probe_name}"
     cases = [
         ("app -> mlflow:5000 /health", app, ["python", "-c", py_http.format(h="lab-mlflow", p=5000, path="/health")], True),
         ("app -> postgres:5432", app, ["python", "-c", py_connect.format(h="lab-postgres", p=5432)], False),
@@ -207,7 +213,7 @@ def network_matrix(ns):
         ("probe pod -> postgres:5432 (ingress only from mlflow)", probe, ["python", "-c", py_connect.format(h="lab-postgres", p=5432)], False),
     ]
     image = f"image-registry.openshift-image-registry.svc:5000/{ns}/lab-app:latest"
-    oc("run", "lab-probe", "-n", ns, f"--image={image}", "--restart=Never", "--labels=run=lab-probe", "--command", "--", "sleep", "900", check=False)
+    oc("run", probe_name, "-n", ns, f"--image={image}", "--restart=Never", f"--labels={probe}", "--command", "--", "sleep", "900")
     for _ in range(60):
         pods = oc_json("get", "pods", "-n", ns, "-l", probe)["items"]
         if pods and pods[0]["status"].get("phase") == "Running":
@@ -220,7 +226,7 @@ def network_matrix(ns):
             observed, passed = probe_verdict(rc, output, expect_open)
             rows.append({"path": name, "expected": "allowed" if expect_open else "denied", "observed": observed, "passed": passed, "output": output[:200]})
     finally:
-        oc("delete", "pod", "lab-probe", "-n", ns, "--ignore-not-found", "--wait=false", check=False)
+        oc("delete", "pod", probe_name, "-n", ns, "--ignore-not-found", "--wait=false", check=False)
     return rows
 
 
@@ -316,15 +322,29 @@ def main():
     parser.add_argument("command", choices=["preflight", "build", "deploy", "verify", "restart", "report", "all"])
     parser.add_argument("--phase", choices=["before", "after"], default="before")
     parser.add_argument("--namespace", default="multimodal-ai-lab")
+    parser.add_argument("--skip-build", action="store_true", help="Reuse existing cluster image streams and record their current digests")
     parser.add_argument("--evidence", default=str(ROOT / "docs" / "evidence" / f"{dt.date.today().isoformat()}-openshift-local"))
     args = parser.parse_args()
-    evidence = Path(args.evidence)
+    evidence = Path(args.evidence).resolve()
     ns = args.namespace
     if shutil.which("oc") is None:
         raise SystemExit("oc is not on PATH: run `crc oc-env | Invoke-Expression` first")
     if args.command == "all":
-        preflight(ns, evidence); build(ns, evidence); deploy(ns, evidence)
-        verify(ns, evidence, "before"); restart(ns, evidence); verify(ns, evidence, "after")
+        preflight(ns, evidence)
+        if args.skip_build:
+            images = {}
+            for name in ("lab-app", "lab-mlflow"):
+                tag = oc_json("get", "istag", f"{name}:latest", "-n", ns)
+                images[name] = {"image": tag["image"]["dockerImageReference"], "digest": tag["image"]["metadata"]["name"]}
+            write(evidence, "images.json", images)
+        else:
+            build(ns, evidence)
+        deploy(ns, evidence)
+        before = verify(ns, evidence, "before")
+        if before["failed"]:
+            report(ns, evidence)
+            sys.exit(1)
+        restart(ns, evidence); verify(ns, evidence, "after")
         sys.exit(0 if report(ns, evidence) else 1)
     {"preflight": lambda: preflight(ns, evidence), "build": lambda: build(ns, evidence), "deploy": lambda: deploy(ns, evidence),
      "verify": lambda: verify(ns, evidence, args.phase), "restart": lambda: restart(ns, evidence), "report": lambda: sys.exit(0 if report(ns, evidence) else 1)}[args.command]()

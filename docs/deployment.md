@@ -5,6 +5,15 @@ tested), **Prepared** (code or configuration exists, not verified), **Target** (
 
 ## Latest retained verification
 
+The [9 October 2026 local OKD package](evidence/2026-10-09-openshift-local/README.md)
+records actual deployment of the application, MLflow and PostgreSQL, with 27 synthetic
+workflow checks before pod replacement and 8 afterwards. All 9 NetworkPolicy paths
+passed in both phases; restricted arbitrary UIDs and unchanged persistent volumes
+were verified. Local Whisper base transcription and image/scanned-PDF OCR passed
+separate checks. The Python baseline passed 67 tests and 15 subtests.
+This is single-workstation CRC/OKD acceptance with simulated identities, not
+OpenShift AI, trusted login, GPU serving or shared production deployment.
+
 The [7 October 2026 closing package](evidence/2026-10-07-closing/README.md) records
 63 Python tests and 15 subtests, 27 Compose checks before restart and 8 afterwards,
 bounded image/scanned-PDF OCR and model publication with checksum-verified release.
@@ -98,14 +107,15 @@ general rewrite needs the following, in this order:
 7. **Data move.** Export cases, transcripts, segments, documents, jobs, settings, model versions and audit rows from `statements.sqlite3`; load them in dependency order; keep uploads and model pickles on object storage or a shared volume.
 8. **Tests.** Run the existing suite against both engines (the tests create the store on a temporary directory; add a PostgreSQL fixture gated by an environment variable).
 
-## Red Hat OpenShift manifests (Prepared, not tested)
+## OpenShift manifests (local OKD accepted; shared deployment prepared)
 
 `deploy/openshift/base` contains the Kustomize equivalent of the Compose stack: ConfigMap with the
 same environment, PostgreSQL StatefulSet, MLflow Deployment, application Deployment with two
 PersistentVolumeClaims, Services, and NetworkPolicies (default-deny ingress, egress limited to
 MLflow and DNS). No Route is in the base; `overlays/exposed-route` documents the shape of a Route
-and must not be applied while actors are simulated. The manifests have not been applied to any
-cluster; the acceptance steps are listed in `deploy/openshift/README.md`.
+and must not be applied while actors are simulated. The `openshift-local` overlay was applied
+and accepted on CRC with its OKD preset on 9 October 2026. Shared hosting still requires its
+own acceptance; commands and limits are listed in `deploy/openshift/README.md`.
 
 ## Primary AI Lab target
 

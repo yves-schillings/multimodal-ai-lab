@@ -1,0 +1,39 @@
+{
+  "timestamp": "2026-10-09T00:46:20",
+  "namespace": "multimodal-ai-lab",
+  "whoami": "developer",
+  "oc_version": "{\n  \"clientVersion\": {\n    \"major\": \"\",\n    \"minor\": \"\",\n    \"gitVersion\": \"4.22.0-202609030033.p2.g96ed0f4.assembly.stream.scos9-96ed0f4\",\n    \"gitCommit\": \"96ed0f43f0b5adf771ce3bd4fbc86809e93139f8\",\n    \"gitTreeState\": \"clean\",\n    \"buildDate\": \"2026-09-03T01:34:16Z\",\n    \"goVersion\": \"go1.25.14 (Red Hat 1.25.14-1.el9)\",\n    \"compiler\": \"gc\",\n    \"platform\": \"windows/amd64\"\n  },\n  \"kustomizeVersion\": \"v5.7.1\",\n  \"serverVersion\": {\n    \"major\": \"1\",\n    \"minor\": \"35\",\n    \"emulationMajor\": \"1\",\n    \"emulationMinor\": \"35\",\n    \"minCompatibilityMajor\": \"1\",\n    \"minCompatibilityMinor\": \"34\",\n    \"gitVersion\": \"v1.35.6\",\n    \"gitCommit\": \"68c342b9f2bd49663e239cc047b71df715bede1a\",\n    \"gitTreeState\": \"clean\",\n    \"buildDate\": \"2026-09-02T15:22:04Z\",\n    \"goVersion\": \"go1.25.14 (Red Hat 1.25.14-1.el9)\",\n    \"compiler\": \"gc\",\n    \"platform\": \"linux/amd64\"\n  },\n  \"releaseClientVersion\": \"4.22.0-okd-scos.10\"\n}",
+  "clusterversion": "not readable by developer: Error from server (Forbidden): clusterversions.config.openshift.io \"version\" is forbidden: User \"developer\" cannot get resource \"clusterversions\" in API group \"config.openshift.io\" at the cluster scop",
+  "nodes": "not readable by developer: Error from server (Forbidden): nodes is forbidden: User \"developer\" cannot list resource \"nodes\" in API group \"\" at the cluster scope",
+  "storageclasses": {
+    "apiVersion": "v1",
+    "items": [
+      {
+        "apiVersion": "storage.k8s.io/v1",
+        "kind": "StorageClass",
+        "metadata": {
+          "annotations": {
+            "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"storage.k8s.io/v1\",\"kind\":\"StorageClass\",\"metadata\":{\"annotations\":{\"storageclass.kubernetes.io/is-default-class\":\"true\"},\"name\":\"crc-csi-hostpath-provisioner\"},\"parameters\":{\"storagePool\":\"local\"},\"provisioner\":\"kubevirt.io.hostpath-provisioner\",\"reclaimPolicy\":\"Retain\",\"volumeBindingMode\":\"WaitForFirstConsumer\"}\n",
+            "storageclass.kubernetes.io/is-default-class": "true"
+          },
+          "creationTimestamp": "2026-09-16T06:13:52Z",
+          "name": "crc-csi-hostpath-provisioner",
+          "resourceVersion": "21347",
+          "uid": "0f1c0072-e032-4d97-8f52-696074a85f68"
+        },
+        "parameters": {
+          "storagePool": "local"
+        },
+        "provisioner": "kubevirt.io.hostpath-provisioner",
+        "reclaimPolicy": "Retain",
+        "volumeBindingMode": "WaitForFirstConsumer"
+      }
+    ],
+    "kind": "List",
+    "metadata": {
+      "resourceVersion": ""
+    }
+  },
+  "crc_version": "CRC version: 2.64.0+458092\nOpenShift version: 4.22.14\nMicroShift version: 4.22.13",
+  "crc_preset": "preset : okd"
+}

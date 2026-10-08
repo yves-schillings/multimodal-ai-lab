@@ -1,0 +1,10 @@
+{
+  "lab-app": {
+    "image": "image-registry.openshift-image-registry.svc:5000/multimodal-ai-lab/lab-app@sha256:d55ab0432f36e0a0dc523f54bcfdc60b9a2d501e51e54fb4aa165dc3bb799131",
+    "digest": "sha256:d55ab0432f36e0a0dc523f54bcfdc60b9a2d501e51e54fb4aa165dc3bb799131"
+  },
+  "lab-mlflow": {
+    "image": "image-registry.openshift-image-registry.svc:5000/multimodal-ai-lab/lab-mlflow@sha256:23bc9ea5ff89c7069508ba43eca3eb0feb1cd613cdc73c67c9284470c02b8dee",
+    "digest": "sha256:23bc9ea5ff89c7069508ba43eca3eb0feb1cd613cdc73c67c9284470c02b8dee"
+  }
+}

@@ -1,0 +1,152 @@
+{
+  "phase": "before",
+  "base": "http://127.0.0.1:18770",
+  "checks": [
+    {
+      "check": "status reachable",
+      "passed": true,
+      "detail": "network_mode=container mlflow=server"
+    },
+    {
+      "check": "identity is simulated (no authentication claim)",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "case created by officer-a",
+      "passed": true,
+      "detail": "case-91fbab5987874f55bfbe10832cf28dae"
+    },
+    {
+      "check": "document job completed",
+      "passed": true,
+      "detail": "completed"
+    },
+    {
+      "check": "document extracted with explicit classification status",
+      "passed": true,
+      "detail": "classification=unavailable label=None"
+    },
+    {
+      "check": "source reviewed by officer-a",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "draft prepared from reviewed sources only",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "officer cannot approve own draft",
+      "passed": true,
+      "detail": "http 403"
+    },
+    {
+      "check": "reviewer approved the draft",
+      "passed": true,
+      "detail": "approved_revision=3 status=approved"
+    },
+    {
+      "check": "question answered from reviewed sources",
+      "passed": true,
+      "detail": "mode=extractive sources=1"
+    },
+    {
+      "check": "unsupported question abstains",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "officer-b denied on officer-a dossier",
+      "passed": true,
+      "detail": "http 403"
+    },
+    {
+      "check": "officer-b denied on question",
+      "passed": true,
+      "detail": "http 403"
+    },
+    {
+      "check": "officer-a denied on demo-case-b",
+      "passed": true,
+      "detail": "http 403"
+    },
+    {
+      "check": "unknown actor denied",
+      "passed": true,
+      "detail": "http 403"
+    },
+    {
+      "check": "training job completed",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "metrics recorded",
+      "passed": true,
+      "detail": "recorded_on_server accuracy=1.0 macro_f1=1.0 gate_passed=True"
+    },
+    {
+      "check": "model artifact published and registered",
+      "passed": true,
+      "detail": "registry_version=1"
+    },
+    {
+      "check": "training job completed",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "metrics recorded",
+      "passed": true,
+      "detail": "recorded_on_server accuracy=1.0 macro_f1=1.0 gate_passed=True"
+    },
+    {
+      "check": "model artifact published and registered",
+      "passed": true,
+      "detail": "registry_version=2"
+    },
+    {
+      "check": "officer cannot promote (reviewer only)",
+      "passed": true,
+      "detail": "http 403"
+    },
+    {
+      "check": "unknown candidate rejected",
+      "passed": true,
+      "detail": "http 422"
+    },
+    {
+      "check": "reviewer promoted candidate 1",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "reviewer promoted candidate 2",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "rollback restored candidate 1",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "active model classifies and requires human validation",
+      "passed": true,
+      "detail": "label=evidence_inventory version=classifier-1f6503a6d568"
+    }
+  ],
+  "failed": 0,
+  "state": {
+    "case_id": "case-91fbab5987874f55bfbe10832cf28dae",
+    "document_id": "document-457cdddf819f44de8872068d591837ff",
+    "versions": [
+      "classifier-1f6503a6d568",
+      "classifier-b3cae33b7269"
+    ],
+    "active_version": "classifier-1f6503a6d568",
+    "case_revision": 4
+  }
+}

@@ -25,3 +25,13 @@ mlruns/
 # Private coordination context (never published)
 .Codex/
 .codex/
+
+# Raw local cluster diagnostics; curated successful reports remain versioned.
+docs/evidence/2026-10-09-openshift-local/deploy.json
+docs/evidence/2026-10-09-openshift-local/images.json
+docs/evidence/2026-10-09-openshift-local/preflight.json
+docs/evidence/2026-10-09-openshift-local/restart.json
+docs/evidence/2026-10-09-openshift-local/verify-before.json
+docs/evidence/2026-10-09-openshift-local/verify-after.json
+docs/evidence/2026-10-09-openshift-local/attempt-2/deploy.json
+docs/evidence/2026-10-09-openshift-local/attempt-2/demo-e2e-state.json

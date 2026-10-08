@@ -5,6 +5,8 @@ $taskComputer = Get-CimInstance Win32_ComputerSystem
 $taskCpu = Get-CimInstance Win32_Processor
 $taskCrc = Get-Command crc -ErrorAction SilentlyContinue
 $taskOc = Get-Command oc -ErrorAction SilentlyContinue
+. (Join-Path $PSScriptRoot 'Get-CrcSessionReadiness.ps1')
+$taskSession = Get-CrcSessionReadiness
 [pscustomobject]@{
     Windows = $taskOs.Caption
     LogicalCPUs = $taskCpu.NumberOfLogicalProcessors
@@ -14,8 +16,12 @@ $taskOc = Get-Command oc -ErrorAction SilentlyContinue
     HypervisorPresent = $taskComputer.HypervisorPresent
     CRCInstalled = [bool]$taskCrc
     OCInstalled = [bool]$taskOc
+    CrcGroupInCurrentToken = $taskSession.CrcGroupInCurrentToken
+    HyperVGroupInCurrentToken = $taskSession.HyperVGroupInCurrentToken
+    SessionReady = $taskSession.Ready
+    SessionNextAction = $taskSession.NextAction
     Purpose = 'OpenShift Local application testing; not full OpenShift AI certification'
 } | ConvertTo-Json
 if (-not $taskCrc) {
-    Write-Host 'Next prerequisite: install OpenShift Local from the official Red Hat download page and obtain a pull secret through your Red Hat account.'
+    Write-Host 'Next prerequisite: install CRC. Its OKD preset needs no Red Hat pull secret; the openshift preset requires one.'
 }
