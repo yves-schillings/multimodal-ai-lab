@@ -121,4 +121,4 @@ Primary AI Lab may request separately approved AI services from the Secondary GP
 
 ## Inventory and backlog linkage
 
-The accompanying implementation workbook contains the full inventory of 28 registry components plus six platform capability entries. Each entry identifies its product/runtime, observed environment, existing evidence, remaining configuration and work-item IDs. The [60-item backlog](system-implementation-backlog.md) includes owner roles, prerequisites, acceptance and evidence. Draft S/M/L effort ranges, owner profiles, 15 activation gate priorities, 38 mandatory dependencies and architecture decision references are recorded. Named assignees, available capacity and deployment dates remain unconfirmed planning inputs.
+The [public implementation roadmap](system-implementation-backlog.md) summarizes delivery phases and expected outcomes. Detailed work items, estimates, assignments and task dependencies are retained privately. Capacity and deployment dates remain unconfirmed.
