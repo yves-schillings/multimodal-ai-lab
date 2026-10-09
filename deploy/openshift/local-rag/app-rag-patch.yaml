@@ -1,0 +1,18 @@
+spec:
+  template:
+    spec:
+      enableServiceLinks: false
+      containers:
+        - name: app
+          envFrom:
+            - configMapRef: {name: lab-config}
+            - configMapRef: {name: lab-rag-config}
+          volumeMounts:
+            - name: vector-password
+              mountPath: /app/secrets/vector
+              readOnly: true
+      volumes:
+        - name: vector-password
+          secret:
+            secretName: lab-vector-client
+            defaultMode: 0440

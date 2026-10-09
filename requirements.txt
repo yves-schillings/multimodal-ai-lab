@@ -11,4 +11,5 @@ mlflow==3.16.1
 faster-whisper==1.2.1
 av==16.1.0
 httpx==0.28.1
+psycopg[binary]==3.3.6
 pytest==9.1.1

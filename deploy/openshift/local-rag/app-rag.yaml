@@ -1,0 +1,14 @@
+# Apply only after offline model copying, client schema setup and image rebuild.
+apiVersion: v1
+kind: ConfigMap
+metadata: {name: lab-rag-config}
+data:
+  LAB_RETRIEVAL_BACKEND: pgvector
+  LAB_INFERENCE_URL: "http://lab-inference:11434"
+  LAB_EMBEDDING_MODEL: "bge-m3:latest"
+  LAB_EMBEDDING_DIGEST: "7907646426070047a77226ac3e684fbbe8410524f7b4a74d02837e43f2146bab"
+  LAB_GENERATION_MODEL: "qwen3:4b"
+  LAB_GENERATION_DIGEST: "359d7dd4bcdab3d86b87d73ac27966f4dbb9f5efdfcc75d34a8764a09474fae7"
+  LAB_VECTOR_HOST: lab-vector
+  LAB_VECTOR_PORT: "5432"
+  LAB_VECTOR_PASSWORD_FILE: /app/secrets/vector/password

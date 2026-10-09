@@ -1,5 +1,7 @@
 # Multimodal AI Lab architecture for on-premises deployment on Red Hat OpenShift AI
 
+**Current local extension, 9 October 2026:** offline pgvector/BGE-M3/Qwen3 RAG, local password sessions, two isolated AI CPEs, recurring MLflow classifier evaluation and selected Jupyter/KServe/native CPU training components are now accepted on local OKD. See the [current implementation](deployment/local-implementation.md) and [extension evidence](evidence/2026-10-09-local-ai-extensions/README.md). The baseline/diagrams below retain their original hosting scope; organizational identity, shared production hosting and the complete OpenShift AI product remain separate work.
+
 Version 1.0. Inventory reviewed on 7 October 2026.
 
 The enterprise system supports five business capabilities: reviewed audio transcription, document extraction and classification, evidence-based drafting, controlled project isolation, and measured model release. The implementation backlog covers all of them, including vector retrieval. The existing eight-layer responsibility model remains the organising view, without an authorship or ownership claim. This document adds an implementation view without replacing the presentation's diagrams.

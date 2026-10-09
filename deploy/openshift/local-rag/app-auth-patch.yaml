@@ -1,0 +1,14 @@
+# Credentials are provisioned separately; never commit passwords or account hashes.
+spec:
+  template:
+    spec:
+      containers:
+        - name: app
+          env:
+            - {name: LAB_AUTH_MODE, value: local_sessions}
+            - {name: LAB_CREDENTIAL_FILE, value: /app/secrets/identity/credentials.json}
+          volumeMounts:
+            - {name: local-credentials, mountPath: /app/secrets/identity, readOnly: true}
+      volumes:
+        - name: local-credentials
+          secret: {secretName: lab-local-credentials, defaultMode: 0440}

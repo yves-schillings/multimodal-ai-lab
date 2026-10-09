@@ -166,7 +166,7 @@ class StatementStore:
                 event = dict(row)
                 event["metadata"] = json.loads(event.pop("metadata_json"))
                 case["audit"].append(event)
-            case["simulated_identity"] = True
+            case["simulated_identity"] = getattr(self, "simulated_identity", True)
             return case
 
     @staticmethod

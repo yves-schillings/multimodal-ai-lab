@@ -7,8 +7,9 @@ from .documents import extract_document
 
 
 class JobRunner:
-    def __init__(self,store,registry,speech):
+    def __init__(self,store,registry,speech,authorize=None):
         self.store,self.registry,self.speech=store,registry,speech
+        self.authorize=authorize
         self.executor=ThreadPoolExecutor(max_workers=1,thread_name_prefix='local-lab')
         self.lock=threading.Lock()
         self.submitted=set()
@@ -35,6 +36,8 @@ class JobRunner:
         self.store.job_update(job_id,'running')
         payload=json.loads(job['payload_json'])
         try:
+            if self.authorize:
+                self.authorize(job['actor'],job['kind'])
             if job['kind']=='train':
                 result=self.registry.train()
             else:

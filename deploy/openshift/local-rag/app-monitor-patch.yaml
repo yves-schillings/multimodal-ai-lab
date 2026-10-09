@@ -1,0 +1,8 @@
+spec:
+  template:
+    spec:
+      containers:
+        - name: app
+          env:
+            - {name: LAB_MONITORING, value: enabled}
+            - {name: LAB_MONITOR_INTERVAL, value: "1800"}

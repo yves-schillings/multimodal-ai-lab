@@ -1,0 +1,100 @@
+# Offline CPU inference inside local OKD. Weights are copied before RAG is enabled.
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata: {name: lab-inference-models}
+spec:
+  accessModes: [ReadWriteOnce]
+  resources:
+    requests: {storage: 6Gi}
+---
+apiVersion: v1
+kind: Service
+metadata: {name: lab-inference}
+spec:
+  selector: {app.kubernetes.io/name: lab-inference}
+  ports: [{port: 11434, targetPort: 11434}]
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: {name: lab-inference}
+spec:
+  replicas: 1
+  strategy: {type: Recreate}
+  selector:
+    matchLabels: {app.kubernetes.io/name: lab-inference}
+  template:
+    metadata:
+      labels: {app.kubernetes.io/name: lab-inference, app.kubernetes.io/part-of: multimodal-ai-lab}
+    spec:
+      automountServiceAccountToken: false
+      securityContext: {runAsNonRoot: true, seccompProfile: {type: RuntimeDefault}}
+      containers:
+        - name: ollama
+          image: docker.io/ollama/ollama@sha256:268c47cdc4718ded54babcd842579a7295ad79fd8d5c2ea64d7ba2e76872de6b
+          args: [serve]
+          env:
+            - {name: HOME, value: /tmp}
+            - {name: OLLAMA_HOST, value: "0.0.0.0:11434"}
+            - {name: OLLAMA_MODELS, value: /models}
+            - {name: OLLAMA_NO_CLOUD, value: "1"}
+            - {name: OLLAMA_KEEP_ALIVE, value: "0"}
+            - {name: OLLAMA_NUM_PARALLEL, value: "1"}
+            - {name: OLLAMA_MAX_LOADED_MODELS, value: "1"}
+            - {name: OLLAMA_CONTEXT_LENGTH, value: "4096"}
+          ports: [{containerPort: 11434}]
+          volumeMounts:
+            - {name: models, mountPath: /models, readOnly: true}
+            - {name: temporary, mountPath: /tmp}
+          resources:
+            requests: {cpu: 500m, memory: 1Gi}
+            limits: {cpu: "3", memory: 5Gi}
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities: {drop: [ALL]}
+          startupProbe:
+            httpGet: {path: /api/version, port: 11434}
+            periodSeconds: 5
+            failureThreshold: 36
+          readinessProbe:
+            httpGet: {path: /api/version, port: 11434}
+            timeoutSeconds: 3
+          livenessProbe:
+            httpGet: {path: /api/version, port: 11434}
+            periodSeconds: 20
+            timeoutSeconds: 3
+      volumes:
+        - name: models
+          persistentVolumeClaim: {claimName: lab-inference-models}
+        - {name: temporary, emptyDir: {}}
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata: {name: lab-inference-isolation}
+spec:
+  podSelector:
+    matchLabels: {app.kubernetes.io/name: lab-inference}
+  policyTypes: [Ingress, Egress]
+  egress: []
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels: {app.kubernetes.io/name: lab-app}
+      ports: [{port: 11434, protocol: TCP}]
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata: {name: lab-app-local-rag-egress}
+spec:
+  podSelector:
+    matchLabels: {app.kubernetes.io/name: lab-app}
+  policyTypes: [Egress]
+  egress:
+    - to:
+        - podSelector:
+            matchLabels: {app.kubernetes.io/name: lab-vector}
+      ports: [{port: 5432, protocol: TCP}]
+    - to:
+        - podSelector:
+            matchLabels: {app.kubernetes.io/name: lab-inference}
+      ports: [{port: 11434, protocol: TCP}]

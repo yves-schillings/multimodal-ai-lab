@@ -1,4 +1,4 @@
-"""Loopback-only synthetic Multimodal AI Lab. Actor selection is not authentication."""
+"""Local synthetic Multimodal AI Lab; optional credential-bound sessions and offline RAG."""
 import hashlib
 import importlib.util
 import os
@@ -6,7 +6,7 @@ import shutil
 import uuid
 from contextlib import asynccontextmanager
 from pathlib import Path
-from urllib.parse import urlsplit
+from urllib.parse import urlsplit, urlencode
 
 from fastapi import FastAPI, File, Form, UploadFile, Request
 from fastapi.responses import FileResponse, JSONResponse
@@ -20,6 +20,11 @@ from lab.retrieval import answer_question
 from lab.speech import SpeechEngine
 from lab.store import ConflictError
 from lab.deployment_policy import deployment_plan
+from lab.rag import configured_rag
+from lab.local_inference import InferenceUnavailable
+from lab.auth import COOKIE, AuthenticationError, configured_auth
+from lab.monitoring import QualityMonitor
+from lab.cpe import CpeInactive, configured_cpe
 
 BASE=Path(__file__).resolve().parent
 MAX_UPLOAD=25*1024*1024
@@ -51,12 +56,17 @@ class PredictInput(BaseModel):
     text: str=Field(min_length=1,max_length=300000)
 
 
+class LoginInput(BaseModel):
+    username: str=Field(min_length=1,max_length=80)
+    password: str=Field(min_length=1,max_length=256)
+
+
 def network_settings():
     """Fail-closed network mode. 'loopback' (default) accepts loopback clients only.
 
     'container' accepts clients from the container network (published port), but
     still requires the Host header to be loopback or listed in LAB_ALLOWED_HOSTS.
-    Neither mode adds authentication: actors remain simulated identities.
+    Authentication is configured independently; default actors remain simulated identities.
     """
     mode=os.environ.get('LAB_NETWORK_MODE','loopback').strip().lower() or 'loopback'
     if mode not in {'loopback','container'}:
@@ -69,14 +79,39 @@ def network_settings():
 def create_app(data_dir=None):
     network_mode,allowed_hosts=network_settings()
     store=LabStore(Path(data_dir or os.environ.get('LAB_DATA_DIR',BASE/'data')))
+    auth=configured_auth(store.root)
+    cpe=configured_cpe()
+    if cpe and not auth:
+        raise RuntimeError('CPE activation requires local credential-bound identities.')
+    if auth:
+        store.simulated_identity=False
+        original_actor=store._actor
+        def active_actor(actor):
+            original_actor(actor)
+            auth.active_actor(actor)
+            if cpe:
+                cpe.authorize(actor)
+            return actor
+        store._actor=active_actor
     registry=ModelRegistry(store)
+    monitor=QualityMonitor(registry,int(os.environ.get('LAB_MONITOR_INTERVAL','1800'))) if os.environ.get('LAB_MONITORING','disabled')=='enabled' else None
     speech=SpeechEngine(model_dir=Path(os.environ.get('LAB_WHISPER_MODEL_DIR',BASE/'models'/'whisper-base')))
-    runner=JobRunner(store,registry,speech)
+    def authorize_job(actor,kind):
+        if auth:
+            auth.authorize_job(actor,kind)
+        if cpe:
+            cpe.authorize(actor,'/api/models' if kind=='train' else '/api/cases')
+    runner=JobRunner(store,registry,speech,authorize=authorize_job if auth or cpe else None)
+    rag=configured_rag()
 
     @asynccontextmanager
     async def lifespan(application):
         runner.recover()
+        if monitor:
+            monitor.start()
         yield
+        if monitor:
+            monitor.close()
         runner.close()
 
     app=FastAPI(title='AI Lab: Multimodal Case Processing',lifespan=lifespan)
@@ -85,6 +120,9 @@ def create_app(data_dir=None):
     def planned_deployment():
         return deployment_plan()
     app.state.store,app.state.registry,app.state.runner=store,registry,runner
+    app.state.auth=auth
+    app.state.monitor=monitor
+    app.state.cpe=cpe
 
     @app.middleware('http')
     async def local_only(request:Request,call_next):
@@ -103,7 +141,31 @@ def create_app(data_dir=None):
             if parsed.scheme not in {'http','https'} or parsed.netloc != request.headers.get('host'):
                 return JSONResponse({'detail':'Cross-origin access is disabled.'},status_code=403)
         # Authorize before FastAPI parses multipart or JSON request bodies.
-        if request.url.path.startswith('/api/') and request.url.path not in {'/api/status','/api/actors'}:
+        protected=request.url.path.startswith('/api/') and request.url.path != '/api/status'
+        if auth and protected and request.url.path != '/api/auth/login':
+            try:
+                principal=auth.authenticate(request.cookies.get(COOKIE),request.headers.get('X-Lab-CSRF'),
+                                            mutation=request.method not in {'GET','HEAD','OPTIONS'})
+            except AuthenticationError as exc:
+                return JSONResponse({'detail':str(exc)},status_code=401)
+            selected=request.query_params.get('actor')
+            if selected is not None and selected != principal['id']:
+                return JSONResponse({'detail':'Caller-selected actor does not match the authenticated account.'},status_code=403)
+            request.state.principal=principal
+            params=[(key,value) for key,value in request.query_params.multi_items() if key!='actor']
+            request.scope['query_string']=urlencode(params+[('actor',principal['id'])]).encode()
+            # Request.query_params was cached before replacing scope.
+            del request._query_params
+            if request.url.path in {'/api/models/train','/api/models/monitoring/run'} and principal['id']!='reviewer':
+                return JSONResponse({'detail':'Local classifier training requires the reviewer account.'},status_code=403)
+            if cpe and request.url.path not in {'/api/auth/me','/api/auth/logout','/api/actors'}:
+                try:
+                    cpe.authorize(principal['id'],request.url.path)
+                except CpeInactive as exc:
+                    return JSONResponse({'detail':str(exc)},status_code=503)
+                except PermissionError as exc:
+                    return JSONResponse({'detail':str(exc)},status_code=403)
+        if protected and request.url.path not in {'/api/actors','/api/auth/login','/api/auth/me','/api/auth/logout'}:
             selected=request.query_params.get('actor')
             if selected is None:
                 return JSONResponse({'detail':'Select a simulated actor.'},status_code=422)
@@ -114,6 +176,8 @@ def create_app(data_dir=None):
                     store.get_case(selected,parts[2])
             except PermissionError as exc:
                 return JSONResponse({'detail':str(exc)},status_code=403)
+            except CpeInactive as exc:
+                return JSONResponse({'detail':str(exc)},status_code=503)
             except KeyError:
                 return JSONResponse({'detail':'Requested item was not found.'},status_code=404)
         length=request.headers.get('content-length')
@@ -133,6 +197,15 @@ def create_app(data_dir=None):
     async def denied(request,exc):
         return JSONResponse({'detail':str(exc)},status_code=403)
 
+    @app.exception_handler(CpeInactive)
+    async def inactive_cpe(request,exc):
+        # The operator can revoke between middleware authorization and a write.
+        return JSONResponse({'detail':str(exc)},status_code=503)
+
+    @app.exception_handler(InferenceUnavailable)
+    async def inference_unavailable(request,exc):
+        return JSONResponse({'detail':str(exc)},status_code=503)
+
     @app.exception_handler(KeyError)
     async def missing(request,exc):
         return JSONResponse({'detail':'Requested item was not found.'},status_code=404)
@@ -148,6 +221,33 @@ def create_app(data_dir=None):
     def actor_check(actor):
         return store._actor(actor)
 
+    @app.post('/api/auth/login')
+    def login(body:LoginInput,request:Request):
+        if not auth:
+            return JSONResponse({'detail':'Local authentication is not configured.'},status_code=404)
+        try:
+            token,csrf,principal=auth.login(body.username,body.password,request.client.host if request.client else 'unknown')
+        except AuthenticationError as exc:
+            return JSONResponse({'detail':str(exc)},status_code=401)
+        response=JSONResponse({'principal':principal,'csrf':csrf,'expires_in':3600,'idle_timeout':900})
+        response.set_cookie(COOKIE,token,httponly=True,samesite='strict',secure=request.url.scheme=='https',max_age=3600,path='/')
+        return response
+
+    @app.get('/api/auth/me')
+    def whoami(request:Request):
+        if not auth:
+            return JSONResponse({'detail':'Local authentication is not configured.'},status_code=404)
+        return {'principal':request.state.principal}
+
+    @app.post('/api/auth/logout')
+    def logout(request:Request):
+        if not auth:
+            return JSONResponse({'detail':'Local authentication is not configured.'},status_code=404)
+        auth.logout(request.cookies.get(COOKIE))
+        response=JSONResponse({'signed_out':True})
+        response.delete_cookie(COOKIE,path='/')
+        return response
+
     @app.get('/health/live')
     def live():
         return {'status':'alive'}
@@ -156,28 +256,31 @@ def create_app(data_dir=None):
     def ready():
         with store._connection() as db:
             db.execute('SELECT 1').fetchone()
-        return {'status':'ready','mode':'synthetic_loopback' if network_mode=='loopback' else 'synthetic_container','network_mode':network_mode}
+        return {'status':'ready','mode':'authenticated_local' if auth else ('synthetic_loopback' if network_mode=='loopback' else 'synthetic_container'),'network_mode':network_mode}
 
     @app.get('/api/status')
     def status():
         tesseract=shutil.which('tesseract') is not None
         whisper_ready=speech.model_dir.is_dir() and (speech.model_dir/'model.bin').is_file()
-        return {'name':'Multimodal AI Lab','identity_mode':'simulated_loopback_only' if network_mode=='loopback' else 'simulated_container_network','simulated_identity':True,
+        return {'name':'Multimodal AI Lab','identity_mode':'local_password_session' if auth else ('simulated_loopback_only' if network_mode=='loopback' else 'simulated_container_network'),'simulated_identity':not bool(auth),
                 'network_mode':network_mode,'allowed_hosts':sorted(allowed_hosts),
+                'cpe':cpe.state() if cpe else {'phase':'not_configured','active':False},
                 'mlflow_tracking':'server' if os.environ.get('MLFLOW_TRACKING_URI') else 'local_sqlite',
-                'production_ready':False,'data_notice':'Synthetic demonstration only. Caller-selected actors are not real authentication.',
+                'production_ready':False,'data_notice':'Synthetic local lab only. Local accounts are not institutional identity integration.' if auth else 'Synthetic demonstration only. Caller-selected actors are not real authentication.',
                 'capabilities':{'document_extraction':True,'classification':registry.state()['active_version'] is not None,
-                                'model_training':importlib.util.find_spec('sklearn') is not None,'speech_recognition':whisper_ready and importlib.util.find_spec('faster_whisper') is not None,
+                                'model_training':not bool(cpe) and importlib.util.find_spec('sklearn') is not None,'speech_recognition':not bool(cpe) and whisper_ready and importlib.util.find_spec('faster_whisper') is not None,
                                 'ocr':tesseract and importlib.util.find_spec('pytesseract') is not None,'mlflow':importlib.util.find_spec('mlflow') is not None,
-                                'retrieval':'case-scoped TF-IDF/lexical extractive','generative_llm':False,
+                                'retrieval':'case/revision-scoped pgvector with local BGE-M3' if rag else 'case-scoped TF-IDF/lexical extractive',
+                                'generative_llm':bool(rag and rag.index.inference.generation_model),
+                                'model_monitoring':bool(monitor),
                                 'queue':'SQLite durable local single worker; pending jobs recover on restart; at-least-once processing',
                                 'rabbitmq':False,'public_cloud_api':False},
                 'limits':{'max_upload_bytes':MAX_UPLOAD,'max_audio_seconds':300,'max_pdf_pages':100},
                 'speech_model':speech.model_name,'speech_languages':['en','fr','nl']}
 
     @app.get('/api/actors')
-    def actors():
-        return {'actors':store.actors()}
+    def actors(request:Request):
+        return {'actors':[request.state.principal] if auth else store.actors()}
 
     @app.get('/api/cases')
     def cases(actor:str):
@@ -205,7 +308,7 @@ def create_app(data_dir=None):
 
     @app.post('/api/cases/{case_id}/question')
     def question(case_id:str,body:QuestionInput,actor:str):
-        return answer_question(store,actor,case_id,body.question)
+        return rag.answer(store,actor,case_id,body.question) if rag else answer_question(store,actor,case_id,body.question)
 
     @app.post('/api/cases/{case_id}/workflow')
     def workflow(case_id:str,body:WorkflowInput,actor:str):
@@ -222,7 +325,7 @@ def create_app(data_dir=None):
             steps.append({'step':'prepare_draft','status':'completed'})
         result={'mode':'bounded_deterministic_workflow','steps':steps,'case':case,'approval':'Human reviewer action required; workflow cannot approve.','max_steps':4}
         if body.question:
-            result['retrieval']=answer_question(store,actor,case_id,body.question)
+            result['retrieval']=rag.answer(store,actor,case_id,body.question) if rag else answer_question(store,actor,case_id,body.question)
             steps.append({'step':'retrieve_reviewed_sources','status':'completed'})
         return result
 
@@ -231,6 +334,8 @@ def create_app(data_dir=None):
         store.get_case(actor,case_id)  # Before filename, file contents or job access.
         if kind not in {'audio','document'} or language not in {'en','fr','nl','auto'}:
             raise ValueError('Choose document/audio and en/fr/nl/auto.')
+        if cpe and kind=='audio':
+            raise PermissionError('This document-only CPE profile approves no speech model endpoint.')
         name=(file.filename or 'upload').replace('\\','/').rsplit('/',1)[-1][:150]
         suffix=Path(name).suffix.lower()
         if kind=='document' and suffix not in {'.txt','.md','.csv','.pdf','.png','.jpg','.jpeg','.tif','.tiff'}:
@@ -278,6 +383,21 @@ def create_app(data_dir=None):
     def runs(actor:str):
         actor_check(actor)
         return {'runs':registry.state()['versions']}
+
+    @app.get('/api/models/monitoring')
+    def monitoring_state(actor:str):
+        actor_check(actor)
+        return monitor.state() if monitor else {'enabled':False,'scope':'Recurring monitoring is not configured.'}
+
+    @app.post('/api/models/monitoring/run')
+    def monitoring_run(actor:str):
+        actor_check(actor)
+        if actor!='reviewer':
+            raise PermissionError('Classifier monitoring requires the reviewer account.')
+        if not monitor:
+            raise ValueError('Recurring classifier monitoring is not configured.')
+        report=monitor.run()
+        return JSONResponse(report,status_code=503 if report['status']=='unavailable' else 200)
 
     @app.post('/api/models/train')
     def train(actor:str):

@@ -26,6 +26,7 @@ export function retrieve(caseData,question){
 }
 
 export function isLocalBackend(status){
- return status?.name==='Multimodal AI Lab' && status.simulated_identity===true &&
-  ['simulated_loopback_only','simulated_container_network'].includes(status.identity_mode);
+ return status?.name==='Multimodal AI Lab' &&
+  ((status.simulated_identity===true && ['simulated_loopback_only','simulated_container_network'].includes(status.identity_mode)) ||
+   (status.simulated_identity===false && status.identity_mode==='local_password_session'));
 }
