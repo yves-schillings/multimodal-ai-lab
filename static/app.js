@@ -1,13 +1,14 @@
 import {seedCases,trainClassifier,predict,retrieve,isLocalBackend} from './core.js';
 const $=s=>document.querySelector(s),esc=t=>String(t??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 let actor='officer-a',currentId='demo-case-a',tab='review',local=false,capabilities={},modelState={versions:[],active_version:null,previous_version:null};
+let authenticated=false,modelAccess=true,csrf=sessionStorage.getItem('lab-csrf')||'';
 let cases=seedCases();const storageKey='multimodal-ai-lab-sandbox-v1';try{const value=JSON.parse(sessionStorage.getItem(storageKey));if(value){cases=value.cases;modelState=value.modelState;}}catch{}
 const notify=(message,error=false)=>{const element=$('#feedback');element.textContent=message;element.className='visible'+(error?' error':'');clearTimeout(notify.timer);notify.timer=setTimeout(()=>{element.className='';element.textContent='';},6500);};
 const save=()=>{if(!local)try{sessionStorage.setItem(storageKey,JSON.stringify({cases,modelState}));}catch{}};
 const allowed=()=>cases.filter(c=>actor==='reviewer'||c.owner_actor===actor);
 const selected=()=>cases.find(c=>c.id===currentId);
 const stamp=v=>`${String(Math.floor(v/60)).padStart(2,'0')}:${Number(v%60).toFixed(1).padStart(4,'0')}`;
-const api=async(path,method='GET',body)=>{const options={method};if(body instanceof FormData)options.body=body;else if(body!==undefined){options.headers={'Content-Type':'application/json'};options.body=JSON.stringify(body);}const response=await fetch(path+(path.includes('?')?'&':'?')+'actor='+encodeURIComponent(actor),options);const result=await response.json();if(!response.ok)throw Error(result.detail||'Request failed.');return result;};
+const api=async(path,method='GET',body)=>{const options={method,headers:{}};if(authenticated&&csrf)options.headers['X-Lab-CSRF']=csrf;if(body instanceof FormData)options.body=body;else if(body!==undefined){options.headers['Content-Type']='application/json';options.body=JSON.stringify(body);}const response=await fetch(path+(path.includes('?')?'&':'?')+'actor='+encodeURIComponent(actor),options);const result=await response.json();if(!response.ok)throw Error(result.detail||'Request failed.');return result;};
 async function loadCases(){if(local){cases=(await api('/api/cases')).cases;const match=cases.find(c=>c.id===currentId)||cases[0];currentId=match?.id;if(match){const full=await api('/api/cases/'+currentId);cases=cases.map(c=>c.id===currentId?full:c);}}else if(!allowed().some(c=>c.id===currentId))currentId=allowed()[0]?.id;render();}
 async function updateCase(result){if(local){const full=result?.segments?result:await api('/api/cases/'+currentId);cases=cases.map(c=>c.id===currentId?full:c);}save();render();}
 function record(action){const c=selected();c.revision++;c.status='in_review';c.draft=null;c.approved_revision=null;c.audit.push({timestamp:new Date().toISOString(),actor,action,revision:c.revision});}
@@ -18,9 +19,9 @@ function render(){const c=selected();$('#case-list').innerHTML=allowed().map(ite
  $('#audit').innerHTML=(c.audit||[]).slice().reverse().slice(0,12).map(e=>`<div class="audit-row"><span>${esc(new Date(e.timestamp).toLocaleString())}</span><span>${esc(e.actor)}</span><span>${esc(e.action.replaceAll('_',' '))} · revision ${e.revision}</span></div>`).join('')||'<p class="muted small">Source review events will appear here.</p>';renderModels();}
 function renderModels(){const active=modelState.versions.find(v=>v.version===modelState.active_version),candidate=modelState.versions.at(-1);$('#model-state').innerHTML=`<div class="metric"><span>ACTIVE VERSION</span><strong>${esc(active?.version||'Not released')}</strong></div><div class="metric"><span>LATEST ACCURACY</span><strong>${candidate?(candidate.accuracy*100).toFixed(0)+'%':'—'}</strong></div><div class="metric"><span>LATEST MACRO-F1</span><strong>${candidate?candidate.macro_f1.toFixed(2):'—'}</strong></div>`;$('#runs').innerHTML=modelState.versions.slice().reverse().map(v=>`<div class="run"><span><strong>${esc(v.version)}</strong><br>${esc(v.training_samples)} training / ${esc(v.test_samples)} held-out samples · ${esc(v.mlflow_status||'browser')}</span><span class="${v.gate_passed?'pass':'fail'}">${v.gate_passed?'Gate passed':'Gate failed'} · accuracy ${v.accuracy.toFixed(2)} · F1 ${v.macro_f1.toFixed(2)}</span></div>`).join('');}
 function view(name){tab=name;document.querySelectorAll('.view').forEach(e=>e.classList.toggle('hidden',e.id!=='view-'+name));document.querySelectorAll('[data-tab]').forEach(e=>e.classList.toggle('active',e.dataset.tab===name));}
-async function guarded(fn){try{await fn();}catch(error){notify(error.message,true);}}
+async function guarded(fn){try{await fn();}catch(error){if(authenticated&&!$('#login-form').classList.contains('hidden'))$('#auth-status').textContent=error.message;notify(error.message,true);}}
 async function waitJob(id){for(let i=0;i<180;i++){const job=await api('/api/jobs/'+id);if(job.status==='succeeded'||job.status==='completed')return job.result;if(job.status==='failed')throw Error(job.error||'Local job failed.');await new Promise(resolve=>setTimeout(resolve,1000));}throw Error('Processing is still running. Reload the case later.');}
-document.addEventListener('click',event=>{const button=event.target.closest('button');if(!button)return;guarded(async()=>{if(button.dataset.tab){view(button.dataset.tab);if(tab==='models'&&local){modelState=await api('/api/models');renderModels();}}if(button.dataset.case){currentId=button.dataset.case;$('#answer').textContent='Review a source, then ask a question.';await loadCases();}if(button.dataset.question){$('#question').value=button.dataset.question;$('#search-form').requestSubmit();}if(button.dataset.review){const source=button.dataset.review,kind=button.dataset.kind,text=document.querySelector(`textarea[data-source="${source}"]`).value;button.disabled=true;try{if(local){await updateCase(await api('/api/cases/'+currentId+(kind==='segment'?'/segments/':'/documents/')+source+(kind==='document'?'/review':''),kind==='segment'?'PATCH':'POST',{text,expected_revision:selected().revision}));}else{const c=selected(),item=(kind==='segment'?c.segments:c.documents).find(s=>s.id===source);if(!text.trim())throw Error('Source text cannot be empty.');item.text=text;item.reviewed=true;item.reviewed_by=actor;record(kind==='segment'?'segment_reviewed':'document_reviewed');save();render();}notify('Source reviewed. Any earlier draft or approval is invalidated.');}finally{button.disabled=false;}}});});
+document.addEventListener('click',event=>{const button=event.target.closest('button');if(!button)return;guarded(async()=>{if(button.dataset.tab){view(button.dataset.tab);if(tab==='models'&&local){modelState=await api('/api/models');renderModels();await refreshMonitoring();}}if(button.dataset.case){currentId=button.dataset.case;$('#answer').textContent='Review a source, then ask a question.';await loadCases();}if(button.dataset.question){$('#question').value=button.dataset.question;$('#search-form').requestSubmit();}if(button.dataset.review){const source=button.dataset.review,kind=button.dataset.kind,text=document.querySelector(`textarea[data-source="${source}"]`).value;button.disabled=true;try{if(local){await updateCase(await api('/api/cases/'+currentId+(kind==='segment'?'/segments/':'/documents/')+source+(kind==='document'?'/review':''),kind==='segment'?'PATCH':'POST',{text,expected_revision:selected().revision}));}else{const c=selected(),item=(kind==='segment'?c.segments:c.documents).find(s=>s.id===source);if(!text.trim())throw Error('Source text cannot be empty.');item.text=text;item.reviewed=true;item.reviewed_by=actor;record(kind==='segment'?'segment_reviewed':'document_reviewed');save();render();}notify('Source reviewed. Any earlier draft or approval is invalidated.');}finally{button.disabled=false;}}});});
 $('#actor').addEventListener('change',()=>guarded(async()=>{actor=$('#actor').value;$('#answer').textContent='Review a source, then ask a question.';await loadCases();}));
 $('#search-form').addEventListener('submit',event=>{event.preventDefault();guarded(async()=>{const question=$('#question').value;const result=local?await api('/api/cases/'+currentId+'/question','POST',{question}):retrieve(selected(),question);$('#answer').innerHTML=`<div class="eyebrow">${result.abstained?'INSUFFICIENT EVIDENCE':'SOURCE EXCERPTS'} · ${esc(result.mode)}</div><p>${esc(result.answer).replaceAll('\n','<br>')}</p>${result.sources.map(s=>`<div class="quote"><small>${esc(s.id)} · ${esc(s.title)}${s.start!=null?' · '+stamp(s.start):''}</small><p>${esc(s.text)}</p></div>`).join('')}`;});});
 $('#make-draft').onclick=()=>guarded(async()=>{if(local){await updateCase(await api('/api/cases/'+currentId+'/draft','POST',{}));}else{const c=selected();if(!c.segments.length||c.segments.some(s=>!s.reviewed)||c.documents.some(d=>!d.reviewed))throw Error('Review every transcript segment and document before drafting.');record('draft_prepared');c.draft={text:c.segments.map(s=>`[${stamp(s.start)}] ${s.text}`).join('\n\n'),sources:[...c.segments,...c.documents].map(s=>({...s,title:s.name||'Reviewed transcript'})),revision:c.revision};c.status='draft_ready';save();render();}notify('A source-linked extractive draft is ready.');});
@@ -34,4 +35,50 @@ $('#classify').onclick=()=>guarded(async()=>{if(local){const result=await api('/
 $('#upload-form').onsubmit=event=>{event.preventDefault();guarded(async()=>{const file=$('#upload-file').files[0];if(!file)throw Error('Choose a synthetic file.');const form=new FormData();form.append('file',file);form.append('kind',$('#upload-kind').value);form.append('language',$('#upload-language').value);const job=await api('/api/cases/'+currentId+'/upload','POST',form);notify('Local processing queued…');await waitJob(job.job_id);await loadCases();notify('File processed locally. Review the extracted content.');});};
 $('#new-case').onclick=()=>guarded(async()=>{const title=prompt('Synthetic case title');if(!title)return;const c=await api('/api/cases','POST',{title});currentId=c.id;await loadCases();});
 $('#reset').onclick=()=>{if(local){notify('Local evidence is preserved. Create a new synthetic case for a fresh exercise.');return;}cases=seedCases();modelState={versions:[],active_version:null,previous_version:null};currentId='demo-case-a';actor='officer-a';$('#actor').value=actor;save();render();notify('The browser sandbox has been reset.');};
-async function init(){if(['127.0.0.1','localhost','[::1]'].includes(location.hostname))try{const response=await fetch('/api/status');if(response.ok){const status=await response.json();if(isLocalBackend(status)){local=true;capabilities=status.capabilities;$('#mode').textContent=status.identity_mode==='simulated_container_network'?'Local Docker service':'Local Python service';$('#notice').textContent='Local synthetic demonstration. Processing uses your Python service; personas remain simulated identities. Use fictitious files only.';$('#upload-area').classList.remove('hidden');$('#new-case').classList.remove('hidden');$('#model-explanation').textContent='A local sklearn TF-IDF / logistic regression classifier uses 24 synthetic training and 8 held-out examples. Metrics are recorded in local MLflow; these scores are not production validation.';$('#train-weak').classList.add('hidden');$('#mlflow-notice').textContent='Local MLflow stores metrics and model version references without raw case content.';modelState=await api('/api/models');}}}catch{}await loadCases();}init().catch(e=>notify(e.message,true));
+function loginRequired(){
+ cases=[];currentId=null;$('#case-list').innerHTML='';$('main').classList.add('hidden');
+ $('#login-form').classList.remove('hidden');$('#logout').classList.add('hidden');$('#auth-status').textContent='Sign in with your local account.';
+}
+async function refreshMonitoring(){
+ if(!local||!capabilities.model_monitoring)return;
+ $('#monitor-area').classList.remove('hidden');$('#run-monitor').disabled=actor!=='reviewer';
+ const result=await api('/api/models/monitoring'),latest=result.runs?.[0];
+ $('#monitor-result').textContent=latest?`${latest.status} · ${latest.model_version||'No active classifier'} · ${new Date(latest.created_at).toLocaleString()}${latest.metrics?' · accuracy '+latest.metrics.accuracy.toFixed(2)+' · macro-F1 '+latest.metrics.macro_f1.toFixed(2):''}`:'No evaluation has run yet.';
+}
+$('#run-monitor').onclick=()=>guarded(async()=>{await api('/api/models/monitoring/run','POST');await refreshMonitoring();});
+async function signedIn(principal){
+ actor=principal.id;$('#actor').value=actor;$('#actor').disabled=true;
+ $('#login-form').classList.add('hidden');$('#logout').classList.remove('hidden');$('main').classList.remove('hidden');
+ $('#auth-status').textContent='Signed in as '+principal.name+' (local account)';
+ if(modelAccess)modelState=await api('/api/models');
+ await loadCases();await refreshMonitoring();$('#train').disabled=actor!=='reviewer';
+}
+$('#login-form').onsubmit=event=>{event.preventDefault();guarded(async()=>{
+ const response=await fetch('/api/auth/login',{method:'POST',headers:{'Content-Type':'application/json'},
+ body:JSON.stringify({username:$('#login-user').value,password:$('#login-password').value})});
+ $('#login-password').value='';const result=await response.json();if(!response.ok)throw Error(result.detail||'Local login failed.');
+ csrf=result.csrf;sessionStorage.setItem('lab-csrf',csrf);await signedIn(result.principal);
+});};
+$('#logout').onclick=()=>guarded(async()=>{await api('/api/auth/logout','POST');csrf='';sessionStorage.removeItem('lab-csrf');loginRequired();});
+async function init(){
+ if(['127.0.0.1','localhost','[::1]'].includes(location.hostname)){
+  const response=await fetch('/api/status');if(response.ok){const status=await response.json();if(isLocalBackend(status)){
+   local=true;capabilities=status.capabilities;authenticated=!status.simulated_identity;
+   modelAccess=!status.cpe||status.cpe.phase==='not_configured';
+   $('[data-tab="models"]').classList.toggle('hidden',!modelAccess);
+   if(!modelAccess){$('#upload-kind option[value="audio"]').remove();$('#upload-file').accept='.txt,.md,.csv,.pdf,.png,.jpg,.jpeg';}
+   $('#mode').textContent=authenticated?'Authenticated local service':'Local synthetic service';
+   $('#notice').textContent=authenticated?'Synthetic files only. Local password sessions, case permissions and local processing are enabled. Institutional identity integration is not configured.':'Local synthetic demonstration. Personas remain simulated identities. Use fictitious files only.';
+   $('#upload-area').classList.remove('hidden');$('#new-case').classList.remove('hidden');$('#train-weak').classList.add('hidden');
+   $('#model-explanation').textContent='A local sklearn TF-IDF / logistic regression classifier uses 24 synthetic training and 8 held-out examples. Metrics are recorded in MLflow; these scores are not production validation.';
+   $('#mlflow-notice').textContent='Local MLflow stores metrics and model references without raw case content.';
+   if(authenticated){$('#auth-area').classList.remove('hidden');$('#actor').disabled=true;loginRequired();
+    if(csrf){const me=await fetch('/api/auth/me');if(me.ok)await signedIn((await me.json()).principal);}
+    return;
+   }
+   modelState=await api('/api/models');
+  }}
+ }
+ await loadCases();
+}
+init().catch(e=>notify(e.message,true));

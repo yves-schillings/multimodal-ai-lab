@@ -6,6 +6,8 @@ The software source code, tests and deployment scripts are distributed under [Ap
 
 A synthetic-data lab for document classification, speech transcription, reviewed-source search and human approval. The application connects a case workflow to measured model training and release decisions.
 
+Optional local OKD deployment adds offline BGE-M3/pgvector/Qwen3 RAG, real password sessions, case authorization and recurring MLflow classifier evaluation. See the [implementation guide](docs/deployment/local-implementation.md), [isolated CPE profiles](docs/deployment/local-cpe.md) and [free Jupyter/KServe/training platform](docs/deployment/local-ai-platform.md). These are opt-in server features; the default desktop demo still uses simulated actors. Exact deployment acceptance and remaining limits are recorded separately from unit tests.
+
 ## Run locally
 
 On Windows, double-click `Start.cmd`. The first launch creates `.venv` and installs the pinned dependencies. The application opens at **http://127.0.0.1:8770** and remains bound to loopback.
@@ -41,7 +43,7 @@ LAB_HOST_PORT=8780 docker compose -f deploy/docker/compose.yaml up -d --build
 python scripts/demo_e2e.py --phase before --base http://127.0.0.1:8780
 ```
 
-`scripts/demo_e2e.py` runs a synthetic dossier end to end (upload, review, draft, separate approval, question, denied access for another actor, training, promotion, rollback) and `--phase after` verifies that everything survived a restart. The case store remains SQLite on a volume; actors remain simulated identities. Details, verified results and limits: [docs/deployment.md](docs/deployment.md). The application, MLflow and PostgreSQL are now accepted locally on CRC with the OKD preset: [deployment guide](deploy/openshift/README.md) and [9 October evidence](docs/evidence/2026-10-09-openshift-local/README.md). Shared hosting and OpenShift AI remain separate, unaccepted extensions.
+`scripts/demo_e2e.py` runs a synthetic dossier end to end (upload, review, draft, separate approval, question, denied access for another actor, training, promotion, rollback) and `--phase after` verifies that everything survived a restart. The case store remains SQLite on a volume; actors remain simulated identities. Details, verified results and limits: [docs/deployment.md](docs/deployment.md). The application, MLflow and PostgreSQL are now accepted locally on CRC with the OKD preset: [deployment guide](deploy/openshift/README.md) and [9 October evidence](docs/evidence/2026-10-09-openshift-local/README.md). Later accepted local extensions add authenticated RAG, isolated AI CPEs and selected Jupyter/KServe/training components: [current extension evidence](docs/evidence/2026-10-09-local-ai-extensions/README.md). Shared production hosting and the complete OpenShift AI product remain separate work.
 
 ## Document input
 
@@ -57,7 +59,7 @@ The browser-only demonstration has no live speech or LLM inference, server-side 
 
 ## Architecture and implementation status
 
-See [component register](docs/components.md), [the eight-layer responsibility model](docs/ai-layers.md) (design by Yves Schillings) and [architecture](docs/architecture.md). The case store uses SQLite and one durable worker. MLflow's PostgreSQL backend and model artifact publication run in Compose. A PostgreSQL case store, pgvector, distributed messaging, trusted identity, generative RAG and OpenShift AI deployment remain extensions.
+See [component register](docs/components.md), [the eight-layer responsibility model](docs/ai-layers.md) (design by Yves Schillings) and [architecture](docs/architecture.md). The case store uses SQLite and one durable worker. MLflow's PostgreSQL backend and model artifact publication run in Compose. The optional local OKD implementation adds pgvector, offline generative RAG, local authenticated accounts and CPE control gates. Free lightweight KServe serving, Jupyter workbench and native CPU training are accepted separately; the complete OpenShift AI product is not installed. Shared case PostgreSQL, distributed messaging, organizational identity and GPU execution remain additional work. Earlier diagrams describe their original hosting scope; consult the current implementation/evidence guides for later verified capabilities.
 
 ### Architecture figures for review
 

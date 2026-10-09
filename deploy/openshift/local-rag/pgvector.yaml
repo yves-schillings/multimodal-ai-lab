@@ -1,0 +1,89 @@
+# Optional local RAG service. It never replaces the existing MLflow database/PVC.
+# Create lab-vector-admin and lab-vector-client Secrets before applying.
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: lab-vector-data
+  labels: {app.kubernetes.io/name: lab-vector, app.kubernetes.io/part-of: multimodal-ai-lab}
+spec:
+  accessModes: [ReadWriteOnce]
+  resources:
+    requests: {storage: 5Gi}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: lab-vector
+spec:
+  selector: {app.kubernetes.io/name: lab-vector}
+  ports: [{port: 5432, targetPort: 5432}]
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: lab-vector
+spec:
+  serviceName: lab-vector
+  replicas: 1
+  selector:
+    matchLabels: {app.kubernetes.io/name: lab-vector}
+  template:
+    metadata:
+      labels: {app.kubernetes.io/name: lab-vector, app.kubernetes.io/part-of: multimodal-ai-lab}
+    spec:
+      automountServiceAccountToken: false
+      securityContext: {runAsNonRoot: true, seccompProfile: {type: RuntimeDefault}}
+      containers:
+        - name: postgres
+          image: docker.io/pgvector/pgvector@sha256:a97d77306ff47cc1d8add4d000cec2207da2e110746318df3137ce53c337ca30
+          args: [postgres, "-c", "unix_socket_directories=/var/run/postgresql", "-c", "password_encryption=scram-sha-256"]
+          env:
+            - {name: POSTGRES_DB, value: lab_vectors}
+            - {name: POSTGRES_USER, value: vector_admin}
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef: {name: lab-vector-admin, key: password}
+            - {name: PGDATA, value: /var/lib/postgresql/data/pgdata}
+            - {name: POSTGRES_INITDB_ARGS, value: "--auth-host=scram-sha-256"}
+          ports: [{containerPort: 5432}]
+          volumeMounts:
+            - {name: data, mountPath: /var/lib/postgresql/data}
+            - {name: socket, mountPath: /var/run/postgresql}
+            - {name: temporary, mountPath: /tmp}
+          resources:
+            requests: {cpu: 100m, memory: 256Mi}
+            limits: {cpu: "1", memory: 768Mi}
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities: {drop: [ALL]}
+          startupProbe:
+            exec: {command: [pg_isready, -h, 127.0.0.1, -U, vector_admin, -d, lab_vectors]}
+            periodSeconds: 5
+            failureThreshold: 36
+          readinessProbe:
+            exec: {command: [pg_isready, -h, 127.0.0.1, -U, vector_admin, -d, lab_vectors]}
+            timeoutSeconds: 3
+          livenessProbe:
+            exec: {command: [pg_isready, -h, 127.0.0.1, -U, vector_admin, -d, lab_vectors]}
+            timeoutSeconds: 3
+            periodSeconds: 20
+      volumes:
+        - name: data
+          persistentVolumeClaim: {claimName: lab-vector-data}
+        - {name: socket, emptyDir: {}}
+        - {name: temporary, emptyDir: {}}
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata: {name: lab-vector-isolation}
+spec:
+  podSelector:
+    matchLabels: {app.kubernetes.io/name: lab-vector}
+  policyTypes: [Ingress, Egress]
+  egress: []
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels: {app.kubernetes.io/name: lab-app}
+      ports: [{port: 5432, protocol: TCP}]

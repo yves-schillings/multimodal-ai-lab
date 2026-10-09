@@ -16,7 +16,7 @@
 | `static/` | Interface that uses the Python API on loopback | Review, search, drafting and model lifecycle |
 | `public-demo/` | Standalone synthetic browser exercise | Naive Bayes gate comparison; no upload or server identity |
 
-The bounded workflow endpoint is deterministic orchestration. It is not an autonomous LLM agent. Retrieval is extractive, without embeddings or generative inference in this release.
+The bounded workflow endpoint is deterministic orchestration. It is not an autonomous LLM agent. The default desktop/browser demonstration uses extractive retrieval. The opt-in, actually accepted local OKD configuration adds BGE-M3 embeddings, pgvector and Qwen3:4b generation with checked citations, plus local password sessions, CPE gates and recurring classifier canaries. See the [implementation guide](deployment/local-implementation.md), [AI platform guide](deployment/local-ai-platform.md) and [current extension evidence](evidence/2026-10-09-local-ai-extensions/README.md).
 
 ## Demonstration route
 
@@ -29,11 +29,23 @@ The bounded workflow endpoint is deterministic orchestration. It is not an auton
 7. Prepare the speech model, import a fictional audio recording, and inspect timestamps and original text before accepting it.
 8. Read the deployment policy tests alongside the target architecture. No external pool is active.
 
+## Current optional server modules
+
+| Source | Responsibility |
+| --- | --- |
+| `lab/auth.py`, `lab/cpe.py` | Local account sessions and evidence-bound project activation |
+| `lab/rag.py`, `lab/vector_retrieval.py`, `lab/local_inference.py` | Current-source vector retrieval and offline cited generation |
+| `lab/inference_gateway.py` | Scoped CPE model credentials, pinned models and bounded inference requests |
+| `lab/monitoring.py` | Recurring MLflow-linked synthetic classifier evaluation |
+| `scripts/platform_training.py`, `scripts/platform_predictor.py` | Real native CPU training and the private KServe classifier endpoint |
+
+The complete source suite now passes 104 Python tests plus 15 subtests; deployment acceptance is recorded separately. The following 7 October results remain dated baseline evidence.
+
 ## Verification evidence
 
 On 7 October 2026, the closing local run passed 63 Python tests and 15 subtests, including five added scanned-PDF tests. Use `python -m pytest tests` so function-style tests are not omitted by unittest-only discovery. Browser core checks passed. The rebuilt Compose application passed 27 checks before restart and 8 afterwards. Real CPU speech inference processed a 10.648-second synthetic English recording in 2.851 seconds and produced three segments. A different officer was denied access. These are integration checks, not a speech accuracy benchmark. A later offline fixture measurement gives French WER 67.11% and Dutch WER 71.01% on ten formant-generated clips per language. Representative human-speech quality remains to be evaluated. See [speech evaluation](speech-evaluation.md). Reports and tested-source hashes are retained in [the closing evidence package](evidence/2026-10-07-closing/README.md).
 
-The speech runtime pins PyAV 16.1.0 because the tested faster-whisper decoder uses an argument no longer accepted by PyAV 19.0.1. The pinned combination passed real decoding and inference. Image OCR and image-only PDF fallback are verified in Docker, including an arbitrary non-root UID with network disabled. Distributed queues, embedding RAG, generative assistants and trusted identity remain extensions. The container vulnerability scan has unresolved findings recorded in the evidence package.
+The speech runtime pins PyAV 16.1.0 because the tested faster-whisper decoder uses an argument no longer accepted by PyAV 19.0.1. The pinned combination passed real decoding and inference. Image OCR and image-only PDF fallback are verified in Docker, including an arbitrary non-root UID with network disabled. The later local OKD extension accepts embedding/generative RAG and credential-bound local identity; distributed queues and organizational OpenID Connect remain additional work. The container vulnerability scan has unresolved findings recorded in the evidence package.
 
 ## Release and container acceptance
 

@@ -1,5 +1,7 @@
 # Deployment stages
 
+**Current local extension, 9 October 2026:** offline pgvector/BGE-M3/Qwen3 RAG, local password sessions, two isolated AI CPEs, recurring MLflow classifier evaluation and selected Jupyter/KServe/native CPU training components are now accepted on local OKD. See the [current implementation](deployment/local-implementation.md) and [extension evidence](evidence/2026-10-09-local-ai-extensions/README.md). The baseline/diagrams below retain their original hosting scope; organizational identity, shared production hosting and the complete OpenShift AI product remain separate work.
+
 Status vocabulary used in this document and in the architecture deck: **Implemented** (runs and is
 tested), **Prepared** (code or configuration exists, not verified), **Target** (design only).
 

@@ -1,0 +1,632 @@
+{
+  "scope": "Actual local CPU-only OKD extensions with fictional data. No complete OpenShift AI, GPU or LLM fine-tuning claim.",
+  "accepted_date": "2026-10-09",
+  "runtime": {
+    "crc_memory_mib": 24576,
+    "logical_cpus": 6,
+    "cpe_gateway_image_sha256": "8cee7703d342f30dc04e730ff3b39dce13924551ee49dd005899f496d524a7c6"
+  },
+  "cpe": {
+    "a": {
+      "verification": {
+        "passed": true,
+        "checks": [
+          {
+            "name": "restricted non-root application",
+            "passed": true
+          },
+          {
+            "name": "runtime token is not mounted",
+            "passed": true
+          },
+          {
+            "name": "approved immutable app image",
+            "passed": true
+          },
+          {
+            "name": "separate project storage is Bound",
+            "passed": true
+          },
+          {
+            "name": "CPU memory storage and GPU admission budgets",
+            "passed": true
+          },
+          {
+            "name": "runtime cannot update networkpolicies in lab-cpe-a",
+            "passed": true
+          },
+          {
+            "name": "runtime cannot update configmaps in lab-cpe-a",
+            "passed": true
+          },
+          {
+            "name": "runtime cannot get secrets in lab-cpe-a",
+            "passed": true
+          },
+          {
+            "name": "runtime cannot delete persistentvolumeclaims in lab-cpe-a",
+            "passed": true
+          },
+          {
+            "name": "runtime cannot create pods in lab-cpe-a",
+            "passed": true
+          },
+          {
+            "name": "runtime cannot delete configmaps in lab-cpe-control",
+            "passed": true
+          },
+          {
+            "name": "admission rejects unapproved workload image",
+            "passed": true
+          },
+          {
+            "name": "admission rejects host filesystem mounts",
+            "passed": true
+          },
+          {
+            "name": "admission refuses excess project storage",
+            "passed": true
+          },
+          {
+            "name": "network own application open",
+            "passed": true
+          },
+          {
+            "name": "network other project closed",
+            "passed": true
+          },
+          {
+            "name": "network primary lab closed",
+            "passed": true
+          },
+          {
+            "name": "network unapproved model endpoint closed",
+            "passed": true
+          },
+          {
+            "name": "network public Internet closed",
+            "passed": true
+          },
+          {
+            "name": "approved inference gateway reachable",
+            "passed": true
+          },
+          {
+            "name": "gateway rejects missing project token",
+            "passed": true
+          },
+          {
+            "name": "gateway denies remote or unapproved model",
+            "passed": true
+          },
+          {
+            "name": "database role denied lab_vectors",
+            "passed": true
+          },
+          {
+            "name": "database role denied cpe_vectors_b",
+            "passed": true
+          },
+          {
+            "name": "database role denied postgres",
+            "passed": true
+          },
+          {
+            "name": "tenant business API disabled before activation",
+            "passed": true
+          },
+          {
+            "name": "verification phase denies tenant business access",
+            "passed": true
+          },
+          {
+            "name": "reviewer verifier can use gated application",
+            "passed": true
+          },
+          {
+            "name": "unapproved model actions refused",
+            "passed": true
+          },
+          {
+            "name": "actual isolated document job completed",
+            "passed": true
+          },
+          {
+            "name": "reviewed source persisted",
+            "passed": true
+          },
+          {
+            "name": "isolated reviewed evidence retrieval",
+            "passed": true
+          },
+          {
+            "name": "actual offline RAG cites source text",
+            "passed": true
+          },
+          {
+            "name": "unsupported CPE RAG question abstains",
+            "passed": true
+          },
+          {
+            "name": "corrected revision replaces old vector evidence",
+            "passed": true
+          },
+          {
+            "name": "another actor cannot override reviewer identity",
+            "passed": true
+          },
+          {
+            "name": "other project credentials rejected",
+            "passed": true
+          },
+          {
+            "name": "verification leaves project inactive for tenants",
+            "passed": true
+          },
+          {
+            "name": "protected resources unchanged by verification",
+            "passed": true
+          }
+        ]
+      },
+      "lifecycle": {
+        "passed": true,
+        "checks": [
+          {
+            "name": "activation rejects evidence for different resources",
+            "passed": true
+          },
+          {
+            "name": "verified active project admits its own account",
+            "passed": true
+          },
+          {
+            "name": "active case belongs to authenticated project actor",
+            "passed": true
+          },
+          {
+            "name": "active project still rejects unapproved speech processing",
+            "passed": true
+          },
+          {
+            "name": "active project still rejects model release actions",
+            "passed": true
+          },
+          {
+            "name": "other actor cannot select this session",
+            "passed": true
+          },
+          {
+            "name": "revocation denies existing authenticated case access",
+            "passed": true
+          },
+          {
+            "name": "expiry denies existing authenticated case access",
+            "passed": true
+          },
+          {
+            "name": "unreadable activation control fails closed",
+            "passed": true
+          },
+          {
+            "name": "authenticated session persists after project pod replacement",
+            "passed": true
+          },
+          {
+            "name": "isolated case persists after project pod replacement",
+            "passed": true
+          },
+          {
+            "name": "activation survives project pod replacement",
+            "passed": true
+          },
+          {
+            "name": "all protected project resources and storage UID retained",
+            "passed": true
+          }
+        ]
+      },
+      "browser": {
+        "passed": true,
+        "checks": [
+          {
+            "name": "CPE browser login loads actual cases",
+            "passed": true
+          },
+          {
+            "name": "CPE browser workspace is visible",
+            "passed": true
+          },
+          {
+            "name": "Model administration tab is hidden",
+            "passed": true
+          },
+          {
+            "name": "Unapproved audio input is absent",
+            "passed": true
+          },
+          {
+            "name": "Login makes no forbidden model request",
+            "passed": true
+          },
+          {
+            "name": "Browser completes without JavaScript error",
+            "passed": true
+          }
+        ]
+      }
+    },
+    "b": {
+      "verification": {
+        "passed": true,
+        "checks": [
+          {
+            "name": "restricted non-root application",
+            "passed": true
+          },
+          {
+            "name": "runtime token is not mounted",
+            "passed": true
+          },
+          {
+            "name": "approved immutable app image",
+            "passed": true
+          },
+          {
+            "name": "separate project storage is Bound",
+            "passed": true
+          },
+          {
+            "name": "CPU memory storage and GPU admission budgets",
+            "passed": true
+          },
+          {
+            "name": "runtime cannot update networkpolicies in lab-cpe-b",
+            "passed": true
+          },
+          {
+            "name": "runtime cannot update configmaps in lab-cpe-b",
+            "passed": true
+          },
+          {
+            "name": "runtime cannot get secrets in lab-cpe-b",
+            "passed": true
+          },
+          {
+            "name": "runtime cannot delete persistentvolumeclaims in lab-cpe-b",
+            "passed": true
+          },
+          {
+            "name": "runtime cannot create pods in lab-cpe-b",
+            "passed": true
+          },
+          {
+            "name": "runtime cannot delete configmaps in lab-cpe-control",
+            "passed": true
+          },
+          {
+            "name": "admission rejects unapproved workload image",
+            "passed": true
+          },
+          {
+            "name": "admission rejects host filesystem mounts",
+            "passed": true
+          },
+          {
+            "name": "admission refuses excess project storage",
+            "passed": true
+          },
+          {
+            "name": "network own application open",
+            "passed": true
+          },
+          {
+            "name": "network other project closed",
+            "passed": true
+          },
+          {
+            "name": "network primary lab closed",
+            "passed": true
+          },
+          {
+            "name": "network unapproved model endpoint closed",
+            "passed": true
+          },
+          {
+            "name": "network public Internet closed",
+            "passed": true
+          },
+          {
+            "name": "approved inference gateway reachable",
+            "passed": true
+          },
+          {
+            "name": "gateway rejects missing project token",
+            "passed": true
+          },
+          {
+            "name": "gateway denies remote or unapproved model",
+            "passed": true
+          },
+          {
+            "name": "database role denied lab_vectors",
+            "passed": true
+          },
+          {
+            "name": "database role denied cpe_vectors_a",
+            "passed": true
+          },
+          {
+            "name": "database role denied postgres",
+            "passed": true
+          },
+          {
+            "name": "tenant business API disabled before activation",
+            "passed": true
+          },
+          {
+            "name": "verification phase denies tenant business access",
+            "passed": true
+          },
+          {
+            "name": "reviewer verifier can use gated application",
+            "passed": true
+          },
+          {
+            "name": "unapproved model actions refused",
+            "passed": true
+          },
+          {
+            "name": "actual isolated document job completed",
+            "passed": true
+          },
+          {
+            "name": "reviewed source persisted",
+            "passed": true
+          },
+          {
+            "name": "isolated reviewed evidence retrieval",
+            "passed": true
+          },
+          {
+            "name": "actual offline RAG cites source text",
+            "passed": true
+          },
+          {
+            "name": "unsupported CPE RAG question abstains",
+            "passed": true
+          },
+          {
+            "name": "corrected revision replaces old vector evidence",
+            "passed": true
+          },
+          {
+            "name": "another actor cannot override reviewer identity",
+            "passed": true
+          },
+          {
+            "name": "other project credentials rejected",
+            "passed": true
+          },
+          {
+            "name": "verification leaves project inactive for tenants",
+            "passed": true
+          },
+          {
+            "name": "protected resources unchanged by verification",
+            "passed": true
+          }
+        ]
+      },
+      "lifecycle": {
+        "passed": true,
+        "checks": [
+          {
+            "name": "activation rejects evidence for different resources",
+            "passed": true
+          },
+          {
+            "name": "verified active project admits its own account",
+            "passed": true
+          },
+          {
+            "name": "active case belongs to authenticated project actor",
+            "passed": true
+          },
+          {
+            "name": "active project still rejects unapproved speech processing",
+            "passed": true
+          },
+          {
+            "name": "active project still rejects model release actions",
+            "passed": true
+          },
+          {
+            "name": "other actor cannot select this session",
+            "passed": true
+          },
+          {
+            "name": "revocation denies existing authenticated case access",
+            "passed": true
+          },
+          {
+            "name": "expiry denies existing authenticated case access",
+            "passed": true
+          },
+          {
+            "name": "unreadable activation control fails closed",
+            "passed": true
+          },
+          {
+            "name": "authenticated session persists after project pod replacement",
+            "passed": true
+          },
+          {
+            "name": "isolated case persists after project pod replacement",
+            "passed": true
+          },
+          {
+            "name": "activation survives project pod replacement",
+            "passed": true
+          },
+          {
+            "name": "all protected project resources and storage UID retained",
+            "passed": true
+          }
+        ]
+      },
+      "browser": {
+        "passed": true,
+        "checks": [
+          {
+            "name": "CPE browser login loads actual cases",
+            "passed": true
+          },
+          {
+            "name": "CPE browser workspace is visible",
+            "passed": true
+          },
+          {
+            "name": "Model administration tab is hidden",
+            "passed": true
+          },
+          {
+            "name": "Unapproved audio input is absent",
+            "passed": true
+          },
+          {
+            "name": "Login makes no forbidden model request",
+            "passed": true
+          },
+          {
+            "name": "Browser completes without JavaScript error",
+            "passed": true
+          }
+        ]
+      }
+    }
+  },
+  "vector_restart": {
+    "passed": true,
+    "checks": [
+      {
+        "name": "CPE a RAG persists after vector database replacement",
+        "passed": true
+      },
+      {
+        "name": "CPE b RAG persists after vector database replacement",
+        "passed": true
+      },
+      {
+        "name": "Original shared vector PVC UID retained",
+        "passed": true
+      }
+    ]
+  },
+  "ai_platform": {
+    "passed": true,
+    "checks": [
+      {
+        "name": "KServe reports accepted CPU predictor Ready",
+        "passed": true
+      },
+      {
+        "name": "KServe predictor denies missing credential",
+        "passed": true
+      },
+      {
+        "name": "real trained model predicts expected category",
+        "passed": true
+      },
+      {
+        "name": "served model matches accepted artifact",
+        "passed": true
+      },
+      {
+        "name": "actual native training Job completed",
+        "passed": true
+      },
+      {
+        "name": "real classifier training uses separate24/8 split",
+        "passed": true
+      },
+      {
+        "name": "MLflow independently confirms completed run and metrics",
+        "passed": true
+      },
+      {
+        "name": "workbench denies unauthenticated contents",
+        "passed": true
+      },
+      {
+        "name": "workbench authenticated API available",
+        "passed": true
+      },
+      {
+        "name": "native editable training notebook saved",
+        "passed": true
+      },
+      {
+        "name": "actual Python workbench kernel starts",
+        "passed": true
+      },
+      {
+        "name": "workbench calls private KServe predictor",
+        "passed": true
+      },
+      {
+        "name": "workbench has no Internet egress",
+        "passed": true
+      },
+      {
+        "name": "saved notebook survives workbench replacement",
+        "passed": true
+      },
+      {
+        "name": "workbench PVC identity retained",
+        "passed": true
+      }
+    ],
+    "training": {
+      "accuracy": 1.0,
+      "macro_f1": 1.0,
+      "training_samples": 24,
+      "test_samples": 8
+    }
+  },
+  "crc_restart": {
+    "passed": true,
+    "pvc_count": 11,
+    "all_pvc_uids_retained": true,
+    "memory_mib": 24576
+  },
+  "post_application_restart": {
+    "passed": true,
+    "checked_projects": [
+      "a",
+      "b"
+    ],
+    "evidence": "Successful cluster_cpe_rag_acceptance.py run; both actual post-replacement RAG assertions passed before the vector restart checks."
+  },
+  "main_post_extension": {
+    "passed": true,
+    "checks": [
+      {
+        "name": "Main authenticated pgvector and generation configuration retained",
+        "passed": true
+      },
+      {
+        "name": "Main RAG still generates a cited answer after CRC and vector restart",
+        "passed": true
+      },
+      {
+        "name": "Recurring monitoring enabled at1800seconds with retained records",
+        "passed": true
+      },
+      {
+        "name": "Main active classifier release retained",
+        "passed": true
+      }
+    ]
+  }
+}
