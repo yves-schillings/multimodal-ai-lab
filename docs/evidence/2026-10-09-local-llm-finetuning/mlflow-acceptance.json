@@ -1,0 +1,10 @@
+{
+  "passed": true,
+  "run_id": "60daaa23b55147e58c9fa4d74010cf33",
+  "experiment": "local-grounded-llm-lora",
+  "finished_readback": true,
+  "metric_readback": true,
+  "artifact_download_sha256_verified": true,
+  "active_model_changed": false,
+  "promotion": "denied-quality"
+}

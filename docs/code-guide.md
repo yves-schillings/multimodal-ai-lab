@@ -4,17 +4,17 @@
 
 | Component | Responsibility | Useful verification |
 | --- | --- | --- |
-| `app.py` | FastAPI routes, loopback and origin boundary, actor/case checks, bounded uploads | Deny a different officer access before processing input |
-| `lab/store.py` | Source originals, revisions and change history | A stale revision is rejected |
-| `lab/backend_store.py` | Documents, durable job records and reviewed-source draft approval | An unreviewed document blocks drafting; a correction invalidates approval |
-| `lab/jobs.py` | One durable local processing worker | Restart recovery and idempotent insertion |
-| `lab/documents.py` | Bounded text/PDF extraction and optional local image OCR | Unsupported input returns a visible error |
-| `lab/speech.py` | Prepared local faster-whisper inference and audio limits | Transcript segments require human review |
-| `lab/retrieval.py` | Reviewed, case-scoped TF-IDF/lexical evidence search | Missing evidence produces abstention |
-| `lab/models.py` | Sklearn training, held-out evaluation, local MLflow tracking and controlled releases | Passing/rejected candidates and rollback |
-| `lab/deployment_policy.py` | Fail-closed planning decisions for resource pools | Classification, geography, CPE and quota denials |
-| `static/` | Interface that uses the Python API on loopback | Review, search, drafting and model lifecycle |
-| `public-demo/` | Standalone synthetic browser exercise | Naive Bayes gate comparison; no upload or server identity |
+| [`app.py`](../app.py) | FastAPI routes, loopback and origin boundary, actor/case checks, bounded uploads | Deny a different officer access before processing input |
+| [`lab/store.py`](../lab/store.py) | Source originals, revisions and change history | A stale revision is rejected |
+| [`lab/backend_store.py`](../lab/backend_store.py) | Documents, durable job records and reviewed-source draft approval | An unreviewed document blocks drafting; a correction invalidates approval |
+| [`lab/jobs.py`](../lab/jobs.py) | One durable local processing worker | Restart recovery and idempotent insertion |
+| [`lab/documents.py`](../lab/documents.py) | Bounded text/PDF extraction and optional local image OCR | Unsupported input returns a visible error |
+| [`lab/speech.py`](../lab/speech.py) | Prepared local faster-whisper inference and audio limits | Transcript segments require human review |
+| [`lab/retrieval.py`](../lab/retrieval.py) | Reviewed, case-scoped TF-IDF/lexical evidence search | Missing evidence produces abstention |
+| [`lab/models.py`](../lab/models.py) | Sklearn training, held-out evaluation, local MLflow tracking and controlled releases | Passing/rejected candidates and rollback |
+| [`lab/deployment_policy.py`](../lab/deployment_policy.py) | Fail-closed planning decisions for resource pools | Classification, geography, CPE and quota denials |
+| [`static/`](../static/) | Interface that uses the Python API on loopback | Review, search, drafting and model lifecycle |
+| [`public-demo/`](../public-demo/) | Standalone synthetic browser exercise | Naive Bayes gate comparison; no upload or server identity |
 
 The bounded workflow endpoint is deterministic orchestration. It is not an autonomous LLM agent. The default desktop/browser demonstration uses extractive retrieval. The opt-in, actually accepted local OKD configuration adds BGE-M3 embeddings, pgvector and Qwen3:4b generation with checked citations, plus local password sessions, CPE gates and recurring classifier canaries. See the [implementation guide](deployment/local-implementation.md), [AI platform guide](deployment/local-ai-platform.md) and [current extension evidence](evidence/2026-10-09-local-ai-extensions/README.md).
 
@@ -33,11 +33,11 @@ The bounded workflow endpoint is deterministic orchestration. It is not an auton
 
 | Source | Responsibility |
 | --- | --- |
-| `lab/auth.py`, `lab/cpe.py` | Local account sessions and evidence-bound project activation |
-| `lab/rag.py`, `lab/vector_retrieval.py`, `lab/local_inference.py` | Current-source vector retrieval and offline cited generation |
-| `lab/inference_gateway.py` | Scoped CPE model credentials, pinned models and bounded inference requests |
-| `lab/monitoring.py` | Recurring MLflow-linked synthetic classifier evaluation |
-| `scripts/platform_training.py`, `scripts/platform_predictor.py` | Real native CPU training and the private KServe classifier endpoint |
+| [`lab/auth.py`](../lab/auth.py), [`lab/cpe.py`](../lab/cpe.py) | Local account sessions and evidence-bound project activation |
+| [`lab/rag.py`](../lab/rag.py), [`lab/vector_retrieval.py`](../lab/vector_retrieval.py), [`lab/local_inference.py`](../lab/local_inference.py) | Current-source vector retrieval and offline cited generation |
+| [`lab/inference_gateway.py`](../lab/inference_gateway.py) | Scoped CPE model credentials, pinned models and bounded inference requests |
+| [`lab/monitoring.py`](../lab/monitoring.py) | Recurring MLflow-linked synthetic classifier evaluation |
+| [`scripts/platform_training.py`](../scripts/platform_training.py), [`scripts/platform_predictor.py`](../scripts/platform_predictor.py) | Real native CPU training and the private KServe classifier endpoint |
 
 The complete source suite now passes 104 Python tests plus 15 subtests; deployment acceptance is recorded separately. The following 7 October results remain dated baseline evidence.
 
@@ -49,9 +49,15 @@ The speech runtime pins PyAV 16.1.0 because the tested faster-whisper decoder us
 
 ## Release and container acceptance
 
-`tests/test_model_publication.py` reloads a model downloaded from MLflow and compares its
+[`tests/test_model_publication.py`](../tests/test_model_publication.py) reloads a model downloaded from MLflow and compares its
 inference result, then checks that failed publication, altered artifacts, unavailable evidence
 and legacy unpublished candidates cannot be released. An unavailable registry also blocks rollback.
-`scripts/container_acceptance.py` exercises the application and synthetic image OCR with an
-arbitrary non-root UID and network disabled. `deploy/openshift/Check-LocalHost.ps1` reports local
+[`scripts/container_acceptance.py`](../scripts/container_acceptance.py) exercises the application and synthetic image OCR with an
+arbitrary non-root UID and network disabled. [`deploy/openshift/Check-LocalHost.ps1`](../deploy/openshift/Check-LocalHost.ps1) reports local
 resources without installing software or changing the host.
+
+## Article source references
+
+The article links its explanations to the corresponding Python modules, acceptance scripts and deployment manifests. The [CPE source table](deployment/local-cpe.md#source-code-by-control-family) explains each linked implementation in French. The [authorized multi-project design](https://secloudis.com/ai-lab-multimodal-case-processing/#CrossProjectWorkspace) remains a specified extension, not an implemented federated retrieval path.
+
+The [RAG request flow](deployment/local-implementation.md#3-how-one-rag-request-works) connects the browser request, case permission check, BGE-M3 embeddings, pgvector retrieval, Qwen3:4b generation and final source checks. The default lexical demo and the accepted optional OKD RAG are separate execution profiles.

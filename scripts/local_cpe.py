@@ -183,6 +183,35 @@ class Controller:
         self.save('profile-'+key+'.json',profile);self.gate(key,'provisioned')
         print('Updated pinned local CPE image. Fresh verification is mandatory before activation.')
 
+    def renew(self,key,approval,hours=24):
+        """Owner-requested renewal, retaining scope and data, never auto-activating."""
+        if not isinstance(approval,str) or not approval.strip():
+            raise ValueError('A new explicit owner approval reference is required')
+        if type(hours) is not int or not 1<=hours<=24:
+            raise ValueError('Renewal must be between one and twenty-four hours')
+        ns=self.namespace(key)
+        if self.get('namespace',ns)['metadata'].get('labels',{}).get('lab.multimodal.local/cpe')!='true':
+            raise RuntimeError('Only operator-owned local CPEs can be renewed')
+        cm=self.get('configmap','cpe-profile',ns)
+        profile=json.loads(cm['data']['profile.json'])
+        if profile['key']!=key or profile['namespace']!=ns or '@sha256:' not in profile['image']:
+            raise RuntimeError('Renewal requires the unchanged pinned project profile')
+        if approval.strip()==profile['approval']:
+            raise ValueError('Renewal requires a distinct new approval reference')
+        before=self.snapshot(key)
+        self.save('renewal-'+key+'-'+str(time.time_ns())+'.json',
+                  {'previous_profile':profile,'resource_digest':digest(before),'requested_hours':hours,
+                   'new_approval':approval.strip(),'requested_at':time.time()})
+        self.gate(key,'revoked')
+        updated={**profile,'approval':approval.strip(),'expires':time.time()+hours*3600}
+        # Optimistic concurrency: never overwrite a concurrently edited approval or scope.
+        self.oc('replace','-f','-',payload={'apiVersion':'v1','kind':'ConfigMap',
+            'metadata':{'name':'cpe-profile','namespace':ns,'resourceVersion':cm['metadata']['resourceVersion']},
+            'data':{**cm['data'],'profile.json':json.dumps(updated)}})
+        self.save('profile-'+key+'.json',updated)
+        self.gate(key,'provisioned')
+        print('Renewed local CPE '+key+' approval. Existing data and scope retained; fresh verify/activate required.')
+
     def snapshot(self,key):
         ns=self.namespace(key);out={}
         for kind,name in [('namespace',ns),('resourcequota','cpe-budget'),('limitrange','cpe-container-limits'),
@@ -223,15 +252,17 @@ class Controller:
 
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('command',choices=['provision','activate','revoke','upgrade-image'])
+    parser.add_argument('command',choices=['provision','activate','revoke','upgrade-image','renew'])
     parser.add_argument('--project',choices=PROJECTS,required=True)
     parser.add_argument('--admin-kubeconfig',type=Path,required=True)
     parser.add_argument('--private-dir',type=Path,required=True)
     parser.add_argument('--approval-reference')
+    parser.add_argument('--hours',type=int,default=24)
     args=parser.parse_args();controller=Controller(args.admin_kubeconfig,args.private_dir)
     if args.command=='provision':controller.provision(args.project,args.approval_reference or '')
     elif args.command=='activate':controller.activate(args.project)
     elif args.command=='upgrade-image':controller.upgrade_image(args.project)
+    elif args.command=='renew':controller.renew(args.project,args.approval_reference or '',args.hours)
     else:controller.gate(args.project,'revoked');print('CPE revoked. Volumes and audit evidence retained.')
 
 

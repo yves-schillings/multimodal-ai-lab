@@ -8,7 +8,25 @@ A synthetic-data lab for document classification, speech transcription, reviewed
 
 Optional local OKD deployment adds offline BGE-M3/pgvector/Qwen3 RAG, real password sessions, case authorization and recurring MLflow classifier evaluation. See the [implementation guide](docs/deployment/local-implementation.md), [isolated CPE profiles](docs/deployment/local-cpe.md) and [free Jupyter/KServe/training platform](docs/deployment/local-ai-platform.md). These are opt-in server features; the default desktop demo still uses simulated actors. Exact deployment acceptance and remaining limits are recorded separately from unit tests.
 
+## RAG implementation and project scope
+
+The **offline RAG pipeline is implemented and accepted on the local OKD demonstrator**. BGE-M3 encodes reviewed passages, PostgreSQL with pgvector retrieves relevant evidence, and Qwen3:4b generates a cited answer. The application checks access and source revisions before delivery. Human review remains required.
+
+| Capability | Current scope | Code and explanation |
+| --- | --- | --- |
+| Reviewed-source vector retrieval | Implemented per authorized case in the configured project database | [Vector index](lab/vector_retrieval.py), [RAG coordinator](lab/rag.py), [step-by-step request flow](docs/deployment/local-implementation.md#3-how-one-rag-request-works) |
+| Cited local generation | Implemented with pinned BGE-M3 and Qwen3:4b, with no remote fallback | [Model client](lab/local_inference.py), [scoped gateway](lab/inference_gateway.py), [accepted extension evidence](docs/evidence/2026-10-09-local-ai-extensions/README.md) |
+| Two isolated AI CPEs | Implemented with separate project vector databases and credentials | [CPE controller](scripts/local_cpe.py), [AI extension](scripts/extend_cpe_rag.py), [configuration and source map](docs/deployment/local-cpe.md) |
+| One authorized search across several project vector databases | Specified, not implemented or accepted. An allowed user must be checked independently by every contributing project | [Architecture and grants](https://secloudis.com/ai-lab-multimodal-case-processing/#workspace-guide-3). Existing [case authorization](lab/store.py) is not a federated search coordinator |
+| Shared production OpenShift AI and remote GPU execution | Deployment targets, separate from accepted local OKD RAG | [Planning policy, not a live connector](lab/deployment_policy.py) |
+
+The default direct-Python, browser-only and Compose demonstrations retain their documented execution profiles. Their lexical or extractive baseline does not mean that the separately configured OKD RAG is unimplemented.
+
+![Implemented offline OKD RAG: authorization, BGE-M3 retrieval, pgvector and Qwen3 cited generation](docs/images/offline-rag.png)
+
 ## Run locally
+
+For the **already installed authenticated OKD MVP**, use `Start-MVP.cmd`. It reuses the current cluster and opens a loopback connection, without installation or rebuild. See the [MVP operating guide](docs/deployment/local-mvp.md) for launch checks, explicit project renewal, usable recovery rehearsal and the completion boundary.
 
 On Windows, double-click `Start.cmd`. The first launch creates `.venv` and installs the pinned dependencies. The application opens at **http://127.0.0.1:8770** and remains bound to loopback.
 
@@ -59,7 +77,11 @@ The browser-only demonstration has no live speech or LLM inference, server-side 
 
 ## Architecture and implementation status
 
-See [component register](docs/components.md), [the eight-layer responsibility model](docs/ai-layers.md) (design by Yves Schillings) and [architecture](docs/architecture.md). The case store uses SQLite and one durable worker. MLflow's PostgreSQL backend and model artifact publication run in Compose. The optional local OKD implementation adds pgvector, offline generative RAG, local authenticated accounts and CPE control gates. Free lightweight KServe serving, Jupyter workbench and native CPU training are accepted separately; the complete OpenShift AI product is not installed. Shared case PostgreSQL, distributed messaging, organizational identity and GPU execution remain additional work. Earlier diagrams describe their original hosting scope; consult the current implementation/evidence guides for later verified capabilities.
+The [CPE configuration guide across Docker Compose, Kubernetes, local OKD and OpenShift AI](docs/deployment/cpe-platform-configurations.md) identifies executable configuration, recorded acceptance and target capabilities. It explains why Python and Compose can run on the same host, and how the six control families differ by platform.
+
+The [secondary GPU services and governed cloud burst guide](docs/deployment/secondary-gpu-and-cloud-burst.md) specifies what the second data center must install, how the principal OpenShift gateway connects, how token budgets and destination-specific data eligibility apply, and where an MCP interface would fit. These external connections are proposed and have no deployment acceptance.
+
+See [component register](docs/components.md), [the eight-layer responsibility model](docs/ai-layers.md) (design by Yves Schillings) and [architecture](docs/architecture.md). The case store uses SQLite and one durable worker. MLflow's PostgreSQL backend and model artifact publication run in Compose. The optional local OKD implementation adds pgvector, offline generative RAG, local authenticated accounts and CPE control gates. Free lightweight KServe serving, Jupyter workbench and native CPU training are accepted separately; the complete OpenShift AI product is not installed. Shared case PostgreSQL, distributed messaging, organizational identity and GPU execution remain additional work. The architecture images below are exported from the current editable presentation. They distinguish implemented local OKD capabilities from shared-production and remote-service targets.
 
 ### Architecture figures for review
 

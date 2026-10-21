@@ -1,0 +1,45 @@
+{
+  "model": "Qwen/Qwen3-0.6B",
+  "revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+  "device": "NVIDIA GeForce RTX 2080 Ti",
+  "torch": "2.8.0+cu126",
+  "train_samples": 96,
+  "holdout_samples": 24,
+  "epochs": 3,
+  "rank": 16,
+  "alpha": 32,
+  "learning_rate": 0.0002,
+  "changed_parameter_tensors": 224,
+  "adapter_sha256": "1f87d8493e0020a5747ddf93f2ba4ad684035f513730faa9a25203fe8f28ac0e",
+  "training_seconds": 176.29355025291443,
+  "peak_allocated_gpu_bytes": 1672815616,
+  "initial_mean_loss": 0.05666219488800076,
+  "final_mean_loss": 4.934420331892397e-06,
+  "baseline": {
+    "json_valid": 1.0,
+    "exact": 0.0,
+    "supported_grounded": 0.0,
+    "missing_abstention": 0.0,
+    "incorrect_abstention": 0.0,
+    "seconds": 110.76374435424805
+  },
+  "adapted": {
+    "json_valid": 1.0,
+    "exact": 0.75,
+    "supported_grounded": 0.875,
+    "missing_abstention": 0.5,
+    "incorrect_abstention": 0.125,
+    "seconds": 121.66412663459778
+  },
+  "reloaded": {
+    "json_valid": 1.0,
+    "exact": 0.75,
+    "supported_grounded": 0.875,
+    "missing_abstention": 0.5,
+    "incorrect_abstention": 0.125,
+    "seconds": 107.91475534439087
+  },
+  "scope": "Synthetic English grounded-answer extraction, separate documents and holdout wording. Four held-out source-instruction injections. Host WSL CUDA only, not OKD GPU training. No runtime model promotion.",
+  "training_offline": true,
+  "reload_passed": true
+}

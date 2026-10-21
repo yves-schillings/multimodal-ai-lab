@@ -24,7 +24,7 @@ flowchart LR
   Gate --> Release[Promotion / rollback]
 ```
 
-## Current execution
+## Default desktop and Compose execution
 
 - The local application binds to loopback and rejects remote clients, foreign hosts and cross-origin requests. A selected persona is a demo fixture, not authentication.
 - Case access precedes retrieval, file processing and job metadata reads. Sources require review before draft or search use. Stale edits are rejected; relevant changes invalidate approval.
@@ -33,11 +33,11 @@ flowchart LR
 - Speech inference reads a prepared local model. No application request calls a public transcription API or downloads model weights.
 - The browser sandbox implements its own synthetic review/search/classifier exercise without a server. Its role switching is a simulation and does not prove production access control.
 
-## Target architecture
+## Shared deployment targets
 
-For a shared private deployment, replace simulated identities with trusted OpenID Connect identity and enforce case permissions in the data layer and every tool. Introduce PostgreSQL with pgvector only after a measured embedding-retrieval comparison. Use controlled object storage for original files and a durable broker/outbox for distributed processing.
+For a shared private deployment, replace simulated identities with trusted OpenID Connect identity and enforce case permissions in the data layer and every tool. The local OKD demonstrator already implements project-scoped PostgreSQL/pgvector retrieval. Shared production deployment still requires its own sizing, identity, operating controls and acceptance. Use controlled object storage for original files and a durable broker/outbox for distributed processing.
 
-Add locally served language models and bounded tools only after evaluating grounding, abstention and prompt-injection behaviour. Treat source text as data, not authority to grant access. Preserve source/model/index/configuration versions and recheck access before returning evidence.
+The local OKD demonstrator already serves pinned Qwen3:4b through Ollama with checked citations and abstention. Broader shared deployment and autonomous tools still require evaluation of grounding, abstention and prompt-injection behaviour. Treat source text as data, not authority to grant access. Preserve source/model/index/configuration versions and recheck access before returning evidence.
 
 The target requires TLS, encryption at rest, managed secrets, least-privilege service identities, bounded resources, default-deny egress, retention/deletion and restricted audit access. Default logs/traces must not contain raw recordings, prompts, transcripts or drafts.
 
@@ -75,3 +75,9 @@ Separate short-lived, audience-bound access tokens from model input/output token
 A **Controlled Project Environment (CPE)** is a governed, isolated environment selected by the case risk and access requirements. It is not mandatory for every workload. Speech transcription can use an approved shared service without a dedicated CPE where the case policy permits it; confidentiality, access control, encryption, retention and routing rules still apply. Restricted projects can require separate namespaces, identities, storage, network policy, quotas and model endpoints. CPE activation includes approval, provisioning, configuration, tests and accountable ownership.
 
 Sovereign Cloud is an architectural resource category. Sovereignty and eligibility require validation of the exact service, region, contract, operational controls and applicable certification. The label alone never authorises a dataset transfer. Azure remains a separate later preparation with explicit authorisation for real data.
+
+## Implemented RAG and cross-project search
+
+The [RAG coordinator](../lab/rag.py), [case-scoped vector index](../lab/vector_retrieval.py) and [local model client](../lab/local_inference.py) implement the accepted local pipeline. The [request walkthrough](deployment/local-implementation.md#3-how-one-rag-request-works) explains its execution, and the [extension evidence](evidence/2026-10-09-local-ai-extensions/README.md) records its bounded acceptance.
+
+Some authenticated users require one search across several authorized project vector databases. This requires independent current grants and source-side checks for every contributing project, followed by scoped aggregation, citation and revision checks. The [documented grant design](https://secloudis.com/ai-lab-multimodal-case-processing/#workspace-guide-3) describes this extension. The independent grant registry and federated coordinator are not implemented or accepted. Separate CPE databases and denied direct cross-project connections remain the current isolation boundary.
