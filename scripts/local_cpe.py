@@ -42,6 +42,12 @@ class Controller:
         args=['get',kind,name,'-o','json']+(['-n',ns] if ns else [])
         return json.loads(self.oc(*args).stdout)
 
+    # Each Python dictionary below describes a Kubernetes object, not a model.
+    # apiVersion chooses the Kubernetes API group and schema. kind names the object.
+    # metadata identifies it. spec describes the configuration requested from OKD.
+    # oc apply -f - sends this dictionary as JSON through standard input. The API
+    # server validates and stores it; the relevant cluster component enforces it.
+    # The operator runs this method. The application receives no operator token.
     def apply(self,obj):self.oc('apply','-f','-',payload=obj)
 
     def save(self,name,data):
@@ -62,6 +68,7 @@ class Controller:
         self.refresh_control(key)
 
     def refresh_control(self,key):
+
         # Pod annotation updates prompt kubelet to refresh mounted ConfigMaps.
         # The caller still waits for the application's observed phase before acceptance.
         self.oc('annotate','pods','-n',self.namespace(key),'-l','app=cpe-app',
@@ -88,29 +95,122 @@ class Controller:
                 profile=json.loads(json.loads(previous)['data']['profile.json'])
                 if profile['approval']!=approval:raise RuntimeError('Pending owner approval must be preserved')
                 image=profile['image']
+
+        # PROJECT BOUNDARY: ns is lab-cpe-a or lab-cpe-b. A namespace groups this
+        # project's objects. It does not, by itself, block network traffic or
+        # decide which human may read a case. The following controls add those
+        # separate protections. Restricted pod-security labels request pod checks.
         self.apply({'apiVersion':'v1','kind':'Namespace','metadata':{'name':ns,'labels':{**LABEL,
                     'pod-security.kubernetes.io/enforce':'restricted','pod-security.kubernetes.io/audit':'restricted'}}})
         self.admission(ns,image)
+
+        # CONTROL 3 - PROJECT BUDGET: admission rejects new objects whose declared
+        # resource requests/limits exceed the namespace totals. 500m means half
+        # of one CPU core; Mi/Gi are binary memory/storage units. GPU requests,
+        # external LoadBalancer services and NodePort services have a zero budget.
+        # A 1Gi storage REQUEST is not a physical filesystem quota on CRC hostpath.
         self.apply({'apiVersion':'v1','kind':'ResourceQuota','metadata':{'name':'cpe-budget','namespace':ns},'spec':{'hard':{
             'requests.cpu':'500m','limits.cpu':'1','requests.memory':'512Mi','limits.memory':'1Gi',
             'requests.storage':'1Gi','persistentvolumeclaims':'1','pods':'2','secrets':'8','configmaps':'4',
             'requests.nvidia.com/gpu':'0','services.loadbalancers':'0','services.nodeports':'0'}}})
+
+        # CONTROL 3 - CONTAINER DEFAULTS: LimitRange supplies defaults when a
+        # container omits requests/limits, and rejects values above its maximum.
+        # Requests guide scheduling. CPU limits can throttle execution; exceeding
+        # a memory limit can terminate a container. ResourceQuota still applies.
         self.apply({'apiVersion':'v1','kind':'LimitRange','metadata':{'name':'cpe-container-limits','namespace':ns},'spec':{'limits':[{
             'type':'Container','max':{'cpu':'1','memory':'1Gi'},'default':{'cpu':'1','memory':'1Gi'},
             'defaultRequest':{'cpu':'500m','memory':'512Mi'}}]}})
-        self.apply({'apiVersion':'v1','kind':'ServiceAccount','metadata':{'name':'cpe-runtime','namespace':ns},'automountServiceAccountToken':False})
-        self.apply({'apiVersion':'rbac.authorization.k8s.io/v1','kind':'RoleBinding','metadata':{'name':ns+'-image-pull','namespace':'multimodal-ai-lab'},
-            'roleRef':{'apiGroup':'rbac.authorization.k8s.io','kind':'ClusterRole','name':'system:image-puller'},
-            'subjects':[{'kind':'ServiceAccount','name':'cpe-runtime','namespace':ns}]})
+
+        # CONTROL 1 - WORKLOAD IDENTITY: create a technical account for the pod.
+        # This account identifies application processes to Kubernetes. It is NOT
+        # the Officer's login account. Human logins and case rights are checked
+        # separately by lab/auth.py and the application's case store.
+        self.apply({
+
+            # v1 is the stable CORE Kubernetes API schema for ServiceAccount.
+            # It is not the Python version or the AI model version.
+            'apiVersion': 'v1',
+
+            # kind tells the API server which type of object to create/update.
+            'kind': 'ServiceAccount',
+
+            # The same account name may exist in two different namespaces.
+            # Its full identity includes the namespace, so these are distinct.
+            'metadata': {
+                'name': 'cpe-runtime',
+                'namespace': ns,
+            },
+
+            # Do not automatically put a Kubernetes API access token in the pod.
+            # The application does not need to administer cluster resources.
+            # The Deployment below repeats this restriction on its pod template.
+            'automountServiceAccountToken': False,
+        })
+
+        # CONTROL 1 - IMAGE DOWNLOAD PERMISSION: the project's pod needs the
+        # approved container image held by the main lab's internal registry.
+        # This binding grants that narrow registry permission. It does not grant
+        # access to another project's cases, documents, Secrets or vector database.
+        self.apply({
+
+            # RBAC means Role-Based Access Control. This object belongs to the
+            # RBAC API group, whereas ServiceAccount above uses the core API.
+            'apiVersion': 'rbac.authorization.k8s.io/v1',
+            'kind': 'RoleBinding',
+
+            # A RoleBinding applies in the namespace WHERE THE RESOURCE LIVES.
+            # Here the images are in multimodal-ai-lab, not in lab-cpe-a/b.
+            # The generated binding name keeps project A and B grants separate.
+            'metadata': {
+                'name': ns + '-image-pull',
+                'namespace': 'multimodal-ai-lab',
+            },
+
+            # roleRef selects the existing OpenShift image-puller role. Using a
+            # ClusterRole here reuses its permission definition. A RoleBinding
+            # still limits this grant to its own namespace; it is not a
+            # ClusterRoleBinding and does not make the workload a cluster admin.
+            'roleRef': {
+                'apiGroup': 'rbac.authorization.k8s.io',
+                'kind': 'ClusterRole',
+                'name': 'system:image-puller',
+            },
+
+            # subjects identifies WHO receives this permission: only the technical
+            # cpe-runtime account in the selected project's namespace. No human
+            # account and no service account from another namespace is included.
+            'subjects': [{
+                'kind': 'ServiceAccount',
+                'name': 'cpe-runtime',
+                'namespace': ns,
+            }],
+        })
+
+        # CONTROL 2 - DEFAULT DENY: an empty podSelector selects every pod in ns.
+        # Empty ingress and egress lists allow no traffic under THIS policy.
+        # NetworkPolicy allow rules are additive, so inspect all policies too.
+        # The cluster network plugin enforces traffic rules, not this Python code.
+        # Operator port-forward is a separate path and bypasses NetworkPolicy.
         self.apply({'apiVersion':'networking.k8s.io/v1','kind':'NetworkPolicy','metadata':{'name':'cpe-default-deny','namespace':ns},
                     'spec':{'podSelector':{},'policyTypes':['Ingress','Egress'],'ingress':[],'egress':[]}})
+
         # A controlled in-namespace verification client may reach the app. There is no external Route or model egress.
         self.apply({'apiVersion':'networking.k8s.io/v1','kind':'NetworkPolicy','metadata':{'name':'cpe-local-http','namespace':ns},
                     'spec':{'podSelector':{'matchLabels':{'app':'cpe-app'}},'policyTypes':['Ingress','Egress'],
                             'ingress':[{'from':[{'podSelector':{'matchLabels':{'app':'cpe-app'}}}],'ports':[{'port':8770}]}],
                             'egress':[{'to':[{'podSelector':{'matchLabels':{'app':'cpe-app'}}}],'ports':[{'port':8770}]}]}})
+
+        # APPROVAL PROFILE: ConfigMap stores non-secret scope, expiry, image and
+        # allowed models. The separate control ConfigMap starts as provisioned,
+        # not active. The application gate in lab/cpe.py refuses normal use until
+        # verification succeeds and the operator explicitly activates the project.
         self.apply({'apiVersion':'v1','kind':'ConfigMap','metadata':{'name':'cpe-profile','namespace':ns},'data':{'profile.json':json.dumps(profile)}})
         self.gate(key,'provisioned')
+
+        # CONTROL 4 - HUMAN LOGIN CREDENTIALS: keep generated clear passwords in
+        # protected operator records outside Git. Only password hashes enter the
+        # application's Secret. Hashing is performed by lab.auth.password_hash.
         credential_path=self.private/('credentials-'+key+'.json')
         if credential_path.exists():
             passwords=json.loads(credential_path.read_text(encoding='utf-8'))['passwords']
@@ -118,10 +218,26 @@ class Controller:
         accounts={actor:{'enabled':True,'password_hash':password_hash(password)} for actor,password in passwords.items()}
         self.save('credentials-'+key+'.json',{'passwords':passwords})
         if not self.oc('get','secret','cpe-credentials','-n',ns,'--ignore-not-found','-o','name').stdout.strip():
+
+            # Opaque means application-defined Secret data. Kubernetes requires
+            # base64 for this data field; base64 is encoding, NOT encryption.
+            # API permissions and cluster storage protection remain necessary.
             self.apply({'apiVersion':'v1','kind':'Secret','metadata':{'name':'cpe-credentials','namespace':ns},'type':'Opaque',
                         'data':{'credentials.json':base64.b64encode(json.dumps(accounts).encode()).decode()}})
+
+        # CONTROL 5 - PERSISTENCE: a PersistentVolumeClaim (PVC) requests a volume
+        # for this project. Pod replacement reuses it instead of losing cases,
+        # originals, reviewed text and audit records. ReadWriteOnce is a volume
+        # access mode, not a human access rule. CRC volumes share physical disk.
         self.apply({'apiVersion':'v1','kind':'PersistentVolumeClaim','metadata':{'name':'cpe-data','namespace':ns},'spec':{
             'accessModes':['ReadWriteOnce'],'resources':{'requests':{'storage':'1Gi'}}}})
+
+        # WORKLOAD CONTRACT: the pod uses the technical account defined above,
+        # runs as a non-root user and drops Linux capabilities. Its root filesystem
+        # is read-only. Only data and temporary mounts are writable. Secret and
+        # approval files are mounted read-only; no Kubernetes API token is mounted.
+        # CONTROL 6 BASELINE: lexical retrieval is enabled, but models=[] approves
+        # no model endpoints. extend_cpe_rag.py adds the bounded offline AI profile.
         pod={'metadata':{'labels':{'app':'cpe-app'}},'spec':{'serviceAccountName':'cpe-runtime','automountServiceAccountToken':False,
              'enableServiceLinks':False,'securityContext':{'runAsNonRoot':True,'seccompProfile':{'type':'RuntimeDefault'}},
              'containers':[{'name':'app','image':image,'ports':[{'containerPort':8770}],
@@ -139,8 +255,15 @@ class Controller:
              'volumes':[{'name':'data','persistentVolumeClaim':{'claimName':'cpe-data'}},{'name':'tmp','emptyDir':{'sizeLimit':'64Mi'}},
                 {'name':'identity','secret':{'secretName':'cpe-credentials','defaultMode':288}},
                 {'name':'control','configMap':{'name':'cpe-control','defaultMode':288}}]}}
+
+        # Deployment maintains one application pod. Recreate avoids overlapping
+        # application replicas while this demonstrator retains SQLite and one worker.
         self.apply({'apiVersion':'apps/v1','kind':'Deployment','metadata':{'name':'cpe-app','namespace':ns},'spec':{
             'replicas':1,'strategy':{'type':'Recreate'},'selector':{'matchLabels':{'app':'cpe-app'}},'template':pod}})
+
+        # Service gives matching pods a stable internal address on port 8770.
+        # No NodePort, LoadBalancer or OpenShift Route is created here. A Service
+        # address is connectivity, not authorization to read the application's data.
         self.apply({'apiVersion':'v1','kind':'Service','metadata':{'name':'cpe-app','namespace':ns},'spec':{
             'selector':{'app':'cpe-app'},'ports':[{'port':8770,'targetPort':8770}]}})
         self.oc('rollout','status','deployment/cpe-app','-n',ns,'--timeout=240s')
@@ -148,6 +271,11 @@ class Controller:
         print('Provisioned inactive synthetic CPE '+key+'. Private credentials retained; none displayed.')
 
     def admission(self,ns,image):
+
+        # Before admitting a pod, the API server evaluates these Common Expression
+        # Language (CEL) conditions. They reject host access, unapproved containers,
+        # mounted API tokens and unexpected volumes. Deny-on-error is requested.
+        # These checks complement, rather than replace, network and case rights.
         # Namespace-scoped binding keeps all unrelated projects unaffected.
         validations=[
           "!has(object.spec.hostNetwork) || !object.spec.hostNetwork",
@@ -185,6 +313,10 @@ class Controller:
 
     def renew(self,key,approval,hours=24):
         """Owner-requested renewal, retaining scope and data, never auto-activating."""
+
+        # Renewal retains the existing project controls and data. It requires a
+        # distinct owner approval, revokes the gate before changing expiry, and
+        # finishes inactive. Old test evidence cannot activate the updated profile.
         if not isinstance(approval,str) or not approval.strip():
             raise ValueError('A new explicit owner approval reference is required')
         if type(hours) is not int or not 1<=hours<=24:
@@ -204,6 +336,7 @@ class Controller:
                    'new_approval':approval.strip(),'requested_at':time.time()})
         self.gate(key,'revoked')
         updated={**profile,'approval':approval.strip(),'expires':time.time()+hours*3600}
+
         # Optimistic concurrency: never overwrite a concurrently edited approval or scope.
         self.oc('replace','-f','-',payload={'apiVersion':'v1','kind':'ConfigMap',
             'metadata':{'name':'cpe-profile','namespace':ns,'resourceVersion':cm['metadata']['resourceVersion']},
@@ -213,6 +346,10 @@ class Controller:
         print('Renewed local CPE '+key+' approval. Existing data and scope retained; fresh verify/activate required.')
 
     def snapshot(self,key):
+
+        # Bind evidence to the resources actually configured, not just their names.
+        # Include object identity, security settings and data fingerprints. Secret
+        # values are hashed in this snapshot instead of copied into the report.
         ns=self.namespace(key);out={}
         for kind,name in [('namespace',ns),('resourcequota','cpe-budget'),('limitrange','cpe-container-limits'),
                           ('serviceaccount','cpe-runtime'),('networkpolicy','cpe-default-deny'),('networkpolicy','cpe-local-http'),
@@ -239,6 +376,11 @@ class Controller:
         return out
 
     def activate(self,key):
+
+        # ACTIVATION DECISION: all recorded checks must pass, match the current
+        # profile/resources, be at most ten minutes old, and precede expiry.
+        # Any mismatch revokes access. Passing this local gate is not production
+        # acceptance, nor permission for additional models or other projects.
         path=self.private/('verified-'+key+'.json');report=json.loads(path.read_text(encoding='utf-8'))
         profile=json.loads(self.get('configmap','cpe-profile',self.namespace(key))['data']['profile.json'])
         if (not report.get('passed') or not report.get('checks') or not all(x['passed'] for x in report['checks'])
