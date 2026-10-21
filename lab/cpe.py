@@ -16,6 +16,11 @@ class CpeGate:
         self.path = Path(path)
 
     def state(self):
+
+        # --- READ THE OPERATOR'S APPROVAL, NOT A USER-SUPPLIED FLAG ---
+        # The controller mounts this control file read-only. Re-read it so expiry
+        # and revocation can take effect without restarting the application.
+        # Its schema, phase, expiry, model pins and evidence reference must agree.
         try:
             data = json.loads(self.path.read_text(encoding='utf-8'))
             if not isinstance(data,dict):
@@ -34,10 +39,18 @@ class CpeGate:
                 raise ValueError('Activation requires accepted evidence')
             return {**data, 'active': data['phase'] == 'active',
                     'scope': 'Synthetic document CPE with approved offline RAG.' if data['models'] else 'Synthetic document/lexical CPE; no model endpoints approved. Storage quota is admission only.'}
+
+        # Missing, unreadable or malformed control data must never enable access.
+        # This is the fail-closed default: deny use when approval cannot be checked.
         except (OSError, ValueError, TypeError):
             return {'phase': 'unavailable', 'active': False, 'models': []}
 
     def authorize(self, actor, path='/api/cases'):
+
+        # --- PROJECT ACTIVATION IS ONE CHECK, NOT ALL ACCESS RIGHTS ---
+        # An inactive project cannot serve normal work. Only the reviewer may use
+        # the verification phase. The application still checks who may perform
+        # which action on each case/document after this project gate succeeds.
         state = self.state()
         if state['phase'] != 'active' and not (state['phase'] == 'verifying' and actor == 'reviewer'):
             raise CpeInactive('CPE is inactive, expired or awaiting independent verification.')
@@ -47,6 +60,11 @@ class CpeGate:
 
     @staticmethod
     def valid_models(models):
+
+        # --- ACCEPT ONLY THE BOUNDED PROFILE IMPLEMENTED BY THIS LAB ---
+        # An empty list belongs to the lexical baseline. The AI profile requires
+        # these two exact model digests, the pgvector backend and the scoped local
+        # gateway address. A model label alone cannot establish artifact identity.
         if models == []:
             return os.environ.get('LAB_RETRIEVAL_BACKEND','lexical') == 'lexical'
         expected = [
@@ -62,5 +80,8 @@ class CpeGate:
 
 
 def configured_cpe():
+
+    # Enable this optional gate only for deployments with an operator control
+    # file configured. Other deployment modes retain their separate access checks.
     path = os.environ.get('LAB_CPE_STATE_FILE')
     return CpeGate(path) if path else None
