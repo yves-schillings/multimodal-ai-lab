@@ -64,3 +64,37 @@ jobs:
         with:
           name: container-security-evidence
           path: container-audit.json
+  mlflow-server:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - run: docker build -f deploy/docker/mlflow.Dockerfile -t multimodal-ai-lab-mlflow:ci deploy/docker
+      - name: Verify the MLflow server version, its PostgreSQL driver and its health endpoint
+        run: |
+          docker run --rm --entrypoint python multimodal-ai-lab-mlflow:ci -c "import mlflow, psycopg2; assert mlflow.__version__ == '3.17.2', mlflow.__version__; print('mlflow', mlflow.__version__)"
+          docker run -d --name mlflow-ci -p 5000:5000 multimodal-ai-lab-mlflow:ci mlflow server --backend-store-uri sqlite:////tmp/mlflow.db --artifacts-destination /mlflow/artifacts --serve-artifacts --allowed-hosts "localhost:5000,127.0.0.1:5000" --host 0.0.0.0 --port 5000
+          for i in $(seq 1 30); do curl -fs http://127.0.0.1:5000/health && break; sleep 2; done
+          curl -fs http://127.0.0.1:5000/health
+          docker rm -f mlflow-ci
+      # Full report (all findings, fixed or not) kept as evidence.
+      - uses: aquasecurity/trivy-action@v0.36.0
+        with:
+          image-ref: multimodal-ai-lab-mlflow:ci
+          format: json
+          output: mlflow-server-audit.json
+          severity: HIGH,CRITICAL
+          exit-code: '0'
+      # Gate: fail only on HIGH/CRITICAL findings that have a fixed version available.
+      - uses: aquasecurity/trivy-action@v0.36.0
+        with:
+          image-ref: multimodal-ai-lab-mlflow:ci
+          format: table
+          severity: HIGH,CRITICAL
+          ignore-unfixed: true
+          exit-code: '1'
+          skip-setup-trivy: true
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: mlflow-server-security-evidence
+          path: mlflow-server-audit.json

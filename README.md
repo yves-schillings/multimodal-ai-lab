@@ -121,11 +121,11 @@ These captures show the actual local Compose application with a fictional bicycl
 
 ## Dated verification package
 
-[7 October 2026 closing evidence](docs/evidence/2026-10-07-closing/README.md) records 63 Python tests plus 15 subtests, 27 Compose checks before restart and 8 afterwards, real scanned-PDF OCR, model publication and source-approval invalidation. It also retains the container vulnerability findings. The prepared GitHub workflow has not yet run on GitHub. No green hosted-CI result or release tag is claimed.
+[7 October 2026 closing evidence](docs/evidence/2026-10-07-closing/README.md) records 63 Python tests plus 15 subtests, 27 Compose checks before restart and 8 afterwards, real scanned-PDF OCR, model publication and source-approval invalidation. It also retains the container vulnerability findings. The hosted GitHub Actions workflow now runs on every push. The [verified run of 23 October 2026](https://github.com/yves-schillings/multimodal-ai-lab/actions/runs/40035603702) passed 111 Python tests plus 15 subtests, the browser checks, the dependency audit and the fixable HIGH/CRITICAL container gate. No release tag is claimed.
 
 [![Tests and container security](https://github.com/yves-schillings/multimodal-ai-lab/actions/workflows/ci.yml/badge.svg)](https://github.com/yves-schillings/multimodal-ai-lab/actions/workflows/ci.yml)
 
-The badge reports the hosted workflow status after publication. The retained image scan reports 76 HIGH and 1 CRITICAL package findings without a reported fixed version. The current workflow keeps the complete report and blocks on fixable HIGH/CRITICAL findings; zero fixable findings in that retained report does not establish a green hosted run or approve residual risk. See the [finding disposition and required follow-up](docs/evidence/2026-10-07-security-review/README.md). Representative human French and Dutch speech, clean-machine reproduction and shared-cluster deployment still require their own acceptance runs. The local OKD application acceptance is recorded separately above.
+The badge reports the hosted workflow status after publication. The retained image scan reports 76 HIGH and 1 CRITICAL package findings without a reported fixed version. The current workflow keeps the complete report and blocks on fixable HIGH/CRITICAL findings. Passing that gate does not approve the residual findings that have no fix. See the [finding disposition and required follow-up](docs/evidence/2026-10-07-security-review/README.md). Representative human French and Dutch speech, clean-machine reproduction and shared-cluster deployment still require their own acceptance runs. The local OKD application acceptance is recorded separately above.
 
 ## French and Dutch fixture results
 

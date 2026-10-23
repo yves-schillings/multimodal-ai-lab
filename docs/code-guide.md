@@ -39,7 +39,7 @@ The bounded workflow endpoint is deterministic orchestration. It is not an auton
 | [`lab/monitoring.py`](../lab/monitoring.py) | Recurring MLflow-linked synthetic classifier evaluation |
 | [`scripts/platform_training.py`](../scripts/platform_training.py), [`scripts/platform_predictor.py`](../scripts/platform_predictor.py) | Real native CPU training and the private KServe classifier endpoint |
 
-The complete source suite now passes 104 Python tests plus 15 subtests; deployment acceptance is recorded separately. The following 7 October results remain dated baseline evidence.
+The complete source suite passes 111 Python tests plus 15 subtests in the [hosted run of 23 October 2026](https://github.com/yves-schillings/multimodal-ai-lab/actions/runs/40035603702). Deployment acceptance is recorded separately. The following 7 October results remain dated baseline evidence.
 
 ## Verification evidence
 
