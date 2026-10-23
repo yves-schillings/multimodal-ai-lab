@@ -43,8 +43,8 @@ spec:
         runAsNonRoot: true
       containers:
         - name: mlflow
-          # Replace with the pushed image, for example image-registry.openshift-image-registry.svc:5000/multimodal-ai-lab/lab-mlflow:3.16.1
-          image: lab-mlflow:3.16.1
+          # Replace with the pushed image, for example image-registry.openshift-image-registry.svc:5000/multimodal-ai-lab/lab-mlflow:3.17.2
+          image: lab-mlflow:3.17.2
           env:
             - name: POSTGRES_PASSWORD
               valueFrom:

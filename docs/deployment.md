@@ -43,7 +43,7 @@ The Python application runs locally at http://127.0.0.1:8770. Use `Start.cmd` on
 | Service | Image | Persistent volume | Role |
 | --- | --- | --- | --- |
 | `app` | built from the repository `Dockerfile` | `lab-data` (SQLite case store, uploads, model pickles); `../../models` mounted read-only for the prepared speech weights | Case API, browser workspace, durable job runner, in-process adapters |
-| `mlflow` | built from `deploy/docker/mlflow.Dockerfile` (MLflow 3.16.1 + psycopg2) | `mlflow-artifacts` | Tracking server; the application logs runs to it when `MLFLOW_TRACKING_URI` is set |
+| `mlflow` | built from `deploy/docker/mlflow.Dockerfile` (MLflow 3.17.2 + psycopg2) | `mlflow-artifacts` | Tracking server; the application logs runs to it when `MLFLOW_TRACKING_URI` is set |
 | `postgres` | `postgres:16-alpine` | `postgres-data` | MLflow backend store (experiments, runs, metrics, params) |
 
 Network behaviour is fail-closed. The image defaults to `LAB_BIND_HOST=127.0.0.1` and
