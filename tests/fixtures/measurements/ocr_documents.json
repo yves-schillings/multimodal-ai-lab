@@ -1,0 +1,97 @@
+{
+  "name": "Fictional typed documents for the OCR quality measurement",
+  "version": "1.0",
+  "notice": "All references, places, values and events are fictional and written for this laboratory measurement.",
+  "documents": [
+    {
+      "id": "D-EN-statement",
+      "language": "en",
+      "font": "arial.ttf",
+      "points": 11,
+      "lines": [
+        "FICTIONAL WITNESS STATEMENT - TRAINING DOCUMENT",
+        "Reference: FIC-2026-0412",
+        "Date of statement: 14 March 2026, 10:25",
+        "I am the manager of the fictional Riverside Joinery workshop on Mill Street.",
+        "On Tuesday morning I received a telephone call at 03:05 informing me that the",
+        "alarm had been triggered. When I arrived at 03:40, the rear door was open and",
+        "the frame showed marks of a flat tool about two centimetres wide.",
+        "Missing items: two cordless drills, one mitre saw, one laser level and a green",
+        "metal toolbox. Estimated value: 4.300,00 EUR.",
+        "I confirm that this statement is accurate to the best of my knowledge."
+      ]
+    },
+    {
+      "id": "D-FR-statement",
+      "language": "fr",
+      "font": "times.ttf",
+      "points": 12,
+      "lines": [
+        "DÉCLARATION FICTIVE - DOCUMENT DE FORMATION",
+        "Référence : FIC-2026-0518",
+        "Date : le mercredi 11 mars 2026 à 09:10",
+        "Je suis le chef de chantier fictif de la rue des Tilleuls à Bellerive.",
+        "Le gardien m'a appelé à 05:40 pour signaler la disparition de deux bobines",
+        "de câble de cuivre. La clôture était découpée près du portail est et des",
+        "traces de pneus larges étaient visibles dans la boue.",
+        "Préjudice estimé : environ 9.000,00 € pour le câble, la découpeuse et le",
+        "groupe électrogène. Je n'ai remarqué aucune autre dégradation.",
+        "Fait à Bellerive, lu et approuvé."
+      ]
+    },
+    {
+      "id": "D-NL-statement",
+      "language": "nl",
+      "font": "calibri.ttf",
+      "points": 11,
+      "lines": [
+        "FICTIEVE VERKLARING - OPLEIDINGSDOCUMENT",
+        "Referentie: FIC-2026-0620",
+        "Datum: vrijdag 20 maart 2026 om 08:45",
+        "Ik ben de fictieve beheerder van de fietsenstalling aan het station van Vlierdonk.",
+        "Om 07:15 stelde ik vast dat zes elektrische fietsen verdwenen waren. De sloten",
+        "waren doorgeknipt en het hangslot van de achteringang hing open aan het hek.",
+        "Naast het hek lag een afgebroken kniptang met een rood handvat.",
+        "Geschatte schade: ongeveer 18.000,00 € inclusief drie losse accu's.",
+        "Ik verklaar dat deze gegevens volgens mij juist zijn."
+      ]
+    },
+    {
+      "id": "D-MIX-inventory",
+      "language": "en+fr+nl",
+      "font": "cour.ttf",
+      "points": 11,
+      "lines": [
+        "EVIDENCE INVENTORY / INVENTAIRE / INVENTARIS - FICTIONAL",
+        "Item  Description                     Qty  Seal",
+        "01    Cordless drill, grey            2    A-1043",
+        "02    Mitre saw with blade guard      1    A-1044",
+        "03    Câble de cuivre, bobine 250 m   2    B-2210",
+        "04    Kniptang, rood handvat          1    C-3319",
+        "05    Toolbox lid, green metal        1    A-1045",
+        "Recorded by: fictional officer 7741",
+        "Checked on: 21/03/2026 at 14:20"
+      ]
+    }
+  ],
+  "conditions": [
+    {"id": "clean-300dpi", "category": "clean", "format": "png", "dpi": 300},
+    {"id": "clean-200dpi", "category": "clean", "format": "png", "dpi": 200},
+    {"id": "clean-150dpi", "category": "clean", "format": "png", "dpi": 150},
+    {"id": "scanned-pdf-300dpi", "category": "clean", "format": "pdf", "dpi": 300},
+    {"id": "low-resolution-100dpi", "category": "difficult", "format": "png", "dpi": 100},
+    {"id": "skew-3-degrees", "category": "difficult", "format": "png", "dpi": 300, "rotate": 3.0},
+    {"id": "blur", "category": "difficult", "format": "png", "dpi": 200, "blur": 1.6},
+    {"id": "salt-and-pepper-noise", "category": "difficult", "format": "png", "dpi": 200, "noise": 0.03},
+    {"id": "jpeg-quality-15", "category": "difficult", "format": "jpg", "dpi": 150, "jpeg_quality": 15},
+    {"id": "low-contrast", "category": "difficult", "format": "png", "dpi": 200, "ink": 150, "paper": 205},
+    {"id": "uneven-lighting", "category": "difficult", "format": "png", "dpi": 200, "shade": 150},
+    {"id": "fax-like", "category": "difficult", "format": "png", "dpi": 150, "binarize": 150, "noise": 0.01, "rotate": 1.0},
+    {"id": "scanned-pdf-200dpi-noisy", "category": "difficult", "format": "pdf", "dpi": 200, "noise": 0.01, "rotate": 1.5}
+  ],
+  "thresholds": {
+    "clean": 0.02,
+    "difficult": 0.10,
+    "metric": "Character error rate after Unicode NFC normalisation and whitespace collapsing; case, accents and punctuation count."
+  }
+}
