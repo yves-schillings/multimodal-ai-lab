@@ -1,0 +1,177 @@
+{
+  "transcription_fr": {
+    "wall_seconds": {
+      "n": 30,
+      "min": 1.3386,
+      "median": 1.7956,
+      "p95": 17.4106,
+      "max": 20.0158,
+      "mean": 3.5186
+    },
+    "model_load_seconds": 0.7279,
+    "processing_seconds": {
+      "n": 30,
+      "min": 1.332,
+      "median": 1.7875,
+      "p95": 17.402,
+      "max": 20.008,
+      "mean": 3.5092
+    },
+    "real_time_factor_per_clip": {
+      "n": 30,
+      "min": 0.248,
+      "median": 0.3385,
+      "p95": 3.0594,
+      "max": 3.5176,
+      "mean": 0.6461
+    },
+    "real_time_factor_aggregate": 0.6703,
+    "audio_seconds_total": 157.062
+  },
+  "transcription_nl": {
+    "wall_seconds": {
+      "n": 30,
+      "min": 1.4585,
+      "median": 1.7908,
+      "p95": 10.2908,
+      "max": 11.0974,
+      "mean": 3.651
+    },
+    "model_load_seconds": 0.7917,
+    "processing_seconds": {
+      "n": 30,
+      "min": 1.452,
+      "median": 1.7825,
+      "p95": 10.283,
+      "max": 11.091,
+      "mean": 3.641
+    },
+    "real_time_factor_per_clip": {
+      "n": 30,
+      "min": 0.2181,
+      "median": 0.2796,
+      "p95": 1.899,
+      "max": 2.3678,
+      "mean": 0.6493
+    },
+    "real_time_factor_aggregate": 0.5942,
+    "audio_seconds_total": 183.831
+  },
+  "ocr_scanned_pdf": {
+    "wall_seconds": {
+      "n": 30,
+      "min": 0.5189,
+      "median": 0.68,
+      "p95": 1.3636,
+      "max": 2.1638,
+      "mean": 0.7942
+    }
+  },
+  "ocr_png": {
+    "wall_seconds": {
+      "n": 30,
+      "min": 0.4934,
+      "median": 0.5919,
+      "p95": 0.768,
+      "max": 1.254,
+      "mean": 0.6249
+    }
+  },
+  "embedding": {
+    "wall_seconds": {
+      "n": 30,
+      "min": 2.1228,
+      "median": 2.1467,
+      "p95": 2.2059,
+      "max": 2.5179,
+      "mean": 2.1606
+    },
+    "ollama_load_seconds": {
+      "n": 30,
+      "min": 2.0081,
+      "median": 2.0248,
+      "p95": 2.0892,
+      "max": 2.3316,
+      "mean": 2.0356
+    },
+    "ollama_total_seconds": {
+      "n": 30,
+      "min": 2.1056,
+      "median": 2.1238,
+      "p95": 2.1849,
+      "max": 2.4222,
+      "mean": 2.1377
+    }
+  },
+  "vector_search": {
+    "wall_seconds": {
+      "n": 30,
+      "min": 0.0109,
+      "median": 0.012,
+      "p95": 0.0186,
+      "max": 0.1934,
+      "mean": 0.0184
+    }
+  },
+  "retrieval_full": {
+    "wall_seconds": {
+      "n": 30,
+      "min": 1.9295,
+      "median": 2.1779,
+      "p95": 2.4003,
+      "max": 2.4137,
+      "mean": 2.1816
+    }
+  },
+  "generation": {
+    "wall_seconds": {
+      "n": 30,
+      "min": 38.1771,
+      "median": 58.8894,
+      "p95": 77.6597,
+      "max": 77.8697,
+      "mean": 57.8469
+    },
+    "ollama_load_seconds": {
+      "n": 21,
+      "min": 4.0713,
+      "median": 4.3365,
+      "p95": 4.3906,
+      "max": 4.6055,
+      "mean": 4.262
+    },
+    "ollama_total_seconds": {
+      "n": 21,
+      "min": 38.1579,
+      "median": 60.8622,
+      "p95": 77.6392,
+      "max": 77.8511,
+      "mean": 57.9601
+    },
+    "output_tokens_per_second": {
+      "n": 21,
+      "min": 5.8191,
+      "median": 6.5603,
+      "p95": 7.2103,
+      "max": 7.3697,
+      "mean": 6.6145
+    },
+    "prompt_tokens": {
+      "n": 21,
+      "min": 308,
+      "median": 366,
+      "p95": 431,
+      "max": 456,
+      "mean": 377.4286
+    },
+    "outcomes": {
+      "InferenceUnavailable": 26,
+      "claims": 4
+    },
+    "withheld_reasons": {
+      "invalid_json": 9,
+      "prompt_echoed": 17
+    },
+    "skipped": 0
+  }
+}
