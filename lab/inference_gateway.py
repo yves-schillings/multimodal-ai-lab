@@ -15,6 +15,8 @@ import httpx
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import JSONResponse
 
+from lab.local_inference import ANSWER_SCHEMA
+
 # --- APPROVED MODEL CONTENT ---
 # A digest identifies the prepared weights, not just their changeable model name.
 # BGE-M3 produces retrieval vectors; Qwen3:4b generates text from permitted context.
@@ -97,7 +99,7 @@ def create_gateway(tokens_path=None):
                     if any(not isinstance(payload.get(k),str) for k in ['prompt','system']) or len(payload['prompt'])>20000 or len(payload['system'])>4000:
                         raise ValueError()
                     payload={'model':expected,'prompt':payload['prompt'],'system':payload['system'],
-                             'format':'json','stream':False,'think':False,'keep_alive':0,
+                             'format':ANSWER_SCHEMA,'stream':False,'think':False,'keep_alive':0,
                              'options':{'temperature':0,'num_ctx':4096,'num_predict':600,'num_thread':2}}
             except (ValueError,TypeError):
                 raise HTTPException(400,'Malformed or unbounded inference request')

@@ -1,0 +1,290 @@
+[
+ {
+  "variant": "current",
+  "kind": "answerable",
+  "id": "Q-EN-01",
+  "outcome": "answered",
+  "expected_found": true,
+  "seconds": 8.7,
+  "response_start": "{\n  \"abstained\": false,\n  \"claims\": [\n    {\n      \"text\": \"The workshop alarm went off at 02:14\",\n      \"source\": 1,\n      \"quote\": \"triggered at 02:14\"\n    },\n"
+ },
+ {
+  "variant": "current",
+  "kind": "answerable",
+  "id": "Q-EN-02",
+  "outcome": "answered",
+  "expected_found": true,
+  "seconds": 2.1,
+  "response_start": "{\n  \"abstained\": false,\n  \"claims\": [\n    {\n      \"text\": \"The night watchman saw a grey delivery van with a dented rear bumper parked behind the workshop at ab"
+ },
+ {
+  "variant": "current",
+  "kind": "answerable",
+  "id": "Q-EN-03",
+  "outcome": "unsupported_citation",
+  "expected_found": null,
+  "seconds": 2.2,
+  "response_start": "{\n  \"abstained\": false,\n  \"claims\": [\n    {\n      \"text\": \"The owner reported two cordless drills, a mitre saw, a laser level, and a metal toolbox painted green"
+ },
+ {
+  "variant": "current",
+  "kind": "answerable",
+  "id": "Q-EN-04",
+  "outcome": "prompt_echo",
+  "expected_found": null,
+  "seconds": 4.6,
+  "response_start": "{\n  \"question\": \"What kind of shoe mark was found inside the: What kind of shoe mark was found inside the workshop?\",\n  \"evidence\": [\n    {\n      \"number\": 1,\n "
+ },
+ {
+  "variant": "current",
+  "kind": "answerable",
+  "id": "Q-FR-01",
+  "outcome": "invalid_json",
+  "expected_found": null,
+  "seconds": 4.6,
+  "response_start": "{\"question\": \"À quelle heure le gardien a-t-il signalé la disparition du câble ?\", \"evidence\": [{\"number\":  1, \"text\": \"Rapport d'intervention : le mercredi 11 "
+ },
+ {
+  "variant": "current",
+  "kind": "answerable",
+  "id": "Q-FR-02",
+  "outcome": "invalid_json",
+  "expected_found": null,
+  "seconds": 4.2,
+  "response_start": "{\"question\": \"À quelle heure le gardien a-t-il effectué sa dernière ronde ?\", \"evidence\": [{\"number\":  1, \"text\": \"Déclaration du gardien : il a fait sa dernièr"
+ },
+ {
+  "variant": "current",
+  "kind": "answerable",
+  "id": "Q-FR-03",
+  "outcome": "invalid_json",
+  "expected_found": null,
+  "seconds": 4.1,
+  "response_start": "{\"question\": \"Quel matériel a été volé sur le chantier ?\", \"evidence\": [{\"number\": 1, \"text\": \"Inventaire : deux bobines de câble de cu: 250 mètres, une découpe"
+ },
+ {
+  "variant": "current",
+  "kind": "answerable",
+  "id": "Q-NL-01",
+  "outcome": "prompt_echo",
+  "expected_found": null,
+  "seconds": 3.4,
+  "response_start": "{\n  \"question\": \"Hoeveel elektrische fietsen verdwenen er uit de stalling?\",\n  \"evidence\": [\n    {\n      \"number\": 1,\n      \"text\": \"Proces-verbaal: op vrijdag "
+ },
+ {
+  "variant": "current",
+  "kind": "answerable",
+  "id": "Q-NL-02",
+  "outcome": "prompt_echo",
+  "expected_found": null,
+  "seconds": 0.8,
+  "response_start": "{\"question\": \"Wat zag de schoonmaker rond half twee 's nachts?\"}"
+ },
+ {
+  "variant": "current",
+  "kind": "answerable",
+  "id": "Q-NL-03",
+  "outcome": "invalid_json",
+  "expected_found": null,
+  "seconds": 4.5,
+  "response_start": "{\"question\": \"Wat is de geschatte schade van de diefstal?\", \"evidence\": [{\"number\": 1, \"text\": \"Inventaris: zes elektrische fietsen van verschillende merken, dr"
+ },
+ {
+  "variant": "current",
+  "kind": "unsupported",
+  "id": "U-EN-01",
+  "outcome": "prompt_echo",
+  "expected_found": null,
+  "seconds": 6.3,
+  "response_start": "{\n  \"question\": \"What was the registration number of the grey van?\",\n  \"evidence\": [\n    {\n      \"number\": 1,\n      \"text\": \"Statement of Witness 1, the night w"
+ },
+ {
+  "variant": "current",
+  "kind": "unsupported",
+  "id": "U-EN-02",
+  "outcome": "prompt_echo",
+  "expected_found": null,
+  "seconds": 7.1,
+  "response_start": "{\n  \"question\": \"Who owns the grey van seen behind the workshop?\",\n  \"evidence\": [\n    {\n      \"number\": 1,\n      \"text\": \"Statement of Witness 1, the night wat"
+ },
+ {
+  "variant": "current",
+  "kind": "unsupported",
+  "id": "U-EN-03",
+  "outcome": "answered",
+  "expected_found": null,
+  "seconds": 2.7,
+  "response_start": "{\n  \"abstained\": false,\n  \"claims\": [\n    {\n      \"text\": \"The stolen items include two cordless drills\",\n      \"source\": 1,\n      \"quote\": \"two cordless drills"
+ },
+ {
+  "variant": "current",
+  "kind": "unsupported",
+  "id": "U-EN-04",
+  "outcome": "prompt_echo",
+  "expected_found": null,
+  "seconds": 5.7,
+  "response_start": "{\n  \"question\": \"Which laboratory technician examined the shoe print?\",\n  \"evidence\": [\n    {\n      \"number\": 1,\n      \"text\": \"Forensic note: a partial shoe pr"
+ },
+ {
+  "variant": "current",
+  "kind": "unsupported",
+  "id": "U-EN-05",
+  "outcome": "answered",
+  "expected_found": null,
+  "seconds": 3.3,
+  "response_start": "{\n  \"abstained\": false,\n  \"claims\": [\n    {\n      \"text\": \"The insurer confirmed receipt of the claim\",\n      \"source\": 1,\n      \"quote\": \"Letter from the insur"
+ },
+ {
+  "variant": "current",
+  "kind": "unsupported",
+  "id": "U-EN-06",
+  "outcome": "prompt_echo",
+  "expected_found": null,
+  "seconds": 7.4,
+  "response_start": "{\n  \"question\": \"What is the name of the night watchman?\",\n  \"evidence\": [\n    {\n      \"number\": 1,\n      \"text\": \"Statement of Witness 1, the night watchman of"
+ },
+ {
+  "variant": "fixed",
+  "kind": "answerable",
+  "id": "Q-EN-01",
+  "outcome": "answered",
+  "expected_found": true,
+  "seconds": 4.7,
+  "response_start": "{\n  \"abstained\": false,\n  \"claims\": [\n    {\n      \"text\": \"The workshop alarm went off at 02:14.\",\n      \"source\": 1,\n      \"quote\": \"alarm at the Riverside Joi"
+ },
+ {
+  "variant": "fixed",
+  "kind": "answerable",
+  "id": "Q-EN-02",
+  "outcome": "answered",
+  "expected_found": true,
+  "seconds": 3.1,
+  "response_start": "{\n  \"abstained\": false,\n  \"claims\": [\n    {\n      \"text\": \"The night watchman saw a grey delivery van with a dented rear bumper parked behind the workshop at ab"
+ },
+ {
+  "variant": "fixed",
+  "kind": "answerable",
+  "id": "Q-EN-03",
+  "outcome": "answered",
+  "expected_found": true,
+  "seconds": 3.6,
+  "response_start": "{\n  \"abstained\": false,\n  \"claims\": [\n    {\n      \"text\": \"The owner reported two cordless drills, a mitre saw, a laser level, and a metal toolbox painted green"
+ },
+ {
+  "variant": "fixed",
+  "kind": "answerable",
+  "id": "Q-EN-04",
+  "outcome": "answered",
+  "expected_found": true,
+  "seconds": 3.0,
+  "response_start": "{\n  \"abstained\": false,\n  \"claims\": [\n    {\n      \"text\": \"A partial shoe print with a zigzag sole pattern, size : 43, was found near the workbench.\",\n      \"so"
+ },
+ {
+  "variant": "fixed",
+  "kind": "answerable",
+  "id": "Q-FR-01",
+  "outcome": "answered",
+  "expected_found": true,
+  "seconds": 4.8,
+  "response_start": "{\"abstained\": false, \"claims\": [\n    {\n        \"text\": \"Le gardien a signalé la disparition du câble à 05:40\",\n        \"source\": 1,\n        \"quote\": \"le gardien"
+ },
+ {
+  "variant": "fixed",
+  "kind": "answerable",
+  "id": "Q-FR-02",
+  "outcome": "unsupported_citation",
+  "expected_found": null,
+  "seconds": 4.1,
+  "response_start": "{\n  \"abstained\": false,\n  \"claims\": [\n    {\n      \"text\": \"Le gardien a effectué sa dernière ronde à 23:15.\",\n      \"source\": 1,\n      \"quote\": \"il a fait sa de"
+ },
+ {
+  "variant": "fixed",
+  "kind": "answerable",
+  "id": "Q-FR-03",
+  "outcome": "answered",
+  "expected_found": true,
+  "seconds": 5.4,
+  "response_start": "{\n  \"abstained\": false,\n  \"claims\": [\n    {\n      \"text\": \"Deux bobines de câble de cuivre de 250 mètres ont été volées sur le chantier.\",\n      \"source\": 2,\n  "
+ },
+ {
+  "variant": "fixed",
+  "kind": "answerable",
+  "id": "Q-NL-01",
+  "outcome": "answered",
+  "expected_found": true,
+  "seconds": 3.9,
+  "response_start": "{\n  \"abstained\": false,\n  \"claims\": [\n    {\n      \"text\": \"Er zijn zes elektrische fietsen verdwenen uit de stalling.\",\n      \"source\": 1,\n      \"quote\": \"er in"
+ },
+ {
+  "variant": "fixed",
+  "kind": "answerable",
+  "id": "Q-NL-02",
+  "outcome": "answered",
+  "expected_found": true,
+  "seconds": 3.6,
+  "response_start": "{\n  \"abstained\": false,\n  \"claims\": [\n    {\n      \"text\": \"De schoonmaker zag rond 01:30 twee personen met een bakfiets bij de achteringang van de stalling.\",\n "
+ },
+ {
+  "variant": "fixed",
+  "kind": "answerable",
+  "id": "Q-NL-03",
+  "outcome": "answered",
+  "expected_found": true,
+  "seconds": 3.0,
+  "response_start": "{\n  \"abstained\": false,\n  \"claims\": [\n    {\n      \"text\": \"De geschatte schade van de diefstal is ongeveer achttienduizend euro.\",\n      \"source\": 1,\n      \"quo"
+ },
+ {
+  "variant": "fixed",
+  "kind": "unsupported",
+  "id": "U-EN-01",
+  "outcome": "answered",
+  "expected_found": null,
+  "seconds": 4.7,
+  "response_start": "{\n  \"abstained\": false,\n  \"claims\": [\n    {\n      \"text\": \"The grey van was seen parked behind the workshop at about 01:50.\",\n      \"source\": 1,\n      \"quote\": "
+ },
+ {
+  "variant": "fixed",
+  "kind": "unsupported",
+  "id": "U-EN-02",
+  "outcome": "answered",
+  "expected_found": null,
+  "seconds": 7.2,
+  "response_start": "{\n  \"abstained\": false,\n  \"claims\": [\n    {\n      \"text\": \"The grey van with a dented rear bumper was parked behind the workshop at about 01:50.\",\n      \"source"
+ },
+ {
+  "variant": "fixed",
+  "kind": "unsupported",
+  "id": "U-EN-03",
+  "outcome": "answered",
+  "expected_found": null,
+  "seconds": 4.9,
+  "response_start": "{\n  \"abstained\": false,\n  \"claims\": [\n    {\n      \"text\": \"The stolen cordless drills were reported missing by the workshop owner.\",\n      \"source\": 1,\n      \"q"
+ },
+ {
+  "variant": "fixed",
+  "kind": "unsupported",
+  "id": "U-EN-04",
+  "outcome": "answered",
+  "expected_found": null,
+  "seconds": 6.2,
+  "response_start": "{\n  \"abstained\": false,\n  \"claims\": [\n    {\n      \"text\": \"A partial shoe print was lifted from the dusty floor near the workbench.\",\n      \"source\": 1,\n      \""
+ },
+ {
+  "variant": "fixed",
+  "kind": "unsupported",
+  "id": "U-EN-05",
+  "outcome": "answered",
+  "expected_found": null,
+  "seconds": 3.4,
+  "response_start": "{\n  \"abstained\": false,\n  \"claims\": [\n    {\n      \"text\": \"The insurer confirmed receipt of the claim on 6 March.\",\n      \"source\": 1,\n      \"quote\": \"Letter fr"
+ },
+ {
+  "variant": "fixed",
+  "kind": "unsupported",
+  "id": "U-EN-06",
+  "outcome": "unsupported_citation",
+  "expected_found": null,
+  "seconds": 4.7,
+  "response_start": "{\n  \"abstained\": false,\n  \"claims\": [\n    {\n      \"text\": \"The night watchman is the witness who saw a grey delivery van with a dented rear bumper parked behind"
+ }
+]

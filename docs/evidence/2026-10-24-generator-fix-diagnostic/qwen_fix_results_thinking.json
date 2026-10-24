@@ -1,0 +1,146 @@
+[
+ {
+  "variant": "thinking",
+  "kind": "answerable",
+  "id": "Q-EN-01",
+  "outcome": "invalid_json",
+  "expected_found": null,
+  "seconds": 13.4,
+  "response_start": ""
+ },
+ {
+  "variant": "thinking",
+  "kind": "answerable",
+  "id": "Q-EN-02",
+  "outcome": "invalid_json",
+  "expected_found": null,
+  "seconds": 2.8,
+  "response_start": ""
+ },
+ {
+  "variant": "thinking",
+  "kind": "answerable",
+  "id": "Q-EN-03",
+  "outcome": "invalid_json",
+  "expected_found": null,
+  "seconds": 3.1,
+  "response_start": ""
+ },
+ {
+  "variant": "thinking",
+  "kind": "answerable",
+  "id": "Q-EN-04",
+  "outcome": "invalid_json",
+  "expected_found": null,
+  "seconds": 3.0,
+  "response_start": ""
+ },
+ {
+  "variant": "thinking",
+  "kind": "answerable",
+  "id": "Q-FR-01",
+  "outcome": "invalid_json",
+  "expected_found": null,
+  "seconds": 5.0,
+  "response_start": ""
+ },
+ {
+  "variant": "thinking",
+  "kind": "answerable",
+  "id": "Q-FR-02",
+  "outcome": "invalid_json",
+  "expected_found": null,
+  "seconds": 4.8,
+  "response_start": ""
+ },
+ {
+  "variant": "thinking",
+  "kind": "answerable",
+  "id": "Q-FR-03",
+  "outcome": "invalid_json",
+  "expected_found": null,
+  "seconds": 6.8,
+  "response_start": ""
+ },
+ {
+  "variant": "thinking",
+  "kind": "answerable",
+  "id": "Q-NL-01",
+  "outcome": "invalid_json",
+  "expected_found": null,
+  "seconds": 5.2,
+  "response_start": ""
+ },
+ {
+  "variant": "thinking",
+  "kind": "answerable",
+  "id": "Q-NL-02",
+  "outcome": "invalid_json",
+  "expected_found": null,
+  "seconds": 4.2,
+  "response_start": ""
+ },
+ {
+  "variant": "thinking",
+  "kind": "answerable",
+  "id": "Q-NL-03",
+  "outcome": "invalid_json",
+  "expected_found": null,
+  "seconds": 4.2,
+  "response_start": ""
+ },
+ {
+  "variant": "thinking",
+  "kind": "unsupported",
+  "id": "U-EN-01",
+  "outcome": "invalid_json",
+  "expected_found": null,
+  "seconds": 5.4,
+  "response_start": ""
+ },
+ {
+  "variant": "thinking",
+  "kind": "unsupported",
+  "id": "U-EN-02",
+  "outcome": "invalid_json",
+  "expected_found": null,
+  "seconds": 9.1,
+  "response_start": ""
+ },
+ {
+  "variant": "thinking",
+  "kind": "unsupported",
+  "id": "U-EN-03",
+  "outcome": "invalid_json",
+  "expected_found": null,
+  "seconds": 5.7,
+  "response_start": ""
+ },
+ {
+  "variant": "thinking",
+  "kind": "unsupported",
+  "id": "U-EN-04",
+  "outcome": "invalid_json",
+  "expected_found": null,
+  "seconds": 7.2,
+  "response_start": ""
+ },
+ {
+  "variant": "thinking",
+  "kind": "unsupported",
+  "id": "U-EN-05",
+  "outcome": "invalid_json",
+  "expected_found": null,
+  "seconds": 3.5,
+  "response_start": ""
+ },
+ {
+  "variant": "thinking",
+  "kind": "unsupported",
+  "id": "U-EN-06",
+  "outcome": "invalid_json",
+  "expected_found": null,
+  "seconds": 4.4,
+  "response_start": ""
+ }
+]

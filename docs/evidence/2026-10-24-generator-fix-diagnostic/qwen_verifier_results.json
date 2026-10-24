@@ -1,0 +1,130 @@
+[
+ {
+  "kind": "answerable",
+  "id": "Q-EN-01",
+  "generation": "answered",
+  "final": "answered",
+  "expected_found": true,
+  "seconds": 10.6
+ },
+ {
+  "kind": "answerable",
+  "id": "Q-EN-02",
+  "generation": "answered",
+  "final": "answered",
+  "expected_found": true,
+  "seconds": 2.3
+ },
+ {
+  "kind": "answerable",
+  "id": "Q-EN-03",
+  "generation": "answered",
+  "final": "answered",
+  "expected_found": true,
+  "seconds": 3.2
+ },
+ {
+  "kind": "answerable",
+  "id": "Q-EN-04",
+  "generation": "answered",
+  "final": "answered",
+  "expected_found": true,
+  "seconds": 3.5
+ },
+ {
+  "kind": "answerable",
+  "id": "Q-FR-01",
+  "generation": "answered",
+  "final": "answered",
+  "expected_found": true,
+  "seconds": 3.6
+ },
+ {
+  "kind": "answerable",
+  "id": "Q-FR-02",
+  "generation": "unsupported_citation",
+  "final": "unsupported_citation",
+  "expected_found": null,
+  "seconds": 3.8
+ },
+ {
+  "kind": "answerable",
+  "id": "Q-FR-03",
+  "generation": "answered",
+  "final": "answered",
+  "expected_found": true,
+  "seconds": 7.1
+ },
+ {
+  "kind": "answerable",
+  "id": "Q-NL-01",
+  "generation": "answered",
+  "final": "answered",
+  "expected_found": true,
+  "seconds": 5.3
+ },
+ {
+  "kind": "answerable",
+  "id": "Q-NL-02",
+  "generation": "answered",
+  "final": "answered",
+  "expected_found": true,
+  "seconds": 4.3
+ },
+ {
+  "kind": "answerable",
+  "id": "Q-NL-03",
+  "generation": "answered",
+  "final": "answered",
+  "expected_found": true,
+  "seconds": 3.9
+ },
+ {
+  "kind": "unsupported",
+  "id": "U-EN-01",
+  "generation": "answered",
+  "final": "answered",
+  "expected_found": null,
+  "seconds": 6.0
+ },
+ {
+  "kind": "unsupported",
+  "id": "U-EN-02",
+  "generation": "answered",
+  "final": "answered",
+  "expected_found": null,
+  "seconds": 6.4
+ },
+ {
+  "kind": "unsupported",
+  "id": "U-EN-03",
+  "generation": "answered",
+  "final": "answered",
+  "expected_found": null,
+  "seconds": 6.6
+ },
+ {
+  "kind": "unsupported",
+  "id": "U-EN-04",
+  "generation": "answered",
+  "final": "answered",
+  "expected_found": null,
+  "seconds": 8.9
+ },
+ {
+  "kind": "unsupported",
+  "id": "U-EN-05",
+  "generation": "answered",
+  "final": "answered",
+  "expected_found": null,
+  "seconds": 4.0
+ },
+ {
+  "kind": "unsupported",
+  "id": "U-EN-06",
+  "generation": "answered",
+  "final": "answered",
+  "expected_found": null,
+  "seconds": 4.7
+ }
+]
