@@ -1,0 +1,1614 @@
+{
+  "recorded_at": "2026-10-24T13:00:02+02:00",
+  "tesseract_version": "tesseract 5.5.0",
+  "tesseract_languages": [
+    "eng",
+    "fra",
+    "nld",
+    "osd"
+  ],
+  "thresholds": {
+    "clean": 0.02,
+    "difficult": 0.1,
+    "metric": "Character error rate after Unicode NFC normalisation and whitespace collapsing; case, accents and punctuation count."
+  },
+  "categories": {
+    "clean": {
+      "documents_passed": 16,
+      "documents": 16,
+      "cer": {
+        "n": 16,
+        "min": 0.0,
+        "median": 0.0066,
+        "p95": 0.0199,
+        "max": 0.0199,
+        "mean": 0.0083
+      }
+    },
+    "difficult": {
+      "documents_passed": 34,
+      "documents": 36,
+      "cer": {
+        "n": 36,
+        "min": 0.0,
+        "median": 0.018,
+        "p95": 0.1413,
+        "max": 0.1875,
+        "mean": 0.0313
+      }
+    }
+  },
+  "conditions": {
+    "clean-300dpi": {
+      "category": "clean",
+      "threshold_cer": 0.02,
+      "cer": {
+        "n": 4,
+        "min": 0.0,
+        "median": 0.0063,
+        "p95": 0.0181,
+        "max": 0.0181,
+        "mean": 0.0077
+      },
+      "wer": {
+        "n": 4,
+        "min": 0.0,
+        "median": 0.0369,
+        "p95": 0.1053,
+        "max": 0.1053,
+        "mean": 0.0447
+      },
+      "documents_passed": 4,
+      "documents": 4
+    },
+    "clean-200dpi": {
+      "category": "clean",
+      "threshold_cer": 0.02,
+      "cer": {
+        "n": 4,
+        "min": 0.0,
+        "median": 0.0063,
+        "p95": 0.0199,
+        "max": 0.0199,
+        "mean": 0.0081
+      },
+      "wer": {
+        "n": 4,
+        "min": 0.0,
+        "median": 0.0369,
+        "p95": 0.1158,
+        "max": 0.1158,
+        "mean": 0.0474
+      },
+      "documents_passed": 4,
+      "documents": 4
+    },
+    "clean-150dpi": {
+      "category": "clean",
+      "threshold_cer": 0.02,
+      "cer": {
+        "n": 4,
+        "min": 0.0,
+        "median": 0.0093,
+        "p95": 0.0199,
+        "max": 0.0199,
+        "mean": 0.0096
+      },
+      "wer": {
+        "n": 4,
+        "min": 0.0,
+        "median": 0.0455,
+        "p95": 0.1158,
+        "max": 0.1158,
+        "mean": 0.0517
+      },
+      "documents_passed": 4,
+      "documents": 4
+    },
+    "scanned-pdf-300dpi": {
+      "category": "clean",
+      "threshold_cer": 0.02,
+      "cer": {
+        "n": 4,
+        "min": 0.0,
+        "median": 0.0063,
+        "p95": 0.0181,
+        "max": 0.0181,
+        "mean": 0.0077
+      },
+      "wer": {
+        "n": 4,
+        "min": 0.0,
+        "median": 0.0369,
+        "p95": 0.1053,
+        "max": 0.1053,
+        "mean": 0.0447
+      },
+      "documents_passed": 4,
+      "documents": 4
+    },
+    "low-resolution-100dpi": {
+      "category": "difficult",
+      "threshold_cer": 0.1,
+      "cer": {
+        "n": 4,
+        "min": 0.0038,
+        "median": 0.016,
+        "p95": 0.1413,
+        "max": 0.1413,
+        "mean": 0.0443
+      },
+      "wer": {
+        "n": 4,
+        "min": 0.0247,
+        "median": 0.0762,
+        "p95": 0.2632,
+        "max": 0.2632,
+        "mean": 0.1101
+      },
+      "documents_passed": 3,
+      "documents": 4
+    },
+    "skew-3-degrees": {
+      "category": "difficult",
+      "threshold_cer": 0.1,
+      "cer": {
+        "n": 4,
+        "min": 0.0,
+        "median": 0.0137,
+        "p95": 0.0217,
+        "max": 0.0217,
+        "mean": 0.0123
+      },
+      "wer": {
+        "n": 4,
+        "min": 0.0,
+        "median": 0.0713,
+        "p95": 0.1263,
+        "max": 0.1263,
+        "mean": 0.0672
+      },
+      "documents_passed": 4,
+      "documents": 4
+    },
+    "blur": {
+      "category": "difficult",
+      "threshold_cer": 0.1,
+      "cer": {
+        "n": 4,
+        "min": 0.0057,
+        "median": 0.0063,
+        "p95": 0.0181,
+        "max": 0.0181,
+        "mean": 0.0091
+      },
+      "wer": {
+        "n": 4,
+        "min": 0.0345,
+        "median": 0.0381,
+        "p95": 0.1053,
+        "max": 0.1053,
+        "mean": 0.054
+      },
+      "documents_passed": 4,
+      "documents": 4
+    },
+    "salt-and-pepper-noise": {
+      "category": "difficult",
+      "threshold_cer": 0.1,
+      "cer": {
+        "n": 4,
+        "min": 0.0807,
+        "median": 0.0887,
+        "p95": 0.1875,
+        "max": 0.1875,
+        "mean": 0.1114
+      },
+      "wer": {
+        "n": 4,
+        "min": 0.4526,
+        "median": 0.4748,
+        "p95": 0.7069,
+        "max": 0.7069,
+        "mean": 0.5272
+      },
+      "documents_passed": 3,
+      "documents": 4
+    },
+    "jpeg-quality-15": {
+      "category": "difficult",
+      "threshold_cer": 0.1,
+      "cer": {
+        "n": 4,
+        "min": 0.0,
+        "median": 0.0107,
+        "p95": 0.0181,
+        "max": 0.0181,
+        "mean": 0.0099
+      },
+      "wer": {
+        "n": 4,
+        "min": 0.0,
+        "median": 0.0541,
+        "p95": 0.1053,
+        "max": 0.1053,
+        "mean": 0.0534
+      },
+      "documents_passed": 4,
+      "documents": 4
+    },
+    "low-contrast": {
+      "category": "difficult",
+      "threshold_cer": 0.1,
+      "cer": {
+        "n": 4,
+        "min": 0.0,
+        "median": 0.0077,
+        "p95": 0.0199,
+        "max": 0.0199,
+        "mean": 0.0089
+      },
+      "wer": {
+        "n": 4,
+        "min": 0.0,
+        "median": 0.0455,
+        "p95": 0.1158,
+        "max": 0.1158,
+        "mean": 0.0517
+      },
+      "documents_passed": 4,
+      "documents": 4
+    },
+    "uneven-lighting": {
+      "category": "difficult",
+      "threshold_cer": 0.1,
+      "cer": {
+        "n": 4,
+        "min": 0.0,
+        "median": 0.0123,
+        "p95": 0.0217,
+        "max": 0.0217,
+        "mean": 0.0115
+      },
+      "wer": {
+        "n": 4,
+        "min": 0.0,
+        "median": 0.0455,
+        "p95": 0.1158,
+        "max": 0.1158,
+        "mean": 0.0517
+      },
+      "documents_passed": 4,
+      "documents": 4
+    },
+    "fax-like": {
+      "category": "difficult",
+      "threshold_cer": 0.1,
+      "cer": {
+        "n": 4,
+        "min": 0.0246,
+        "median": 0.0498,
+        "p95": 0.0744,
+        "max": 0.0744,
+        "mean": 0.0496
+      },
+      "wer": {
+        "n": 4,
+        "min": 0.1481,
+        "median": 0.3047,
+        "p95": 0.3789,
+        "max": 0.3789,
+        "mean": 0.2841
+      },
+      "documents_passed": 4,
+      "documents": 4
+    },
+    "scanned-pdf-200dpi-noisy": {
+      "category": "difficult",
+      "threshold_cer": 0.1,
+      "cer": {
+        "n": 4,
+        "min": 0.0095,
+        "median": 0.0195,
+        "p95": 0.0506,
+        "max": 0.0506,
+        "mean": 0.0248
+      },
+      "wer": {
+        "n": 4,
+        "min": 0.0686,
+        "median": 0.1222,
+        "p95": 0.2586,
+        "max": 0.2586,
+        "mean": 0.1429
+      },
+      "documents_passed": 4,
+      "documents": 4
+    }
+  },
+  "documents": [
+    {
+      "file": "D-EN-statement__clean-300dpi.png",
+      "document": "D-EN-statement",
+      "language": "en",
+      "condition": "clean-300dpi",
+      "category": "clean",
+      "seconds": 2.1612,
+      "cer": 0.0066,
+      "wer": 0.0392,
+      "reference_characters": 607,
+      "reference_words": 102,
+      "engine": "local-tesseract-ocr",
+      "threshold_cer": 0.02,
+      "passed": true
+    },
+    {
+      "file": "D-EN-statement__clean-200dpi.png",
+      "document": "D-EN-statement",
+      "language": "en",
+      "condition": "clean-200dpi",
+      "category": "clean",
+      "seconds": 1.2349,
+      "cer": 0.0066,
+      "wer": 0.0392,
+      "reference_characters": 607,
+      "reference_words": 102,
+      "engine": "local-tesseract-ocr",
+      "threshold_cer": 0.02,
+      "passed": true
+    },
+    {
+      "file": "D-EN-statement__clean-150dpi.png",
+      "document": "D-EN-statement",
+      "language": "en",
+      "condition": "clean-150dpi",
+      "category": "clean",
+      "seconds": 12.9843,
+      "cer": 0.0066,
+      "wer": 0.0392,
+      "reference_characters": 607,
+      "reference_words": 102,
+      "engine": "local-tesseract-ocr",
+      "threshold_cer": 0.02,
+      "passed": true
+    },
+    {
+      "file": "D-EN-statement__scanned-pdf-300dpi.pdf",
+      "document": "D-EN-statement",
+      "language": "en",
+      "condition": "scanned-pdf-300dpi",
+      "category": "clean",
+      "seconds": 17.5212,
+      "cer": 0.0066,
+      "wer": 0.0392,
+      "reference_characters": 607,
+      "reference_words": 102,
+      "engine": "pypdf-text+local-tesseract-ocr",
+      "threshold_cer": 0.02,
+      "passed": true
+    },
+    {
+      "file": "D-EN-statement__low-resolution-100dpi.png",
+      "document": "D-EN-statement",
+      "language": "en",
+      "condition": "low-resolution-100dpi",
+      "category": "difficult",
+      "seconds": 10.9556,
+      "cer": 0.0082,
+      "wer": 0.049,
+      "reference_characters": 607,
+      "reference_words": 102,
+      "engine": "local-tesseract-ocr",
+      "threshold_cer": 0.1,
+      "passed": true
+    },
+    {
+      "file": "D-EN-statement__skew-3-degrees.png",
+      "document": "D-EN-statement",
+      "language": "en",
+      "condition": "skew-3-degrees",
+      "category": "difficult",
+      "seconds": 17.0047,
+      "cer": 0.0066,
+      "wer": 0.0392,
+      "reference_characters": 607,
+      "reference_words": 102,
+      "engine": "local-tesseract-ocr",
+      "threshold_cer": 0.1,
+      "passed": true
+    },
+    {
+      "file": "D-EN-statement__blur.png",
+      "document": "D-EN-statement",
+      "language": "en",
+      "condition": "blur",
+      "category": "difficult",
+      "seconds": 12.106,
+      "cer": 0.0066,
+      "wer": 0.0392,
+      "reference_characters": 607,
+      "reference_words": 102,
+      "engine": "local-tesseract-ocr",
+      "threshold_cer": 0.1,
+      "passed": true
+    },
+    {
+      "file": "D-EN-statement__salt-and-pepper-noise.png",
+      "document": "D-EN-statement",
+      "language": "en",
+      "condition": "salt-and-pepper-noise",
+      "category": "difficult",
+      "seconds": 10.9711,
+      "cer": 0.0807,
+      "wer": 0.4804,
+      "reference_characters": 607,
+      "reference_words": 102,
+      "engine": "local-tesseract-ocr",
+      "threshold_cer": 0.1,
+      "passed": true
+    },
+    {
+      "file": "D-EN-statement__jpeg-quality-15.jpg",
+      "document": "D-EN-statement",
+      "language": "en",
+      "condition": "jpeg-quality-15",
+      "category": "difficult",
+      "seconds": 11.6106,
+      "cer": 0.0066,
+      "wer": 0.0392,
+      "reference_characters": 607,
+      "reference_words": 102,
+      "engine": "local-tesseract-ocr",
+      "threshold_cer": 0.1,
+      "passed": true
+    },
+    {
+      "file": "D-EN-statement__low-contrast.png",
+      "document": "D-EN-statement",
+      "language": "en",
+      "condition": "low-contrast",
+      "category": "difficult",
+      "seconds": 8.6321,
+      "cer": 0.0066,
+      "wer": 0.0392,
+      "reference_characters": 607,
+      "reference_words": 102,
+      "engine": "local-tesseract-ocr",
+      "threshold_cer": 0.1,
+      "passed": true
+    },
+    {
+      "file": "D-EN-statement__uneven-lighting.png",
+      "document": "D-EN-statement",
+      "language": "en",
+      "condition": "uneven-lighting",
+      "category": "difficult",
+      "seconds": 8.9555,
+      "cer": 0.0066,
+      "wer": 0.0392,
+      "reference_characters": 607,
+      "reference_words": 102,
+      "engine": "local-tesseract-ocr",
+      "threshold_cer": 0.1,
+      "passed": true
+    },
+    {
+      "file": "D-EN-statement__fax-like.png",
+      "document": "D-EN-statement",
+      "language": "en",
+      "condition": "fax-like",
+      "category": "difficult",
+      "seconds": 14.0409,
+      "cer": 0.0362,
+      "wer": 0.2647,
+      "reference_characters": 607,
+      "reference_words": 102,
+      "engine": "local-tesseract-ocr",
+      "threshold_cer": 0.1,
+      "passed": true
+    },
+    {
+      "file": "D-EN-statement__scanned-pdf-200dpi-noisy.pdf",
+      "document": "D-EN-statement",
+      "language": "en",
+      "condition": "scanned-pdf-200dpi-noisy",
+      "category": "difficult",
+      "seconds": 2.1757,
+      "cer": 0.0099,
+      "wer": 0.0686,
+      "reference_characters": 607,
+      "reference_words": 102,
+      "engine": "pypdf-text+local-tesseract-ocr",
+      "threshold_cer": 0.1,
+      "passed": true
+    },
+    {
+      "file": "D-FR-statement__clean-300dpi.png",
+      "document": "D-FR-statement",
+      "language": "fr",
+      "condition": "clean-300dpi",
+      "category": "clean",
+      "seconds": 0.7788,
+      "cer": 0.0181,
+      "wer": 0.1053,
+      "reference_characters": 552,
+      "reference_words": 95,
+      "engine": "local-tesseract-ocr",
+      "threshold_cer": 0.02,
+      "passed": true
+    },
+    {
+      "file": "D-FR-statement__clean-200dpi.png",
+      "document": "D-FR-statement",
+      "language": "fr",
+      "condition": "clean-200dpi",
+      "category": "clean",
+      "seconds": 0.6039,
+      "cer": 0.0199,
+      "wer": 0.1158,
+      "reference_characters": 552,
+      "reference_words": 95,
+      "engine": "local-tesseract-ocr",
+      "threshold_cer": 0.02,
+      "passed": true
+    },
+    {
+      "file": "D-FR-statement__clean-150dpi.png",
+      "document": "D-FR-statement",
+      "language": "fr",
+      "condition": "clean-150dpi",
+      "category": "clean",
+      "seconds": 0.7189,
+      "cer": 0.0199,
+      "wer": 0.1158,
+      "reference_characters": 552,
+      "reference_words": 95,
+      "engine": "local-tesseract-ocr",
+      "threshold_cer": 0.02,
+      "passed": true
+    },
+    {
+      "file": "D-FR-statement__scanned-pdf-300dpi.pdf",
+      "document": "D-FR-statement",
+      "language": "fr",
+      "condition": "scanned-pdf-300dpi",
+      "category": "clean",
+      "seconds": 1.0965,
+      "cer": 0.0181,
+      "wer": 0.1053,
+      "reference_characters": 552,
+      "reference_words": 95,
+      "engine": "pypdf-text+local-tesseract-ocr",
+      "threshold_cer": 0.02,
+      "passed": true
+    },
+    {
+      "file": "D-FR-statement__low-resolution-100dpi.png",
+      "document": "D-FR-statement",
+      "language": "fr",
+      "condition": "low-resolution-100dpi",
+      "category": "difficult",
+      "seconds": 0.4022,
+      "cer": 0.1413,
+      "wer": 0.2632,
+      "reference_characters": 552,
+      "reference_words": 95,
+      "engine": "local-tesseract-ocr",
+      "threshold_cer": 0.1,
+      "passed": false
+    },
+    {
+      "file": "D-FR-statement__skew-3-degrees.png",
+      "document": "D-FR-statement",
+      "language": "fr",
+      "condition": "skew-3-degrees",
+      "category": "difficult",
+      "seconds": 0.7838,
+      "cer": 0.0217,
+      "wer": 0.1263,
+      "reference_characters": 552,
+      "reference_words": 95,
+      "engine": "local-tesseract-ocr",
+      "threshold_cer": 0.1,
+      "passed": true
+    },
+    {
+      "file": "D-FR-statement__blur.png",
+      "document": "D-FR-statement",
+      "language": "fr",
+      "condition": "blur",
+      "category": "difficult",
+      "seconds": 0.7313,
+      "cer": 0.0181,
+      "wer": 0.1053,
+      "reference_characters": 552,
+      "reference_words": 95,
+      "engine": "local-tesseract-ocr",
+      "threshold_cer": 0.1,
+      "passed": true
+    },
+    {
+      "file": "D-FR-statement__salt-and-pepper-noise.png",
+      "document": "D-FR-statement",
+      "language": "fr",
+      "condition": "salt-and-pepper-noise",
+      "category": "difficult",
+      "seconds": 0.7787,
+      "cer": 0.0942,
+      "wer": 0.4526,
+      "reference_characters": 552,
+      "reference_words": 95,
+      "engine": "local-tesseract-ocr",
+      "threshold_cer": 0.1,
+      "passed": true
+    },
+    {
+      "file": "D-FR-statement__jpeg-quality-15.jpg",
+      "document": "D-FR-statement",
+      "language": "fr",
+      "condition": "jpeg-quality-15",
+      "category": "difficult",
+      "seconds": 0.6235,
+      "cer": 0.0181,
+      "wer": 0.1053,
+      "reference_characters": 552,
+      "reference_words": 95,
+      "engine": "local-tesseract-ocr",
+      "threshold_cer": 0.1,
+      "passed": true
+    },
+    {
+      "file": "D-FR-statement__low-contrast.png",
+      "document": "D-FR-statement",
+      "language": "fr",
+      "condition": "low-contrast",
+      "category": "difficult",
+      "seconds": 0.6692,
+      "cer": 0.0199,
+      "wer": 0.1158,
+      "reference_characters": 552,
+      "reference_words": 95,
+      "engine": "local-tesseract-ocr",
+      "threshold_cer": 0.1,
+      "passed": true
+    },
+    {
+      "file": "D-FR-statement__uneven-lighting.png",
+      "document": "D-FR-statement",
+      "language": "fr",
+      "condition": "uneven-lighting",
+      "category": "difficult",
+      "seconds": 1.1892,
+      "cer": 0.0217,
+      "wer": 0.1158,
+      "reference_characters": 552,
+      "reference_words": 95,
+      "engine": "local-tesseract-ocr",
+      "threshold_cer": 0.1,
+      "passed": true
+    },
+    {
+      "file": "D-FR-statement__fax-like.png",
+      "document": "D-FR-statement",
+      "language": "fr",
+      "condition": "fax-like",
+      "category": "difficult",
+      "seconds": 11.6756,
+      "cer": 0.0634,
+      "wer": 0.3789,
+      "reference_characters": 552,
+      "reference_words": 95,
+      "engine": "local-tesseract-ocr",
+      "threshold_cer": 0.1,
+      "passed": true
+    },
+    {
+      "file": "D-FR-statement__scanned-pdf-200dpi-noisy.pdf",
+      "document": "D-FR-statement",
+      "language": "fr",
+      "condition": "scanned-pdf-200dpi-noisy",
+      "category": "difficult",
+      "seconds": 11.0716,
+      "cer": 0.029,
+      "wer": 0.1579,
+      "reference_characters": 552,
+      "reference_words": 95,
+      "engine": "pypdf-text+local-tesseract-ocr",
+      "threshold_cer": 0.1,
+      "passed": true
+    },
+    {
+      "file": "D-NL-statement__clean-300dpi.png",
+      "document": "D-NL-statement",
+      "language": "nl",
+      "condition": "clean-300dpi",
+      "category": "clean",
+      "seconds": 8.1581,
+      "cer": 0.0,
+      "wer": 0.0,
+      "reference_characters": 529,
+      "reference_words": 81,
+      "engine": "local-tesseract-ocr",
+      "threshold_cer": 0.02,
+      "passed": true
+    },
+    {
+      "file": "D-NL-statement__clean-200dpi.png",
+      "document": "D-NL-statement",
+      "language": "nl",
+      "condition": "clean-200dpi",
+      "category": "clean",
+      "seconds": 6.8477,
+      "cer": 0.0,
+      "wer": 0.0,
+      "reference_characters": 529,
+      "reference_words": 81,
+      "engine": "local-tesseract-ocr",
+      "threshold_cer": 0.02,
+      "passed": true
+    },
+    {
+      "file": "D-NL-statement__clean-150dpi.png",
+      "document": "D-NL-statement",
+      "language": "nl",
+      "condition": "clean-150dpi",
+      "category": "clean",
+      "seconds": 5.4042,
+      "cer": 0.0,
+      "wer": 0.0,
+      "reference_characters": 529,
+      "reference_words": 81,
+      "engine": "local-tesseract-ocr",
+      "threshold_cer": 0.02,
+      "passed": true
+    },
+    {
+      "file": "D-NL-statement__scanned-pdf-300dpi.pdf",
+      "document": "D-NL-statement",
+      "language": "nl",
+      "condition": "scanned-pdf-300dpi",
+      "category": "clean",
+      "seconds": 4.9622,
+      "cer": 0.0,
+      "wer": 0.0,
+      "reference_characters": 529,
+      "reference_words": 81,
+      "engine": "pypdf-text+local-tesseract-ocr",
+      "threshold_cer": 0.02,
+      "passed": true
+    },
+    {
+      "file": "D-NL-statement__low-resolution-100dpi.png",
+      "document": "D-NL-statement",
+      "language": "nl",
+      "condition": "low-resolution-100dpi",
+      "category": "difficult",
+      "seconds": 4.35,
+      "cer": 0.0038,
+      "wer": 0.0247,
+      "reference_characters": 529,
+      "reference_words": 81,
+      "engine": "local-tesseract-ocr",
+      "threshold_cer": 0.1,
+      "passed": true
+    },
+    {
+      "file": "D-NL-statement__skew-3-degrees.png",
+      "document": "D-NL-statement",
+      "language": "nl",
+      "condition": "skew-3-degrees",
+      "category": "difficult",
+      "seconds": 12.8752,
+      "cer": 0.0,
+      "wer": 0.0,
+      "reference_characters": 529,
+      "reference_words": 81,
+      "engine": "local-tesseract-ocr",
+      "threshold_cer": 0.1,
+      "passed": true
+    },
+    {
+      "file": "D-NL-statement__blur.png",
+      "document": "D-NL-statement",
+      "language": "nl",
+      "condition": "blur",
+      "category": "difficult",
+      "seconds": 5.5612,
+      "cer": 0.0057,
+      "wer": 0.037,
+      "reference_characters": 529,
+      "reference_words": 81,
+      "engine": "local-tesseract-ocr",
+      "threshold_cer": 0.1,
+      "passed": true
+    },
+    {
+      "file": "D-NL-statement__salt-and-pepper-noise.png",
+      "document": "D-NL-statement",
+      "language": "nl",
+      "condition": "salt-and-pepper-noise",
+      "category": "difficult",
+      "seconds": 8.3025,
+      "cer": 0.0832,
+      "wer": 0.4691,
+      "reference_characters": 529,
+      "reference_words": 81,
+      "engine": "local-tesseract-ocr",
+      "threshold_cer": 0.1,
+      "passed": true
+    },
+    {
+      "file": "D-NL-statement__jpeg-quality-15.jpg",
+      "document": "D-NL-statement",
+      "language": "nl",
+      "condition": "jpeg-quality-15",
+      "category": "difficult",
+      "seconds": 0.6407,
+      "cer": 0.0,
+      "wer": 0.0,
+      "reference_characters": 529,
+      "reference_words": 81,
+      "engine": "local-tesseract-ocr",
+      "threshold_cer": 0.1,
+      "passed": true
+    },
+    {
+      "file": "D-NL-statement__low-contrast.png",
+      "document": "D-NL-statement",
+      "language": "nl",
+      "condition": "low-contrast",
+      "category": "difficult",
+      "seconds": 1.142,
+      "cer": 0.0,
+      "wer": 0.0,
+      "reference_characters": 529,
+      "reference_words": 81,
+      "engine": "local-tesseract-ocr",
+      "threshold_cer": 0.1,
+      "passed": true
+    },
+    {
+      "file": "D-NL-statement__uneven-lighting.png",
+      "document": "D-NL-statement",
+      "language": "nl",
+      "condition": "uneven-lighting",
+      "category": "difficult",
+      "seconds": 0.7098,
+      "cer": 0.0,
+      "wer": 0.0,
+      "reference_characters": 529,
+      "reference_words": 81,
+      "engine": "local-tesseract-ocr",
+      "threshold_cer": 0.1,
+      "passed": true
+    },
+    {
+      "file": "D-NL-statement__fax-like.png",
+      "document": "D-NL-statement",
+      "language": "nl",
+      "condition": "fax-like",
+      "category": "difficult",
+      "seconds": 0.5253,
+      "cer": 0.0246,
+      "wer": 0.1481,
+      "reference_characters": 529,
+      "reference_words": 81,
+      "engine": "local-tesseract-ocr",
+      "threshold_cer": 0.1,
+      "passed": true
+    },
+    {
+      "file": "D-NL-statement__scanned-pdf-200dpi-noisy.pdf",
+      "document": "D-NL-statement",
+      "language": "nl",
+      "condition": "scanned-pdf-200dpi-noisy",
+      "category": "difficult",
+      "seconds": 0.7961,
+      "cer": 0.0095,
+      "wer": 0.0864,
+      "reference_characters": 529,
+      "reference_words": 81,
+      "engine": "pypdf-text+local-tesseract-ocr",
+      "threshold_cer": 0.1,
+      "passed": true
+    },
+    {
+      "file": "D-MIX-inventory__clean-300dpi.png",
+      "document": "D-MIX-inventory",
+      "language": "en+fr+nl",
+      "condition": "clean-300dpi",
+      "category": "clean",
+      "seconds": 0.607,
+      "cer": 0.006,
+      "wer": 0.0345,
+      "reference_characters": 336,
+      "reference_words": 58,
+      "engine": "local-tesseract-ocr",
+      "threshold_cer": 0.02,
+      "passed": true
+    },
+    {
+      "file": "D-MIX-inventory__clean-200dpi.png",
+      "document": "D-MIX-inventory",
+      "language": "en+fr+nl",
+      "condition": "clean-200dpi",
+      "category": "clean",
+      "seconds": 0.6013,
+      "cer": 0.006,
+      "wer": 0.0345,
+      "reference_characters": 336,
+      "reference_words": 58,
+      "engine": "local-tesseract-ocr",
+      "threshold_cer": 0.02,
+      "passed": true
+    },
+    {
+      "file": "D-MIX-inventory__clean-150dpi.png",
+      "document": "D-MIX-inventory",
+      "language": "en+fr+nl",
+      "condition": "clean-150dpi",
+      "category": "clean",
+      "seconds": 0.7105,
+      "cer": 0.0119,
+      "wer": 0.0517,
+      "reference_characters": 336,
+      "reference_words": 58,
+      "engine": "local-tesseract-ocr",
+      "threshold_cer": 0.02,
+      "passed": true
+    },
+    {
+      "file": "D-MIX-inventory__scanned-pdf-300dpi.pdf",
+      "document": "D-MIX-inventory",
+      "language": "en+fr+nl",
+      "condition": "scanned-pdf-300dpi",
+      "category": "clean",
+      "seconds": 1.1822,
+      "cer": 0.006,
+      "wer": 0.0345,
+      "reference_characters": 336,
+      "reference_words": 58,
+      "engine": "pypdf-text+local-tesseract-ocr",
+      "threshold_cer": 0.02,
+      "passed": true
+    },
+    {
+      "file": "D-MIX-inventory__low-resolution-100dpi.png",
+      "document": "D-MIX-inventory",
+      "language": "en+fr+nl",
+      "condition": "low-resolution-100dpi",
+      "category": "difficult",
+      "seconds": 0.5061,
+      "cer": 0.0238,
+      "wer": 0.1034,
+      "reference_characters": 336,
+      "reference_words": 58,
+      "engine": "local-tesseract-ocr",
+      "threshold_cer": 0.1,
+      "passed": true
+    },
+    {
+      "file": "D-MIX-inventory__skew-3-degrees.png",
+      "document": "D-MIX-inventory",
+      "language": "en+fr+nl",
+      "condition": "skew-3-degrees",
+      "category": "difficult",
+      "seconds": 0.9043,
+      "cer": 0.0208,
+      "wer": 0.1034,
+      "reference_characters": 336,
+      "reference_words": 58,
+      "engine": "local-tesseract-ocr",
+      "threshold_cer": 0.1,
+      "passed": true
+    },
+    {
+      "file": "D-MIX-inventory__blur.png",
+      "document": "D-MIX-inventory",
+      "language": "en+fr+nl",
+      "condition": "blur",
+      "category": "difficult",
+      "seconds": 2.2864,
+      "cer": 0.006,
+      "wer": 0.0345,
+      "reference_characters": 336,
+      "reference_words": 58,
+      "engine": "local-tesseract-ocr",
+      "threshold_cer": 0.1,
+      "passed": true
+    },
+    {
+      "file": "D-MIX-inventory__salt-and-pepper-noise.png",
+      "document": "D-MIX-inventory",
+      "language": "en+fr+nl",
+      "condition": "salt-and-pepper-noise",
+      "category": "difficult",
+      "seconds": 13.0032,
+      "cer": 0.1875,
+      "wer": 0.7069,
+      "reference_characters": 336,
+      "reference_words": 58,
+      "engine": "local-tesseract-ocr",
+      "threshold_cer": 0.1,
+      "passed": false
+    },
+    {
+      "file": "D-MIX-inventory__jpeg-quality-15.jpg",
+      "document": "D-MIX-inventory",
+      "language": "en+fr+nl",
+      "condition": "jpeg-quality-15",
+      "category": "difficult",
+      "seconds": 7.3949,
+      "cer": 0.0149,
+      "wer": 0.069,
+      "reference_characters": 336,
+      "reference_words": 58,
+      "engine": "local-tesseract-ocr",
+      "threshold_cer": 0.1,
+      "passed": true
+    },
+    {
+      "file": "D-MIX-inventory__low-contrast.png",
+      "document": "D-MIX-inventory",
+      "language": "en+fr+nl",
+      "condition": "low-contrast",
+      "category": "difficult",
+      "seconds": 5.3322,
+      "cer": 0.0089,
+      "wer": 0.0517,
+      "reference_characters": 336,
+      "reference_words": 58,
+      "engine": "local-tesseract-ocr",
+      "threshold_cer": 0.1,
+      "passed": true
+    },
+    {
+      "file": "D-MIX-inventory__uneven-lighting.png",
+      "document": "D-MIX-inventory",
+      "language": "en+fr+nl",
+      "condition": "uneven-lighting",
+      "category": "difficult",
+      "seconds": 6.9829,
+      "cer": 0.0179,
+      "wer": 0.0517,
+      "reference_characters": 336,
+      "reference_words": 58,
+      "engine": "local-tesseract-ocr",
+      "threshold_cer": 0.1,
+      "passed": true
+    },
+    {
+      "file": "D-MIX-inventory__fax-like.png",
+      "document": "D-MIX-inventory",
+      "language": "en+fr+nl",
+      "condition": "fax-like",
+      "category": "difficult",
+      "seconds": 9.2174,
+      "cer": 0.0744,
+      "wer": 0.3448,
+      "reference_characters": 336,
+      "reference_words": 58,
+      "engine": "local-tesseract-ocr",
+      "threshold_cer": 0.1,
+      "passed": true
+    },
+    {
+      "file": "D-MIX-inventory__scanned-pdf-200dpi-noisy.pdf",
+      "document": "D-MIX-inventory",
+      "language": "en+fr+nl",
+      "condition": "scanned-pdf-200dpi-noisy",
+      "category": "difficult",
+      "seconds": 4.7432,
+      "cer": 0.0506,
+      "wer": 0.2586,
+      "reference_characters": 336,
+      "reference_words": 58,
+      "engine": "pypdf-text+local-tesseract-ocr",
+      "threshold_cer": 0.1,
+      "passed": true
+    }
+  ],
+  "passed": false,
+  "diagnostic_three_languages": {
+    "lang": "eng+fra+nld",
+    "scope": "Diagnostic only: the service calls Tesseract without a language, so English data only.",
+    "categories": {
+      "clean": {
+        "documents_passed": 16,
+        "documents": 16,
+        "cer": {
+          "n": 16,
+          "min": 0.0,
+          "median": 0.0033,
+          "p95": 0.0066,
+          "max": 0.0066,
+          "mean": 0.0034
+        }
+      },
+      "difficult": {
+        "documents_passed": 34,
+        "documents": 36,
+        "cer": {
+          "n": 36,
+          "min": 0.0,
+          "median": 0.0066,
+          "p95": 0.1286,
+          "max": 0.1369,
+          "mean": 0.0208
+        }
+      }
+    },
+    "conditions": {
+      "clean-300dpi": {
+        "n": 4,
+        "min": 0.0,
+        "median": 0.0048,
+        "p95": 0.0066,
+        "max": 0.0066,
+        "mean": 0.004
+      },
+      "clean-200dpi": {
+        "n": 4,
+        "min": 0.0,
+        "median": 0.0033,
+        "p95": 0.0066,
+        "max": 0.0066,
+        "mean": 0.0033
+      },
+      "clean-150dpi": {
+        "n": 4,
+        "min": 0.0,
+        "median": 0.0033,
+        "p95": 0.0066,
+        "max": 0.0066,
+        "mean": 0.0033
+      },
+      "scanned-pdf-300dpi": {
+        "n": 4,
+        "min": 0.0,
+        "median": 0.0024,
+        "p95": 0.0066,
+        "max": 0.0066,
+        "mean": 0.0029
+      },
+      "low-resolution-100dpi": {
+        "n": 4,
+        "min": 0.0019,
+        "median": 0.0093,
+        "p95": 0.1286,
+        "max": 0.1286,
+        "mean": 0.0372
+      },
+      "skew-3-degrees": {
+        "n": 4,
+        "min": 0.0,
+        "median": 0.0069,
+        "p95": 0.0149,
+        "max": 0.0149,
+        "mean": 0.0072
+      },
+      "blur": {
+        "n": 4,
+        "min": 0.0,
+        "median": 0.0024,
+        "p95": 0.0066,
+        "max": 0.0066,
+        "mean": 0.0029
+      },
+      "salt-and-pepper-noise": {
+        "n": 4,
+        "min": 0.061,
+        "median": 0.0703,
+        "p95": 0.1369,
+        "max": 0.1369,
+        "mean": 0.0846
+      },
+      "jpeg-quality-15": {
+        "n": 4,
+        "min": 0.0,
+        "median": 0.0024,
+        "p95": 0.0066,
+        "max": 0.0066,
+        "mean": 0.0029
+      },
+      "low-contrast": {
+        "n": 4,
+        "min": 0.0,
+        "median": 0.0048,
+        "p95": 0.0066,
+        "max": 0.0066,
+        "mean": 0.004
+      },
+      "uneven-lighting": {
+        "n": 4,
+        "min": 0.0,
+        "median": 0.0048,
+        "p95": 0.0066,
+        "max": 0.0066,
+        "mean": 0.004
+      },
+      "fax-like": {
+        "n": 4,
+        "min": 0.0151,
+        "median": 0.0257,
+        "p95": 0.0565,
+        "max": 0.0565,
+        "mean": 0.0307
+      },
+      "scanned-pdf-200dpi-noisy": {
+        "n": 4,
+        "min": 0.0038,
+        "median": 0.0068,
+        "p95": 0.0357,
+        "max": 0.0357,
+        "mean": 0.0133
+      }
+    },
+    "documents": {
+      "D-EN-statement__clean-300dpi.png": {
+        "cer": 0.0066,
+        "wer": 0.0392,
+        "category": "clean",
+        "condition": "clean-300dpi",
+        "passed": true
+      },
+      "D-EN-statement__clean-200dpi.png": {
+        "cer": 0.0066,
+        "wer": 0.0392,
+        "category": "clean",
+        "condition": "clean-200dpi",
+        "passed": true
+      },
+      "D-EN-statement__clean-150dpi.png": {
+        "cer": 0.0066,
+        "wer": 0.0392,
+        "category": "clean",
+        "condition": "clean-150dpi",
+        "passed": true
+      },
+      "D-EN-statement__scanned-pdf-300dpi.pdf": {
+        "cer": 0.0066,
+        "wer": 0.0392,
+        "category": "clean",
+        "condition": "scanned-pdf-300dpi",
+        "passed": true
+      },
+      "D-EN-statement__low-resolution-100dpi.png": {
+        "cer": 0.0066,
+        "wer": 0.0392,
+        "category": "difficult",
+        "condition": "low-resolution-100dpi",
+        "passed": true
+      },
+      "D-EN-statement__skew-3-degrees.png": {
+        "cer": 0.0066,
+        "wer": 0.0392,
+        "category": "difficult",
+        "condition": "skew-3-degrees",
+        "passed": true
+      },
+      "D-EN-statement__blur.png": {
+        "cer": 0.0066,
+        "wer": 0.0392,
+        "category": "difficult",
+        "condition": "blur",
+        "passed": true
+      },
+      "D-EN-statement__salt-and-pepper-noise.png": {
+        "cer": 0.061,
+        "wer": 0.3431,
+        "category": "difficult",
+        "condition": "salt-and-pepper-noise",
+        "passed": true
+      },
+      "D-EN-statement__jpeg-quality-15.jpg": {
+        "cer": 0.0066,
+        "wer": 0.0392,
+        "category": "difficult",
+        "condition": "jpeg-quality-15",
+        "passed": true
+      },
+      "D-EN-statement__low-contrast.png": {
+        "cer": 0.0066,
+        "wer": 0.0392,
+        "category": "difficult",
+        "condition": "low-contrast",
+        "passed": true
+      },
+      "D-EN-statement__uneven-lighting.png": {
+        "cer": 0.0066,
+        "wer": 0.0392,
+        "category": "difficult",
+        "condition": "uneven-lighting",
+        "passed": true
+      },
+      "D-EN-statement__fax-like.png": {
+        "cer": 0.0297,
+        "wer": 0.1961,
+        "category": "difficult",
+        "condition": "fax-like",
+        "passed": true
+      },
+      "D-EN-statement__scanned-pdf-200dpi-noisy.pdf": {
+        "cer": 0.0082,
+        "wer": 0.049,
+        "category": "difficult",
+        "condition": "scanned-pdf-200dpi-noisy",
+        "passed": true
+      },
+      "D-FR-statement__clean-300dpi.png": {
+        "cer": 0.0036,
+        "wer": 0.0211,
+        "category": "clean",
+        "condition": "clean-300dpi",
+        "passed": true
+      },
+      "D-FR-statement__clean-200dpi.png": {
+        "cer": 0.0036,
+        "wer": 0.0211,
+        "category": "clean",
+        "condition": "clean-200dpi",
+        "passed": true
+      },
+      "D-FR-statement__clean-150dpi.png": {
+        "cer": 0.0036,
+        "wer": 0.0211,
+        "category": "clean",
+        "condition": "clean-150dpi",
+        "passed": true
+      },
+      "D-FR-statement__scanned-pdf-300dpi.pdf": {
+        "cer": 0.0018,
+        "wer": 0.0105,
+        "category": "clean",
+        "condition": "scanned-pdf-300dpi",
+        "passed": true
+      },
+      "D-FR-statement__low-resolution-100dpi.png": {
+        "cer": 0.1286,
+        "wer": 0.1895,
+        "category": "difficult",
+        "condition": "low-resolution-100dpi",
+        "passed": false
+      },
+      "D-FR-statement__skew-3-degrees.png": {
+        "cer": 0.0072,
+        "wer": 0.0421,
+        "category": "difficult",
+        "condition": "skew-3-degrees",
+        "passed": true
+      },
+      "D-FR-statement__blur.png": {
+        "cer": 0.0018,
+        "wer": 0.0105,
+        "category": "difficult",
+        "condition": "blur",
+        "passed": true
+      },
+      "D-FR-statement__salt-and-pepper-noise.png": {
+        "cer": 0.0688,
+        "wer": 0.2842,
+        "category": "difficult",
+        "condition": "salt-and-pepper-noise",
+        "passed": true
+      },
+      "D-FR-statement__jpeg-quality-15.jpg": {
+        "cer": 0.0018,
+        "wer": 0.0105,
+        "category": "difficult",
+        "condition": "jpeg-quality-15",
+        "passed": true
+      },
+      "D-FR-statement__low-contrast.png": {
+        "cer": 0.0036,
+        "wer": 0.0211,
+        "category": "difficult",
+        "condition": "low-contrast",
+        "passed": true
+      },
+      "D-FR-statement__uneven-lighting.png": {
+        "cer": 0.0036,
+        "wer": 0.0211,
+        "category": "difficult",
+        "condition": "uneven-lighting",
+        "passed": true
+      },
+      "D-FR-statement__fax-like.png": {
+        "cer": 0.0217,
+        "wer": 0.1158,
+        "category": "difficult",
+        "condition": "fax-like",
+        "passed": true
+      },
+      "D-FR-statement__scanned-pdf-200dpi-noisy.pdf": {
+        "cer": 0.0054,
+        "wer": 0.0211,
+        "category": "difficult",
+        "condition": "scanned-pdf-200dpi-noisy",
+        "passed": true
+      },
+      "D-NL-statement__clean-300dpi.png": {
+        "cer": 0.0,
+        "wer": 0.0,
+        "category": "clean",
+        "condition": "clean-300dpi",
+        "passed": true
+      },
+      "D-NL-statement__clean-200dpi.png": {
+        "cer": 0.0,
+        "wer": 0.0,
+        "category": "clean",
+        "condition": "clean-200dpi",
+        "passed": true
+      },
+      "D-NL-statement__clean-150dpi.png": {
+        "cer": 0.0,
+        "wer": 0.0,
+        "category": "clean",
+        "condition": "clean-150dpi",
+        "passed": true
+      },
+      "D-NL-statement__scanned-pdf-300dpi.pdf": {
+        "cer": 0.0,
+        "wer": 0.0,
+        "category": "clean",
+        "condition": "scanned-pdf-300dpi",
+        "passed": true
+      },
+      "D-NL-statement__low-resolution-100dpi.png": {
+        "cer": 0.0019,
+        "wer": 0.0123,
+        "category": "difficult",
+        "condition": "low-resolution-100dpi",
+        "passed": true
+      },
+      "D-NL-statement__skew-3-degrees.png": {
+        "cer": 0.0,
+        "wer": 0.0,
+        "category": "difficult",
+        "condition": "skew-3-degrees",
+        "passed": true
+      },
+      "D-NL-statement__blur.png": {
+        "cer": 0.0,
+        "wer": 0.0,
+        "category": "difficult",
+        "condition": "blur",
+        "passed": true
+      },
+      "D-NL-statement__salt-and-pepper-noise.png": {
+        "cer": 0.0718,
+        "wer": 0.3827,
+        "category": "difficult",
+        "condition": "salt-and-pepper-noise",
+        "passed": true
+      },
+      "D-NL-statement__jpeg-quality-15.jpg": {
+        "cer": 0.0,
+        "wer": 0.0,
+        "category": "difficult",
+        "condition": "jpeg-quality-15",
+        "passed": true
+      },
+      "D-NL-statement__low-contrast.png": {
+        "cer": 0.0,
+        "wer": 0.0,
+        "category": "difficult",
+        "condition": "low-contrast",
+        "passed": true
+      },
+      "D-NL-statement__uneven-lighting.png": {
+        "cer": 0.0,
+        "wer": 0.0,
+        "category": "difficult",
+        "condition": "uneven-lighting",
+        "passed": true
+      },
+      "D-NL-statement__fax-like.png": {
+        "cer": 0.0151,
+        "wer": 0.0864,
+        "category": "difficult",
+        "condition": "fax-like",
+        "passed": true
+      },
+      "D-NL-statement__scanned-pdf-200dpi-noisy.pdf": {
+        "cer": 0.0038,
+        "wer": 0.0247,
+        "category": "difficult",
+        "condition": "scanned-pdf-200dpi-noisy",
+        "passed": true
+      },
+      "D-MIX-inventory__clean-300dpi.png": {
+        "cer": 0.006,
+        "wer": 0.0345,
+        "category": "clean",
+        "condition": "clean-300dpi",
+        "passed": true
+      },
+      "D-MIX-inventory__clean-200dpi.png": {
+        "cer": 0.003,
+        "wer": 0.0172,
+        "category": "clean",
+        "condition": "clean-200dpi",
+        "passed": true
+      },
+      "D-MIX-inventory__clean-150dpi.png": {
+        "cer": 0.003,
+        "wer": 0.0172,
+        "category": "clean",
+        "condition": "clean-150dpi",
+        "passed": true
+      },
+      "D-MIX-inventory__scanned-pdf-300dpi.pdf": {
+        "cer": 0.003,
+        "wer": 0.0172,
+        "category": "clean",
+        "condition": "scanned-pdf-300dpi",
+        "passed": true
+      },
+      "D-MIX-inventory__low-resolution-100dpi.png": {
+        "cer": 0.0119,
+        "wer": 0.069,
+        "category": "difficult",
+        "condition": "low-resolution-100dpi",
+        "passed": true
+      },
+      "D-MIX-inventory__skew-3-degrees.png": {
+        "cer": 0.0149,
+        "wer": 0.0862,
+        "category": "difficult",
+        "condition": "skew-3-degrees",
+        "passed": true
+      },
+      "D-MIX-inventory__blur.png": {
+        "cer": 0.003,
+        "wer": 0.0172,
+        "category": "difficult",
+        "condition": "blur",
+        "passed": true
+      },
+      "D-MIX-inventory__salt-and-pepper-noise.png": {
+        "cer": 0.1369,
+        "wer": 0.4655,
+        "category": "difficult",
+        "condition": "salt-and-pepper-noise",
+        "passed": false
+      },
+      "D-MIX-inventory__jpeg-quality-15.jpg": {
+        "cer": 0.003,
+        "wer": 0.0172,
+        "category": "difficult",
+        "condition": "jpeg-quality-15",
+        "passed": true
+      },
+      "D-MIX-inventory__low-contrast.png": {
+        "cer": 0.006,
+        "wer": 0.0345,
+        "category": "difficult",
+        "condition": "low-contrast",
+        "passed": true
+      },
+      "D-MIX-inventory__uneven-lighting.png": {
+        "cer": 0.006,
+        "wer": 0.0345,
+        "category": "difficult",
+        "condition": "uneven-lighting",
+        "passed": true
+      },
+      "D-MIX-inventory__fax-like.png": {
+        "cer": 0.0565,
+        "wer": 0.2759,
+        "category": "difficult",
+        "condition": "fax-like",
+        "passed": true
+      },
+      "D-MIX-inventory__scanned-pdf-200dpi-noisy.pdf": {
+        "cer": 0.0357,
+        "wer": 0.1552,
+        "category": "difficult",
+        "condition": "scanned-pdf-200dpi-noisy",
+        "passed": true
+      }
+    }
+  }
+}

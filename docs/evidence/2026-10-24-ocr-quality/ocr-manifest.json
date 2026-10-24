@@ -1,0 +1,697 @@
+{
+  "generated_at": "2026-10-24T10:12:40+02:00",
+  "fixture_sha256": "d4763f010e79f6c3a8ea05f77571a9d6bf4d77b9f85387cc041b10f92692a515",
+  "generator": {
+    "python": "3.12.14",
+    "pillow": "13.0.0",
+    "numpy": "2.5.3",
+    "fonts_sha256": {
+      "arial.ttf": "b3658eadae55e682b5f69eb64c439c1ecc8f196c0bb8d4756d145d13bc86476a",
+      "times.ttf": "931c5de5c70401d9324d5014c123802b4fb753000360ceb2f56c589403cd58c5",
+      "calibri.ttf": "57e93ff143572bcc092c1f56202d43ddc07bb119aa104c6d7af163470fb551f6",
+      "cour.ttf": "e4a66a0259718d0c8f4b6e14319b4803ced45afbddf3abba8b8c3e2006856206"
+    }
+  },
+  "items": [
+    {
+      "file": "D-EN-statement__clean-300dpi.png",
+      "document": "D-EN-statement",
+      "language": "en",
+      "condition": "clean-300dpi",
+      "category": "clean",
+      "pixels": [
+        1983,
+        1030
+      ],
+      "seed": 2833788716,
+      "sha256": "7328d2fe6ae5c6d2ed2a69479f416f486b3ac3ed15d436ca99dcafc48cf6c4f9"
+    },
+    {
+      "file": "D-EN-statement__clean-200dpi.png",
+      "document": "D-EN-statement",
+      "language": "en",
+      "condition": "clean-200dpi",
+      "category": "clean",
+      "pixels": [
+        1322,
+        687
+      ],
+      "seed": 1832791100,
+      "sha256": "8836dd65599a9a80e1c039129bf8f1ef5a6cf4b106b8afdd4027035cfefa9b2e"
+    },
+    {
+      "file": "D-EN-statement__clean-150dpi.png",
+      "document": "D-EN-statement",
+      "language": "en",
+      "condition": "clean-150dpi",
+      "category": "clean",
+      "pixels": [
+        992,
+        515
+      ],
+      "seed": 3731669839,
+      "sha256": "43a39facd728c2f83ed20398a05253acff5e8cd35cf2d749fc0ecde29cee16eb"
+    },
+    {
+      "file": "D-EN-statement__scanned-pdf-300dpi.pdf",
+      "document": "D-EN-statement",
+      "language": "en",
+      "condition": "scanned-pdf-300dpi",
+      "category": "clean",
+      "pixels": [
+        1983,
+        1030
+      ],
+      "seed": 609972627,
+      "sha256": "70e40a372d9df101750f7d314bbf52d7376b96dd3a21ce857abcc82fad705b66"
+    },
+    {
+      "file": "D-EN-statement__low-resolution-100dpi.png",
+      "document": "D-EN-statement",
+      "language": "en",
+      "condition": "low-resolution-100dpi",
+      "category": "difficult",
+      "pixels": [
+        661,
+        343
+      ],
+      "seed": 1343192872,
+      "sha256": "eba32dcad01e73a229dd86c0689b48d118ab02e03c22fae08969fe83880ed3bb"
+    },
+    {
+      "file": "D-EN-statement__skew-3-degrees.png",
+      "document": "D-EN-statement",
+      "language": "en",
+      "condition": "skew-3-degrees",
+      "category": "difficult",
+      "pixels": [
+        2035,
+        1134
+      ],
+      "seed": 3525523972,
+      "sha256": "2d43fa410df89e5490609911ac794569178c77c5fe590806bbb04503e06d576c"
+    },
+    {
+      "file": "D-EN-statement__blur.png",
+      "document": "D-EN-statement",
+      "language": "en",
+      "condition": "blur",
+      "category": "difficult",
+      "pixels": [
+        1322,
+        687
+      ],
+      "seed": 768097506,
+      "sha256": "1e1cb97e95f603d99f473ecbd9cdc900d0cc2d37885627d675d8bfc71d61dab0"
+    },
+    {
+      "file": "D-EN-statement__salt-and-pepper-noise.png",
+      "document": "D-EN-statement",
+      "language": "en",
+      "condition": "salt-and-pepper-noise",
+      "category": "difficult",
+      "pixels": [
+        1322,
+        687
+      ],
+      "seed": 2266205715,
+      "sha256": "dc395bae85f4b83179c44d4004e30cea4d35d2cebeda64bfa28bfee5941bb084"
+    },
+    {
+      "file": "D-EN-statement__jpeg-quality-15.jpg",
+      "document": "D-EN-statement",
+      "language": "en",
+      "condition": "jpeg-quality-15",
+      "category": "difficult",
+      "pixels": [
+        992,
+        515
+      ],
+      "seed": 3112830815,
+      "sha256": "f1e667d97b9ba95041bd4df6ebdf70476f0b79b219151933c2c215575c1f9ede"
+    },
+    {
+      "file": "D-EN-statement__low-contrast.png",
+      "document": "D-EN-statement",
+      "language": "en",
+      "condition": "low-contrast",
+      "category": "difficult",
+      "pixels": [
+        1322,
+        687
+      ],
+      "seed": 3002192143,
+      "sha256": "c7de0d10e14fd1d90a675f2d05be3ec72d4836585c091401e948407c883b70a7"
+    },
+    {
+      "file": "D-EN-statement__uneven-lighting.png",
+      "document": "D-EN-statement",
+      "language": "en",
+      "condition": "uneven-lighting",
+      "category": "difficult",
+      "pixels": [
+        1322,
+        687
+      ],
+      "seed": 3718825327,
+      "sha256": "1f5e2e968a104965d088868dd9405f356a32f15da94acfe68939126b79ca5862"
+    },
+    {
+      "file": "D-EN-statement__fax-like.png",
+      "document": "D-EN-statement",
+      "language": "en",
+      "condition": "fax-like",
+      "category": "difficult",
+      "pixels": [
+        1000,
+        533
+      ],
+      "seed": 4210122167,
+      "sha256": "ce390feddb184a66147695ee0d6daf9bc98c6d3f804829c5ce1666cf59e6b6e1"
+    },
+    {
+      "file": "D-EN-statement__scanned-pdf-200dpi-noisy.pdf",
+      "document": "D-EN-statement",
+      "language": "en",
+      "condition": "scanned-pdf-200dpi-noisy",
+      "category": "difficult",
+      "pixels": [
+        1341,
+        721
+      ],
+      "seed": 1666756051,
+      "sha256": "f0800eb3dd931dd666bb7963b53e94667bc342a659bac30cf70d32a45e08d248"
+    },
+    {
+      "file": "D-FR-statement__clean-300dpi.png",
+      "document": "D-FR-statement",
+      "language": "fr",
+      "condition": "clean-300dpi",
+      "category": "clean",
+      "pixels": [
+        1854,
+        1080
+      ],
+      "seed": 2227616019,
+      "sha256": "ca2b195928eb310ebeb425462dec027c7bb54601f07a32de9c0ccff63360702e"
+    },
+    {
+      "file": "D-FR-statement__clean-200dpi.png",
+      "document": "D-FR-statement",
+      "language": "fr",
+      "condition": "clean-200dpi",
+      "category": "clean",
+      "pixels": [
+        1236,
+        720
+      ],
+      "seed": 1151779151,
+      "sha256": "2fdbc1eeb11914b43df54268f256e6b8c8c5f6db664e937183ee2f22d464e1d6"
+    },
+    {
+      "file": "D-FR-statement__clean-150dpi.png",
+      "document": "D-FR-statement",
+      "language": "fr",
+      "condition": "clean-150dpi",
+      "category": "clean",
+      "pixels": [
+        927,
+        540
+      ],
+      "seed": 572140370,
+      "sha256": "8d0254ff278865638079021370fdfdd70d999e7c4d72f6ee8fac936796ed778b"
+    },
+    {
+      "file": "D-FR-statement__scanned-pdf-300dpi.pdf",
+      "document": "D-FR-statement",
+      "language": "fr",
+      "condition": "scanned-pdf-300dpi",
+      "category": "clean",
+      "pixels": [
+        1854,
+        1080
+      ],
+      "seed": 2112630844,
+      "sha256": "336f13e01859b15fbdb56c22092d28e273b748aaa707d261dd28518aeab76c9e"
+    },
+    {
+      "file": "D-FR-statement__low-resolution-100dpi.png",
+      "document": "D-FR-statement",
+      "language": "fr",
+      "condition": "low-resolution-100dpi",
+      "category": "difficult",
+      "pixels": [
+        618,
+        360
+      ],
+      "seed": 935006540,
+      "sha256": "2093910d7727167ac9cc968bd566463e08bd3a8828461a464463aec8371921f5"
+    },
+    {
+      "file": "D-FR-statement__skew-3-degrees.png",
+      "document": "D-FR-statement",
+      "language": "fr",
+      "condition": "skew-3-degrees",
+      "category": "difficult",
+      "pixels": [
+        1908,
+        1176
+      ],
+      "seed": 2318502726,
+      "sha256": "5e12b5f8e9a35c5dabd3439f749e406a8a008f843033de6814d7e7cbc1a06f75"
+    },
+    {
+      "file": "D-FR-statement__blur.png",
+      "document": "D-FR-statement",
+      "language": "fr",
+      "condition": "blur",
+      "category": "difficult",
+      "pixels": [
+        1236,
+        720
+      ],
+      "seed": 3063472139,
+      "sha256": "e8b909df55ed6bdf7a424e1209dcbfa2223e1a65334e97988fff5655c26bbbb6"
+    },
+    {
+      "file": "D-FR-statement__salt-and-pepper-noise.png",
+      "document": "D-FR-statement",
+      "language": "fr",
+      "condition": "salt-and-pepper-noise",
+      "category": "difficult",
+      "pixels": [
+        1236,
+        720
+      ],
+      "seed": 3341652228,
+      "sha256": "da499ca686c0b8c31b40ff28e5e03eaace3ca051d873560894add3eb0eea154a"
+    },
+    {
+      "file": "D-FR-statement__jpeg-quality-15.jpg",
+      "document": "D-FR-statement",
+      "language": "fr",
+      "condition": "jpeg-quality-15",
+      "category": "difficult",
+      "pixels": [
+        927,
+        540
+      ],
+      "seed": 2595930033,
+      "sha256": "301c2c41b17f875d68b773c231aea0a499487e28136e57552f80890eb8460fc8"
+    },
+    {
+      "file": "D-FR-statement__low-contrast.png",
+      "document": "D-FR-statement",
+      "language": "fr",
+      "condition": "low-contrast",
+      "category": "difficult",
+      "pixels": [
+        1236,
+        720
+      ],
+      "seed": 3638128037,
+      "sha256": "ad9f929ecd4fdf9463087d4f6976d1b0745e2f7cdfee25a88008cb7c08c9e9bd"
+    },
+    {
+      "file": "D-FR-statement__uneven-lighting.png",
+      "document": "D-FR-statement",
+      "language": "fr",
+      "condition": "uneven-lighting",
+      "category": "difficult",
+      "pixels": [
+        1236,
+        720
+      ],
+      "seed": 2891745323,
+      "sha256": "3a802ed699e94ed47c4c60ac323463c86964cea2d30835b3722971794fdb880f"
+    },
+    {
+      "file": "D-FR-statement__fax-like.png",
+      "document": "D-FR-statement",
+      "language": "fr",
+      "condition": "fax-like",
+      "category": "difficult",
+      "pixels": [
+        937,
+        557
+      ],
+      "seed": 693457389,
+      "sha256": "78973ee8fbf6016b185d8468f5a15c3cb29e4efd2bc9ee41b5ec3aeb38e14c81"
+    },
+    {
+      "file": "D-FR-statement__scanned-pdf-200dpi-noisy.pdf",
+      "document": "D-FR-statement",
+      "language": "fr",
+      "condition": "scanned-pdf-200dpi-noisy",
+      "category": "difficult",
+      "pixels": [
+        1255,
+        753
+      ],
+      "seed": 2109724648,
+      "sha256": "5467b8e2a1814046d14d22f11fc1ac011406f65af4f5318793c943ba14aa4b3a"
+    },
+    {
+      "file": "D-NL-statement__clean-300dpi.png",
+      "document": "D-NL-statement",
+      "language": "nl",
+      "condition": "clean-300dpi",
+      "category": "clean",
+      "pixels": [
+        1858,
+        963
+      ],
+      "seed": 3716373096,
+      "sha256": "82e2aa6df2fbe0fa7e9c77aefc341674c6ceffa94ae4d051af0cf19640e66234"
+    },
+    {
+      "file": "D-NL-statement__clean-200dpi.png",
+      "document": "D-NL-statement",
+      "language": "nl",
+      "condition": "clean-200dpi",
+      "category": "clean",
+      "pixels": [
+        1239,
+        642
+      ],
+      "seed": 2576909279,
+      "sha256": "bfc7625797b283979cdb8b87647063aa3eedadb8e5e576c34f4dddad575ab14b"
+    },
+    {
+      "file": "D-NL-statement__clean-150dpi.png",
+      "document": "D-NL-statement",
+      "language": "nl",
+      "condition": "clean-150dpi",
+      "category": "clean",
+      "pixels": [
+        929,
+        482
+      ],
+      "seed": 3424388855,
+      "sha256": "59706e1964898ac61fc7ce744d3db2c77a6df4f0980f7669b03ae1818b9f59fb"
+    },
+    {
+      "file": "D-NL-statement__scanned-pdf-300dpi.pdf",
+      "document": "D-NL-statement",
+      "language": "nl",
+      "condition": "scanned-pdf-300dpi",
+      "category": "clean",
+      "pixels": [
+        1858,
+        963
+      ],
+      "seed": 484118813,
+      "sha256": "f417ae2e0c6837a98d95f64b711e71939d0ad0c1841c9f7dceb6f9131957f03c"
+    },
+    {
+      "file": "D-NL-statement__low-resolution-100dpi.png",
+      "document": "D-NL-statement",
+      "language": "nl",
+      "condition": "low-resolution-100dpi",
+      "category": "difficult",
+      "pixels": [
+        619,
+        321
+      ],
+      "seed": 4165492373,
+      "sha256": "1ab1358bd4d08a66f49de080045d4491fa0e321d378c2d40a2966ee8d1dfd8a6"
+    },
+    {
+      "file": "D-NL-statement__skew-3-degrees.png",
+      "document": "D-NL-statement",
+      "language": "nl",
+      "condition": "skew-3-degrees",
+      "category": "difficult",
+      "pixels": [
+        1906,
+        1059
+      ],
+      "seed": 3408869686,
+      "sha256": "3c4d7c3d18256e387c5b862bc11f1b13a1a1f22cb0b93836aee39992c1af5613"
+    },
+    {
+      "file": "D-NL-statement__blur.png",
+      "document": "D-NL-statement",
+      "language": "nl",
+      "condition": "blur",
+      "category": "difficult",
+      "pixels": [
+        1239,
+        642
+      ],
+      "seed": 3697842596,
+      "sha256": "e433681cb000b6715b7f81be658cb31982f7034a8191b80083125f22bfe8a406"
+    },
+    {
+      "file": "D-NL-statement__salt-and-pepper-noise.png",
+      "document": "D-NL-statement",
+      "language": "nl",
+      "condition": "salt-and-pepper-noise",
+      "category": "difficult",
+      "pixels": [
+        1239,
+        642
+      ],
+      "seed": 3680474046,
+      "sha256": "398c0e0ac05ee188726fbfce0e617142b6c50408da5a81425df6f7284d9b3e0d"
+    },
+    {
+      "file": "D-NL-statement__jpeg-quality-15.jpg",
+      "document": "D-NL-statement",
+      "language": "nl",
+      "condition": "jpeg-quality-15",
+      "category": "difficult",
+      "pixels": [
+        929,
+        482
+      ],
+      "seed": 104070765,
+      "sha256": "db0fd0d50869fa642354170fb4c31b26c265c6aeb8572a24003edaf82fcd80d6"
+    },
+    {
+      "file": "D-NL-statement__low-contrast.png",
+      "document": "D-NL-statement",
+      "language": "nl",
+      "condition": "low-contrast",
+      "category": "difficult",
+      "pixels": [
+        1239,
+        642
+      ],
+      "seed": 2013882935,
+      "sha256": "2c22ecddddfb61ffafe3058198ec11e6eb6e85620e80a50acb0105d5cb89d4dd"
+    },
+    {
+      "file": "D-NL-statement__uneven-lighting.png",
+      "document": "D-NL-statement",
+      "language": "nl",
+      "condition": "uneven-lighting",
+      "category": "difficult",
+      "pixels": [
+        1239,
+        642
+      ],
+      "seed": 1919065796,
+      "sha256": "f00f9f6da1d806e29f08cd29a3168a04035f67129eaee652f2d1cb6a110eeebd"
+    },
+    {
+      "file": "D-NL-statement__fax-like.png",
+      "document": "D-NL-statement",
+      "language": "nl",
+      "condition": "fax-like",
+      "category": "difficult",
+      "pixels": [
+        938,
+        498
+      ],
+      "seed": 1530111414,
+      "sha256": "84e6b26fabc9643e4daf57e2b527d2566d617a6fa07105606e01137f73d0c571"
+    },
+    {
+      "file": "D-NL-statement__scanned-pdf-200dpi-noisy.pdf",
+      "document": "D-NL-statement",
+      "language": "nl",
+      "condition": "scanned-pdf-200dpi-noisy",
+      "category": "difficult",
+      "pixels": [
+        1256,
+        675
+      ],
+      "seed": 3350473585,
+      "sha256": "3738b690188a4b851343e9fbeb605929d406b3f51afee67a5b1096abb8bd5ac8"
+    },
+    {
+      "file": "D-MIX-inventory__clean-300dpi.png",
+      "document": "D-MIX-inventory",
+      "language": "en+fr+nl",
+      "condition": "clean-300dpi",
+      "category": "clean",
+      "pixels": [
+        1928,
+        963
+      ],
+      "seed": 2877148567,
+      "sha256": "0a81e326c159e54821bd0d5bc60fbb7776dad76d5337160c84ab7bd299a9f253"
+    },
+    {
+      "file": "D-MIX-inventory__clean-200dpi.png",
+      "document": "D-MIX-inventory",
+      "language": "en+fr+nl",
+      "condition": "clean-200dpi",
+      "category": "clean",
+      "pixels": [
+        1285,
+        642
+      ],
+      "seed": 2697758795,
+      "sha256": "f29af36416230660cee723316d0c3e056611d96d4673c3e46b4f87a8b43a1014"
+    },
+    {
+      "file": "D-MIX-inventory__clean-150dpi.png",
+      "document": "D-MIX-inventory",
+      "language": "en+fr+nl",
+      "condition": "clean-150dpi",
+      "category": "clean",
+      "pixels": [
+        964,
+        482
+      ],
+      "seed": 2621297822,
+      "sha256": "0cc0474bafd98d527c79a02e436cbd67d23713e99cd8bdb7a8b85f326a3a67f3"
+    },
+    {
+      "file": "D-MIX-inventory__scanned-pdf-300dpi.pdf",
+      "document": "D-MIX-inventory",
+      "language": "en+fr+nl",
+      "condition": "scanned-pdf-300dpi",
+      "category": "clean",
+      "pixels": [
+        1928,
+        963
+      ],
+      "seed": 2492491957,
+      "sha256": "a891d31f3a1cca8409c8987e42cea35ac5c836a457682e52e87ab90fde0fdb2b"
+    },
+    {
+      "file": "D-MIX-inventory__low-resolution-100dpi.png",
+      "document": "D-MIX-inventory",
+      "language": "en+fr+nl",
+      "condition": "low-resolution-100dpi",
+      "category": "difficult",
+      "pixels": [
+        643,
+        321
+      ],
+      "seed": 1383314850,
+      "sha256": "904c89788813336755341bdac08286636ab68366e54f96958e30493beb0e6935"
+    },
+    {
+      "file": "D-MIX-inventory__skew-3-degrees.png",
+      "document": "D-MIX-inventory",
+      "language": "en+fr+nl",
+      "condition": "skew-3-degrees",
+      "category": "difficult",
+      "pixels": [
+        1976,
+        1063
+      ],
+      "seed": 3022137876,
+      "sha256": "5736e94cfac403d5d2158882b1e4c6e79adbff9981cf6a03bf181d3eb724d91e"
+    },
+    {
+      "file": "D-MIX-inventory__blur.png",
+      "document": "D-MIX-inventory",
+      "language": "en+fr+nl",
+      "condition": "blur",
+      "category": "difficult",
+      "pixels": [
+        1285,
+        642
+      ],
+      "seed": 4294937918,
+      "sha256": "79984081345a920aed88acb4481587d80c9ad804598353a38eb56327d06614d3"
+    },
+    {
+      "file": "D-MIX-inventory__salt-and-pepper-noise.png",
+      "document": "D-MIX-inventory",
+      "language": "en+fr+nl",
+      "condition": "salt-and-pepper-noise",
+      "category": "difficult",
+      "pixels": [
+        1285,
+        642
+      ],
+      "seed": 1298592651,
+      "sha256": "d1f56878ec002374d5f4ac26c03281c6921e45f5ab8f38a00772db430bffbd1f"
+    },
+    {
+      "file": "D-MIX-inventory__jpeg-quality-15.jpg",
+      "document": "D-MIX-inventory",
+      "language": "en+fr+nl",
+      "condition": "jpeg-quality-15",
+      "category": "difficult",
+      "pixels": [
+        964,
+        482
+      ],
+      "seed": 2972255685,
+      "sha256": "dc021b03f3d859004183ff4cbe610622722b4c8621508c0becf4892fb9598a55"
+    },
+    {
+      "file": "D-MIX-inventory__low-contrast.png",
+      "document": "D-MIX-inventory",
+      "language": "en+fr+nl",
+      "condition": "low-contrast",
+      "category": "difficult",
+      "pixels": [
+        1285,
+        642
+      ],
+      "seed": 415983381,
+      "sha256": "52e9ea8b9944d7440406787c58ab435a6b9a1d398e5e3b886023dd3d7d37dd6b"
+    },
+    {
+      "file": "D-MIX-inventory__uneven-lighting.png",
+      "document": "D-MIX-inventory",
+      "language": "en+fr+nl",
+      "condition": "uneven-lighting",
+      "category": "difficult",
+      "pixels": [
+        1285,
+        642
+      ],
+      "seed": 230364954,
+      "sha256": "264db4689cbe7ffb59cf5adba960a8e4a0dce637fca1d9d85b5cfbcfaef88f6b"
+    },
+    {
+      "file": "D-MIX-inventory__fax-like.png",
+      "document": "D-MIX-inventory",
+      "language": "en+fr+nl",
+      "condition": "fax-like",
+      "category": "difficult",
+      "pixels": [
+        973,
+        498
+      ],
+      "seed": 3931671152,
+      "sha256": "17c2aabd2897fdfe54ec26c89d7283bef76fc20f5c475c2820fdff354f6aef88"
+    },
+    {
+      "file": "D-MIX-inventory__scanned-pdf-200dpi-noisy.pdf",
+      "document": "D-MIX-inventory",
+      "language": "en+fr+nl",
+      "condition": "scanned-pdf-200dpi-noisy",
+      "category": "difficult",
+      "pixels": [
+        1303,
+        677
+      ],
+      "seed": 2959542168,
+      "sha256": "65253a12b6a71f719336efd13f71b168f0fb160d404cef4830163c785a33ec17"
+    }
+  ],
+  "latency_items": {
+    "scanned_pdf": "D-EN-statement__scanned-pdf-300dpi.pdf",
+    "png": "D-EN-statement__clean-200dpi.png"
+  }
+}

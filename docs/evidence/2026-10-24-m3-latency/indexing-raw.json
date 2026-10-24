@@ -1,0 +1,21 @@
+{
+  "passages": 60,
+  "characters": 12815,
+  "seconds": [
+    20.4611,
+    16.5738,
+    17.0118,
+    16.811,
+    18.2658
+  ],
+  "recorded_at": "2026-10-24T12:49:33+02:00",
+  "stage": "indexing: one BGE-M3 embedding batch of every reviewed passage of the 60-passage case (what VectorIndex.synchronize embeds after a revision change); vector rows not written",
+  "summary": {
+    "n": 5,
+    "min": 16.5738,
+    "median": 17.0118,
+    "p95": 20.4611,
+    "max": 20.4611,
+    "mean": 17.8247
+  }
+}

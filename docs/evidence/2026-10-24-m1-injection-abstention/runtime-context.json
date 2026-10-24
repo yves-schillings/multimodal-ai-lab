@@ -1,0 +1,109 @@
+{
+  "recorded_at": "2026-10-24T12:49:39+02:00",
+  "host": {
+    "platform": "Windows-11-10.0.26300-SP0",
+    "processor": "Intel64 Family 6 Model 158 Stepping 12, GenuineIntel"
+  },
+  "lab-app": {
+    "image": "image-registry.openshift-image-registry.svc:5000/multimodal-ai-lab/lab-app:latest",
+    "image_id": "image-registry.openshift-image-registry.svc:5000/multimodal-ai-lab/lab-app@sha256:8cee7703d342f30dc04e730ff3b39dce13924551ee49dd005899f496d524a7c6",
+    "resources": {
+      "limits": {
+        "cpu": "2",
+        "memory": "3Gi"
+      },
+      "requests": {
+        "cpu": "500m",
+        "memory": "1Gi"
+      }
+    },
+    "node": "crc"
+  },
+  "lab-inference": {
+    "image": "docker.io/ollama/ollama@sha256:268c47cdc4718ded54babcd842579a7295ad79fd8d5c2ea64d7ba2e76872de6b",
+    "image_id": "docker.io/ollama/ollama@sha256:268c47cdc4718ded54babcd842579a7295ad79fd8d5c2ea64d7ba2e76872de6b",
+    "resources": {
+      "limits": {
+        "cpu": "3",
+        "memory": "5Gi"
+      },
+      "requests": {
+        "cpu": "500m",
+        "memory": "1Gi"
+      }
+    },
+    "node": "crc",
+    "env": {
+      "OLLAMA_HOST": "0.0.0.0:11434",
+      "OLLAMA_MODELS": "/models",
+      "OLLAMA_NO_CLOUD": "1",
+      "OLLAMA_KEEP_ALIVE": "0",
+      "OLLAMA_NUM_PARALLEL": "1",
+      "OLLAMA_MAX_LOADED_MODELS": "1",
+      "OLLAMA_CONTEXT_LENGTH": "4096"
+    }
+  },
+  "lab-vector": {
+    "image": "docker.io/pgvector/pgvector@sha256:a97d77306ff47cc1d8add4d000cec2207da2e110746318df3137ce53c337ca30",
+    "image_id": "docker.io/pgvector/pgvector@sha256:a97d77306ff47cc1d8add4d000cec2207da2e110746318df3137ce53c337ca30",
+    "resources": {
+      "limits": {
+        "cpu": "1",
+        "memory": "768Mi"
+      },
+      "requests": {
+        "cpu": "100m",
+        "memory": "256Mi"
+      }
+    },
+    "node": "crc"
+  },
+  "node": {
+    "capacity": {
+      "cpu": "6",
+      "ephemeral-storage": "62323692Ki",
+      "hugepages-1Gi": "0",
+      "hugepages-2Mi": "0",
+      "memory": "24603156Ki",
+      "pods": "250"
+    },
+    "allocatable": {
+      "cpu": "5800m",
+      "ephemeral-storage": "57070512853",
+      "hugepages-1Gi": "0",
+      "hugepages-2Mi": "0",
+      "memory": "24142356Ki",
+      "pods": "250"
+    },
+    "os_image": "CentOS Stream CoreOS 10.0.20260806-0 (Coughlan)",
+    "kubelet": "v1.35.5"
+  },
+  "app_source_sha256": {
+    "lab/auth.py": "45e7ab1b7bbbbb1c183bedc5d8b1ab113caf754094483ae549151b81a8091262",
+    "lab/backend_store.py": "c39d9ed4237149161608370588443438180ea4acf6288816c815508b6eff76c9",
+    "lab/cpe.py": "a1824106a8dea8bea2808876aebbf6fc25adef0a40669b6a1341eebb201ac5b3",
+    "lab/deployment_policy.py": "897e27f4c3aea743076b7a5a2f2f352f3d71199439268d63d24bee2f20351179",
+    "lab/documents.py": "720dad4ecb1b99888e86c2c209e2a3d37f7fc92878943e226f8b0efc1437d41e",
+    "lab/evaluation.py": "41cf31c367cc68cb00dfaa9185cd570c5e4c5bd827079fe6b62900c4f0413d9e",
+    "lab/fixtures.py": "b1045a269df0dd86871f5ad0575ce5385b81b1a6e28b7b99eb689f929d75fd78",
+    "lab/inference_gateway.py": "d7d373b3425eb0672dcc21232bcb5e78c7f65c531e0a96ecc74f756c18cb6f46",
+    "lab/jobs.py": "05657d9d0e30ab81ef4319c3113e8556a6e800fdb759d0c94bbfa1bf06e2d60e",
+    "lab/local_inference.py": "36955be75eb94d9c72329bfc7cd6313eb2d8a04606765c567fb948dcb8b815ed",
+    "lab/models.py": "1832329a2ce215af04e8dfe4d618e6e7b7f6db606451e9cba755f48bbdc9918c",
+    "lab/monitoring.py": "bf4b6f72a62dac937724adf855a11a1017a6c9f8145532a526c484b579398be3",
+    "lab/rag.py": "29ab680cea811f32effe968c9049f95704a405f04f0cb4d3d2ab2d6c5774a407",
+    "lab/retrieval.py": "07057d3b43382d29f13145e6cd2e95b27cddae7c43d03f5f7574c6a3d7649a93",
+    "lab/speech.py": "9c082166dadb885bb057c5a8ddece01d94825e5239130f28e37b2a5b9088d976",
+    "lab/store.py": "d964afbcd72b6dc503ff5e067571eaa38e7799fd19765ae992dcf2d0f6d7e3c3",
+    "lab/vector_retrieval.py": "1b9bdf63710159d0bab3960dab52a1092d134051318c9019a2d48cd98bf4e38d",
+    "env": {
+      "LAB_RETRIEVAL_BACKEND": "pgvector",
+      "LAB_EMBEDDING_MODEL": "bge-m3:latest",
+      "LAB_EMBEDDING_DIGEST": "7907646426070047a77226ac3e684fbbe8410524f7b4a74d02837e43f2146bab",
+      "LAB_GENERATION_MODEL": "qwen3:4b",
+      "LAB_GENERATION_DIGEST": "359d7dd4bcdab3d86b87d73ac27966f4dbb9f5efdfcc75d34a8764a09474fae7",
+      "LAB_WHISPER_MODEL_DIR": "/app/models/whisper-base",
+      "LAB_AUTH_MODE": "local_sessions"
+    }
+  }
+}

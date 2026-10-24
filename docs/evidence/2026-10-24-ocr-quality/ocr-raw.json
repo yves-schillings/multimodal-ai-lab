@@ -1,0 +1,588 @@
+{
+  "tesseract_version": "tesseract 5.5.0",
+  "tesseract_languages": [
+    "eng",
+    "fra",
+    "nld",
+    "osd"
+  ],
+  "results": [
+    {
+      "file": "D-EN-statement__clean-300dpi.png",
+      "engine": "local-tesseract-ocr",
+      "text": "FICTIONAL WITNESS STATEMENT - TRAINING DOCUMENT\n\nReference: FIC-2026-0412\n\nDate of statement: 14 March 2026, 10:25\n\n| am the manager of the fictional Riverside Joinery workshop on Mill Street.\n\nOn Tuesday morning | received a telephone call at 03:05 informing me that the\nalarm had been triggered. When | arrived at 03:40, the rear door was open and\nthe frame showed marks of a flat tool about two centimetres wide.\n\nMissing items: two cordless drills, one mitre saw, one laser level and a green\nmetal toolbox. Estimated value: 4.300,00 EUR.\n\n| confirm that this statement is accurate to the best of my knowledge.",
+      "seconds": 2.1612
+    },
+    {
+      "file": "D-EN-statement__clean-200dpi.png",
+      "engine": "local-tesseract-ocr",
+      "text": "FICTIONAL WITNESS STATEMENT - TRAINING DOCUMENT\n\nReference: FIC-2026-0412\n\nDate of statement: 14 March 2026, 10:25\n\n| am the manager of the fictional Riverside Joinery workshop on Mill Street.\n\nOn Tuesday morning | received a telephone call at 03:05 informing me that the\nalarm had been triggered. When | arrived at 03:40, the rear door was open and\nthe frame showed marks of a flat tool about two centimetres wide.\n\nMissing items: two cordless drills, one mitre saw, one laser level and a green\nmetal toolbox. Estimated value: 4.300,00 EUR.\n\n| confirm that this statement is accurate to the best of my knowledge.",
+      "seconds": 1.2349
+    },
+    {
+      "file": "D-EN-statement__clean-150dpi.png",
+      "engine": "local-tesseract-ocr",
+      "text": "FICTIONAL WITNESS STATEMENT - TRAINING DOCUMENT\n\nReference: FIC-2026-0412\n\nDate of statement: 14 March 2026, 10:25\n\n| am the manager of the fictional Riverside Joinery workshop on Mill Street.\n\nOn Tuesday morning | received a telephone call at 03:05 informing me that the\nalarm had been triggered. When | arrived at 03:40, the rear door was open and\nthe frame showed marks of a flat tool about two centimetres wide.\n\nMissing items: two cordless drills, one mitre saw, one laser level and a green\nmetal toolbox. Estimated value: 4.300,00 EUR.\n\n| confirm that this statement is accurate to the best of my knowledge.",
+      "seconds": 12.9843
+    },
+    {
+      "file": "D-EN-statement__scanned-pdf-300dpi.pdf",
+      "engine": "pypdf-text+local-tesseract-ocr",
+      "text": "FICTIONAL WITNESS STATEMENT - TRAINING DOCUMENT\n\nReference: FIC-2026-0412\n\nDate of statement: 14 March 2026, 10:25\n\n| am the manager of the fictional Riverside Joinery workshop on Mill Street.\n\nOn Tuesday morning | received a telephone call at 03:05 informing me that the\nalarm had been triggered. When | arrived at 03:40, the rear door was open and\nthe frame showed marks of a flat tool about two centimetres wide.\n\nMissing items: two cordless drills, one mitre saw, one laser level and a green\nmetal toolbox. Estimated value: 4.300,00 EUR.\n\n| confirm that this statement is accurate to the best of my knowledge.",
+      "seconds": 17.5212
+    },
+    {
+      "file": "D-EN-statement__low-resolution-100dpi.png",
+      "engine": "local-tesseract-ocr",
+      "text": "FICTIONAL WITNESS STATEMENT - TRAINING DOCUMENT\nReference: FIC-2026-0412\n\nDate of statement: 14 March 2026, 10:25\n\n| am the manager of the fictional Riverside Joinery workshop on Miill Street.\n\nOn Tuesday morning | received a telephone call at 03:05 informing me that the\nalarm had been triggered. When | arrived at 03:40, the rear door was open and\nthe frame showed marks of a flat tool about two centimetres wide.\n\nMissing items: two cordless drills, one mitre saw, one laser level and a green\nmetal toolbox. Estimated value: 4.300,00 EUR.\n\n| confirm that this statement is accurate to the best of my knowledge.",
+      "seconds": 10.9556
+    },
+    {
+      "file": "D-EN-statement__skew-3-degrees.png",
+      "engine": "local-tesseract-ocr",
+      "text": "FICTIONAL WITNESS STATEMENT - TRAINING DOCUMENT\n\nReference: FIC-2026-0412\n\nDate of statement: 14 March 2026, 10:25\n\n| am the manager of the fictional Riverside Joinery workshop on Mill Street.\n\nOn Tuesday morning | received a telephone call at 03:05 informing me that the\nalarm had been triggered. When | arrived at 03:40, the rear door was open and\nthe frame showed marks of a flat tool about two centimetres wide.\n\nMissing items: two cordless drills, one mitre saw, one laser level and a green\nmetal toolbox. Estimated value: 4.300,00 EUR.\n\n| confirm that this statement is accurate to the best of my knowledge.",
+      "seconds": 17.0047
+    },
+    {
+      "file": "D-EN-statement__blur.png",
+      "engine": "local-tesseract-ocr",
+      "text": "FICTIONAL WITNESS STATEMENT - TRAINING DOCUMENT\n\nReference: FIC-2026-0412\n\nDate of statement: 14 March 2026, 10:25\n\n| am the manager of the fictional Riverside Joinery workshop on Mill Street.\n\nOn Tuesday morning | received a telephone call at 03:05 informing me that the\nalarm had been triggered. When | arrived at 03:40, the rear door was open and\nthe frame showed marks of a flat tool about two centimetres wide.\n\nMissing items: two cordless drills, one mitre saw, one laser level and a green\nmetal toolbox. Estimated value: 4.300,00 EUR.\n\n| confirm that this statement is accurate to the best of my knowledge.",
+      "seconds": 12.106
+    },
+    {
+      "file": "D-EN-statement__salt-and-pepper-noise.png",
+      "engine": "local-tesseract-ocr",
+      "text": "“FICTIONAL WITNESS STATEMENT - TRAINING DOCUMENT _\nReférence: FIC-2026-0442\n\n““Date‘of statement: 14 March 2026; 10:25 :\n\n~bam_the manager. of the fictional-Riverside Joinery. workshop é on Mill Street.\nOn Tuesday. morning. t réceived.a telephone. call’ at,03:05 informing me that the:\nalarm. had been triggered: When | arrived-at'03:40, the rear. door was open and:\nthe frame showed marks of 4 fiat-tool about two-centimetres wide.\n\n“Missing items: two cordless drills; one mitre: saw, one laser level and’a gteen.\n\nmetal.toolbox. Estimated value:4.300,00-EUR:\n\nI confirm that this statement is accurate to the best. of my knowledge.",
+      "seconds": 10.9711
+    },
+    {
+      "file": "D-EN-statement__jpeg-quality-15.jpg",
+      "engine": "local-tesseract-ocr",
+      "text": "FICTIONAL WITNESS STATEMENT - TRAINING DOCUMENT\n\nReference: FIC-2026-0412\n\nDate of statement: 14 March 2026, 10:25\n\n| am the manager of the fictional Riverside Joinery workshop on Mill Street.\n\nOn Tuesday morning | received a telephone call at 03:05 informing me that the\nalarm had been triggered. When | arrived at 03:40, the rear door was open and\nthe frame showed marks of a flat tool about two centimetres wide.\n\nMissing items: two cordless drills, one mitre saw, one laser level and a green\nmetal toolbox. Estimated value: 4.300,00 EUR.\n\n| confirm that this statement is accurate to the best of my knowledge.",
+      "seconds": 11.6106
+    },
+    {
+      "file": "D-EN-statement__low-contrast.png",
+      "engine": "local-tesseract-ocr",
+      "text": "FICTIONAL WITNESS STATEMENT - TRAINING DOCUMENT\n\nReference: FIC-2026-0412\n\nDate of statement: 14 March 2026, 10:25\n\n| am the manager of the fictional Riverside Joinery workshop on Mill Street.\n\nOn Tuesday morning | received a telephone call at 03:05 informing me that the\nalarm had been triggered. When | arrived at 03:40, the rear door was open and\nthe frame showed marks of a flat tool about two centimetres wide.\n\nMissing items: two cordless drills, one mitre saw, one laser level and a green\nmetal toolbox. Estimated value: 4.300,00 EUR.\n\n| confirm that this statement is accurate to the best of my knowledge.",
+      "seconds": 8.6321
+    },
+    {
+      "file": "D-EN-statement__uneven-lighting.png",
+      "engine": "local-tesseract-ocr",
+      "text": "FICTIONAL WITNESS STATEMENT - TRAINING DOCUMENT\n\nReference: FIC-2026-0412\n\nDate of statement: 14 March 2026, 10:25\n\n| am the manager of the fictional Riverside Joinery workshop on Mill Street.\n\nOn Tuesday morning | received a telephone call at 03:05 informing me that the\nalarm had been triggered. When | arrived at 03:40, the rear door was open and\nthe frame showed marks of a flat tool about two centimetres wide.\n\nMissing items: two cordless drills, one mitre saw, one laser level and a green\nmetal toolbox. Estimated value: 4.300,00 EUR.\n\n| confirm that this statement is accurate to the best of my knowledge.",
+      "seconds": 8.9555
+    },
+    {
+      "file": "D-EN-statement__fax-like.png",
+      "engine": "local-tesseract-ocr",
+      "text": "FICTIONAL WITNESS STATEMENT - TRAINING DOCUMENT\n\nReference: FIC:2026-0412 .\n\nDate. of statement: 14 March 2026, 10:25\n\nlam the manager of the fictional Riverside. Joinery workshop on: Mill Street.\n\nOn Tuesday morning | received a telephone call at'03:05 informing me that the\nlarm.had been triggeréd. When. | arrived at 03:40, the rear door was open and\nthe frame showed miarks of a flat tool.about two centimetres wide.\n\nMissing items: two cordless drills, one mitre saw, one laser level'and a-green\nmetal-toolbox. Estimated value: 4.300,00 EUR.\n\n| confirm that this statement-is accurate to the best of my knowledge.",
+      "seconds": 14.0409
+    },
+    {
+      "file": "D-EN-statement__scanned-pdf-200dpi-noisy.pdf",
+      "engine": "pypdf-text+local-tesseract-ocr",
+      "text": "FICTIONAL WITNESS. STATEMENT - TRAINING DOCUMENT\n\nReference: FIC-2026-0412\n\nDate of statement: 14 March 2026, 10:25\n\n| am the manager of the fictional Riverside Joinery workshop on Mill Street.\n\nOn Tuesday morning | received a telephone call at 03:05 informing me that the\nalarm had been triggered. When | arrived at 03:40, the rear door was open and\nthe frame showed marks of a flat tool about two centimetres wide.\n\nMissing items: two cordless drills, one mitre saw, one'laser level and a green\nmetal toolbox. Estimated value: 4.300,00 EUR.\n\n| confirm that this statement is accurate to the best of my knowledge.",
+      "seconds": 2.1757
+    },
+    {
+      "file": "D-FR-statement__clean-300dpi.png",
+      "engine": "local-tesseract-ocr",
+      "text": "DECLARATION FICTIVE - DOCUMENT DE FORMATION\nRéférence : FIC-2026-0518\n\nDate : le mercredi 11 mars 2026 a 09:10\n\nJe suis le chef de chantier fictif de la rue des Tilleuls a Bellerive.\n\nLe gardien m'a appelé a 05:40 pour signaler la disparition de deux bobines\nde cable de cuivre. La cloture était découpée pres du portail est et des\ntraces de pneus larges étaient visibles dans la boue.\n\nPréjudice estimé : environ 9.000,00 € pour le cable, la découpeuse et le\ngroupe électrogéne. Je n'ai remarqué aucune autre dégradation.\n\nFait a Bellerive, lu et approuvé.",
+      "seconds": 0.7788
+    },
+    {
+      "file": "D-FR-statement__clean-200dpi.png",
+      "engine": "local-tesseract-ocr",
+      "text": "DECLARATION FICTIVE - DOCUMENT DE FORMATION\nRéférence : FIC-2026-0518\n\nDate : le mercredi 11 mars 2026 a 09:10\n\nJe suis le chef de chantier fictif de la rue des Tilleuls a Bellerive.\n\nLe gardien m'a appelé a 05:40 pour signaler la disparition de deux bobines\nde cable de cuivre. La cléture était découpée prés du portail est et des\ntraces de pneus larges étaient visibles dans la boue.\n\nPréjudice estimé : environ 9.000,00 € pour le cable, la découpeuse et le\ngroupe électrogéne. Je n'ai remarqué aucune autre dégradation.\n\nFait a Bellerive, lu et approuve.",
+      "seconds": 0.6039
+    },
+    {
+      "file": "D-FR-statement__clean-150dpi.png",
+      "engine": "local-tesseract-ocr",
+      "text": "DECLARATION FICTIVE - DOCUMENT DE FORMATION\n\nRéférence : FIC-2026-0518\n\nDate : le mercredi 11 mars 2026 a 09:10\n\nJe suis le chef de chantier fictif de la rue des Tilleuls 4 Bellerive.\n\nLe gardien m'a appelé a 05:40 pour signaler la disparition de deux bobines\nde cable de cuivre. La cloture était découpée prés du portail est et des\ntraces de pneus larges étaient visibles dans la boue.\n\nPréjudice estimé : environ 9.000,00 € pour le cable, la découpeuse et le\ngroupe électrogéne. Je n'ai remarqué aucune autre dégradation.\n\nFait a Bellerive, lu et approuveé.",
+      "seconds": 0.7189
+    },
+    {
+      "file": "D-FR-statement__scanned-pdf-300dpi.pdf",
+      "engine": "pypdf-text+local-tesseract-ocr",
+      "text": "DECLARATION FICTIVE - DOCUMENT DE FORMATION\nRéférence : FIC-2026-0518\n\nDate : le mercredi 11 mars 2026 a 09:10\n\nJe suis le chef de chantier fictif de la rue des Tilleuls 4 Bellerive.\n\nLe gardien m'a appelé 4 05:40 pour signaler la disparition de deux bobines\nde cable de cuivre. La cléture était découpée prés du portail est et des\ntraces de pneus larges étaient visibles dans la boue.\n\nPréjudice estimé : environ 9.000,00 € pour le cable, la découpeuse et le\ngroupe électrogéne. Je n'ai remarqué aucune autre dégradation.\n\nFait 4 Bellerive, lu et approuvé.",
+      "seconds": 1.0965
+    },
+    {
+      "file": "D-FR-statement__low-resolution-100dpi.png",
+      "engine": "local-tesseract-ocr",
+      "text": "DECLARATION FICTIVE - DOCUMENT DE FORMATION\nRéférence : FIC-2026-0518\n\nDat\nJe suis le chef de chantier fictif de la rue des Tilleuls a Bellerive.\n\nje mercredi 11 mars 2026 4 09:10\n\nLe gardien m'a appelé 4 05:40 pour signaler la disparition de deux bobines\nde cable de cuivre. La cléture était découpée prés du portail est et des\ntraces de pneus larges étaient visibles dans la boue.\n\nPréjudice estimé : environ 9.000,00 € pour le cable, la découpeuse et le\ngroupe électrogéne. Je n'ai remarqué aucune autre dégradation.\n\nFait a Bellerive, lu et approuvé.",
+      "seconds": 0.4022
+    },
+    {
+      "file": "D-FR-statement__skew-3-degrees.png",
+      "engine": "local-tesseract-ocr",
+      "text": "DECLARATION FICTIVE - DOCUMENT DE FORMATION\n\nRéférence : FIC-2026-0518\n\nDate : le mercredi 11 mars 2026 a 09:10\n\nJe suis le chef de chantier fictif de la rue des Tilleuls 4 Bellerive.\n\nLe gardien m'a appelé a 05:40 pour signaler la disparition de deux bobines\nde cable de cuivre. La cloture était découpée pres du portail est et des\ntraces de pneus larges étaient visibles dans la boue.\n\nPréjudice estime : environ 9.000,00 € pour le cable, la découpeuse et le\ngroupe électrogéne. Je n'ai remarqué aucune autre dégradation.\n\nFait a Bellerive, lu et approuve.",
+      "seconds": 0.7838
+    },
+    {
+      "file": "D-FR-statement__blur.png",
+      "engine": "local-tesseract-ocr",
+      "text": "DECLARATION FICTIVE - DOCUMENT DE FORMATION\n\nRéférence : FIC-2026-0518\n\nDate : le mercredi 11 mars 2026 4 09:10\n\nJe suis le chef de chantier fictif de la rue des Tilleuls 4 Bellerive.\n\nLe gardien m'a appelé 4 05:40 pour signaler la disparition de deux bobines\nde cable de cuivre. La cloture était découpée prés du portail est et des\ntraces de pneus larges étaient visibles dans la boue.\n\nPréjudice estimé : environ 9.000,00 € pour le cable, la découpeuse et le\ngroupe électrogéne. Je n'ai remarqué aucune autre dégradation.\n\nFait a Bellerive, lu et approuvé.",
+      "seconds": 0.7313
+    },
+    {
+      "file": "D-FR-statement__salt-and-pepper-noise.png",
+      "engine": "local-tesseract-ocr",
+      "text": "DECLARATION FICTIVE - DOCUMENT DE FORMATION\n\n7 Référence : FIC-2026-0518.\n\n“Date: Je mercredi‘l1 mars 2026.4 09:10°° > =\n\nJe suis ‘le-chef de ‘chantier fictif dé la rue des Tilleuls' a Bellerive.\n\nLe gardienm'a appelé’a a-05:40 pour signaler la disparition de deux bobines\n\nde cable de Cuivre. La cléture était découpée prés du portail'est et des. .\n\ntraces de pneus larges étaient visibles dans la boue..: ; :\n\n; Prejudice estimé : environ 9.000,00, € pour le cable, la découpeuse et le\ngroupe électrogéne. Je n'ai remarqué aucune autre dégradation.\n\nFait a Bellerive, lu-et approuve,",
+      "seconds": 0.7787
+    },
+    {
+      "file": "D-FR-statement__jpeg-quality-15.jpg",
+      "engine": "local-tesseract-ocr",
+      "text": "DECLARATION FICTIVE - DOCUMENT DE FORMATION\nRéférence : FIC-2026-0518\n\nDate : le mercredi 11 mars 2026 4 09:10\n\nJe suis le chef de chantier fictif de la rue des Tilleuls a Bellerive.\n\nLe gardien m'a appelé a 05:40 pour signaler la disparition de deux bobines\nde cable de cuivre. La cléture était découpée prés du portail est et des\ntraces de pneus larges étaient visibles dans la boue.\n\nPréjudice estimé : environ 9.000,00 € pour le cable, la découpeuse et le\ngroupe électrogéne. Je n'ai remarqué aucune autre dégradation.\n\nFait 4 Bellerive, lu et approuvé.",
+      "seconds": 0.6235
+    },
+    {
+      "file": "D-FR-statement__low-contrast.png",
+      "engine": "local-tesseract-ocr",
+      "text": "DECLARATION FICTIVE - DOCUMENT DE FORMATION\nRéférence : FIC-2026-0518\n\nDate : le mercredi 11 mars 2026 a 09:10\n\nJe suis le chef de chantier fictif de la rue des Tilleuls 4 Bellerive.\n\nLe gardien m'a appelé a 05:40 pour signaler la disparition de deux bobines\nde cable de cuivre. La cléture était découpée prés du portail est et des\ntraces de pneus larges étaient visibles dans la boue.\n\nPréjudice estimé : environ 9.000,00 € pour le cable, la découpeuse et le\ngroupe électrogéne. Je n'ai remarqué aucune autre dégradation.\n\nFait a Bellerive, lu et approuve.",
+      "seconds": 0.6692
+    },
+    {
+      "file": "D-FR-statement__uneven-lighting.png",
+      "engine": "local-tesseract-ocr",
+      "text": "DECLARATION FICTIVE - DOCUMENT DE FORMATION\nRéférence : FIC-2026-0518\n\nDate : le mercredi 11 mars 2026 a 09:10\n\nJe suis le chef de chantier fictif de la rue des Tilleuls a Bellerive.\n\nLe gardien m'a appelé a 05:40 pour signaler la disparition de deux bobines\nde cable de cuivre. La cléture était découpée prés du portail est et des\ntraces de pneus larges étaient visibles dans la boue.\n\nPréjudice estimé : environ 9.000,00 € pour le cable, la découpeuse et le\ngroupe électrogeéne. Je n'ai remarqué aucune autre dégradation.\n\nFait a Bellerive, lu et approuve.",
+      "seconds": 1.1892
+    },
+    {
+      "file": "D-FR-statement__fax-like.png",
+      "engine": "local-tesseract-ocr",
+      "text": "DECLARATION FICTIVE - DOCUMENT DE FORMATION\n\nRéférence : FIC-2026-0518 “\n\nDate: le mercredi11 mars 2026 2:09:10\n\nJe suis le chef de chantier fictif de la rue.des Tilleuls 4 Bellerive.\n\nLe gardien m’a appelé 4 05:40 pour. signaler-la disparition.de deux bobines*\nde cablé de cuivre. La cloture était découpée prés du portail est et des\ntraces de pneus larges étaient visibles dans.la boue. :\nPréjudice estimé : environ 9:000,00 € pour le. cable, la découpeuse et fe\ngroupe électrogéne. Je-n’ai reinarqué aucune autre dégradation. :\n\nFait 4 Bellerive, lu.et approuvé.",
+      "seconds": 11.6756
+    },
+    {
+      "file": "D-FR-statement__scanned-pdf-200dpi-noisy.pdf",
+      "engine": "pypdf-text+local-tesseract-ocr",
+      "text": "DECLARATION FICTIVE - DOCUMENT DE FORMATION\nRéférence : FIC-2026-0518\n\nDate : le mercredi 11 mars 2026 a 09:10.\n\nJe-suis le chef de chantier fictif de la rue des Tilleuls 4 Bellerive.\n\nLe gardien m'a appelé a 05:40 pour signaler la disparition de deux. bobines\nde cable. de cuivre. La cléture était découpée prés du portail est et des\ntraces de pneus larges étaient visibles dans la boue. —\n\nPréjudice estimé : environ 9.000,00 € pour le cable, la découpeuse et le\ngroupe électrogéne. Je n'ai remarqué aucune autre dégradation.\n\nFait a Bellerive, lu et approuvé.",
+      "seconds": 11.0716
+    },
+    {
+      "file": "D-NL-statement__clean-300dpi.png",
+      "engine": "local-tesseract-ocr",
+      "text": "FICTIEVE VERKLARING - OPLEIDINGSDOCUMENT\n\nReferentie: FIC-2026-0620\n\nDatum: vrijdag 20 maart 2026 om 08:45\n\nIk ben de fictieve beheerder van de fietsenstalling aan het station van Vlierdonk.\nOm 07:15 stelde ik vast dat zes elektrische fietsen verdwenen waren. De sloten\nwaren doorgeknipt en het hangslot van de achteringang hing open aan het hek.\nNaast het hek lag een afgebroken kniptang met een rood handvat.\n\nGeschatte schade: ongeveer 18.000,00 € inclusief drie losse accu's.\n\nIk verklaar dat deze gegevens volgens mij juist zijn.",
+      "seconds": 8.1581
+    },
+    {
+      "file": "D-NL-statement__clean-200dpi.png",
+      "engine": "local-tesseract-ocr",
+      "text": "FICTIEVE VERKLARING - OPLEIDINGSDOCUMENT\n\nReferentie: FIC-2026-0620\n\nDatum: vrijdag 20 maart 2026 om 08:45\n\nIk ben de fictieve beheerder van de fietsenstalling aan het station van Vlierdonk.\nOm 07:15 stelde ik vast dat zes elektrische fietsen verdwenen waren. De sloten\nwaren doorgeknipt en het hangslot van de achteringang hing open aan het hek.\nNaast het hek lag een afgebroken kniptang met een rood handvat.\n\nGeschatte schade: ongeveer 18.000,00 € inclusief drie losse accu's.\n\nIk verklaar dat deze gegevens volgens mij juist zijn.",
+      "seconds": 6.8477
+    },
+    {
+      "file": "D-NL-statement__clean-150dpi.png",
+      "engine": "local-tesseract-ocr",
+      "text": "FICTIEVE VERKLARING - OPLEIDINGSDOCUMENT\n\nReferentie: FIC-2026-0620\n\nDatum: vrijdag 20 maart 2026 om 08:45\n\nIk ben de fictieve beheerder van de fietsenstalling aan het station van Vlierdonk.\nOm 07:15 stelde ik vast dat zes elektrische fietsen verdwenen waren. De sloten\nwaren doorgeknipt en het hangslot van de achteringang hing open aan het hek.\nNaast het hek lag een afgebroken kniptang met een rood handvat.\n\nGeschatte schade: ongeveer 18.000,00 € inclusief drie losse accu's.\n\nIk verklaar dat deze gegevens volgens mij juist zijn.",
+      "seconds": 5.4042
+    },
+    {
+      "file": "D-NL-statement__scanned-pdf-300dpi.pdf",
+      "engine": "pypdf-text+local-tesseract-ocr",
+      "text": "FICTIEVE VERKLARING - OPLEIDINGSDOCUMENT\n\nReferentie: FIC-2026-0620\n\nDatum: vrijdag 20 maart 2026 om 08:45\n\nIk ben de fictieve beheerder van de fietsenstalling aan het station van Vlierdonk.\nOm 07:15 stelde ik vast dat zes elektrische fietsen verdwenen waren. De sloten\nwaren doorgeknipt en het hangslot van de achteringang hing open aan het hek.\nNaast het hek lag een afgebroken kniptang met een rood handvat.\n\nGeschatte schade: ongeveer 18.000,00 € inclusief drie losse accu's.\n\nIk verklaar dat deze gegevens volgens mij juist zijn.",
+      "seconds": 4.9622
+    },
+    {
+      "file": "D-NL-statement__low-resolution-100dpi.png",
+      "engine": "local-tesseract-ocr",
+      "text": "FICTIEVE VERKLARING - OPLEIDINGSDOCUMENT\nReferentie: FIC-2026-0620\n\nDatum: vrijdag 20 maart 2026 om 08:45\n\nIk ben de fictieve beheerder van de fietsenstalling aan het station van Viierdonk.\nOm 07:15 stelde ik vast dat zes elektrische fietsen verdwenen waren. De sloten\n\nwaren doorgeknipt en het hangslot van de achteringang hing open aan het hek.\nNaast het hek lag een afgebroken kniptang met een rood handvat.\n\nGeschatte schade: ongeveer 18.000,00 € inclusief drie losse accu's.\n\nIk verklaar dat deze gegevens volgens mij juist zijn",
+      "seconds": 4.35
+    },
+    {
+      "file": "D-NL-statement__skew-3-degrees.png",
+      "engine": "local-tesseract-ocr",
+      "text": "FICTIEVE VERKLARING - OPLEIDINGSDOCUMENT\n\nReferentie: FIC-2026-0620\n\nDatum: vrijdag 20 maart 2026 om 08:45\n\nIk ben de fictieve beheerder van de fietsenstalling aan het station van Vlierdonk.\nOm 07:15 stelde ik vast dat zes elektrische fietsen verdwenen waren. De sloten\nwaren doorgeknipt en het hangslot van de achteringang hing open aan het hek.\nNaast het hek lag een afgebroken kniptang met een rood handvat.\n\nGeschatte schade: ongeveer 18.000,00 € inclusief drie losse accu's.\n\nIk verklaar dat deze gegevens volgens mij juist zijn.",
+      "seconds": 12.8752
+    },
+    {
+      "file": "D-NL-statement__blur.png",
+      "engine": "local-tesseract-ocr",
+      "text": "FICTIEVE VERKLARING - OPLEIDINGSDOCUMENT\n\nReferentie: FiC-2026-0620\n\nDatum: vrijdag 20 maart 2026 om 08:45\n\nIk ben de fictieve beheerder van de fietsenstalling aan het station van Viierdonk.\nOm 07:15 stelde ik vast dat zes elektrische fietsen verdwenen waren. De sloten\nwaren doorgeknipt en het hangslot van de achteringang hing open aan het hek.\nNaast het hek lag een afgebroken kniptang met een rood handvat.\n\nGeschatte schade: ongeveer 18.000,00 € inclusief drie losse accu's.\n\nik verklaar dat deze gegevens volgens mij juist zijn.",
+      "seconds": 5.5612
+    },
+    {
+      "file": "D-NL-statement__salt-and-pepper-noise.png",
+      "engine": "local-tesseract-ocr",
+      "text": "FICTIEVE VERKLARING - OPLEIDINGSDOCUMENT\nReferentie: FIC- 2026- 0620 : :\n“Datum: vrijdag:20. maart 2026 om 08:45. : :\n© Ik.ben dé-fictieve behéerdér van de fietsenstalling ‘aan het station’van Viierdonk,\nOm 07:15 stelde ik vast dat zes elektrische fietsen verdwenen waren, De sloten\n: waren doorgeknipt en:het hangslot van de.achteringang hing:open aan het hek.» ”\n‘Naast het hek lag een afgebroken kniptang met een rood handvat,\nGeschatte schade: ongeveer 18.000, 00 € inclusief-drie: losse aecu's.\n\noll verklaar dat deze gegevens volgens mij juist-zijn.",
+      "seconds": 8.3025
+    },
+    {
+      "file": "D-NL-statement__jpeg-quality-15.jpg",
+      "engine": "local-tesseract-ocr",
+      "text": "FICTIEVE VERKLARING - OPLEIDINGSDOCUMENT\n\nReferentie: FIC-2026-0620\n\nDatum: vrijdag 20 maart 2026 om 08:45\n\nIk ben de fictieve beheerder van de fietsenstalling aan het station van Vlierdonk.\nOm 07:15 stelde ik vast dat zes elektrische fietsen verdwenen waren. De sloten\nwaren doorgeknipt en het hangslot van de achteringang hing open aan het hek.\nNaast het hek lag een afgebroken kniptang met een rood handvat.\n\nGeschatte schade: ongeveer 18.000,00 € inclusief drie losse accu's.\n\nIk verklaar dat deze gegevens volgens mij juist zijn.",
+      "seconds": 0.6407
+    },
+    {
+      "file": "D-NL-statement__low-contrast.png",
+      "engine": "local-tesseract-ocr",
+      "text": "FICTIEVE VERKLARING - OPLEIDINGSDOCUMENT\n\nReferentie: FIC-2026-0620\n\nDatum: vrijdag 20 maart 2026 om 08:45\n\nIk ben de fictieve beheerder van de fietsenstalling aan het station van Vlierdonk.\nOm 07:15 stelde ik vast dat zes elektrische fietsen verdwenen waren. De sloten\nwaren doorgeknipt en het hangslot van de achteringang hing open aan het hek.\nNaast het hek lag een afgebroken kniptang met een rood handvat.\n\nGeschatte schade: ongeveer 18.000,00 € inclusief drie losse accu's.\n\nIk verklaar dat deze gegevens volgens mij juist zijn.",
+      "seconds": 1.142
+    },
+    {
+      "file": "D-NL-statement__uneven-lighting.png",
+      "engine": "local-tesseract-ocr",
+      "text": "FICTIEVE VERKLARING - OPLEIDINGSDOCUMENT\n\nReferentie: FIC-2026-0620\n\nDatum: vrijdag 20 maart 2026 om 08:45\n\nIk ben de fictieve beheerder van de fietsenstalling aan het station van Vlierdonk.\nOm 07:15 stelde ik vast dat zes elektrische fietsen verdwenen waren. De sloten\nwaren doorgeknipt en het hangslot van de achteringang hing open aan het hek.\nNaast het hek lag een afgebroken kniptang met een rood handvat.\n\nGeschatte schade: ongeveer 18.000,00 € inclusief drie losse accu's.\n\nIk verklaar dat deze gegevens volgens mij juist zijn.",
+      "seconds": 0.7098
+    },
+    {
+      "file": "D-NL-statement__fax-like.png",
+      "engine": "local-tesseract-ocr",
+      "text": "FICTIEVE VERKLARING - OPLEIDINGSDOCUMENT\n\nReferentie: FIC-2026-0620 |\n\nDatum: vrijdag 20 maart 2026 or'08:45\n\nik ben de fictieve beheerdér van de fietsenstalling aan het station van Viierdonk.\nOrn 07:15 stelde ik vast dat zes elektrische fietsen verdwenen waren. De sloten\nwaren doorgeknipt en het hangslot van de achteringang hing open aan het hek.\nNaast het hek tag een-afgebroken kniptang met een. rood handvat.\n\nGeschatte schade: ongeveer 18.000,00 € inclusief drie losse accu’'s.\n\nIk verklaar dat deze gegevens volgens mij juist zijn.",
+      "seconds": 0.5253
+    },
+    {
+      "file": "D-NL-statement__scanned-pdf-200dpi-noisy.pdf",
+      "engine": "pypdf-text+local-tesseract-ocr",
+      "text": "FICTIEVE VERKLARING - OPLEIDINGSDOCUMENT\nReferentie: FIC-2026-0620.\n\nDatum: vrijdag 20 maart 2026 om 08:45\n\n1k ben de fictieve beheerder van de fietsenstalling aan het station van Vlierdonk.\n\nOm 07:15 stelde ik vast dat zes elektrische fietsen verdwenen waren. De sloten\n\nwaren doorgeknipt en het hangslot van de achteringang hing open aan het hek:\nNaast het hek lag een afgebroken kniptang met.een rood handvat.\n\nGeschatte schade: ongeveer 18.000,00 € inclusief drie losse accu's.\n\nIk verklaar dat deze gegevens volgens mij juist.zijn.",
+      "seconds": 0.7961
+    },
+    {
+      "file": "D-MIX-inventory__clean-300dpi.png",
+      "engine": "local-tesseract-ocr",
+      "text": "EVIDENCE INVENTORY / INVENTAIRE / INVENTARIS - FICTIONAL\n\nItem Description Qty Seal\nO1 Cordless drill, grey 2 A-1043\n02 Mitre saw with blade guard 1 A-1044\n03 Cable de cuivre, bobine 250 m 2 B-2210\n04 Kniptang, rood handvat 1 C-3319\n05 Toolbox lid, green metal 1 A-1045\nRecorded by: fictional officer 7741\n\nChecked on: 21/03/2026 at 14:20",
+      "seconds": 0.607
+    },
+    {
+      "file": "D-MIX-inventory__clean-200dpi.png",
+      "engine": "local-tesseract-ocr",
+      "text": "EVIDENCE INVENTORY / INVENTAIRE / INVENTARIS - FICTIONAL\n\nItem Description Qty Seal\n\no1 Cordless drill, grey 2 A-1043\n02 Mitre saw with blade guard 1 A-1044\n03 Cable de cuivre, bobine 250 m 2 B-2210\n04 Kniptang, rood handvat 1 C-3319\n05 Toolbox lid, green metal 1 A-1045\n\nRecorded by: fictional officer 7741\nChecked on: 21/03/2026 at 14:20",
+      "seconds": 0.6013
+    },
+    {
+      "file": "D-MIX-inventory__clean-150dpi.png",
+      "engine": "local-tesseract-ocr",
+      "text": "EVIDENCE INVENTORY / INVENTAIRE / INVENTARIS - FICTIONAL\n\nItem Description Qty Seal\n\no1 Cordless drill, grey 2 A-1043\n02 Mitre saw with blade guard 1 A-1044\n03 Cable de cuivre, bobine 250 m 2 B-2210\n04 Kniptang, rood handvat 1 C-3319\nos Toolbox lid, green metal 1 A-1045\n\nRecorded by: fictional officer 7741\nChecked on: 21/03/2026 at 14:20",
+      "seconds": 0.7105
+    },
+    {
+      "file": "D-MIX-inventory__scanned-pdf-300dpi.pdf",
+      "engine": "pypdf-text+local-tesseract-ocr",
+      "text": "EVIDENCE INVENTORY / INVENTAIRE / INVENTARIS - FICTIONAL\n\nItem Description Qty Seal\n\no1 Cordless drill, grey 2 A-1043\n02 Mitre saw with blade guard 1 A-1044\n03 Cable de cuivre, bobine 250 m 2 B-2210\n04 Kniptang, rood handvat 1 C-3319\n05 Toolbox lid, green metal 1 A-1045\n\nRecorded by: fictional officer 7741\nChecked on: 21/03/2026 at 14:20",
+      "seconds": 1.1822
+    },
+    {
+      "file": "D-MIX-inventory__low-resolution-100dpi.png",
+      "engine": "local-tesseract-ocr",
+      "text": "EVIDENCE INVENTORY / INVENTAIRE / INVENTARIS - FICTIONAL\n\nItem Description Qty seal\n\n01 Cordless drill, grey 2 A-1043\n02 Mitre saw with blade guard 1 aA-1044\n03 Cable de cuivre, bobine 250 m 2 B+2210\n04 — Kniptang, rood handvat 1 +3319\n05 Toolbox lid, green metal 1 A-1045\n\nRecorded by: fictional officer 7741\nChecked on: 21/03/2026 at 14:20",
+      "seconds": 0.5061
+    },
+    {
+      "file": "D-MIX-inventory__skew-3-degrees.png",
+      "engine": "local-tesseract-ocr",
+      "text": "EVIDENCE INVENTORY / INVENTAIRE / INVENTARIS — FICTIONAL\n\nItem Description ety seal\n\nOl Cordless drill, grey 2 A-1043\n02 Mitre saw with blade guard 1 A-1044\n03 Cable de cuivre, bobine 250 m 2 B-2210\n04 Kniptang, rood handvat 1 c-3319\n05 Toolbox lid, green metal 1 A-1045\n\nRecorded by: fictional officer 7741\nChecked on: 21/03/2026 at 14:20",
+      "seconds": 0.9043
+    },
+    {
+      "file": "D-MIX-inventory__blur.png",
+      "engine": "local-tesseract-ocr",
+      "text": "EVIDENCE INVENTORY / INVENTAIRE / INVENTARIS - FICTIONAL\n\nItem Description Qty Seal\n\n01 Cordless drill, grey 2 A-1043\n02 Mitre saw with blade guard 1 A-1044\n03 Cable de cuivre, bobine 250 m 2 B-2210\n04 Kniptang, rood handvat 1 c-3319\n05 Toolbox lid, green metal 1 A-1045\n\nRecorded by: fictional officer 7741\nChecked on: 21/03/2026 at 14:20",
+      "seconds": 2.2864
+    },
+    {
+      "file": "D-MIX-inventory__salt-and-pepper-noise.png",
+      "engine": "local-tesseract-ocr",
+      "text": "EVIDENCE” INVENTORY a INVENTAERE whe INVENTARIS. = FICTIONAL |\n\ntem. “Description : 7 : Ory Seal\not Cordless: drill, grey 2 A=1043\n02° Mitre “sdw with blade guard Vo AS 1044,\n03... Cab1S de’ cuivre, bobine’ 250 mo) 2.9) B+2210°\n04 Kniptang, rood ‘handvat. i =3319.\n05: Toolbox Lid, -green metal 1 A~1045\n\nRecorded by: fictional officer7741\n“Chécked ‘on: 21/03/2026. at: 14:20",
+      "seconds": 13.0032
+    },
+    {
+      "file": "D-MIX-inventory__jpeg-quality-15.jpg",
+      "engine": "local-tesseract-ocr",
+      "text": "EVIDENCE INVENTORY / INVENTAIRE / INVENTARIS - FICTIONAL\nItem Description Qty Seal\n\nOl Cordless drill, grey 2 A-1043\n02 Mitre saw with blade guard 1 A-1044\n03 Cable de cuivre, bobine 250 m 2 B-2210\n04 Kniptang, rood handvat 1 €-3319\n05 Toolbox lid, green metal L A-1045\n\nRecorded by: fictional officer 7741\nChecked on: 21/03/2026 at 14:20",
+      "seconds": 7.3949
+    },
+    {
+      "file": "D-MIX-inventory__low-contrast.png",
+      "engine": "local-tesseract-ocr",
+      "text": "EVIDENCE INVENTORY / INVENTAIRE / INVENTARIS - FICTIONAL\n\nItem Description Qty Seal\n\no1 Cordless drill, grey 2 A-1043\n02 Mitre saw with blade guard 1 A-1044\n03 Cable de cuivre, bobine 250 m 2 B-2210\n04 Kniptang, rood handvat 1 C=3319\n05 Toolbox lid, green metal 1 A-1045\n\nRecorded by: fictional officer 7741\nChecked on: 21/03/2026 at 14:20",
+      "seconds": 5.3322
+    },
+    {
+      "file": "D-MIX-inventory__uneven-lighting.png",
+      "engine": "local-tesseract-ocr",
+      "text": "EVIDENCE INVENTORY / INVENTAIRE / INVENTARIS - FICTIONAL\n\nItem Description Qty Seal\n\no1 Cordless drill, grey 2 A-1043\n02 Mitre saw with blade guard 1 A-1044\n03 Cable de cuivre, bobine 250 m 2 B-2210\n04 Kniptang, rood handvat 1 €=—3319)\n05 Toolbox lid, green metal 1 A-1045\n\nRecorded by: fictional officer 7741\nChecked on: 21/03/2026 at 14:20",
+      "seconds": 6.9829
+    },
+    {
+      "file": "D-MIX-inventory__fax-like.png",
+      "engine": "local-tesseract-ocr",
+      "text": "EVIDENCE INVENTORY -/ INVENTAIRE / INVENTARIS ~ FICTIONAL\n\nItem’ Description Qty, Seal\n\n61. Cordless drill, grey ~ 2 A+1043\n02 Mitre saw with: blade guard ¥ A-1044\nO38 Cable de cuivre, bobine 250 m 2. B-2210\n04 Kniptang,.. rood .handvat 1 23319\n05 Toolbox. Lid, gréen metal 1. A-1045\n\nRecorded by: fictional officer 7741\nChecked on: 21/03/2026. at 14:20",
+      "seconds": 9.2174
+    },
+    {
+      "file": "D-MIX-inventory__scanned-pdf-200dpi-noisy.pdf",
+      "engine": "pypdf-text+local-tesseract-ocr",
+      "text": "EVIDENCE INVENTORY /- INVENTAIRE 7 INVENTARIS.. ~ FICTIONAL\n\nItem Description Qty Seal\n\no1 Cordless drill, grey 2 A-1043\n\n02 Mitre saw with blade guard 1 A-1044\n\n03 Cable de cuivre, bobine® 250°m 2 B-2210\n\n04 © Kniptang, rood handvat r c-3319°\n05 Toolbox. lid, green metal 1 A-1045\n\nRecorded by: fictional officer 7741\nChecked ‘on: .21/03/2026 at 14:20",
+      "seconds": 4.7432
+    }
+  ],
+  "diagnostic": {
+    "lang": "eng+fra+nld",
+    "results": [
+      {
+        "file": "D-EN-statement__clean-300dpi.png",
+        "text": "FICTIONAL WITNESS STATEMENT - TRAINING DOCUMENT\n\nReference: FIC-2026-0412\n\nDate of statement: 14 March 2026, 10:25\n\n| am the manager of the fictional Riverside Joinery workshop on Mill Street.\n\nOn Tuesday morning | received a telephone call at 03:05 informing me that the\nalarm had been triggered. When | arrived at 03:40, the rear door was open and\nthe frame showed marks of a flat tool about two centimetres wide.\n\nMissing items: two cordless drills, one mitre saw, one laser level and a green\nmetal toolbox. Estimated value: 4.300,00 EUR.\n\n| confirm that this statement is accurate to the best of my knowledge.",
+        "seconds": 8.9226
+      },
+      {
+        "file": "D-EN-statement__clean-200dpi.png",
+        "text": "FICTIONAL WITNESS STATEMENT - TRAINING DOCUMENT\n\nReference: FIC-2026-0412\n\nDate of statement: 14 March 2026, 10:25\n\n| am the manager of the fictional Riverside Joinery workshop on Mill Street.\n\nOn Tuesday morning | received a telephone call at 03:05 informing me that the\nalarm had been triggered. When | arrived at 03:40, the rear door was open and\nthe frame showed marks of a flat tool about two centimetres wide.\n\nMissing items: two cordless drills, one mitre saw, one laser level and a green\nmetal toolbox. Estimated value: 4.300,00 EUR.\n\n| confirm that this statement is accurate to the best of my knowledge.",
+        "seconds": 4.7266
+      },
+      {
+        "file": "D-EN-statement__clean-150dpi.png",
+        "text": "FICTIONAL WITNESS STATEMENT - TRAINING DOCUMENT\n\nReference: FIC-2026-0412\n\nDate of statement: 14 March 2026, 10:25\n\n| am the manager of the fictional Riverside Joinery workshop on Mill Street.\n\nOn Tuesday morning | received a telephone call at 03:05 informing me that the\nalarm had been triggered. When | arrived at 03:40, the rear door was open and\nthe frame showed marks of a flat tool about two centimetres wide.\n\nMissing items: two cordless drills, one mitre saw, one laser level and a green\nmetal toolbox. Estimated value: 4.300,00 EUR.\n\n| confirm that this statement is accurate to the best of my knowledge.",
+        "seconds": 22.2165
+      },
+      {
+        "file": "D-EN-statement__scanned-pdf-300dpi.pdf",
+        "text": "FICTIONAL WITNESS STATEMENT - TRAINING DOCUMENT\n\nReference: FIC-2026-0412\n\nDate of statement: 14 March 2026, 10:25\n\n| am the manager of the fictional Riverside Joinery workshop on Mill Street.\n\nOn Tuesday morning | received a telephone call at 03:05 informing me that the\nalarm had been triggered. When | arrived at 03:40, the rear door was open and\nthe frame showed marks of a flat tool about two centimetres wide.\n\nMissing items: two cordless drills, one mitre saw, one laser level and a green\nmetal toolbox. Estimated value: 4.300,00 EUR.\n\n| confirm that this statement is accurate to the best of my knowledge.",
+        "seconds": 16.1884
+      },
+      {
+        "file": "D-EN-statement__low-resolution-100dpi.png",
+        "text": "FICTIONAL WITNESS STATEMENT - TRAINING DOCUMENT\nReference: FIC-2026-0412\n\nDate of statement: 14 March 2026, 10:25\n\n| am the manager of the fictional Riverside Joinery workshop on Mill Street.\n\nOn Tuesday morning | received a telephone call at 03:05 informing me that the\nalarm had been triggered. When | arrived at 03:40, the rear door was open and\nthe frame showed marks of a flat tool about two centimetres wide.\n\nMissing items: two cordless drills, one mitre saw, one laser level and a green\nmetal toolbox. Estimated value: 4.300,00 EUR.\n\n| confirm that this statement is accurate to the best of my knowledge.",
+        "seconds": 5.3722
+      },
+      {
+        "file": "D-EN-statement__skew-3-degrees.png",
+        "text": "FICTIONAL WITNESS STATEMENT - TRAINING DOCUMENT\n\nReference: FIC-2026-0412\n\nDate of statement: 14 March 2026, 10:25\n\n| am the manager of the fictional Riverside Joinery workshop on Mill Street.\n\nOn Tuesday morning | received a telephone call at 03:05 informing me that the\nalarm had been triggered. When | arrived at 03:40, the rear door was open and\nthe frame showed marks of a flat tool about two centimetres wide.\n\nMissing items: two cordless drills, one mitre saw, one laser level and a green\nmetal toolbox. Estimated value: 4.300,00 EUR.\n\n| confirm that this statement is accurate to the best of my knowledge.",
+        "seconds": 1.4994
+      },
+      {
+        "file": "D-EN-statement__blur.png",
+        "text": "FICTIONAL WITNESS STATEMENT - TRAINING DOCUMENT\n\nReference: FIC-2026-0412\n\nDate of statement: 14 March 2026, 10:25\n\n| am the manager of the fictional Riverside Joinery workshop on Mill Street.\n\nOn Tuesday morning | received a telephone call at 03:05 informing me that the\nalarm had been triggered. When | arrived at 03:40, the rear door was open and\nthe frame showed marks of a flat tool about two centimetres wide.\n\nMissing items: two cordless drills, one mitre saw, one laser level and a green\nmetal toolbox. Estimated value: 4.300,00 EUR.\n\n| confirm that this statement is accurate to the best of my knowledge.",
+        "seconds": 1.0331
+      },
+      {
+        "file": "D-EN-statement__salt-and-pepper-noise.png",
+        "text": "“FICTIONAL WITNESS STATEMENT - “TRAINING DOCUMENT oe\nReférence: FIC-2026-0442\n\n| Date of statement: 14 March 2026, 10:25 :\n\nlam the manager of the fictional-Riverside Joinery. workshop é on Mill Street.\nOn Tuesday. morning. | received a telephone call at 03:05 informing me that the:\nalarm.had been triggered: When | arrived-at 03:40, thé réar door was open and :\nthe frame showed marks of 4 flät tool about two centimetres wide.\n\n: Missing items: two cordless drills; one mitre: saw, one laser level and'a green:\n\nmetal.toolbôx. Estimated value: 4.300,00 EUR.\n\nI confirm that this statement is accurate to the best of my knowledge.",
+        "seconds": 2.2392
+      },
+      {
+        "file": "D-EN-statement__jpeg-quality-15.jpg",
+        "text": "FICTIONAL WITNESS STATEMENT - TRAINING DOCUMENT\n\nReference: FIC-2026-0412\n\nDate of statement: 14 March 2026, 10:25\n\n| am the manager of the fictional Riverside Joinery workshop on Mill Street.\n\nOn Tuesday morning | received a telephone call at 03:05 informing me that the\nalarm had been triggered. When | arrived at 03:40, the rear door was open and\nthe frame showed marks of a flat tool about two centimetres wide.\n\nMissing items: two cordless drills, one mitre saw, one laser level and a green\nmetal toolbox. Estimated value: 4.300,00 EUR.\n\n| confirm that this statement is accurate to the best of my knowledge.",
+        "seconds": 1.6233
+      },
+      {
+        "file": "D-EN-statement__low-contrast.png",
+        "text": "FICTIONAL WITNESS STATEMENT - TRAINING DOCUMENT\n\nReference: FIC-2026-0412\n\nDate of statement: 14 March 2026, 10:25\n\n| am the manager of the fictional Riverside Joinery workshop on Mill Street.\n\nOn Tuesday morning | received a telephone call at 03:05 informing me that the\nalarm had been triggered. When | arrived at 03:40, the rear door was open and\nthe frame showed marks of a flat tool about two centimetres wide.\n\nMissing items: two cordless drills, one mitre saw, one laser level and a green\nmetal toolbox. Estimated value: 4.300,00 EUR.\n\n| confirm that this statement is accurate to the best of my knowledge.",
+        "seconds": 1.5482
+      },
+      {
+        "file": "D-EN-statement__uneven-lighting.png",
+        "text": "FICTIONAL WITNESS STATEMENT - TRAINING DOCUMENT\n\nReference: FIC-2026-0412\n\nDate of statement: 14 March 2026, 10:25\n\n| am the manager of the fictional Riverside Joinery workshop on Mill Street.\n\nOn Tuesday morning | received a telephone call at 03:05 informing me that the\nalarm had been triggered. When | arrived at 03:40, the rear door was open and\nthe frame showed marks of a flat tool about two centimetres wide.\n\nMissing items: two cordless drills, one mitre saw, one laser level and a green\nmetal toolbox. Estimated value: 4.300,00 EUR.\n\n| confirm that this statement is accurate to the best of my knowledge.",
+        "seconds": 8.7691
+      },
+      {
+        "file": "D-EN-statement__fax-like.png",
+        "text": "FICTIONAL WITNESS STATEMENT - TRAINING DOCUMENT\n\nReference: FIC:2026-0412 ,\n\nDate óf statement: 14 March 2026, 10:25\n\nLam the manager of the fictional Riverside. Joinery workshop on: Mill Street.\n\nOn Tuesday morning | received a telephone call at'03:05 informing me that the\nlarm.had been triggeréd. When. | arrived at 03:40, the rear door was open and\nthe frame showed marks of a flat tool about two centimetres wide.\n\nMissing items: two cordless drills, one mitre saw, one laser level'and a-green\nmetal toolbox. Estimated value: 4.300,00 EUR.\n\n| confirm that this statement is accurate to the best of my knowledge.",
+        "seconds": 31.79
+      },
+      {
+        "file": "D-EN-statement__scanned-pdf-200dpi-noisy.pdf",
+        "text": "FICTIONAL WITNESS. STATEMENT - TRAINING DOCUMENT\n\nReference: FIC-2026-0412\n\nDate of statement: 14 March 2026, 10:25\n\n| am the manager of the fictional Riverside Joinery workshop on Mill Street.\n\nOn Tuesday morning | received a telephone call at 03:05 informing me that the\nalarm had been triggered. When | arrived at 03:40, the rear door was open and\nthe frame showed marks of a flat tool about two centimetres wide.\n\nMissing items: two cordless drills, one mitre saw, one laser level and a green\nmetal toolbox. Estimated value: 4.300,00 EUR.\n\n| confirm that this statement is accurate to the best of my knowledge.",
+        "seconds": 11.3106
+      },
+      {
+        "file": "D-FR-statement__clean-300dpi.png",
+        "text": "DECLARATION FICTIVE - DOCUMENT DE FORMATION\nRéférence : FIC-2026-0518\n\nDate : le mercredi 11 mars 2026 a 09:10\n\nJe suis le chef de chantier fictif de la rue des Tilleuls à Bellerive.\n\nLe gardien m'a appelé à 05:40 pour signaler la disparition de deux bobines\nde câble de cuivre. La clôture était découpée près du portail est et des\ntraces de pneus larges étaient visibles dans la boue.\n\nPréjudice estimé : environ 9.000,00 € pour le câble, la découpeuse et le\ngroupe électrogène. Je n'ai remarqué aucune autre dégradation.\n\nFait à Bellerive, lu et approuvé.",
+        "seconds": 9.6193
+      },
+      {
+        "file": "D-FR-statement__clean-200dpi.png",
+        "text": "DECLARATION FICTIVE - DOCUMENT DE FORMATION\nRéférence : FIC-2026-0518\n\nDate : le mercredi 11 mars 2026 a 09:10\n\nJe suis le chef de chantier fictif de la rue des Tilleuls à Bellerive.\n\nLe gardien m'a appelé à 05:40 pour signaler la disparition de deux bobines\nde câble de cuivre. La clôture était découpée près du portail est et des\ntraces de pneus larges étaient visibles dans la boue.\n\nPréjudice estimé : environ 9.000,00 € pour le câble, la découpeuse et le\ngroupe électrogène. Je n'ai remarqué aucune autre dégradation.\n\nFait à Bellerive, lu et approuvé.",
+        "seconds": 9.5296
+      },
+      {
+        "file": "D-FR-statement__clean-150dpi.png",
+        "text": "DECLARATION FICTIVE - DOCUMENT DE FORMATION\n\nRéférence : FIC-2026-0518\n\nDate : le mercredi 11 mars 2026 a 09:10\n\nJe suis le chef de chantier fictif de la rue des Tilleuls à Bellerive.\n\nLe gardien m'a appelé à 05:40 pour signaler la disparition de deux bobines\nde câble de cuivre. La clôture était découpée près du portail est et des\ntraces de pneus larges étaient visibles dans la boue.\n\nPréjudice estimé : environ 9.000,00 € pour le câble, la découpeuse et le\ngroupe électrogène. Je n'ai remarqué aucune autre dégradation.\n\nFait à Bellerive, lu et approuvé.",
+        "seconds": 0.9179
+      },
+      {
+        "file": "D-FR-statement__scanned-pdf-300dpi.pdf",
+        "text": "DECLARATION FICTIVE - DOCUMENT DE FORMATION\nRéférence : FIC-2026-0518\n\nDate : le mercredi 11 mars 2026 à 09:10\n\nJe suis le chef de chantier fictif de la rue des Tilleuls à Bellerive.\n\nLe gardien m'a appelé à 05:40 pour signaler la disparition de deux bobines\nde câble de cuivre. La clôture était découpée près du portail est et des\ntraces de pneus larges étaient visibles dans la boue.\n\nPréjudice estimé : environ 9.000,00 € pour le câble, la découpeuse et le\ngroupe électrogène. Je n'ai remarqué aucune autre dégradation.\n\nFait à Bellerive, lu et approuvé.",
+        "seconds": 1.3345
+      },
+      {
+        "file": "D-FR-statement__low-resolution-100dpi.png",
+        "text": "DECLARATION FICTIVE - DOCUMENT DE FORMATION\nRéférence : FIC-2026-0518\n\nDat\nJe suis le chef de chantier fictif de la rue des Tilleuls a Bellerive.\n\nle mercredi 11 mars 2026 à 09:10\n\nLe gardien m'a appelé à 05:40 pour signaler la disparition de deux bobines\nde câble de cuivre. La clôture était découpée près du portail est et des\ntraces de pneus larges étaient visibles dans la boue.\n\nPréjudice estimé : environ 9.000,00 € pour le câble, la découpeuse et le\ngroupe électrogène. Je n'ai remarqué aucune autre dégradation.\n\nFait à Bellerive, lu et approuvé.",
+        "seconds": 0.9895
+      },
+      {
+        "file": "D-FR-statement__skew-3-degrees.png",
+        "text": "DECLARATION FICTIVE - DOCUMENT DE FORMATION\n\nRéférence : FIC-2026-0518\n\nDate : le mercredi 11 mars 2026 a 09:10\n\nJe suis le chef de chantier fictif de la rue des Tilleuls à Bellerive.\n\nLe gardien m'a appelé à 05:40 pour signaler la disparition de deux bobines\nde cable de cuivre. La clôture était découpée près du portail est et des\ntraces de pneus larges étaient visibles dans la boue.\n\nPréjudice estimé : environ 9.000,00 € pour Je câble, la découpeuse et le\ngroupe électrogène. Je n'ai remarqué aucune autre dégradation.\n\nFait à Bellerive, lu et approuvé.",
+        "seconds": 2.5971
+      },
+      {
+        "file": "D-FR-statement__blur.png",
+        "text": "DECLARATION FICTIVE - DOCUMENT DE FORMATION\n\nRéférence : FIC-2026-0518\n\nDate : le mercredi 11 mars 2026 à 09:10\n\nJe suis le chef de chantier fictif de la rue des Tilleuls à Bellerive.\n\nLe gardien m'a appelé à 05:40 pour signaler la disparition de deux bobines\nde câble de cuivre. La clôture était découpée près du portail est et des\ntraces de pneus larges étaient visibles dans la boue.\n\nPréjudice estimé : environ 9.000,00 € pour le câble, la découpeuse et le\ngroupe électrogène. Je n'ai remarqué aucune autre dégradation.\n\nFait à Bellerive, lu et approuvé.",
+        "seconds": 2.2276
+      },
+      {
+        "file": "D-FR-statement__salt-and-pepper-noise.png",
+        "text": "DECLARATION FICTIVE - DOCUMENT DE FORMATION\n\n: „Référence: FIC-2026-0518\n\n“Date : le mercredi11 mars 2026 à 09:10: :: =\n\nJe suis ‘le-chef de chantier fictif dé la rue des Tilleuls à à Bellerive.\n\nLe gardien-m'à appelé à à 05:40 pour signaler la disparition de deux bobines\n\nde cable de cuivre. La clôture était découpée près du portail est et des. .\n\ntraces de pneus larges étaient visibles dans la boue. ; :\n\n| ; Prejudice estimé : environ 9.000,00 € pour le câble, la découpeuse et le\ngroupe électrogène. Je n'ai remarqué aucune autre dégradation.\n\nFait à Bellerive, lu-et approuve,",
+        "seconds": 3.5477
+      },
+      {
+        "file": "D-FR-statement__jpeg-quality-15.jpg",
+        "text": "DECLARATION FICTIVE - DOCUMENT DE FORMATION\nRéférence : FIC-2026-0518\n\nDate : le mercredi 11 mars 2026 à 09:10\n\nJe suis le chef de chantier fictif de la rue des Tilleuls à Bellerive.\n\nLe gardien m'a appelé à 05:40 pour signaler la disparition de deux bobines\nde câble de cuivre. La clôture était découpée près du portail est et des\ntraces de pneus larges étaient visibles dans la boue.\n\nPréjudice estimé : environ 9.000,00 € pour le câble, la découpeuse et le\ngroupe électrogène. Je n'ai remarqué aucune autre dégradation.\n\nFait à Bellerive, lu et approuvé.",
+        "seconds": 15.1609
+      },
+      {
+        "file": "D-FR-statement__low-contrast.png",
+        "text": "DECLARATION FICTIVE - DOCUMENT DE FORMATION\nRéférence : FIC-2026-0518\n\nDate : le mercredi 11 mars 2026 a 09:10\n\nJe suis le chef de chantier fictif de la rue des Tilleuls à Bellerive.\n\nLe gardien m'a appelé à 05:40 pour signaler la disparition de deux bobines\nde câble de cuivre. La clôture était découpée près du portail est et des\ntraces de pneus larges étaient visibles dans la boue.\n\nPréjudice estimé : environ 9.000,00 € pour le câble, la découpeuse et le\ngroupe électrogène. Je n'ai remarqué aucune autre dégradation.\n\nFait à Bellerive, lu et approuvé.",
+        "seconds": 9.1792
+      },
+      {
+        "file": "D-FR-statement__uneven-lighting.png",
+        "text": "DECLARATION FICTIVE - DOCUMENT DE FORMATION\nRéférence : FIC-2026-0518\n\nDate : le mercredi 11 mars 2026 a 09:10\n\nJe suis le chef de chantier fictif de la rue des Tilleuls à Bellerive.\n\nLe gardien m'a appelé à 05:40 pour signaler la disparition de deux bobines\nde câble de cuivre. La clôture était découpée près du portail est et des\ntraces de pneus larges étaient visibles dans la boue.\n\nPréjudice estimé : environ 9.000,00 € pour le câble, la découpeuse et le\ngroupe électrogène. Je n'ai remarqué aucune autre dégradation.\n\nFait à Bellerive, lu et approuvé.",
+        "seconds": 10.5119
+      },
+      {
+        "file": "D-FR-statement__fax-like.png",
+        "text": "DECLARATION FICTIVE - DOCUMENT DE FORMATION\n\nRéférence : FIC-2026-0518 :\n\nDate : le mercredi 11 mars 2026 à 09:10\n\nJe suis le chef de chantier fictif de la rue des Tilleuls à Bellerive.\n\nLe gardien m'a appelé à 05:40 pour signaler la disparition.de deux bobines\nde cable de cuivre. La clôture était découpée près du portail est et des\ntraces de pneus larges étaient visibles dans.la boue. |\nPréjudice estimé : environ 9:000,00 € pour le câble, la découpeuse et le\ngroupe électrogène. Je n'ai remarqué aucuné autre dégradation. :\n\nFait à Bellerive, lu et approuvé.",
+        "seconds": 13.6632
+      },
+      {
+        "file": "D-FR-statement__scanned-pdf-200dpi-noisy.pdf",
+        "text": "DECLARATION FICTIVE - DOCUMENT DE FORMATION\nRéférence : FIC-2026-0518\n\nDate : le mercredi 11 mars 2026 à 09:10\n\nJe suis le chef de chantier fictif de la rue des Tilleuls à Bellerive.\n\nLe gardien m'a appelé à 05:40 pour signaler la disparition de deux bobines\nde câble de cuivre. La clôture était découpée près du portail est et des\ntraces de pneus larges étaient visibles dans la boue. —\n\nPréjudice estimé : environ 9.000,00 € pour le câble, la découpeuse et le\ngroupe électrogène. Je n'ai remarqué aucune autre dégradation.\n\nFait à Bellerive, lu et approuvé.",
+        "seconds": 0.9101
+      },
+      {
+        "file": "D-NL-statement__clean-300dpi.png",
+        "text": "FICTIEVE VERKLARING - OPLEIDINGSDOCUMENT\n\nReferentie: FIC-2026-0620\n\nDatum: vrijdag 20 maart 2026 om 08:45\n\nIk ben de fictieve beheerder van de fietsenstalling aan het station van Vlierdonk.\nOm 07:15 stelde ik vast dat zes elektrische fietsen verdwenen waren. De sloten\nwaren doorgeknipt en het hangslot van de achteringang hing open aan het hek.\nNaast het hek lag een afgebroken kniptang met een rood handvat.\n\nGeschatte schade: ongeveer 18.000,00 € inclusief drie losse accu's.\n\nIk verklaar dat deze gegevens volgens mij juist zijn.",
+        "seconds": 0.8202
+      },
+      {
+        "file": "D-NL-statement__clean-200dpi.png",
+        "text": "FICTIEVE VERKLARING - OPLEIDINGSDOCUMENT\n\nReferentie: FIC-2026-0620\n\nDatum: vrijdag 20 maart 2026 om 08:45\n\nIk ben de fictieve beheerder van de fietsenstalling aan het station van Vlierdonk.\nOm 07:15 stelde ik vast dat zes elektrische fietsen verdwenen waren. De sloten\nwaren doorgeknipt en het hangslot van de achteringang hing open aan het hek.\nNaast het hek lag een afgebroken kniptang met een rood handvat.\n\nGeschatte schade: ongeveer 18.000,00 € inclusief drie losse accu's.\n\nIk verklaar dat deze gegevens volgens mij juist zijn.",
+        "seconds": 0.8099
+      },
+      {
+        "file": "D-NL-statement__clean-150dpi.png",
+        "text": "FICTIEVE VERKLARING - OPLEIDINGSDOCUMENT\n\nReferentie: FIC-2026-0620\n\nDatum: vrijdag 20 maart 2026 om 08:45\n\nIk ben de fictieve beheerder van de fietsenstalling aan het station van Vlierdonk.\nOm 07:15 stelde ik vast dat zes elektrische fietsen verdwenen waren. De sloten\nwaren doorgeknipt en het hangslot van de achteringang hing open aan het hek.\nNaast het hek lag een afgebroken kniptang met een rood handvat.\n\nGeschatte schade: ongeveer 18.000,00 € inclusief drie losse accu's.\n\nIk verklaar dat deze gegevens volgens mij juist zijn.",
+        "seconds": 0.875
+      },
+      {
+        "file": "D-NL-statement__scanned-pdf-300dpi.pdf",
+        "text": "FICTIEVE VERKLARING - OPLEIDINGSDOCUMENT\n\nReferentie: FIC-2026-0620\n\nDatum: vrijdag 20 maart 2026 om 08:45\n\nIk ben de fictieve beheerder van de fietsenstalling aan het station van Vlierdonk.\nOm 07:15 stelde ik vast dat zes elektrische fietsen verdwenen waren. De sloten\nwaren doorgeknipt en het hangslot van de achteringang hing open aan het hek.\nNaast het hek lag een afgebroken kniptang met een rood handvat.\n\nGeschatte schade: ongeveer 18.000,00 € inclusief drie losse accu's.\n\nIk verklaar dat deze gegevens volgens mij juist zijn.",
+        "seconds": 0.736
+      },
+      {
+        "file": "D-NL-statement__low-resolution-100dpi.png",
+        "text": "FICTIEVE VERKLARING - OPLEIDINGSDOCUMENT\nReferentie: FIC-2026-0620\n\nDatum: vrijdag 20 maart 2026 om 08:45\n\nIk ben de fictieve beheerder van de fietsenstalling aan het station van Vlierdonk.\nOm 07:15 stelde ik vast dat zes elektrische fietsen verdwenen waren. De sloten\n\nwaren doorgeknipt en het hangslot van de achteringang hing open aan het hek.\nNaast het hek lag een afgebroken kniptang met een rood handvat.\n\nGeschatte schade: ongeveer 18.000,00 € inclusief drie losse accu's.\n\nIk verklaar dat deze gegevens volgens mij juist zijn",
+        "seconds": 0.9564
+      },
+      {
+        "file": "D-NL-statement__skew-3-degrees.png",
+        "text": "FICTIEVE VERKLARING - OPLEIDINGSDOCUMENT\n\nReferentie: FIC-2026-0620\n\nDatum: vrijdag 20 maart 2026 om 08:45\n\nIk ben de fictieve beheerder van de fietsenstalling aan het station van Vlierdonk.\nOm 07:15 stelde ik vast dat zes elektrische fietsen verdwenen waren. De sloten\nwaren doorgeknipt en het hangslot van de achteringang hing open aan het hek.\nNaast het hek lag een afgebroken kniptang met een rood handvat.\n\nGeschatte schade: ongeveer 18.000,00 € inclusief drie losse accu's.\n\nIk verklaar dat deze gegevens volgens mij juist zijn.",
+        "seconds": 1.2398
+      },
+      {
+        "file": "D-NL-statement__blur.png",
+        "text": "FICTIEVE VERKLARING - OPLEIDINGSDOCUMENT\n\nReferentie: FIC-2026-0620\n\nDatum: vrijdag 20 maart 2026 om 08:45\n\nIk ben de fictieve beheerder van de fietsenstalling aan het station van Vlierdonk.\nOm 07:15 stelde ik vast dat zes elektrische fietsen verdwenen waren. De sloten\nwaren doorgeknipt en het hangslot van de achteringang hing open aan het hek.\nNaast het hek lag een afgebroken kniptang met een rood handvat.\n\nGeschatte schade: ongeveer 18.000,00 € inclusief drie losse accu's.\n\nIk verklaar dat deze gegevens volgens mij juist zijn.",
+        "seconds": 1.7502
+      },
+      {
+        "file": "D-NL-statement__salt-and-pepper-noise.png",
+        "text": "FICTIEVE VERKLARING OPLEIDINGSDOCUMENT\nReferentie: FIC- 2026- 0620 : :\n“ Datum: vrijdag:20. maart 2026 om 08:45 … : :\n\n“Ik ben dé-fictieve beheerder van de fietsenstalling aan het station Van Viierdonk,\nOm 07:15 stelde ik vast dat zes elektrische fietsen Verdwenñen waren, De sloten\n: waren doorgeknipt en:het hangslot van de achteringang hing:open aan het hek. ”\nNaast het hek lag een afgebroken kniptang met een rood handvat,\nGeschatte schade: ongeveer 18.000, 00 € inclusief. drie: losse accu's.\n\nlk verklaar dat deze gegevens volgens mij juist zijn.",
+        "seconds": 27.0014
+      },
+      {
+        "file": "D-NL-statement__jpeg-quality-15.jpg",
+        "text": "FICTIEVE VERKLARING - OPLEIDINGSDOCUMENT\n\nReferentie: FIC-2026-0620\n\nDatum: vrijdag 20 maart 2026 om 08:45\n\nIk ben de fictieve beheerder van de fietsenstalling aan het station van Vlierdonk.\nOm 07:15 stelde ik vast dat zes elektrische fietsen verdwenen waren. De sloten\nwaren doorgeknipt en het hangslot van de achteringang hing open aan het hek.\nNaast het hek lag een afgebroken kniptang met een rood handvat.\n\nGeschatte schade: ongeveer 18.000,00 € inclusief drie losse accu's.\n\nIk verklaar dat deze gegevens volgens mij juist zijn.",
+        "seconds": 11.7422
+      },
+      {
+        "file": "D-NL-statement__low-contrast.png",
+        "text": "FICTIEVE VERKLARING - OPLEIDINGSDOCUMENT\n\nReferentie: FIC-2026-0620\n\nDatum: vrijdag 20 maart 2026 om 08:45\n\nIk ben de fictieve beheerder van de fietsenstalling aan het station van Vlierdonk.\nOm 07:15 stelde ik vast dat zes elektrische fietsen verdwenen waren. De sloten\nwaren doorgeknipt en het hangslot van de achteringang hing open aan het hek.\nNaast het hek lag een afgebroken kniptang met een rood handvat.\n\nGeschatte schade: ongeveer 18.000,00 € inclusief drie losse accu's.\n\nIk verklaar dat deze gegevens volgens mij juist zijn.",
+        "seconds": 5.0826
+      },
+      {
+        "file": "D-NL-statement__uneven-lighting.png",
+        "text": "FICTIEVE VERKLARING - OPLEIDINGSDOCUMENT\n\nReferentie: FIC-2026-0620\n\nDatum: vrijdag 20 maart 2026 om 08:45\n\nIk ben de fictieve beheerder van de fietsenstalling aan het station van Vlierdonk.\nOm 07:15 stelde ik vast dat zes elektrische fietsen verdwenen waren. De sloten\nwaren doorgeknipt en het hangslot van de achteringang hing open aan het hek.\nNaast het hek lag een afgebroken kniptang met een rood handvat.\n\nGeschatte schade: ongeveer 18.000,00 € inclusief drie losse accu's.\n\nIk verklaar dat deze gegevens volgens mij juist zijn.",
+        "seconds": 0.8661
+      },
+      {
+        "file": "D-NL-statement__fax-like.png",
+        "text": "FICTIEVE VERKLARING - OPLEIDINGSDOCUMENT\n\nReferentie: FIC-2026-0620 |\n\nDatum: vrijdag 20 maart 2026 omi 08:45\n\nik ben de fictieve beheerder van de fietsenstalling aan het station van Viierdonk.\nOm 07:15 stelde ik vast dat zes elektrische fietsen verdwenen waren. De sloten\nwaren doorgeknipt en het hangslot van de achteringang hing open aan het hek.\nNaast het hek lag een-afgebroken kniptang met een rood handvat.\n\nGeschatte schade: ongeveer 18.000,00 € inclusief drie losse actü's.\n\nIk verklaar dat deze gegevens volgens mij juist zijn.",
+        "seconds": 1.0272
+      },
+      {
+        "file": "D-NL-statement__scanned-pdf-200dpi-noisy.pdf",
+        "text": "FICTIEVE VERKLARING - OPLEIDINGSDOCUMENT\nReferentie: FIC-2026-0620.\n\nDatum: vrijdag 20 maart 2026 om 08:45\n\nIk ben de fictieve beheerder van de fietsenstalling aan het station van Vlierdonk.\n\nOm 07:15 stelde ik vast dat zes elektrische fietsen verdwenen waren. De sloten\n\nwaren doorgeknipt en het hangslot van de achteringang hing open aan het hek:\nNaast het hek lag een afgebroken kniptang met een rood handvat.\n\nGeschatte schade: ongeveer 18.000,00 € inclusief drie losse accu's.\n\nIk verklaar dat deze gegevens volgens mij juist zijn.",
+        "seconds": 1.2883
+      },
+      {
+        "file": "D-MIX-inventory__clean-300dpi.png",
+        "text": "EVIDENCE INVENTORY / INVENTAIRE / INVENTARIS - FICTIONAL\n\nItem Description Qty Seal\nO1 Cordless drill, grey 2 A-1043\n02 Mitre saw with blade guard 1 A-1044\n03 Cable de cuivre, bobine 250 m 2 B-2210\n04 Kniptang, rood handvat 1 C-3319\n05 Toolbox lid, green metal 1 A-1045\nRecorded by: fictional officer 7741\n\nChecked on: 21/03/2026 at 14:20",
+        "seconds": 0.9319
+      },
+      {
+        "file": "D-MIX-inventory__clean-200dpi.png",
+        "text": "EVIDENCE INVENTORY / INVENTAIRE / INVENTARIS - FICTIONAL\n\nItem Description Qty Seal\n\n01 Cordless drill, grey 2 A-1043\n02 Mitre saw with blade guard 1 A-1044\n03 Cable de cuivre, bobine 250 m 2 B-2210\n04 Kniptang, rood handvat 1 C-3319\n05 Toolbox lid, green metal 1 A-1045\n\nRecorded by: fictional officer 7741\nChecked on: 21/03/2026 at 14:20",
+        "seconds": 1.0614
+      },
+      {
+        "file": "D-MIX-inventory__clean-150dpi.png",
+        "text": "EVIDENCE INVENTORY / INVENTAIRE / INVENTARIS - FICTIONAL\n\nItem Description Qty Seal\n\n01 Cordless drill, grey 2 A-1043\n02 Mitre saw with blade guard 1 A-1044\n03 Câble de cuivre, bobine 250 m 2 B-2210\n04 Kniptang, rood handvat 1 c-3319\n05 Toolbox lid, green metal 1 A-1045\n\nRecorded by: fictional officer 7741\nChecked on: 21/03/2026 at 14:20",
+        "seconds": 0.9088
+      },
+      {
+        "file": "D-MIX-inventory__scanned-pdf-300dpi.pdf",
+        "text": "EVIDENCE INVENTORY / INVENTAIRE / INVENTARIS - FICTIONAL\n\nItem Description Qty Seal\n\n01 Cordless drill, grey 2 A-1043\n02 Mitre saw with blade guard 1 A-1044\n03 Câble de cuivre, bobine 250 m 2 B-2210\n04 Kniptang, rood handvat 1 c-3319\n05 Toolbox lid, green metal 1 A-1045\n\nRecorded by: fictional officer 7741\nChecked on: 21/03/2026 at 14:20",
+        "seconds": 2.6676
+      },
+      {
+        "file": "D-MIX-inventory__low-resolution-100dpi.png",
+        "text": "EVIDENCE INVENTORY / INVENTAIRE / INVENTARIS - FICTIONAL\n\nItem Description oty seal\n\n01 Cordless drill, grey 2 A-1043\n02  Mitre saw with blade guard 1 A-1044\n03 Cable de cuivre, bobine 250 m 2  B-2210\n04  Kniptang, rood handvat 1 c-3319\n05 Toolbox lid, green metal 1 A-1045\n\nRecorded by: fictional officer 7741\nChecked on: 21/03/2026 at 14:20",
+        "seconds": 16.4472
+      },
+      {
+        "file": "D-MIX-inventory__skew-3-degrees.png",
+        "text": "EVIDENCE INVENTORY / INVENTAIRE / INVENTARIS — FICTIONAL\n\nItem Description ety seal\n\n01 Cordless drill, grey 2 A-1043\n02 Mitre saw with blade guard 1 A-1044\n03 câble de cuivre, bobine 250 m 2 B-2210\n04 Kniptang, rood handvat 1 c-3319\n05 Toolbox lid, green metal 1 A-1045\n\nRecorded by: fictional officer 7741\nChecked on: 21/03/2026 at 14:20",
+        "seconds": 7.0262
+      },
+      {
+        "file": "D-MIX-inventory__blur.png",
+        "text": "EVIDENCE INVENTORY / INVENTAIRE / INVENTARIS - FICTIONAL\n\nItem Description Qty Seal\n\n01 Cordless drill, grey 2 A-1043\n02 Mitre saw with blade guard 1 A-1044\n03 Câble de cuivre, bobine 250 m 2 B-2210\n04 Kniptang, rood handvat 1 c-3319\n05 Toolbox lid, green metal 1 A-1045\n\nRecorded by: fictional officer 7741\nChecked on: 21/03/2026 at 14:20",
+        "seconds": 8.6882
+      },
+      {
+        "file": "D-MIX-inventory__salt-and-pepper-noise.png",
+        "text": "EVIDENCE INVENTORY a INVENTAIRE Je INVENTARIS: = FICTIONAL |\n\nten. “Description : 7 : Ory Seal\not Cordless drill, grey 2 A=1043\n02 Mitre saw with blade guard Vo AS 1044,\n03... câble de cuivre, bobine 250 mo) 2.9) B+2210°\n04 Kniptang, rood handvat ï =3319:\n05: Toolbox Lid, green metal 1 A-1045\n\nRecorded by: fictional officer 7741\n‘Chécked on: 21/03/2026 at. 14:20",
+        "seconds": 11.4721
+      },
+      {
+        "file": "D-MIX-inventory__jpeg-quality-15.jpg",
+        "text": "EVIDENCE INVENTORY / INVENTAIRE / INVENTARIS - FICTIONAL\nItem Description Qty Seal\n\n01 Cordless drill, grey 2 A-1043\n02 Mitre saw with blade guard 1 A-1044\n03 Câble de cuivre, bobine 250 m 2 B-2210\n04 Kniptang, rood handvat 1 €-3319\n05 Toolbox lid, green metal 1 A-1045\n\nRecorded by: fictional officer 7741\nChecked on: 21/03/2026 at 14:20",
+        "seconds": 6.4212
+      },
+      {
+        "file": "D-MIX-inventory__low-contrast.png",
+        "text": "EVIDENCE INVENTORY / INVENTAIRE / INVENTARIS - FICTIONAL\n\nItem Description Qty Seal\n\n01 Cordless drill, grey 2 A-1043\n02 Mitre saw with blade guard 1 A-1044\n03 Cable de cuivre, bobine 250 m 2 B-2210\n04 Kniptang, rood handvat 1 C=3319\n05 Toolbox lid, green metal 1 A-1045\n\nRecorded by: fictional officer 7741\nChecked on: 21/03/2026 at 14:20",
+        "seconds": 8.7234
+      },
+      {
+        "file": "D-MIX-inventory__uneven-lighting.png",
+        "text": "EVIDENCE INVENTORY / INVENTAIRE / INVENTARIS - FICTIONAL\n\nItem Description Qty Seal\n\n01 Cordless drill, grey 2 A-1043\n02 Mitre saw with blade guard 1 A-1044\n03 Cable de cuivre, bobine 250 m 2 B-2210\n04 Kniptang, rood handvat 1 C=3319\n05 Toolbox lid, green metal 1 A-1045\n\nRecorded by: fictional officer 7741\nChecked on: 21/03/2026 at 14:20",
+        "seconds": 4.844
+      },
+      {
+        "file": "D-MIX-inventory__fax-like.png",
+        "text": "EVIDENCE INVENTORY / INVENTAIRE / INVENTARIS — FICTIONAL\n\nItem Description Qty, Seal\n\n61. cordless drill, grey …— 2 A-1043\n02 Mitre saw-with blade guard ¥ A-1044\n03 Cable de cuivre, bobine 250 m 2. B-2210\n04 Kniptang, rood. handvat 1 c=3319\n05 Toolbox. Lid, green metal 1 A-1045\n\nRecorded by: fictiónal officer 7741\nChecked on: 21/03/2026. at 14:20",
+        "seconds": 1.5458
+      },
+      {
+        "file": "D-MIX-inventory__scanned-pdf-200dpi-noisy.pdf",
+        "text": "EVIDENCE INVENTORY /- INVENTAIRE / INVENTARIS. - FICTIONAL\n\nItem Description Qty Seal\n\noi Cordiess drill, grey 2 A-1043\n\n02 Mitre saw with blade guard 1 A-1044\n\n03 Câble de cuivre, bobine 250 m 2 B-2210\n\n04 © Kniptang, rood handvat ij c-3319\n05 Toolbox. lid, green metal 1 A-1045\n\nRecorded by: fictional officer 7741\nChecked on: .21/03/2026 at 14:20",
+        "seconds": 1.3361
+      }
+    ]
+  }
+}

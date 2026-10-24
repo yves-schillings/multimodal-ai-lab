@@ -1,0 +1,2620 @@
+{
+  "transcription_fr": {
+    "stage": "transcription",
+    "samples": [
+      {
+        "rep": 1,
+        "clip": "fr01.wav",
+        "language": "fr",
+        "audio_seconds": 4.945,
+        "processing_seconds": 2.136,
+        "wall_seconds": 2.143,
+        "text": "J'ai l'essai m'aumé l'oblure de mon abînement, et j'ai l'amède ici par eu quand je suis humide."
+      },
+      {
+        "rep": 2,
+        "clip": "fr02.wav",
+        "language": "fr",
+        "audio_seconds": 5.177,
+        "processing_seconds": 2.057,
+        "wall_seconds": 2.064,
+        "text": "Le sourdique là-bas, t'achat du mérôme, il me fait pas d'y non-difier là-penson, qu'il l'a pas dit."
+      },
+      {
+        "rep": 3,
+        "clip": "fr03.wav",
+        "language": "fr",
+        "audio_seconds": 5.196,
+        "processing_seconds": 1.597,
+        "wall_seconds": 1.6041,
+        "text": "Je demande aux milleux de coups paré la transmission avec l'angissement avant de m'aliver le texte."
+      },
+      {
+        "rep": 4,
+        "clip": "fr04.wav",
+        "language": "fr",
+        "audio_seconds": 4.164,
+        "processing_seconds": 1.403,
+        "wall_seconds": 1.4096,
+        "text": "Le dossier contient un alimentaire écrit une photographie et une déclaration enregistrée."
+      },
+      {
+        "rep": 5,
+        "clip": "fr05.wav",
+        "language": "fr",
+        "audio_seconds": 5.688,
+        "processing_seconds": 20.008,
+        "wall_seconds": 20.0158,
+        "text": "Il n'y a pas de cas de commandement, il y en a une, on va tout de même, plaque de matéкуration, non, sept ignots de fictive."
+      },
+      {
+        "rep": 6,
+        "clip": "fr06.wav",
+        "language": "fr",
+        "audio_seconds": 5.485,
+        "processing_seconds": 1.864,
+        "wall_seconds": 1.8734,
+        "text": "Surtez soon s'accepter bien soutenir une épouse et chaque passage va conserver sa défense."
+      },
+      {
+        "rep": 7,
+        "clip": "fr07.wav",
+        "language": "fr",
+        "audio_seconds": 5.372,
+        "processing_seconds": 1.741,
+        "wall_seconds": 1.7501,
+        "text": "Modification du témoignage à nous, la probation pressée n'était pas une nouvelle vérification."
+      },
+      {
+        "rep": 8,
+        "clip": "fr08.wav",
+        "language": "fr",
+        "audio_seconds": 4.983,
+        "processing_seconds": 2.04,
+        "wall_seconds": 2.0604,
+        "text": "le responsable du projet doit tourner la région de traitement et les mutilements de ma mandat d'activation."
+      },
+      {
+        "rep": 9,
+        "clip": "fr09.wav",
+        "language": "fr",
+        "audio_seconds": 5.59,
+        "processing_seconds": 2.276,
+        "wall_seconds": 2.2826,
+        "text": "Le modèle quand il n'est pas resté actif, l'on se relève en publication, le boom, le boom, le boom, le boom, le boom, le boom, le boom, le boom, le boom, le boom."
+      },
+      {
+        "rep": 10,
+        "clip": "fr10.wav",
+        "language": "fr",
+        "audio_seconds": 5.754,
+        "processing_seconds": 1.59,
+        "wall_seconds": 1.5967,
+        "text": "Les services fonctionnent sur cette machine et les données de démonstration de déclinés d'aucune pensonne réelle."
+      },
+      {
+        "rep": 11,
+        "clip": "fr01.wav",
+        "language": "fr",
+        "audio_seconds": 4.945,
+        "processing_seconds": 1.834,
+        "wall_seconds": 1.8411,
+        "text": "J'ai l'essai m'aumé l'oblure de mon abînement, et j'ai l'amède ici par eu quand je suis humide."
+      },
+      {
+        "rep": 12,
+        "clip": "fr02.wav",
+        "language": "fr",
+        "audio_seconds": 5.177,
+        "processing_seconds": 1.978,
+        "wall_seconds": 1.985,
+        "text": "Le sourdique là-bas, t'achat du mérôme, il me fait pas d'y non-difier là-penson, qu'il l'a pas dit."
+      },
+      {
+        "rep": 13,
+        "clip": "fr03.wav",
+        "language": "fr",
+        "audio_seconds": 5.196,
+        "processing_seconds": 1.519,
+        "wall_seconds": 1.5258,
+        "text": "Je demande aux milleux de coups paré la transmission avec l'angissement avant de m'aliver le texte."
+      },
+      {
+        "rep": 14,
+        "clip": "fr04.wav",
+        "language": "fr",
+        "audio_seconds": 4.164,
+        "processing_seconds": 1.403,
+        "wall_seconds": 1.41,
+        "text": "Le dossier contient un alimentaire écrit une photographie et une déclaration enregistrée."
+      },
+      {
+        "rep": 15,
+        "clip": "fr05.wav",
+        "language": "fr",
+        "audio_seconds": 5.688,
+        "processing_seconds": 16.277,
+        "wall_seconds": 16.2849,
+        "text": "Ok, donc, on a maintenant 4h1, à 2h1, plaquement, et que la situation n'a 7h0, 50h1."
+      },
+      {
+        "rep": 16,
+        "clip": "fr06.wav",
+        "language": "fr",
+        "audio_seconds": 5.485,
+        "processing_seconds": 1.547,
+        "wall_seconds": 1.5548,
+        "text": "Surtez soon s'accepter bien soutenir une épouse et chaque passage va conserver sa défense."
+      },
+      {
+        "rep": 17,
+        "clip": "fr07.wav",
+        "language": "fr",
+        "audio_seconds": 5.372,
+        "processing_seconds": 1.548,
+        "wall_seconds": 1.5556,
+        "text": "Modification du témoignage à nous, la probation pressée n'était pas une nouvelle vérification."
+      },
+      {
+        "rep": 18,
+        "clip": "fr08.wav",
+        "language": "fr",
+        "audio_seconds": 4.983,
+        "processing_seconds": 1.64,
+        "wall_seconds": 1.647,
+        "text": "le responsable du projet doit tourner la région de traitement et les mutilements de ma mandat d'activation."
+      },
+      {
+        "rep": 19,
+        "clip": "fr09.wav",
+        "language": "fr",
+        "audio_seconds": 5.59,
+        "processing_seconds": 4.711,
+        "wall_seconds": 4.7184,
+        "text": "Le modèle quand il n'est pas resté actif, l'on se relève en publication, le boom, le boom, le boom, le boom, le boom, le boom, le boom, le boom, le boom, le boom."
+      },
+      {
+        "rep": 20,
+        "clip": "fr10.wav",
+        "language": "fr",
+        "audio_seconds": 5.754,
+        "processing_seconds": 2.209,
+        "wall_seconds": 2.2301,
+        "text": "Les services fonctionnent sur cette machine et les données de démonstration de déclinés d'aucune pensonne réelle."
+      },
+      {
+        "rep": 21,
+        "clip": "fr01.wav",
+        "language": "fr",
+        "audio_seconds": 4.945,
+        "processing_seconds": 3.148,
+        "wall_seconds": 3.1568,
+        "text": "J'ai l'essai m'aumé l'oblure de mon abînement, et j'ai l'amède ici par eu quand je suis humide."
+      },
+      {
+        "rep": 22,
+        "clip": "fr02.wav",
+        "language": "fr",
+        "audio_seconds": 5.177,
+        "processing_seconds": 2.235,
+        "wall_seconds": 2.2442,
+        "text": "Le sourdique là-bas, t'achat du mérôme, il me fait pas d'y non-difier là-penson, qu'il l'a pas dit."
+      },
+      {
+        "rep": 23,
+        "clip": "fr03.wav",
+        "language": "fr",
+        "audio_seconds": 5.196,
+        "processing_seconds": 1.657,
+        "wall_seconds": 1.6638,
+        "text": "Je demande aux milleux de coups paré la transmission avec l'angissement avant de m'aliver le texte."
+      },
+      {
+        "rep": 24,
+        "clip": "fr04.wav",
+        "language": "fr",
+        "audio_seconds": 4.164,
+        "processing_seconds": 1.404,
+        "wall_seconds": 1.4108,
+        "text": "Le dossier contient un alimentaire écrit une photographie et une déclaration enregistrée."
+      },
+      {
+        "rep": 25,
+        "clip": "fr05.wav",
+        "language": "fr",
+        "audio_seconds": 5.688,
+        "processing_seconds": 17.402,
+        "wall_seconds": 17.4106,
+        "text": "On peut dire qu'un document de mon nom, on pourrait dire qu'on a un plac de matin, que la situation n'a cette agnopfictive."
+      },
+      {
+        "rep": 26,
+        "clip": "fr06.wav",
+        "language": "fr",
+        "audio_seconds": 5.485,
+        "processing_seconds": 1.457,
+        "wall_seconds": 1.4645,
+        "text": "Surtez soon s'accepter bien soutenir une épouse et chaque passage va conserver sa défense."
+      },
+      {
+        "rep": 27,
+        "clip": "fr07.wav",
+        "language": "fr",
+        "audio_seconds": 5.372,
+        "processing_seconds": 1.332,
+        "wall_seconds": 1.3386,
+        "text": "Modification du témoignage à nous, la probation pressée n'était pas une nouvelle vérification."
+      },
+      {
+        "rep": 28,
+        "clip": "fr08.wav",
+        "language": "fr",
+        "audio_seconds": 4.983,
+        "processing_seconds": 1.513,
+        "wall_seconds": 1.5218,
+        "text": "le responsable du projet doit tourner la région de traitement et les mutilements de ma mandat d'activation."
+      },
+      {
+        "rep": 29,
+        "clip": "fr09.wav",
+        "language": "fr",
+        "audio_seconds": 5.59,
+        "processing_seconds": 2.251,
+        "wall_seconds": 2.289,
+        "text": "Le modèle quand il n'est pas resté actif, l'on se relève en publication, le boom, le boom, le boom, le boom, le boom, le boom, le boom, le boom, le boom, le boom."
+      },
+      {
+        "rep": 30,
+        "clip": "fr10.wav",
+        "language": "fr",
+        "audio_seconds": 5.754,
+        "processing_seconds": 1.498,
+        "wall_seconds": 1.5048,
+        "text": "Les services fonctionnent sur cette machine et les données de démonstration de déclinés d'aucune pensonne réelle."
+      }
+    ],
+    "model_load_seconds": 0.7279
+  },
+  "transcription_nl": {
+    "stage": "transcription",
+    "samples": [
+      {
+        "rep": 1,
+        "clip": "nl01.wav",
+        "language": "nl",
+        "audio_seconds": 6.657,
+        "processing_seconds": 1.553,
+        "wall_seconds": 1.561,
+        "text": "Ik lied mijn blauwe fiets, voor de bibliotheek staan en mijn deur komt massa fiets werd meneen."
+      },
+      {
+        "rep": 2,
+        "clip": "nl02.wav",
+        "language": "nl",
+        "audio_seconds": 5.522,
+        "processing_seconds": 1.555,
+        "wall_seconds": 1.5628,
+        "text": "Het angok me meiswermel, het angok datum, maar net niet meer de fiets geeft meegenomen."
+      },
+      {
+        "rep": 3,
+        "clip": "nl03.wav",
+        "language": "nl",
+        "audio_seconds": 5.477,
+        "processing_seconds": 6.832,
+        "wall_seconds": 6.8394,
+        "text": "de botdelat met gelijk de transcriptie met de dame botatetekst moet gebruik uit."
+      },
+      {
+        "rep": 4,
+        "clip": "nl04.wav",
+        "language": "nl",
+        "audio_seconds": 4.684,
+        "processing_seconds": 11.091,
+        "wall_seconds": 11.0974,
+        "text": "Toch ziet er maar een deskreimen in mentaris en foto en een opgenomen verklaring."
+      },
+      {
+        "rep": 5,
+        "clip": "nl05.wav",
+        "language": "nl",
+        "audio_seconds": 5.62,
+        "processing_seconds": 1.461,
+        "wall_seconds": 1.468,
+        "text": "Je enkel document noemt een auto of een kentaken in dit fiqtieve voorbeeld."
+      },
+      {
+        "rep": 6,
+        "clip": "nl06.wav",
+        "language": "nl",
+        "audio_seconds": 6.505,
+        "processing_seconds": 1.806,
+        "wall_seconds": 1.8138,
+        "text": "Reindwoordgekooten bewonen mogen en ontmoord om de steunen in elke passage de houten overmijzing."
+      },
+      {
+        "rep": 7,
+        "clip": "nl07.wav",
+        "language": "nl",
+        "audio_seconds": 5.906,
+        "processing_seconds": 8.465,
+        "wall_seconds": 8.4724,
+        "text": "en mij niet ging van de verklaring maakte de redoedkeling onwielde en we reisten nieuwe controle."
+      },
+      {
+        "rep": 8,
+        "clip": "nl08.wav",
+        "language": "nl",
+        "audio_seconds": 6.494,
+        "processing_seconds": 1.837,
+        "wall_seconds": 1.8438,
+        "text": "De projekte weer aan het mortelijke koudde vermerkingsregio en de draakers moed voor dat omgeving actief mot."
+      },
+      {
+        "rep": 9,
+        "clip": "nl09.wav",
+        "language": "nl",
+        "audio_seconds": 6.571,
+        "processing_seconds": 1.597,
+        "wall_seconds": 1.6043,
+        "text": "... dat nieuwe model blijft in actief, manier, dat de meest man publiekarties niet kan worden rekontroleerd."
+      },
+      {
+        "rep": 10,
+        "clip": "nl10.wav",
+        "language": "nl",
+        "audio_seconds": 7.841,
+        "processing_seconds": 1.897,
+        "wall_seconds": 1.9041,
+        "text": "Deze demonstratie draait op deze computer in de brak, uit sleutend fictiewegegevens ondertekte persoonsgegevens."
+      },
+      {
+        "rep": 11,
+        "clip": "nl01.wav",
+        "language": "nl",
+        "audio_seconds": 6.657,
+        "processing_seconds": 1.452,
+        "wall_seconds": 1.4942,
+        "text": "Ik lied mijn blauwe fiets, voor de bibliotheek staan en mijn deur komt massa fiets werd meneen."
+      },
+      {
+        "rep": 12,
+        "clip": "nl02.wav",
+        "language": "nl",
+        "audio_seconds": 5.522,
+        "processing_seconds": 1.452,
+        "wall_seconds": 1.4585,
+        "text": "Het angok me meiswermel, het angok datum, maar net niet meer de fiets geeft meegenomen."
+      },
+      {
+        "rep": 13,
+        "clip": "nl03.wav",
+        "language": "nl",
+        "audio_seconds": 5.477,
+        "processing_seconds": 6.63,
+        "wall_seconds": 6.6384,
+        "text": "de botdelat met gelijk de transcriptie met de dame botatetekst moet gebruik uit."
+      },
+      {
+        "rep": 14,
+        "clip": "nl04.wav",
+        "language": "nl",
+        "audio_seconds": 4.684,
+        "processing_seconds": 8.895,
+        "wall_seconds": 8.9021,
+        "text": "Toch ziet er maar een deskreimen in mentaris en foto en een opgenomen verklaring."
+      },
+      {
+        "rep": 15,
+        "clip": "nl05.wav",
+        "language": "nl",
+        "audio_seconds": 5.62,
+        "processing_seconds": 1.69,
+        "wall_seconds": 1.7012,
+        "text": "Je enkel document noemt een auto of een kentaken in dit fiqtieve voorbeeld."
+      },
+      {
+        "rep": 16,
+        "clip": "nl06.wav",
+        "language": "nl",
+        "audio_seconds": 6.505,
+        "processing_seconds": 2.339,
+        "wall_seconds": 2.3477,
+        "text": "Reindwoordgekooten bewonen mogen en ontmoord om de steunen in elke passage de houten overmijzing."
+      },
+      {
+        "rep": 17,
+        "clip": "nl07.wav",
+        "language": "nl",
+        "audio_seconds": 5.906,
+        "processing_seconds": 7.451,
+        "wall_seconds": 7.4584,
+        "text": "en mij niet ging van de begraving maakte de redoedgeving onwielde en we reizen nieuwe controle."
+      },
+      {
+        "rep": 18,
+        "clip": "nl08.wav",
+        "language": "nl",
+        "audio_seconds": 6.494,
+        "processing_seconds": 1.706,
+        "wall_seconds": 1.7488,
+        "text": "De projekte weer aan het mortelijke koudde vermerkingsregio en de draakers moed voor dat omgeving actief mot."
+      },
+      {
+        "rep": 19,
+        "clip": "nl09.wav",
+        "language": "nl",
+        "audio_seconds": 6.571,
+        "processing_seconds": 1.527,
+        "wall_seconds": 1.5349,
+        "text": "... dat nieuwe model blijft in actief, manier, dat de meest man publiekarties niet kan worden rekontroleerd."
+      },
+      {
+        "rep": 20,
+        "clip": "nl10.wav",
+        "language": "nl",
+        "audio_seconds": 7.841,
+        "processing_seconds": 1.789,
+        "wall_seconds": 1.7968,
+        "text": "Deze demonstratie draait op deze computer in de brak, uit sleutend fictiewegegevens ondertekte persoonsgegevens."
+      },
+      {
+        "rep": 21,
+        "clip": "nl01.wav",
+        "language": "nl",
+        "audio_seconds": 6.657,
+        "processing_seconds": 1.663,
+        "wall_seconds": 1.6698,
+        "text": "Ik lied mijn blauwe fiets, voor de bibliotheek staan en mijn deur komt massa fiets werd meneen."
+      },
+      {
+        "rep": 22,
+        "clip": "nl02.wav",
+        "language": "nl",
+        "audio_seconds": 5.522,
+        "processing_seconds": 1.608,
+        "wall_seconds": 1.6156,
+        "text": "Het angok me meiswermel, het angok datum, maar net niet meer de fiets geeft meegenomen."
+      },
+      {
+        "rep": 23,
+        "clip": "nl03.wav",
+        "language": "nl",
+        "audio_seconds": 5.477,
+        "processing_seconds": 10.283,
+        "wall_seconds": 10.2908,
+        "text": "de botdelat met gelijk de transcriptie met de dame botatetekst moet gebruik uit."
+      },
+      {
+        "rep": 24,
+        "clip": "nl04.wav",
+        "language": "nl",
+        "audio_seconds": 4.684,
+        "processing_seconds": 6.019,
+        "wall_seconds": 6.0295,
+        "text": "Toch ziet er maar een deskreimen in mentaris en foto en een opgenomen verklaring."
+      },
+      {
+        "rep": 25,
+        "clip": "nl05.wav",
+        "language": "nl",
+        "audio_seconds": 5.62,
+        "processing_seconds": 1.456,
+        "wall_seconds": 1.4628,
+        "text": "Je enkel document noemt een auto of een kentaken in dit fiqtieve voorbeeld."
+      },
+      {
+        "rep": 26,
+        "clip": "nl06.wav",
+        "language": "nl",
+        "audio_seconds": 6.505,
+        "processing_seconds": 1.922,
+        "wall_seconds": 1.9305,
+        "text": "Reindwoordgekooten bewonen mogen en ontmoord om de steunen in elke passage de houten overmijzing."
+      },
+      {
+        "rep": 27,
+        "clip": "nl07.wav",
+        "language": "nl",
+        "audio_seconds": 5.906,
+        "processing_seconds": 8.149,
+        "wall_seconds": 8.1567,
+        "text": "en mij niet ging van de begraving maakte de redoongeving onwildig en we reizen nieuwe controle."
+      },
+      {
+        "rep": 28,
+        "clip": "nl08.wav",
+        "language": "nl",
+        "audio_seconds": 6.494,
+        "processing_seconds": 1.635,
+        "wall_seconds": 1.6412,
+        "text": "De projekte weer aan het mortelijke koudde vermerkingsregio en de draakers moed voor dat omgeving actief mot."
+      },
+      {
+        "rep": 29,
+        "clip": "nl09.wav",
+        "language": "nl",
+        "audio_seconds": 6.571,
+        "processing_seconds": 1.693,
+        "wall_seconds": 1.7007,
+        "text": "... dat nieuwe model blijft in actief, manier, dat de meest man publiekarties niet kan worden rekontroleerd."
+      },
+      {
+        "rep": 30,
+        "clip": "nl10.wav",
+        "language": "nl",
+        "audio_seconds": 7.841,
+        "processing_seconds": 1.776,
+        "wall_seconds": 1.7848,
+        "text": "Deze demonstratie draait op deze computer in de brak, uit sleutend fictiewegegevens ondertekte persoonsgegevens."
+      }
+    ],
+    "model_load_seconds": 0.7917
+  },
+  "ocr_scanned_pdf": {
+    "stage": "ocr_scanned_pdf",
+    "samples": [
+      {
+        "rep": 1,
+        "file": "D-EN-statement__scanned-pdf-300dpi.pdf",
+        "engine": "pypdf-text+local-tesseract-ocr",
+        "characters": 613,
+        "wall_seconds": 2.1638
+      },
+      {
+        "rep": 2,
+        "file": "D-EN-statement__scanned-pdf-300dpi.pdf",
+        "engine": "pypdf-text+local-tesseract-ocr",
+        "characters": 613,
+        "wall_seconds": 1.2763
+      },
+      {
+        "rep": 3,
+        "file": "D-EN-statement__scanned-pdf-300dpi.pdf",
+        "engine": "pypdf-text+local-tesseract-ocr",
+        "characters": 613,
+        "wall_seconds": 0.7051
+      },
+      {
+        "rep": 4,
+        "file": "D-EN-statement__scanned-pdf-300dpi.pdf",
+        "engine": "pypdf-text+local-tesseract-ocr",
+        "characters": 613,
+        "wall_seconds": 0.809
+      },
+      {
+        "rep": 5,
+        "file": "D-EN-statement__scanned-pdf-300dpi.pdf",
+        "engine": "pypdf-text+local-tesseract-ocr",
+        "characters": 613,
+        "wall_seconds": 1.1967
+      },
+      {
+        "rep": 6,
+        "file": "D-EN-statement__scanned-pdf-300dpi.pdf",
+        "engine": "pypdf-text+local-tesseract-ocr",
+        "characters": 613,
+        "wall_seconds": 1.3636
+      },
+      {
+        "rep": 7,
+        "file": "D-EN-statement__scanned-pdf-300dpi.pdf",
+        "engine": "pypdf-text+local-tesseract-ocr",
+        "characters": 613,
+        "wall_seconds": 1.224
+      },
+      {
+        "rep": 8,
+        "file": "D-EN-statement__scanned-pdf-300dpi.pdf",
+        "engine": "pypdf-text+local-tesseract-ocr",
+        "characters": 613,
+        "wall_seconds": 0.8672
+      },
+      {
+        "rep": 9,
+        "file": "D-EN-statement__scanned-pdf-300dpi.pdf",
+        "engine": "pypdf-text+local-tesseract-ocr",
+        "characters": 613,
+        "wall_seconds": 0.6401
+      },
+      {
+        "rep": 10,
+        "file": "D-EN-statement__scanned-pdf-300dpi.pdf",
+        "engine": "pypdf-text+local-tesseract-ocr",
+        "characters": 613,
+        "wall_seconds": 0.7661
+      },
+      {
+        "rep": 11,
+        "file": "D-EN-statement__scanned-pdf-300dpi.pdf",
+        "engine": "pypdf-text+local-tesseract-ocr",
+        "characters": 613,
+        "wall_seconds": 0.8044
+      },
+      {
+        "rep": 12,
+        "file": "D-EN-statement__scanned-pdf-300dpi.pdf",
+        "engine": "pypdf-text+local-tesseract-ocr",
+        "characters": 613,
+        "wall_seconds": 0.6453
+      },
+      {
+        "rep": 13,
+        "file": "D-EN-statement__scanned-pdf-300dpi.pdf",
+        "engine": "pypdf-text+local-tesseract-ocr",
+        "characters": 613,
+        "wall_seconds": 0.7006
+      },
+      {
+        "rep": 14,
+        "file": "D-EN-statement__scanned-pdf-300dpi.pdf",
+        "engine": "pypdf-text+local-tesseract-ocr",
+        "characters": 613,
+        "wall_seconds": 0.6845
+      },
+      {
+        "rep": 15,
+        "file": "D-EN-statement__scanned-pdf-300dpi.pdf",
+        "engine": "pypdf-text+local-tesseract-ocr",
+        "characters": 613,
+        "wall_seconds": 0.6012
+      },
+      {
+        "rep": 16,
+        "file": "D-EN-statement__scanned-pdf-300dpi.pdf",
+        "engine": "pypdf-text+local-tesseract-ocr",
+        "characters": 613,
+        "wall_seconds": 0.5679
+      },
+      {
+        "rep": 17,
+        "file": "D-EN-statement__scanned-pdf-300dpi.pdf",
+        "engine": "pypdf-text+local-tesseract-ocr",
+        "characters": 613,
+        "wall_seconds": 0.5342
+      },
+      {
+        "rep": 18,
+        "file": "D-EN-statement__scanned-pdf-300dpi.pdf",
+        "engine": "pypdf-text+local-tesseract-ocr",
+        "characters": 613,
+        "wall_seconds": 0.5918
+      },
+      {
+        "rep": 19,
+        "file": "D-EN-statement__scanned-pdf-300dpi.pdf",
+        "engine": "pypdf-text+local-tesseract-ocr",
+        "characters": 613,
+        "wall_seconds": 0.6271
+      },
+      {
+        "rep": 20,
+        "file": "D-EN-statement__scanned-pdf-300dpi.pdf",
+        "engine": "pypdf-text+local-tesseract-ocr",
+        "characters": 613,
+        "wall_seconds": 0.7014
+      },
+      {
+        "rep": 21,
+        "file": "D-EN-statement__scanned-pdf-300dpi.pdf",
+        "engine": "pypdf-text+local-tesseract-ocr",
+        "characters": 613,
+        "wall_seconds": 0.6422
+      },
+      {
+        "rep": 22,
+        "file": "D-EN-statement__scanned-pdf-300dpi.pdf",
+        "engine": "pypdf-text+local-tesseract-ocr",
+        "characters": 613,
+        "wall_seconds": 0.5451
+      },
+      {
+        "rep": 23,
+        "file": "D-EN-statement__scanned-pdf-300dpi.pdf",
+        "engine": "pypdf-text+local-tesseract-ocr",
+        "characters": 613,
+        "wall_seconds": 0.8059
+      },
+      {
+        "rep": 24,
+        "file": "D-EN-statement__scanned-pdf-300dpi.pdf",
+        "engine": "pypdf-text+local-tesseract-ocr",
+        "characters": 613,
+        "wall_seconds": 0.6755
+      },
+      {
+        "rep": 25,
+        "file": "D-EN-statement__scanned-pdf-300dpi.pdf",
+        "engine": "pypdf-text+local-tesseract-ocr",
+        "characters": 613,
+        "wall_seconds": 0.7675
+      },
+      {
+        "rep": 26,
+        "file": "D-EN-statement__scanned-pdf-300dpi.pdf",
+        "engine": "pypdf-text+local-tesseract-ocr",
+        "characters": 613,
+        "wall_seconds": 0.637
+      },
+      {
+        "rep": 27,
+        "file": "D-EN-statement__scanned-pdf-300dpi.pdf",
+        "engine": "pypdf-text+local-tesseract-ocr",
+        "characters": 613,
+        "wall_seconds": 0.5692
+      },
+      {
+        "rep": 28,
+        "file": "D-EN-statement__scanned-pdf-300dpi.pdf",
+        "engine": "pypdf-text+local-tesseract-ocr",
+        "characters": 613,
+        "wall_seconds": 0.6022
+      },
+      {
+        "rep": 29,
+        "file": "D-EN-statement__scanned-pdf-300dpi.pdf",
+        "engine": "pypdf-text+local-tesseract-ocr",
+        "characters": 613,
+        "wall_seconds": 0.5189
+      },
+      {
+        "rep": 30,
+        "file": "D-EN-statement__scanned-pdf-300dpi.pdf",
+        "engine": "pypdf-text+local-tesseract-ocr",
+        "characters": 613,
+        "wall_seconds": 0.5924
+      }
+    ]
+  },
+  "ocr_png": {
+    "stage": "ocr_png",
+    "samples": [
+      {
+        "rep": 1,
+        "file": "D-EN-statement__clean-200dpi.png",
+        "engine": "local-tesseract-ocr",
+        "characters": 613,
+        "wall_seconds": 1.254
+      },
+      {
+        "rep": 2,
+        "file": "D-EN-statement__clean-200dpi.png",
+        "engine": "local-tesseract-ocr",
+        "characters": 613,
+        "wall_seconds": 0.5826
+      },
+      {
+        "rep": 3,
+        "file": "D-EN-statement__clean-200dpi.png",
+        "engine": "local-tesseract-ocr",
+        "characters": 613,
+        "wall_seconds": 0.6835
+      },
+      {
+        "rep": 4,
+        "file": "D-EN-statement__clean-200dpi.png",
+        "engine": "local-tesseract-ocr",
+        "characters": 613,
+        "wall_seconds": 0.5909
+      },
+      {
+        "rep": 5,
+        "file": "D-EN-statement__clean-200dpi.png",
+        "engine": "local-tesseract-ocr",
+        "characters": 613,
+        "wall_seconds": 0.6287
+      },
+      {
+        "rep": 6,
+        "file": "D-EN-statement__clean-200dpi.png",
+        "engine": "local-tesseract-ocr",
+        "characters": 613,
+        "wall_seconds": 0.5706
+      },
+      {
+        "rep": 7,
+        "file": "D-EN-statement__clean-200dpi.png",
+        "engine": "local-tesseract-ocr",
+        "characters": 613,
+        "wall_seconds": 0.6418
+      },
+      {
+        "rep": 8,
+        "file": "D-EN-statement__clean-200dpi.png",
+        "engine": "local-tesseract-ocr",
+        "characters": 613,
+        "wall_seconds": 0.5902
+      },
+      {
+        "rep": 9,
+        "file": "D-EN-statement__clean-200dpi.png",
+        "engine": "local-tesseract-ocr",
+        "characters": 613,
+        "wall_seconds": 0.5588
+      },
+      {
+        "rep": 10,
+        "file": "D-EN-statement__clean-200dpi.png",
+        "engine": "local-tesseract-ocr",
+        "characters": 613,
+        "wall_seconds": 0.6886
+      },
+      {
+        "rep": 11,
+        "file": "D-EN-statement__clean-200dpi.png",
+        "engine": "local-tesseract-ocr",
+        "characters": 613,
+        "wall_seconds": 0.768
+      },
+      {
+        "rep": 12,
+        "file": "D-EN-statement__clean-200dpi.png",
+        "engine": "local-tesseract-ocr",
+        "characters": 613,
+        "wall_seconds": 0.7627
+      },
+      {
+        "rep": 13,
+        "file": "D-EN-statement__clean-200dpi.png",
+        "engine": "local-tesseract-ocr",
+        "characters": 613,
+        "wall_seconds": 0.6182
+      },
+      {
+        "rep": 14,
+        "file": "D-EN-statement__clean-200dpi.png",
+        "engine": "local-tesseract-ocr",
+        "characters": 613,
+        "wall_seconds": 0.6175
+      },
+      {
+        "rep": 15,
+        "file": "D-EN-statement__clean-200dpi.png",
+        "engine": "local-tesseract-ocr",
+        "characters": 613,
+        "wall_seconds": 0.593
+      },
+      {
+        "rep": 16,
+        "file": "D-EN-statement__clean-200dpi.png",
+        "engine": "local-tesseract-ocr",
+        "characters": 613,
+        "wall_seconds": 0.6746
+      },
+      {
+        "rep": 17,
+        "file": "D-EN-statement__clean-200dpi.png",
+        "engine": "local-tesseract-ocr",
+        "characters": 613,
+        "wall_seconds": 0.5943
+      },
+      {
+        "rep": 18,
+        "file": "D-EN-statement__clean-200dpi.png",
+        "engine": "local-tesseract-ocr",
+        "characters": 613,
+        "wall_seconds": 0.5776
+      },
+      {
+        "rep": 19,
+        "file": "D-EN-statement__clean-200dpi.png",
+        "engine": "local-tesseract-ocr",
+        "characters": 613,
+        "wall_seconds": 0.5583
+      },
+      {
+        "rep": 20,
+        "file": "D-EN-statement__clean-200dpi.png",
+        "engine": "local-tesseract-ocr",
+        "characters": 613,
+        "wall_seconds": 0.557
+      },
+      {
+        "rep": 21,
+        "file": "D-EN-statement__clean-200dpi.png",
+        "engine": "local-tesseract-ocr",
+        "characters": 613,
+        "wall_seconds": 0.6134
+      },
+      {
+        "rep": 22,
+        "file": "D-EN-statement__clean-200dpi.png",
+        "engine": "local-tesseract-ocr",
+        "characters": 613,
+        "wall_seconds": 0.5322
+      },
+      {
+        "rep": 23,
+        "file": "D-EN-statement__clean-200dpi.png",
+        "engine": "local-tesseract-ocr",
+        "characters": 613,
+        "wall_seconds": 0.5513
+      },
+      {
+        "rep": 24,
+        "file": "D-EN-statement__clean-200dpi.png",
+        "engine": "local-tesseract-ocr",
+        "characters": 613,
+        "wall_seconds": 0.5503
+      },
+      {
+        "rep": 25,
+        "file": "D-EN-statement__clean-200dpi.png",
+        "engine": "local-tesseract-ocr",
+        "characters": 613,
+        "wall_seconds": 0.6
+      },
+      {
+        "rep": 26,
+        "file": "D-EN-statement__clean-200dpi.png",
+        "engine": "local-tesseract-ocr",
+        "characters": 613,
+        "wall_seconds": 0.5416
+      },
+      {
+        "rep": 27,
+        "file": "D-EN-statement__clean-200dpi.png",
+        "engine": "local-tesseract-ocr",
+        "characters": 613,
+        "wall_seconds": 0.4934
+      },
+      {
+        "rep": 28,
+        "file": "D-EN-statement__clean-200dpi.png",
+        "engine": "local-tesseract-ocr",
+        "characters": 613,
+        "wall_seconds": 0.5636
+      },
+      {
+        "rep": 29,
+        "file": "D-EN-statement__clean-200dpi.png",
+        "engine": "local-tesseract-ocr",
+        "characters": 613,
+        "wall_seconds": 0.649
+      },
+      {
+        "rep": 30,
+        "file": "D-EN-statement__clean-200dpi.png",
+        "engine": "local-tesseract-ocr",
+        "characters": 613,
+        "wall_seconds": 0.5407
+      }
+    ]
+  },
+  "embedding": {
+    "stage": "embedding",
+    "samples": [
+      {
+        "rep": 1,
+        "question_id": "Q-EN-01",
+        "language": "en",
+        "wall_seconds": 2.5179,
+        "ollama": {
+          "total_duration": 2422152610,
+          "load_duration": 2331570796,
+          "prompt_eval_count": 12,
+          "prompt_eval_duration": null,
+          "eval_count": null,
+          "eval_duration": null
+        }
+      },
+      {
+        "rep": 2,
+        "question_id": "Q-EN-02",
+        "language": "en",
+        "wall_seconds": 2.2059,
+        "ollama": {
+          "total_duration": 2184945202,
+          "load_duration": 2089177353,
+          "prompt_eval_count": 14,
+          "prompt_eval_duration": null,
+          "eval_count": null,
+          "eval_duration": null
+        }
+      },
+      {
+        "rep": 3,
+        "question_id": "Q-EN-03",
+        "language": "en",
+        "wall_seconds": 2.1501,
+        "ollama": {
+          "total_duration": 2133335253,
+          "load_duration": 2035795292,
+          "prompt_eval_count": 12,
+          "prompt_eval_duration": null,
+          "eval_count": null,
+          "eval_duration": null
+        }
+      },
+      {
+        "rep": 4,
+        "question_id": "Q-EN-04",
+        "language": "en",
+        "wall_seconds": 2.1355,
+        "ollama": {
+          "total_duration": 2116883241,
+          "load_duration": 2021829998,
+          "prompt_eval_count": 14,
+          "prompt_eval_duration": null,
+          "eval_count": null,
+          "eval_duration": null
+        }
+      },
+      {
+        "rep": 5,
+        "question_id": "Q-EN-05",
+        "language": "en",
+        "wall_seconds": 2.13,
+        "ollama": {
+          "total_duration": 2112338811,
+          "load_duration": 2016437261,
+          "prompt_eval_count": 15,
+          "prompt_eval_duration": null,
+          "eval_count": null,
+          "eval_duration": null
+        }
+      },
+      {
+        "rep": 6,
+        "question_id": "Q-EN-06",
+        "language": "en",
+        "wall_seconds": 2.1467,
+        "ollama": {
+          "total_duration": 2128445739,
+          "load_duration": 2028793868,
+          "prompt_eval_count": 14,
+          "prompt_eval_duration": null,
+          "eval_count": null,
+          "eval_duration": null
+        }
+      },
+      {
+        "rep": 7,
+        "question_id": "Q-EN-07",
+        "language": "en",
+        "wall_seconds": 2.14,
+        "ollama": {
+          "total_duration": 2121934985,
+          "load_duration": 2026705444,
+          "prompt_eval_count": 14,
+          "prompt_eval_duration": null,
+          "eval_count": null,
+          "eval_duration": null
+        }
+      },
+      {
+        "rep": 8,
+        "question_id": "Q-EN-08",
+        "language": "en",
+        "wall_seconds": 2.1561,
+        "ollama": {
+          "total_duration": 2130296840,
+          "load_duration": 2029695163,
+          "prompt_eval_count": 14,
+          "prompt_eval_duration": null,
+          "eval_count": null,
+          "eval_duration": null
+        }
+      },
+      {
+        "rep": 9,
+        "question_id": "Q-EN-09",
+        "language": "en",
+        "wall_seconds": 2.1613,
+        "ollama": {
+          "total_duration": 2139814705,
+          "load_duration": 2024999032,
+          "prompt_eval_count": 15,
+          "prompt_eval_duration": null,
+          "eval_count": null,
+          "eval_duration": null
+        }
+      },
+      {
+        "rep": 10,
+        "question_id": "Q-EN-10",
+        "language": "en",
+        "wall_seconds": 2.1512,
+        "ollama": {
+          "total_duration": 2132973559,
+          "load_duration": 2025724037,
+          "prompt_eval_count": 13,
+          "prompt_eval_duration": null,
+          "eval_count": null,
+          "eval_duration": null
+        }
+      },
+      {
+        "rep": 11,
+        "question_id": "Q-FR-01",
+        "language": "fr",
+        "wall_seconds": 2.1737,
+        "ollama": {
+          "total_duration": 2153757799,
+          "load_duration": 2026505343,
+          "prompt_eval_count": 23,
+          "prompt_eval_duration": null,
+          "eval_count": null,
+          "eval_duration": null
+        }
+      },
+      {
+        "rep": 12,
+        "question_id": "Q-FR-02",
+        "language": "fr",
+        "wall_seconds": 2.1808,
+        "ollama": {
+          "total_duration": 2156676718,
+          "load_duration": 2045490770,
+          "prompt_eval_count": 18,
+          "prompt_eval_duration": null,
+          "eval_count": null,
+          "eval_duration": null
+        }
+      },
+      {
+        "rep": 13,
+        "question_id": "Q-FR-03",
+        "language": "fr",
+        "wall_seconds": 2.1377,
+        "ollama": {
+          "total_duration": 2112774823,
+          "load_duration": 2028699557,
+          "prompt_eval_count": 12,
+          "prompt_eval_duration": null,
+          "eval_count": null,
+          "eval_duration": null
+        }
+      },
+      {
+        "rep": 14,
+        "question_id": "Q-FR-04",
+        "language": "fr",
+        "wall_seconds": 2.1408,
+        "ollama": {
+          "total_duration": 2122256387,
+          "load_duration": 2013840557,
+          "prompt_eval_count": 18,
+          "prompt_eval_duration": null,
+          "eval_count": null,
+          "eval_duration": null
+        }
+      },
+      {
+        "rep": 15,
+        "question_id": "Q-FR-05",
+        "language": "fr",
+        "wall_seconds": 2.1467,
+        "ollama": {
+          "total_duration": 2114268233,
+          "load_duration": 2020580002,
+          "prompt_eval_count": 15,
+          "prompt_eval_duration": null,
+          "eval_count": null,
+          "eval_duration": null
+        }
+      },
+      {
+        "rep": 16,
+        "question_id": "Q-FR-06",
+        "language": "fr",
+        "wall_seconds": 2.1526,
+        "ollama": {
+          "total_duration": 2134144267,
+          "load_duration": 2028959659,
+          "prompt_eval_count": 17,
+          "prompt_eval_duration": null,
+          "eval_count": null,
+          "eval_duration": null
+        }
+      },
+      {
+        "rep": 17,
+        "question_id": "Q-FR-07",
+        "language": "fr",
+        "wall_seconds": 2.1647,
+        "ollama": {
+          "total_duration": 2142829425,
+          "load_duration": 2035546503,
+          "prompt_eval_count": 19,
+          "prompt_eval_duration": null,
+          "eval_count": null,
+          "eval_duration": null
+        }
+      },
+      {
+        "rep": 18,
+        "question_id": "Q-FR-08",
+        "language": "fr",
+        "wall_seconds": 2.1812,
+        "ollama": {
+          "total_duration": 2163784066,
+          "load_duration": 2026628543,
+          "prompt_eval_count": 23,
+          "prompt_eval_duration": null,
+          "eval_count": null,
+          "eval_duration": null
+        }
+      },
+      {
+        "rep": 19,
+        "question_id": "Q-FR-09",
+        "language": "fr",
+        "wall_seconds": 2.1352,
+        "ollama": {
+          "total_duration": 2117144252,
+          "load_duration": 2016453074,
+          "prompt_eval_count": 16,
+          "prompt_eval_duration": null,
+          "eval_count": null,
+          "eval_duration": null
+        }
+      },
+      {
+        "rep": 20,
+        "question_id": "Q-FR-10",
+        "language": "fr",
+        "wall_seconds": 2.1325,
+        "ollama": {
+          "total_duration": 2115802244,
+          "load_duration": 2008193719,
+          "prompt_eval_count": 18,
+          "prompt_eval_duration": null,
+          "eval_count": null,
+          "eval_duration": null
+        }
+      },
+      {
+        "rep": 21,
+        "question_id": "Q-NL-01",
+        "language": "nl",
+        "wall_seconds": 2.152,
+        "ollama": {
+          "total_duration": 2123334094,
+          "load_duration": 2024080126,
+          "prompt_eval_count": 14,
+          "prompt_eval_duration": null,
+          "eval_count": null,
+          "eval_duration": null
+        }
+      },
+      {
+        "rep": 22,
+        "question_id": "Q-NL-02",
+        "language": "nl",
+        "wall_seconds": 2.1398,
+        "ollama": {
+          "total_duration": 2122429488,
+          "load_duration": 2030130967,
+          "prompt_eval_count": 15,
+          "prompt_eval_duration": null,
+          "eval_count": null,
+          "eval_duration": null
+        }
+      },
+      {
+        "rep": 23,
+        "question_id": "Q-NL-03",
+        "language": "nl",
+        "wall_seconds": 2.1228,
+        "ollama": {
+          "total_duration": 2106012878,
+          "load_duration": 2008084318,
+          "prompt_eval_count": 14,
+          "prompt_eval_duration": null,
+          "eval_count": null,
+          "eval_duration": null
+        }
+      },
+      {
+        "rep": 24,
+        "question_id": "Q-NL-04",
+        "language": "nl",
+        "wall_seconds": 2.1243,
+        "ollama": {
+          "total_duration": 2105565275,
+          "load_duration": 2013318254,
+          "prompt_eval_count": 13,
+          "prompt_eval_duration": null,
+          "eval_count": null,
+          "eval_duration": null
+        }
+      },
+      {
+        "rep": 25,
+        "question_id": "Q-NL-05",
+        "language": "nl",
+        "wall_seconds": 2.1459,
+        "ollama": {
+          "total_duration": 2128096126,
+          "load_duration": 2016978378,
+          "prompt_eval_count": 19,
+          "prompt_eval_duration": null,
+          "eval_count": null,
+          "eval_duration": null
+        }
+      },
+      {
+        "rep": 26,
+        "question_id": "Q-NL-06",
+        "language": "nl",
+        "wall_seconds": 2.134,
+        "ollama": {
+          "total_duration": 2115918344,
+          "load_duration": 2024548329,
+          "prompt_eval_count": 12,
+          "prompt_eval_duration": null,
+          "eval_count": null,
+          "eval_duration": null
+        }
+      },
+      {
+        "rep": 27,
+        "question_id": "Q-NL-07",
+        "language": "nl",
+        "wall_seconds": 2.1473,
+        "ollama": {
+          "total_duration": 2129995339,
+          "load_duration": 2012573549,
+          "prompt_eval_count": 19,
+          "prompt_eval_duration": null,
+          "eval_count": null,
+          "eval_duration": null
+        }
+      },
+      {
+        "rep": 28,
+        "question_id": "Q-NL-08",
+        "language": "nl",
+        "wall_seconds": 2.1544,
+        "ollama": {
+          "total_duration": 2124276700,
+          "load_duration": 2015878271,
+          "prompt_eval_count": 17,
+          "prompt_eval_duration": null,
+          "eval_count": null,
+          "eval_duration": null
+        }
+      },
+      {
+        "rep": 29,
+        "question_id": "Q-NL-09",
+        "language": "nl",
+        "wall_seconds": 2.1235,
+        "ollama": {
+          "total_duration": 2105931277,
+          "load_duration": 2019004992,
+          "prompt_eval_count": 14,
+          "prompt_eval_duration": null,
+          "eval_count": null,
+          "eval_duration": null
+        }
+      },
+      {
+        "rep": 30,
+        "question_id": "Q-NL-10",
+        "language": "nl",
+        "wall_seconds": 2.1321,
+        "ollama": {
+          "total_duration": 2113035125,
+          "load_duration": 2023049619,
+          "prompt_eval_count": 11,
+          "prompt_eval_duration": null,
+          "eval_count": null,
+          "eval_duration": null
+        }
+      }
+    ]
+  },
+  "vector_search": {
+    "stage": "vector_search",
+    "samples": [
+      {
+        "rep": 1,
+        "question_id": "Q-EN-01",
+        "language": "en",
+        "wall_seconds": 0.1934,
+        "rows": 3
+      },
+      {
+        "rep": 2,
+        "question_id": "Q-EN-02",
+        "language": "en",
+        "wall_seconds": 0.0186,
+        "rows": 3
+      },
+      {
+        "rep": 3,
+        "question_id": "Q-EN-03",
+        "language": "en",
+        "wall_seconds": 0.0134,
+        "rows": 3
+      },
+      {
+        "rep": 4,
+        "question_id": "Q-EN-04",
+        "language": "en",
+        "wall_seconds": 0.0121,
+        "rows": 3
+      },
+      {
+        "rep": 5,
+        "question_id": "Q-EN-05",
+        "language": "en",
+        "wall_seconds": 0.0119,
+        "rows": 3
+      },
+      {
+        "rep": 6,
+        "question_id": "Q-EN-06",
+        "language": "en",
+        "wall_seconds": 0.0124,
+        "rows": 3
+      },
+      {
+        "rep": 7,
+        "question_id": "Q-EN-07",
+        "language": "en",
+        "wall_seconds": 0.0114,
+        "rows": 3
+      },
+      {
+        "rep": 8,
+        "question_id": "Q-EN-08",
+        "language": "en",
+        "wall_seconds": 0.0116,
+        "rows": 3
+      },
+      {
+        "rep": 9,
+        "question_id": "Q-EN-09",
+        "language": "en",
+        "wall_seconds": 0.0129,
+        "rows": 3
+      },
+      {
+        "rep": 10,
+        "question_id": "Q-EN-10",
+        "language": "en",
+        "wall_seconds": 0.0117,
+        "rows": 3
+      },
+      {
+        "rep": 11,
+        "question_id": "Q-FR-01",
+        "language": "fr",
+        "wall_seconds": 0.0119,
+        "rows": 3
+      },
+      {
+        "rep": 12,
+        "question_id": "Q-FR-02",
+        "language": "fr",
+        "wall_seconds": 0.0126,
+        "rows": 3
+      },
+      {
+        "rep": 13,
+        "question_id": "Q-FR-03",
+        "language": "fr",
+        "wall_seconds": 0.0125,
+        "rows": 3
+      },
+      {
+        "rep": 14,
+        "question_id": "Q-FR-04",
+        "language": "fr",
+        "wall_seconds": 0.0117,
+        "rows": 3
+      },
+      {
+        "rep": 15,
+        "question_id": "Q-FR-05",
+        "language": "fr",
+        "wall_seconds": 0.0112,
+        "rows": 3
+      },
+      {
+        "rep": 16,
+        "question_id": "Q-FR-06",
+        "language": "fr",
+        "wall_seconds": 0.0156,
+        "rows": 3
+      },
+      {
+        "rep": 17,
+        "question_id": "Q-FR-07",
+        "language": "fr",
+        "wall_seconds": 0.0128,
+        "rows": 3
+      },
+      {
+        "rep": 18,
+        "question_id": "Q-FR-08",
+        "language": "fr",
+        "wall_seconds": 0.0123,
+        "rows": 3
+      },
+      {
+        "rep": 19,
+        "question_id": "Q-FR-09",
+        "language": "fr",
+        "wall_seconds": 0.0112,
+        "rows": 3
+      },
+      {
+        "rep": 20,
+        "question_id": "Q-FR-10",
+        "language": "fr",
+        "wall_seconds": 0.0115,
+        "rows": 3
+      },
+      {
+        "rep": 21,
+        "question_id": "Q-NL-01",
+        "language": "nl",
+        "wall_seconds": 0.0123,
+        "rows": 3
+      },
+      {
+        "rep": 22,
+        "question_id": "Q-NL-02",
+        "language": "nl",
+        "wall_seconds": 0.0124,
+        "rows": 3
+      },
+      {
+        "rep": 23,
+        "question_id": "Q-NL-03",
+        "language": "nl",
+        "wall_seconds": 0.012,
+        "rows": 3
+      },
+      {
+        "rep": 24,
+        "question_id": "Q-NL-04",
+        "language": "nl",
+        "wall_seconds": 0.0129,
+        "rows": 3
+      },
+      {
+        "rep": 25,
+        "question_id": "Q-NL-05",
+        "language": "nl",
+        "wall_seconds": 0.0109,
+        "rows": 3
+      },
+      {
+        "rep": 26,
+        "question_id": "Q-NL-06",
+        "language": "nl",
+        "wall_seconds": 0.0117,
+        "rows": 3
+      },
+      {
+        "rep": 27,
+        "question_id": "Q-NL-07",
+        "language": "nl",
+        "wall_seconds": 0.0127,
+        "rows": 3
+      },
+      {
+        "rep": 28,
+        "question_id": "Q-NL-08",
+        "language": "nl",
+        "wall_seconds": 0.0116,
+        "rows": 3
+      },
+      {
+        "rep": 29,
+        "question_id": "Q-NL-09",
+        "language": "nl",
+        "wall_seconds": 0.0109,
+        "rows": 3
+      },
+      {
+        "rep": 30,
+        "question_id": "Q-NL-10",
+        "language": "nl",
+        "wall_seconds": 0.0118,
+        "rows": 3
+      }
+    ]
+  },
+  "retrieval_full": {
+    "stage": "retrieval_full",
+    "samples": [
+      {
+        "rep": 1,
+        "question_id": "Q-EN-01",
+        "language": "en",
+        "wall_seconds": 2.4003,
+        "sources": 3,
+        "ollama_embed": {
+          "total_duration": 2107678088,
+          "load_duration": 2013134952,
+          "prompt_eval_count": 12,
+          "prompt_eval_duration": null,
+          "eval_count": null,
+          "eval_duration": null
+        }
+      },
+      {
+        "rep": 2,
+        "question_id": "Q-EN-02",
+        "language": "en",
+        "wall_seconds": 2.4137,
+        "sources": 3,
+        "ollama_embed": {
+          "total_duration": 2364196615,
+          "load_duration": 2263501438,
+          "prompt_eval_count": 14,
+          "prompt_eval_duration": null,
+          "eval_count": null,
+          "eval_duration": null
+        }
+      },
+      {
+        "rep": 3,
+        "question_id": "Q-EN-03",
+        "language": "en",
+        "wall_seconds": 2.1664,
+        "sources": 3,
+        "ollama_embed": {
+          "total_duration": 2114850437,
+          "load_duration": 2032849685,
+          "prompt_eval_count": 12,
+          "prompt_eval_duration": null,
+          "eval_count": null,
+          "eval_duration": null
+        }
+      },
+      {
+        "rep": 4,
+        "question_id": "Q-EN-04",
+        "language": "en",
+        "wall_seconds": 2.1796,
+        "sources": 3,
+        "ollama_embed": {
+          "total_duration": 2124562502,
+          "load_duration": 2026732343,
+          "prompt_eval_count": 14,
+          "prompt_eval_duration": null,
+          "eval_count": null,
+          "eval_duration": null
+        }
+      },
+      {
+        "rep": 5,
+        "question_id": "Q-EN-05",
+        "language": "en",
+        "wall_seconds": 2.177,
+        "sources": 3,
+        "ollama_embed": {
+          "total_duration": 2131563449,
+          "load_duration": 2028310954,
+          "prompt_eval_count": 15,
+          "prompt_eval_duration": null,
+          "eval_count": null,
+          "eval_duration": null
+        }
+      },
+      {
+        "rep": 6,
+        "question_id": "Q-EN-06",
+        "language": "en",
+        "wall_seconds": 2.1401,
+        "sources": 3,
+        "ollama_embed": {
+          "total_duration": 2096402413,
+          "load_duration": 2009757729,
+          "prompt_eval_count": 14,
+          "prompt_eval_duration": null,
+          "eval_count": null,
+          "eval_duration": null
+        }
+      },
+      {
+        "rep": 7,
+        "question_id": "Q-EN-07",
+        "language": "en",
+        "wall_seconds": 2.1819,
+        "sources": 3,
+        "ollama_embed": {
+          "total_duration": 2133566163,
+          "load_duration": 2033950293,
+          "prompt_eval_count": 14,
+          "prompt_eval_duration": null,
+          "eval_count": null,
+          "eval_duration": null
+        }
+      },
+      {
+        "rep": 8,
+        "question_id": "Q-EN-08",
+        "language": "en",
+        "wall_seconds": 2.1804,
+        "sources": 3,
+        "ollama_embed": {
+          "total_duration": 2130702044,
+          "load_duration": 2033490290,
+          "prompt_eval_count": 14,
+          "prompt_eval_duration": null,
+          "eval_count": null,
+          "eval_duration": null
+        }
+      },
+      {
+        "rep": 9,
+        "question_id": "Q-EN-09",
+        "language": "en",
+        "wall_seconds": 2.1719,
+        "sources": 3,
+        "ollama_embed": {
+          "total_duration": 2123604896,
+          "load_duration": 2017768583,
+          "prompt_eval_count": 15,
+          "prompt_eval_duration": null,
+          "eval_count": null,
+          "eval_duration": null
+        }
+      },
+      {
+        "rep": 10,
+        "question_id": "Q-EN-10",
+        "language": "en",
+        "wall_seconds": 2.1719,
+        "sources": 3,
+        "ollama_embed": {
+          "total_duration": 2124653702,
+          "load_duration": 2028280254,
+          "prompt_eval_count": 13,
+          "prompt_eval_duration": null,
+          "eval_count": null,
+          "eval_duration": null
+        }
+      },
+      {
+        "rep": 11,
+        "question_id": "Q-FR-01",
+        "language": "fr",
+        "wall_seconds": 2.2034,
+        "sources": 3,
+        "ollama_embed": {
+          "total_duration": 2156260016,
+          "load_duration": 2026862145,
+          "prompt_eval_count": 23,
+          "prompt_eval_duration": null,
+          "eval_count": null,
+          "eval_duration": null
+        }
+      },
+      {
+        "rep": 12,
+        "question_id": "Q-FR-02",
+        "language": "fr",
+        "wall_seconds": 2.1956,
+        "sources": 3,
+        "ollama_embed": {
+          "total_duration": 2146422750,
+          "load_duration": 2023602423,
+          "prompt_eval_count": 18,
+          "prompt_eval_duration": null,
+          "eval_count": null,
+          "eval_duration": null
+        }
+      },
+      {
+        "rep": 13,
+        "question_id": "Q-FR-03",
+        "language": "fr",
+        "wall_seconds": 2.1906,
+        "sources": 3,
+        "ollama_embed": {
+          "total_duration": 2138649498,
+          "load_duration": 2044019660,
+          "prompt_eval_count": 12,
+          "prompt_eval_duration": null,
+          "eval_count": null,
+          "eval_duration": null
+        }
+      },
+      {
+        "rep": 14,
+        "question_id": "Q-FR-04",
+        "language": "fr",
+        "wall_seconds": 2.1949,
+        "sources": 3,
+        "ollama_embed": {
+          "total_duration": 2145125041,
+          "load_duration": 2030929072,
+          "prompt_eval_count": 18,
+          "prompt_eval_duration": null,
+          "eval_count": null,
+          "eval_duration": null
+        }
+      },
+      {
+        "rep": 15,
+        "question_id": "Q-FR-05",
+        "language": "fr",
+        "wall_seconds": 2.1557,
+        "sources": 3,
+        "ollama_embed": {
+          "total_duration": 2110114405,
+          "load_duration": 2014334760,
+          "prompt_eval_count": 15,
+          "prompt_eval_duration": null,
+          "eval_count": null,
+          "eval_duration": null
+        }
+      },
+      {
+        "rep": 16,
+        "question_id": "Q-FR-06",
+        "language": "fr",
+        "wall_seconds": 2.1801,
+        "sources": 3,
+        "ollama_embed": {
+          "total_duration": 2133775365,
+          "load_duration": 2018692390,
+          "prompt_eval_count": 17,
+          "prompt_eval_duration": null,
+          "eval_count": null,
+          "eval_duration": null
+        }
+      },
+      {
+        "rep": 17,
+        "question_id": "Q-FR-07",
+        "language": "fr",
+        "wall_seconds": 2.1903,
+        "sources": 3,
+        "ollama_embed": {
+          "total_duration": 2139423702,
+          "load_duration": 2025265834,
+          "prompt_eval_count": 19,
+          "prompt_eval_duration": null,
+          "eval_count": null,
+          "eval_duration": null
+        }
+      },
+      {
+        "rep": 18,
+        "question_id": "Q-FR-08",
+        "language": "fr",
+        "wall_seconds": 2.2119,
+        "sources": 3,
+        "ollama_embed": {
+          "total_duration": 2162313056,
+          "load_duration": 2033909592,
+          "prompt_eval_count": 23,
+          "prompt_eval_duration": null,
+          "eval_count": null,
+          "eval_duration": null
+        }
+      },
+      {
+        "rep": 19,
+        "question_id": "Q-FR-09",
+        "language": "fr",
+        "wall_seconds": 2.1555,
+        "sources": 3,
+        "ollama_embed": {
+          "total_duration": 2109654902,
+          "load_duration": 2014042859,
+          "prompt_eval_count": 16,
+          "prompt_eval_duration": null,
+          "eval_count": null,
+          "eval_duration": null
+        }
+      },
+      {
+        "rep": 20,
+        "question_id": "Q-FR-10",
+        "language": "fr",
+        "wall_seconds": 2.1929,
+        "sources": 3,
+        "ollama_embed": {
+          "total_duration": 2143824532,
+          "load_duration": 2030830772,
+          "prompt_eval_count": 18,
+          "prompt_eval_duration": null,
+          "eval_count": null,
+          "eval_duration": null
+        }
+      },
+      {
+        "rep": 21,
+        "question_id": "Q-NL-01",
+        "language": "nl",
+        "wall_seconds": 2.1527,
+        "sources": 3,
+        "ollama_embed": {
+          "total_duration": 2106182779,
+          "load_duration": 2012108246,
+          "prompt_eval_count": 14,
+          "prompt_eval_duration": null,
+          "eval_count": null,
+          "eval_duration": null
+        }
+      },
+      {
+        "rep": 22,
+        "question_id": "Q-NL-02",
+        "language": "nl",
+        "wall_seconds": 2.1614,
+        "sources": 3,
+        "ollama_embed": {
+          "total_duration": 2113255527,
+          "load_duration": 2019160793,
+          "prompt_eval_count": 15,
+          "prompt_eval_duration": null,
+          "eval_count": null,
+          "eval_duration": null
+        }
+      },
+      {
+        "rep": 23,
+        "question_id": "Q-NL-03",
+        "language": "nl",
+        "wall_seconds": 2.1697,
+        "sources": 3,
+        "ollama_embed": {
+          "total_duration": 2120295174,
+          "load_duration": 2020631403,
+          "prompt_eval_count": 14,
+          "prompt_eval_duration": null,
+          "eval_count": null,
+          "eval_duration": null
+        }
+      },
+      {
+        "rep": 24,
+        "question_id": "Q-NL-04",
+        "language": "nl",
+        "wall_seconds": 2.1815,
+        "sources": 3,
+        "ollama_embed": {
+          "total_duration": 2134811071,
+          "load_duration": 2024404228,
+          "prompt_eval_count": 13,
+          "prompt_eval_duration": null,
+          "eval_count": null,
+          "eval_duration": null
+        }
+      },
+      {
+        "rep": 25,
+        "question_id": "Q-NL-05",
+        "language": "nl",
+        "wall_seconds": 1.9295,
+        "sources": 3,
+        "ollama_embed": {
+          "total_duration": 1883214278,
+          "load_duration": 1761601559,
+          "prompt_eval_count": 19,
+          "prompt_eval_duration": null,
+          "eval_count": null,
+          "eval_duration": null
+        }
+      },
+      {
+        "rep": 26,
+        "question_id": "Q-NL-06",
+        "language": "nl",
+        "wall_seconds": 2.1516,
+        "sources": 3,
+        "ollama_embed": {
+          "total_duration": 2101310946,
+          "load_duration": 2015920771,
+          "prompt_eval_count": 12,
+          "prompt_eval_duration": null,
+          "eval_count": null,
+          "eval_duration": null
+        }
+      },
+      {
+        "rep": 27,
+        "question_id": "Q-NL-07",
+        "language": "nl",
+        "wall_seconds": 2.1758,
+        "sources": 3,
+        "ollama_embed": {
+          "total_duration": 2125947412,
+          "load_duration": 2015754870,
+          "prompt_eval_count": 19,
+          "prompt_eval_duration": null,
+          "eval_count": null,
+          "eval_duration": null
+        }
+      },
+      {
+        "rep": 28,
+        "question_id": "Q-NL-08",
+        "language": "nl",
+        "wall_seconds": 2.1787,
+        "sources": 3,
+        "ollama_embed": {
+          "total_duration": 2129875138,
+          "load_duration": 2029394962,
+          "prompt_eval_count": 17,
+          "prompt_eval_duration": null,
+          "eval_count": null,
+          "eval_duration": null
+        }
+      },
+      {
+        "rep": 29,
+        "question_id": "Q-NL-09",
+        "language": "nl",
+        "wall_seconds": 2.1514,
+        "sources": 3,
+        "ollama_embed": {
+          "total_duration": 2103607361,
+          "load_duration": 2011711442,
+          "prompt_eval_count": 14,
+          "prompt_eval_duration": null,
+          "eval_count": null,
+          "eval_duration": null
+        }
+      },
+      {
+        "rep": 30,
+        "question_id": "Q-NL-10",
+        "language": "nl",
+        "wall_seconds": 2.1416,
+        "sources": 3,
+        "ollama_embed": {
+          "total_duration": 2097091218,
+          "load_duration": 2018505889,
+          "prompt_eval_count": 11,
+          "prompt_eval_duration": null,
+          "eval_count": null,
+          "eval_duration": null
+        }
+      }
+    ]
+  },
+  "generation": {
+    "stage": "generation",
+    "samples": [
+      {
+        "rep": 1,
+        "question_id": "Q-EN-01",
+        "language": "en",
+        "sources": 3,
+        "outcome": "InferenceUnavailable",
+        "failure_kind": "prompt_echoed",
+        "response_head": "{\n  \"question\": \"At what time did the workshop alarm go off?\",\n  \"evidence\": [\n    {\n      \"number\": 1,\n      \"text\": \"Statement of the workshop owner: she lock",
+        "wall_seconds": 44.6397,
+        "ollama": {
+          "total_duration": 44620971884,
+          "load_duration": 4316204757,
+          "prompt_eval_count": 308,
+          "prompt_eval_duration": 10177655000,
+          "eval_count": 222,
+          "eval_duration": 30123406000
+        }
+      },
+      {
+        "rep": 2,
+        "question_id": "Q-EN-02",
+        "language": "en",
+        "sources": 3,
+        "outcome": "InferenceUnavailable",
+        "failure_kind": "prompt_echoed",
+        "response_head": "{\n  \"question\": \"What vehicle did the night watchman notice behind the workshop?\",\n  \"evidence\": [\n    {\n      \"number\": 1,\n      \"text\": \"Statement of Witness ",
+        "wall_seconds": 69.1126,
+        "ollama": {
+          "total_duration": 69092084075,
+          "load_duration": 4113562292,
+          "prompt_eval_count": 428,
+          "prompt_eval_duration": 14589972000,
+          "eval_count": 344,
+          "eval_duration": 50383709000
+        }
+      },
+      {
+        "rep": 3,
+        "question_id": "Q-EN-03",
+        "language": "en",
+        "sources": 3,
+        "outcome": "InferenceUnavailable",
+        "failure_kind": "prompt_echoed",
+        "response_head": "{\n  \"question\": \"Which items did the: 1. Evidence inventory 1 lists the items reported missing by the workshop owner: two cordless drills, a mitre saw, a laser ",
+        "wall_seconds": 61.1565,
+        "ollama": {
+          "total_duration": 61133169767,
+          "load_duration": 4094767588,
+          "prompt_eval_count": 352,
+          "prompt_eval_duration": 11960276000,
+          "eval_count": 313,
+          "eval_duration": 45073886000
+        }
+      },
+      {
+        "rep": 4,
+        "question_id": "Q-EN-04",
+        "language": "en",
+        "sources": 3,
+        "outcome": "InferenceUnavailable",
+        "failure_kind": "prompt_echoed",
+        "response_head": "{\n  \"question\": \"What kind of shoe mark was found inside the workshop?\",\n  \"evidence\": [\n    {\n      \"number\": 1,\n      \"text\": \"Forensic note: a partial shoe p",
+        "wall_seconds": 54.0215,
+        "ollama": {
+          "total_duration": 54001836772,
+          "load_duration": 4332522001,
+          "prompt_eval_count": 349,
+          "prompt_eval_duration": 12413626000,
+          "eval_count": 263,
+          "eval_duration": 37248860000
+        }
+      },
+      {
+        "rep": 5,
+        "question_id": "Q-EN-05",
+        "language": "en",
+        "sources": 3,
+        "outcome": "InferenceUnavailable",
+        "failure_kind": "prompt_echoed",
+        "response_head": "{\n  \"question\": \"Could the petrol station camera read the number plate of the van?\",\n  \"evidence\": [\n    {\n      \"number\": 1,\n      \"text\": \"CCTV log: the camer",
+        "wall_seconds": 64.953,
+        "ollama": {
+          "total_duration": 64933671158,
+          "load_duration": 4101887737,
+          "prompt_eval_count": 404,
+          "prompt_eval_duration": 13840558000,
+          "eval_count": 320,
+          "eval_duration": 46986284000
+        }
+      },
+      {
+        "rep": 6,
+        "question_id": "Q-EN-06",
+        "language": "en",
+        "sources": 3,
+        "outcome": "InferenceUnavailable",
+        "failure_kind": "invalid_json",
+        "response_head": "{\"question\": \"When did the owner lock up and switch on the alarm?\", \"evidence\": [{\"number\":  1, \"text\": \"Statement of the workshop owner: she locked the worksho",
+        "wall_seconds": 50.5838,
+        "ollama": {
+          "total_duration": null,
+          "load_duration": null,
+          "prompt_eval_count": null,
+          "prompt_eval_duration": null,
+          "eval_count": null,
+          "eval_duration": null
+        }
+      },
+      {
+        "rep": 7,
+        "question_id": "Q-EN-07",
+        "language": "en",
+        "sources": 3,
+        "outcome": "claims",
+        "claims": 3,
+        "wall_seconds": 42.884,
+        "ollama": {
+          "total_duration": 42863836252,
+          "load_duration": 4071346188,
+          "prompt_eval_count": 349,
+          "prompt_eval_duration": 11743296000,
+          "eval_count": 195,
+          "eval_duration": 27044591000
+        }
+      },
+      {
+        "rep": 8,
+        "question_id": "Q-EN-08",
+        "language": "en",
+        "sources": 3,
+        "outcome": "claims",
+        "claims": 2,
+        "wall_seconds": 38.3388,
+        "ollama": {
+          "total_duration": 38320210263,
+          "load_duration": 4096590859,
+          "prompt_eval_count": 313,
+          "prompt_eval_duration": 10947979000,
+          "eval_count": 149,
+          "eval_duration": 23270323000
+        }
+      },
+      {
+        "rep": 9,
+        "question_id": "Q-EN-09",
+        "language": "en",
+        "sources": 3,
+        "outcome": "claims",
+        "claims": 2,
+        "wall_seconds": 38.1771,
+        "ollama": {
+          "total_duration": 38157860563,
+          "load_duration": 4343281430,
+          "prompt_eval_count": 427,
+          "prompt_eval_duration": 14600563000,
+          "eval_count": 126,
+          "eval_duration": 19206406000
+        }
+      },
+      {
+        "rep": 10,
+        "question_id": "Q-EN-10",
+        "language": "en",
+        "sources": 3,
+        "outcome": "InferenceUnavailable",
+        "failure_kind": "prompt_echoed",
+        "response_head": "{\n  \"question\": \"How was the rear door lock defeated?\",\n  \"evidence\": [\n    {\n      \"number\": 1,\n      \"text\": \"Locksmith report: the rear door cylinder was sna",
+        "wall_seconds": 52.5827,
+        "ollama": {
+          "total_duration": 52563084075,
+          "load_duration": 4072295494,
+          "prompt_eval_count": 334,
+          "prompt_eval_duration": 11577283000,
+          "eval_count": 248,
+          "eval_duration": 36909554000
+        }
+      },
+      {
+        "rep": 11,
+        "question_id": "Q-FR-01",
+        "language": "fr",
+        "sources": 3,
+        "outcome": "InferenceUnavailable",
+        "failure_kind": "prompt_echoed",
+        "response_head": "{\n  \"question\": \"À quelle heure le gardien a-t-il signalé la disparition du câble ?\",\n  \"evidence\": [\n    {\n      \"number\": 1,\n      \"text\": \"Rapport d'interven",
+        "wall_seconds": 54.8722,
+        "ollama": {
+          "total_duration": 54851849004,
+          "load_duration": 4336506684,
+          "prompt_eval_count": 366,
+          "prompt_eval_duration": 13476430000,
+          "eval_count": 258,
+          "eval_duration": 37034804000
+        }
+      },
+      {
+        "rep": 12,
+        "question_id": "Q-FR-02",
+        "language": "fr",
+        "sources": 3,
+        "outcome": "InferenceUnavailable",
+        "failure_kind": "invalid_json",
+        "response_head": "{\"question\": \"À quelle heure le gardien a-t-il effectué sa dernière ronde ?\", \"evidence\": [{\"number\": 1, \"text\": \"Déclaration du gardien : il a fait sa dernière",
+        "wall_seconds": 66.8968,
+        "ollama": {
+          "total_duration": null,
+          "load_duration": null,
+          "prompt_eval_count": null,
+          "prompt_eval_duration": null,
+          "eval_count": null,
+          "eval_duration": null
+        }
+      },
+      {
+        "rep": 13,
+        "question_id": "Q-FR-03",
+        "language": "fr",
+        "sources": 3,
+        "outcome": "InferenceUnavailable",
+        "failure_kind": "invalid_json",
+        "response_head": "{\"question\": \"Quel matériel a été volé sur le chantier ?\", \"evidence\": [{\"number\": 1, \"text\": \"Inventaire : deux bobines de câble de cu: 250 mètres, une découpe",
+        "wall_seconds": 58.8872,
+        "ollama": {
+          "total_duration": null,
+          "load_duration": null,
+          "prompt_eval_count": null,
+          "prompt_eval_duration": null,
+          "eval_count": null,
+          "eval_duration": null
+        }
+      },
+      {
+        "rep": 14,
+        "question_id": "Q-FR-04",
+        "language": "fr",
+        "sources": 3,
+        "outcome": "InferenceUnavailable",
+        "failure_kind": "prompt_echoed",
+        "response_head": "{\n  \"question\": \"Quel type de véhicule les traces de pneus suggèrent-elles ?\",\n  \"evidence\": [\n    {\n      \"number\": 1,\n      \"text\": \"Constatation technique : ",
+        "wall_seconds": 61.3143,
+        "ollama": {
+          "total_duration": 61292629995,
+          "load_duration": 4605547521,
+          "prompt_eval_count": 354,
+          "prompt_eval_duration": 12444848000,
+          "eval_count": 269,
+          "eval_duration": 44237215000
+        }
+      },
+      {
+        "rep": 15,
+        "question_id": "Q-FR-05",
+        "language": "fr",
+        "sources": 3,
+        "outcome": "InferenceUnavailable",
+        "failure_kind": "prompt_echoed",
+        "response_head": "{\n  \"question\": \"Qu'a vu la voisine vers trois heures du matin ?\",\n  \"evidence\": [\n    {\n      \"number\": 1,\n      \"text\": \"Statement of Witness 2, a resident of",
+        "wall_seconds": 77.6597,
+        "ollama": {
+          "total_duration": 77639183005,
+          "load_duration": 4368080110,
+          "prompt_eval_count": 423,
+          "prompt_eval_duration": 15008983000,
+          "eval_count": 339,
+          "eval_duration": 58256359000
+        }
+      },
+      {
+        "rep": 16,
+        "question_id": "Q-FR-06",
+        "language": "fr",
+        "sources": 3,
+        "outcome": "InferenceUnavailable",
+        "failure_kind": "prompt_echoed",
+        "response_head": "{\n  \"question\": \"Combien de personnes connaissaits la date de livraison du cuivre ?\",\n  \"evidence\": [\n    {\n      \"number\": 1,\n      \"text\": \"Note du chef de ch",
+        "wall_seconds": 69.5131,
+        "ollama": {
+          "total_duration": 69492306179,
+          "load_duration": 4343916847,
+          "prompt_eval_count": 415,
+          "prompt_eval_duration": 14636875000,
+          "eval_count": 331,
+          "eval_duration": 50505425000
+        }
+      },
+      {
+        "rep": 17,
+        "question_id": "Q-FR-07",
+        "language": "fr",
+        "sources": 3,
+        "outcome": "InferenceUnavailable",
+        "failure_kind": "prompt_echoed",
+        "response_head": "{\n  \"question\": \"Pourquoi la caméra du portail n'a-t-elle rien enregistré ?\",\n  \"evidence\": [\n    {\n      \"number\": 1,\n      \"text\": \"Courriel de l'entreprise d",
+        "wall_seconds": 57.2435,
+        "ollama": {
+          "total_duration": 57223027507,
+          "load_duration": 4077251039,
+          "prompt_eval_count": 356,
+          "prompt_eval_duration": 11979855000,
+          "eval_count": 272,
+          "eval_duration": 41161065000
+        }
+      },
+      {
+        "rep": 18,
+        "question_id": "Q-FR-08",
+        "language": "fr",
+        "sources": 3,
+        "outcome": "InferenceUnavailable",
+        "failure_kind": "invalid_json",
+        "response_head": "{\"question\": \"Qui a présenté un lot de cuivre dénudé et comment l'avait-il payé ?\", \"evidence\": [{\"number\": 1, \"text\": \"Procès-verbal de saisie : un ferrailleur",
+        "wall_seconds": 61.7627,
+        "ollama": {
+          "total_duration": null,
+          "load_duration": null,
+          "prompt_eval_count": null,
+          "prompt_eval_duration": null,
+          "eval_count": null,
+          "eval_duration": null
+        }
+      },
+      {
+        "rep": 19,
+        "question_id": "Q-FR-09",
+        "language": "fr",
+        "sources": 3,
+        "outcome": "InferenceUnavailable",
+        "failure_kind": "prompt_echoed",
+        "response_head": "{\n  \"question\": \"Qu'a remarqué le grutier en quittant le chantier ?\",\n  \"evidence\": [\n    {\n      \"number\": 1,\n      \"text\": \"Déclaration du conducteur de grue ",
+        "wall_seconds": 58.4829,
+        "ollama": {
+          "total_duration": 58462000307,
+          "load_duration": 4372381439,
+          "prompt_eval_count": 353,
+          "prompt_eval_duration": 12654710000,
+          "eval_count": 268,
+          "eval_duration": 41429272000
+        }
+      },
+      {
+        "rep": 20,
+        "question_id": "Q-FR-10",
+        "language": "fr",
+        "sources": 3,
+        "outcome": "InferenceUnavailable",
+        "failure_kind": "invalid_json",
+        "response_head": "{\"question\": \"Qu'a-t-on retrouvé dans un fossé près du chantier ?\", \"evidence\": [{\"number\": 1, \"text\": \"Rapport de la patrouille : à 06:10, les agents ont retro",
+        "wall_seconds": 66.3128,
+        "ollama": {
+          "total_duration": null,
+          "load_duration": null,
+          "prompt_eval_count": null,
+          "prompt_eval_duration": null,
+          "eval_count": null,
+          "eval_duration": null
+        }
+      },
+      {
+        "rep": 21,
+        "question_id": "Q-NL-01",
+        "language": "nl",
+        "sources": 3,
+        "outcome": "InferenceUnavailable",
+        "failure_kind": "invalid_json",
+        "response_head": "{\"question\": \"Hoeveel elektrische fietsen verdwenen er uit de stalling?\", \"evidence\": [{\"number\": 1, \"text\": \"Inventaris: zes elektrische fietsen van verschille",
+        "wall_seconds": 54.3212,
+        "ollama": {
+          "total_duration": null,
+          "load_duration": null,
+          "prompt_eval_count": null,
+          "prompt_eval_duration": null,
+          "eval_count": null,
+          "eval_duration": null
+        }
+      },
+      {
+        "rep": 22,
+        "question_id": "Q-NL-02",
+        "language": "nl",
+        "sources": 3,
+        "outcome": "InferenceUnavailable",
+        "failure_kind": "prompt_echoed",
+        "response_head": "{\n  \"question\": \"Wat zag de schoonmaker rond half twee 's nachts?\",\n  \"evidence\": [\n    {\n      \"number\": 1,\n      \"text\": \"Verklaring van getuige 1, een schoon",
+        "wall_seconds": 77.8697,
+        "ollama": {
+          "total_duration": 77851143827,
+          "load_duration": 4337015249,
+          "prompt_eval_count": 456,
+          "prompt_eval_duration": 15656402000,
+          "eval_count": 373,
+          "eval_duration": 57851991000
+        }
+      },
+      {
+        "rep": 23,
+        "question_id": "Q-NL-03",
+        "language": "nl",
+        "sources": 3,
+        "outcome": "InferenceUnavailable",
+        "failure_kind": "invalid_json",
+        "response_head": "{\"question\": \"Wat is de geschatte schade van de diefstal?\", \"evidence\": [{\"number\": 1, \"text\": \"Inventaris: zes elektrische fietsen van verschillende merken, dr",
+        "wall_seconds": 52.3839,
+        "ollama": {
+          "total_duration": null,
+          "load_duration": null,
+          "prompt_eval_count": null,
+          "prompt_eval_duration": null,
+          "eval_count": null,
+          "eval_duration": null
+        }
+      },
+      {
+        "rep": 24,
+        "question_id": "Q-NL-04",
+        "language": "nl",
+        "sources": 3,
+        "outcome": "InferenceUnavailable",
+        "failure_kind": "prompt_echoed",
+        "response_head": "{\n  \"question\": \"Wat registreerde de camera boven de hoofdingang?\",\n  \"evidence\": [\n    {\n      \"number\": 1,\n      \"text\": \"Camerabeelden: de camera boven de ho",
+        "wall_seconds": 65.5287,
+        "ollama": {
+          "total_duration": 65508837221,
+          "load_duration": 4340389873,
+          "prompt_eval_count": 386,
+          "prompt_eval_duration": 13718933000,
+          "eval_count": 300,
+          "eval_duration": 47444262000
+        }
+      },
+      {
+        "rep": 25,
+        "question_id": "Q-NL-05",
+        "language": "nl",
+        "sources": 3,
+        "outcome": "InferenceUnavailable",
+        "failure_kind": "prompt_echoed",
+        "response_head": "{\n  \"question\": \"In welke toestand werd het hangslot van de achteringang aangetroffen?\",\n  \"evidence\": [\n    {\n      \"number\": 1,\n      \"text\": \"Sporenonderzoek",
+        "wall_seconds": 61.7241,
+        "ollama": {
+          "total_duration": 61704064286,
+          "load_duration": 4353739463,
+          "prompt_eval_count": 384,
+          "prompt_eval_duration": 13138695000,
+          "eval_count": 298,
+          "eval_duration": 44207222000
+        }
+      },
+      {
+        "rep": 26,
+        "question_id": "Q-NL-06",
+        "language": "nl",
+        "sources": 3,
+        "outcome": "InferenceUnavailable",
+        "failure_kind": "prompt_echoed",
+        "response_head": "{\n  \"question\": \"Welk gereedschap lag er naast het hek?\",\n  \"evidence\": [\n    {\n      \"number\": \": 1\",\n      \"text\": \"Patrol note: the officers checked the rive",
+        "wall_seconds": 65.0083,
+        "ollama": {
+          "total_duration": 64986775276,
+          "load_duration": 4390623113,
+          "prompt_eval_count": 379,
+          "prompt_eval_duration": 13507634000,
+          "eval_count": 296,
+          "eval_duration": 47083248000
+        }
+      },
+      {
+        "rep": 27,
+        "question_id": "Q-NL-07",
+        "language": "nl",
+        "sources": 3,
+        "outcome": "claims",
+        "claims": 2,
+        "wall_seconds": 41.6232,
+        "ollama": {
+          "total_duration": 41601170661,
+          "load_duration": 4093651097,
+          "prompt_eval_count": 431,
+          "prompt_eval_duration": 15724649000,
+          "eval_count": 136,
+          "eval_duration": 21777650000
+        }
+      },
+      {
+        "rep": 28,
+        "question_id": "Q-NL-08",
+        "language": "nl",
+        "sources": 3,
+        "outcome": "InferenceUnavailable",
+        "failure_kind": "prompt_echoed",
+        "response_head": "{\n  \"question\": \"Onder welke voorwaarde betaalt de verzekering voor een gestolen fiets?\",\n  \"evidence\": [\n    {\n      \"number\": 1,\n      \"text\": \"Mail van de ve",
+        "wall_seconds": 60.882,
+        "ollama": {
+          "total_duration": 60862242394,
+          "load_duration": 4340404552,
+          "prompt_eval_count": 359,
+          "prompt_eval_duration": 13779437000,
+          "eval_count": 276,
+          "eval_duration": 42737920000
+        }
+      },
+      {
+        "rep": 29,
+        "question_id": "Q-NL-09",
+        "language": "nl",
+        "sources": 3,
+        "outcome": "InferenceUnavailable",
+        "failure_kind": "invalid_json",
+        "response_head": "{\"question\": \"Wat vonden de agenten langs het jaagpad?\", \"evidence\": [{\"number\": \": 1, \"}, {\"number\": 2, \"text\": \"Patrol note: the officers checked the riversid",
+        "wall_seconds": 47.7782,
+        "ollama": {
+          "total_duration": null,
+          "load_duration": null,
+          "prompt_eval_count": null,
+          "prompt_eval_duration": null,
+          "eval_count": null,
+          "eval_duration": null
+        }
+      },
+      {
+        "rep": 30,
+        "question_id": "Q-NL-10",
+        "language": "nl",
+        "sources": 3,
+        "outcome": "InferenceUnavailable",
+        "failure_kind": "invalid_json",
+        "response_head": "{\"question\": \"Waarom was het donker langs het kanaal?\", \"evidence\": [{\"number\": 1, \"text\": \"Weerbericht: de nacht was droog, met een temperatuur van vier graden",
+        "wall_seconds": 58.8917,
+        "ollama": {
+          "total_duration": null,
+          "load_duration": null,
+          "prompt_eval_count": null,
+          "prompt_eval_duration": null,
+          "eval_count": null,
+          "eval_duration": null
+        }
+      }
+    ]
+  }
+}
