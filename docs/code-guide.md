@@ -58,6 +58,6 @@ resources without installing software or changing the host.
 
 ## Article source references
 
-The article links its explanations to the corresponding Python modules, acceptance scripts and deployment manifests. The [CPE source table](deployment/local-cpe.md#source-code-by-control-family) explains each linked implementation in French. The [authorized multi-project design](https://secloudis.com/ai-lab-multimodal-case-processing/#CrossProjectWorkspace) remains a specified extension, not an implemented federated retrieval path.
+The article links its explanations to the corresponding Python modules, acceptance scripts and deployment manifests. The [CPE source table](deployment/local-cpe.md#source-code-by-control-family) explains each linked implementation in French. The [authorized multi-project design](https://secloudis.com/ai-lab-multimodal-cpe-configuration/#CrossProjectWorkspace) remains a specified extension, not an implemented federated retrieval path.
 
 The [RAG request flow](deployment/local-implementation.md#3-how-one-rag-request-works) connects the browser request, case permission check, BGE-M3 embeddings, pgvector retrieval, Qwen3:4b generation and final source checks. The default lexical demo and the accepted optional OKD RAG are separate execution profiles.
