@@ -1,6 +1,6 @@
 # M5 full recovery rehearsal - 24 October 2026
 
-Status: **not executed.** M5 rebuilds the laboratory on a fresh OKD cluster. On this workstation, OpenShift Local runs one cluster only, so a fresh cluster means deleting the current one with `crc delete`, including the CPE namespaces and the local AI platform that the rehearsal does not restore. That irreversible step waits for the owner's explicit approval. No recovery time is claimed.
+Status: **not executed, by decision of the laboratory owner on 24 October 2026: publish the protocol only.** M5 rebuilds the laboratory on a fresh OKD cluster. On this workstation, OpenShift Local runs one cluster only, so a fresh cluster means deleting the current one with `crc delete`, including the CPE namespaces and the local AI platform that the rehearsal does not restore. No recovery time and no recovery time objective are claimed.
 
 The procedure, backup set, timing points and acceptance criteria are fixed in [`PROTOCOL.md`](PROTOCOL.md).
 

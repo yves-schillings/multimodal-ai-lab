@@ -9,7 +9,7 @@ The article's planned measurements were run on the local OKD laboratory with fic
 | [M2 retrieval relevance](../2026-10-24-m2-retrieval-relevance/) | Executed | BGE-M3 beats the lexical baseline on recall at 3 in each language | Recall at 3: English 0.971 against 0.882, French 1.000 against 0.941, Dutch 1.000 against 1.000 | **FAIL** (tie in Dutch) |
 | [OCR quality](../2026-10-24-ocr-quality/) | Executed | Proposed by the laboratory: CER at most 2% clean, at most 10% difficult | Clean 16 of 16; difficult 34 of 36 | **FAIL** (2 difficult scans) |
 | [M4 human French and Dutch speech](../2026-10-24-m4-human-speech-protocol/) | Prepared, not executed | Agreed by the business owner before the run | Recording script, consent form, templates and evaluation script ready; needs consenting speakers | Not run |
-| [M5 full recovery rehearsal](../2026-10-24-m5-recovery-rehearsal/) | Not executed | All acceptance checks pass on restored data; recovery time measured | Needs approval to delete the current cluster | Not run |
+| [M5 full recovery rehearsal](../2026-10-24-m5-recovery-rehearsal/) | Not executed | All acceptance checks pass on restored data; recovery time measured | The owner decided to publish the protocol only; the rebuild would delete the current cluster | Not run |
 
 Shared inputs: the [fictional corpus and its case manifest](../2026-10-24-measurement-corpus/).
 
