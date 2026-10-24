@@ -35,6 +35,31 @@ def test_generation_cannot_cite_another_source_or_invent_quote(monkeypatch):
         inference.generate("What happened?", [{"text": "Reviewed testimony about a blue bicycle."}])
 
 
+def test_generation_uses_answer_schema_and_plain_text_evidence(monkeypatch):
+    inference = client()
+    monkeypatch.setattr(inference, "verify", lambda *args: None)
+    sent = {}
+    def request(method, path, payload=None):
+        sent.update(payload)
+        return {"response": '{"abstained":false,"claims":[{"text":"The bicycle was blue.","source":1,'
+                            '"quote":"about a blue bicycle"}]}'}
+    monkeypatch.setattr(inference, "_request", request)
+    claims = inference.generate("Which colour was the bicycle?", [{"text": "Reviewed testimony about a blue bicycle."}])
+    assert claims == [{"text": "The bicycle was blue.", "source": 1, "quote": "about a blue bicycle"}]
+    assert sent["format"]["required"] == ["abstained", "claims"]
+    assert sent["prompt"].startswith("Question: Which colour was the bicycle?")
+    assert "Evidence 1:\nReviewed testimony about a blue bicycle." in sent["prompt"]
+
+
+def test_prompt_echo_is_withheld(monkeypatch):
+    inference = client()
+    monkeypatch.setattr(inference, "verify", lambda *args: None)
+    echo = '{"question":"What happened?","evidence":[{"number":1,"text":"Reviewed testimony."}]}'
+    monkeypatch.setattr(inference, "_request", lambda *args: {"response": echo})
+    with pytest.raises(InferenceUnavailable):
+        inference.generate("What happened?", [{"text": "Reviewed testimony about a blue bicycle."}])
+
+
 def test_denied_case_never_contacts_embedding_or_vector_server(tmp_path, monkeypatch):
     index = VectorIndex({}, client())
     monkeypatch.setattr(index, "connect", lambda: pytest.fail("Unauthorized database access"))
