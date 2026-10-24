@@ -1,0 +1,52 @@
+{
+  "generation": {
+    "wall_seconds": {
+      "n": 30,
+      "min": 31.4304,
+      "median": 55.8094,
+      "p95": 95.5661,
+      "max": 100.9589,
+      "mean": 60.1563
+    },
+    "ollama_load_seconds": {
+      "n": 30,
+      "min": 4.1314,
+      "median": 5.4876,
+      "p95": 9.6912,
+      "max": 10.3229,
+      "mean": 5.889
+    },
+    "ollama_total_seconds": {
+      "n": 30,
+      "min": 31.4114,
+      "median": 55.7818,
+      "p95": 95.534,
+      "max": 100.9327,
+      "mean": 60.1289
+    },
+    "output_tokens_per_second": {
+      "n": 30,
+      "min": 2.328,
+      "median": 3.7938,
+      "p95": 5.8527,
+      "max": 6.1811,
+      "mean": 4.0829
+    },
+    "prompt_tokens": {
+      "n": 30,
+      "min": 281,
+      "median": 331.0,
+      "p95": 404,
+      "max": 429,
+      "mean": 343.2
+    },
+    "outcomes": {
+      "InferenceUnavailable": 5,
+      "claims": 25
+    },
+    "withheld_reasons": {
+      "unsupported_citation_or_quote": 5
+    },
+    "skipped": 0
+  }
+}

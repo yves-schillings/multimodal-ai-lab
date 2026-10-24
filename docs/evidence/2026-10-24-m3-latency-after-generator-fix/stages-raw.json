@@ -1,0 +1,522 @@
+{
+  "generation": {
+    "stage": "generation",
+    "samples": [
+      {
+        "rep": 1,
+        "question_id": "Q-EN-01",
+        "language": "en",
+        "sources": 3,
+        "outcome": "claims",
+        "claims": 1,
+        "wall_seconds": 41.8073,
+        "ollama": {
+          "total_duration": 41776446294,
+          "load_duration": 5624526326,
+          "prompt_eval_count": 281,
+          "prompt_eval_duration": 12731600000,
+          "eval_count": 82,
+          "eval_duration": 23413708000
+        }
+      },
+      {
+        "rep": 2,
+        "question_id": "Q-EN-02",
+        "language": "en",
+        "sources": 3,
+        "outcome": "claims",
+        "claims": 1,
+        "wall_seconds": 58.0408,
+        "ollama": {
+          "total_duration": 58016035217,
+          "load_duration": 5409009745,
+          "prompt_eval_count": 401,
+          "prompt_eval_duration": 27680674000,
+          "eval_count": 92,
+          "eval_duration": 24919096000
+        }
+      },
+      {
+        "rep": 3,
+        "question_id": "Q-EN-03",
+        "language": "en",
+        "sources": 3,
+        "outcome": "claims",
+        "claims": 1,
+        "wall_seconds": 44.3432,
+        "ollama": {
+          "total_duration": 44307558176,
+          "load_duration": 7555769988,
+          "prompt_eval_count": 325,
+          "prompt_eval_duration": 15512538000,
+          "eval_count": 99,
+          "eval_duration": 21229896000
+        }
+      },
+      {
+        "rep": 4,
+        "question_id": "Q-EN-04",
+        "language": "en",
+        "sources": 3,
+        "outcome": "InferenceUnavailable",
+        "failure_kind": "unsupported_citation_or_quote",
+        "response_head": "{\n  \"abstained\": false,\n  \"claims\": [\n    {\n      \"text\": \"A partial shoe print with a zigzag sole pattern, size 43 was found near the workbench.\",\n      \"sourc",
+        "wall_seconds": 47.0162,
+        "ollama": {
+          "total_duration": 46990407400,
+          "load_duration": 4655559671,
+          "prompt_eval_count": 322,
+          "prompt_eval_duration": 13509632000,
+          "eval_count": 139,
+          "eval_duration": 28820295000
+        }
+      },
+      {
+        "rep": 5,
+        "question_id": "Q-EN-05",
+        "language": "en",
+        "sources": 3,
+        "outcome": "InferenceUnavailable",
+        "failure_kind": "unsupported_citation_or_quote",
+        "response_head": "{\n  \"abstained\": false,\n  \"claims\": [\n    {\n      \"text\": \"The petrol station camera could not read the registration plate of the van due to low image quality.\"",
+        "wall_seconds": 55.0964,
+        "ollama": {
+          "total_duration": 55072482903,
+          "load_duration": 5224391678,
+          "prompt_eval_count": 377,
+          "prompt_eval_duration": 16466879000,
+          "eval_count": 146,
+          "eval_duration": 33372161000
+        }
+      },
+      {
+        "rep": 6,
+        "question_id": "Q-EN-06",
+        "language": "en",
+        "sources": 3,
+        "outcome": "claims",
+        "claims": 3,
+        "wall_seconds": 72.1256,
+        "ollama": {
+          "total_duration": 72100450241,
+          "load_duration": 5182235089,
+          "prompt_eval_count": 303,
+          "prompt_eval_duration": 15113288000,
+          "eval_count": 157,
+          "eval_duration": 51799869000
+        }
+      },
+      {
+        "rep": 7,
+        "question_id": "Q-EN-07",
+        "language": "en",
+        "sources": 3,
+        "outcome": "claims",
+        "claims": 3,
+        "wall_seconds": 91.7364,
+        "ollama": {
+          "total_duration": 91706497083,
+          "load_duration": 9691222654,
+          "prompt_eval_count": 322,
+          "prompt_eval_duration": 22485466000,
+          "eval_count": 164,
+          "eval_duration": 59521237000
+        }
+      },
+      {
+        "rep": 8,
+        "question_id": "Q-EN-08",
+        "language": "en",
+        "sources": 3,
+        "outcome": "claims",
+        "claims": 2,
+        "wall_seconds": 53.7463,
+        "ollama": {
+          "total_duration": 53715014081,
+          "load_duration": 6771964305,
+          "prompt_eval_count": 286,
+          "prompt_eval_duration": 14965025000,
+          "eval_count": 124,
+          "eval_duration": 31971435000
+        }
+      },
+      {
+        "rep": 9,
+        "question_id": "Q-EN-09",
+        "language": "en",
+        "sources": 3,
+        "outcome": "claims",
+        "claims": 1,
+        "wall_seconds": 44.5262,
+        "ollama": {
+          "total_duration": 44500804004,
+          "load_duration": 6602027039,
+          "prompt_eval_count": 400,
+          "prompt_eval_duration": 19731204000,
+          "eval_count": 75,
+          "eval_duration": 18162674000
+        }
+      },
+      {
+        "rep": 10,
+        "question_id": "Q-EN-10",
+        "language": "en",
+        "sources": 3,
+        "outcome": "claims",
+        "claims": 3,
+        "wall_seconds": 55.93,
+        "ollama": {
+          "total_duration": 55897547469,
+          "load_duration": 5043775438,
+          "prompt_eval_count": 307,
+          "prompt_eval_duration": 12819805000,
+          "eval_count": 163,
+          "eval_duration": 38029609000
+        }
+      },
+      {
+        "rep": 11,
+        "question_id": "Q-FR-01",
+        "language": "fr",
+        "sources": 3,
+        "outcome": "claims",
+        "claims": 1,
+        "wall_seconds": 58.8867,
+        "ollama": {
+          "total_duration": 58858193701,
+          "load_duration": 5689231070,
+          "prompt_eval_count": 339,
+          "prompt_eval_duration": 24883327000,
+          "eval_count": 96,
+          "eval_duration": 28271427000
+        }
+      },
+      {
+        "rep": 12,
+        "question_id": "Q-FR-02",
+        "language": "fr",
+        "sources": 3,
+        "outcome": "InferenceUnavailable",
+        "failure_kind": "unsupported_citation_or_quote",
+        "response_head": "{\n  \"abstained\": false,\n  \"claims\": [\n    {\n      \"text\": \"Le gardien a effectué sa dernière ronde à 23:15.\",\n      \"source\": 1,\n      \"quote\": \"il a fait sa de",
+        "wall_seconds": 76.162,
+        "ollama": {
+          "total_duration": 76133624537,
+          "load_duration": 6184182469,
+          "prompt_eval_count": 372,
+          "prompt_eval_duration": 18323450000,
+          "eval_count": 143,
+          "eval_duration": 51619262000
+        }
+      },
+      {
+        "rep": 13,
+        "question_id": "Q-FR-03",
+        "language": "fr",
+        "sources": 3,
+        "outcome": "InferenceUnavailable",
+        "failure_kind": "unsupported_citation_or_quote",
+        "response_head": "{\n  \"abstained\": false,\n  \"claims\": [\n    {\n      \"text\": \"Deux bobines de câble de cuivre de 250 mètres ont été volées sur le chantier.\",\n      \"source\": 1,\n  ",
+        "wall_seconds": 100.9589,
+        "ollama": {
+          "total_duration": 100932683942,
+          "load_duration": 5943549417,
+          "prompt_eval_count": 315,
+          "prompt_eval_duration": 20144433000,
+          "eval_count": 231,
+          "eval_duration": 74837805000
+        }
+      },
+      {
+        "rep": 14,
+        "question_id": "Q-FR-04",
+        "language": "fr",
+        "sources": 3,
+        "outcome": "claims",
+        "claims": 1,
+        "wall_seconds": 50.8892,
+        "ollama": {
+          "total_duration": 50860958781,
+          "load_duration": 6477741385,
+          "prompt_eval_count": 327,
+          "prompt_eval_duration": 17490224000,
+          "eval_count": 102,
+          "eval_duration": 26885921000
+        }
+      },
+      {
+        "rep": 15,
+        "question_id": "Q-FR-05",
+        "language": "fr",
+        "sources": 3,
+        "outcome": "claims",
+        "claims": 1,
+        "wall_seconds": 58.5271,
+        "ollama": {
+          "total_duration": 58493489396,
+          "load_duration": 6015503310,
+          "prompt_eval_count": 396,
+          "prompt_eval_duration": 17772226000,
+          "eval_count": 130,
+          "eval_duration": 34698732000
+        }
+      },
+      {
+        "rep": 16,
+        "question_id": "Q-FR-06",
+        "language": "fr",
+        "sources": 3,
+        "outcome": "claims",
+        "claims": 1,
+        "wall_seconds": 46.1534,
+        "ollama": {
+          "total_duration": 46118959944,
+          "load_duration": 6258161377,
+          "prompt_eval_count": 388,
+          "prompt_eval_duration": 22176900000,
+          "eval_count": 65,
+          "eval_duration": 17676976000
+        }
+      },
+      {
+        "rep": 17,
+        "question_id": "Q-FR-07",
+        "language": "fr",
+        "sources": 3,
+        "outcome": "claims",
+        "claims": 2,
+        "wall_seconds": 55.6889,
+        "ollama": {
+          "total_duration": 55665983738,
+          "load_duration": 5476460093,
+          "prompt_eval_count": 329,
+          "prompt_eval_duration": 15745660000,
+          "eval_count": 140,
+          "eval_duration": 34437064000
+        }
+      },
+      {
+        "rep": 18,
+        "question_id": "Q-FR-08",
+        "language": "fr",
+        "sources": 3,
+        "outcome": "claims",
+        "claims": 3,
+        "wall_seconds": 91.8387,
+        "ollama": {
+          "total_duration": 91813673436,
+          "load_duration": 5167548367,
+          "prompt_eval_count": 330,
+          "prompt_eval_duration": 16074464000,
+          "eval_count": 243,
+          "eval_duration": 70563256000
+        }
+      },
+      {
+        "rep": 19,
+        "question_id": "Q-FR-09",
+        "language": "fr",
+        "sources": 3,
+        "outcome": "claims",
+        "claims": 1,
+        "wall_seconds": 58.1281,
+        "ollama": {
+          "total_duration": 58098912284,
+          "load_duration": 5349784122,
+          "prompt_eval_count": 326,
+          "prompt_eval_duration": 18130252000,
+          "eval_count": 118,
+          "eval_duration": 34613226000
+        }
+      },
+      {
+        "rep": 20,
+        "question_id": "Q-FR-10",
+        "language": "fr",
+        "sources": 3,
+        "outcome": "claims",
+        "claims": 1,
+        "wall_seconds": 66.2662,
+        "ollama": {
+          "total_duration": 66235542186,
+          "load_duration": 10322850250,
+          "prompt_eval_count": 359,
+          "prompt_eval_duration": 19267972000,
+          "eval_count": 121,
+          "eval_duration": 36634995000
+        }
+      },
+      {
+        "rep": 21,
+        "question_id": "Q-NL-01",
+        "language": "nl",
+        "sources": 3,
+        "outcome": "claims",
+        "claims": 3,
+        "wall_seconds": 95.5661,
+        "ollama": {
+          "total_duration": 95533995943,
+          "load_duration": 5498764647,
+          "prompt_eval_count": 312,
+          "prompt_eval_duration": 15488178000,
+          "eval_count": 238,
+          "eval_duration": 74541178000
+        }
+      },
+      {
+        "rep": 22,
+        "question_id": "Q-NL-02",
+        "language": "nl",
+        "sources": 3,
+        "outcome": "claims",
+        "claims": 1,
+        "wall_seconds": 71.5242,
+        "ollama": {
+          "total_duration": 71492826572,
+          "load_duration": 6061035417,
+          "prompt_eval_count": 429,
+          "prompt_eval_duration": 23755970000,
+          "eval_count": 97,
+          "eval_duration": 41666688000
+        }
+      },
+      {
+        "rep": 23,
+        "question_id": "Q-NL-03",
+        "language": "nl",
+        "sources": 3,
+        "outcome": "claims",
+        "claims": 3,
+        "wall_seconds": 82.0172,
+        "ollama": {
+          "total_duration": 81986043895,
+          "load_duration": 8103083272,
+          "prompt_eval_count": 291,
+          "prompt_eval_duration": 19049824000,
+          "eval_count": 208,
+          "eval_duration": 54825101000
+        }
+      },
+      {
+        "rep": 24,
+        "question_id": "Q-NL-04",
+        "language": "nl",
+        "sources": 3,
+        "outcome": "claims",
+        "claims": 1,
+        "wall_seconds": 45.4033,
+        "ollama": {
+          "total_duration": 45379448138,
+          "load_duration": 5146954225,
+          "prompt_eval_count": 359,
+          "prompt_eval_duration": 15863784000,
+          "eval_count": 141,
+          "eval_duration": 24363322000
+        }
+      },
+      {
+        "rep": 25,
+        "question_id": "Q-NL-05",
+        "language": "nl",
+        "sources": 3,
+        "outcome": "InferenceUnavailable",
+        "failure_kind": "unsupported_citation_or_quote",
+        "response_head": "{\n  \"abstained\": false,\n  \"claims\": [\n    {\n      \"text\": \"Het hangslot werd aangetroffen open aan het hek.\",\n      \"source\": 2,\n      \"quote\": \"Op de ocht: de ",
+        "wall_seconds": 39.9063,
+        "ollama": {
+          "total_duration": 39884168715,
+          "load_duration": 4131394536,
+          "prompt_eval_count": 357,
+          "prompt_eval_duration": 13365028000,
+          "eval_count": 131,
+          "eval_duration": 22382763000
+        }
+      },
+      {
+        "rep": 26,
+        "question_id": "Q-NL-06",
+        "language": "nl",
+        "sources": 3,
+        "outcome": "claims",
+        "claims": 1,
+        "wall_seconds": 31.4304,
+        "ollama": {
+          "total_duration": 31411355798,
+          "load_duration": 4616361073,
+          "prompt_eval_count": 352,
+          "prompt_eval_duration": 13845280000,
+          "eval_count": 80,
+          "eval_duration": 12942778000
+        }
+      },
+      {
+        "rep": 27,
+        "question_id": "Q-NL-07",
+        "language": "nl",
+        "sources": 3,
+        "outcome": "claims",
+        "claims": 1,
+        "wall_seconds": 40.1188,
+        "ollama": {
+          "total_duration": 40099089795,
+          "load_duration": 4863998878,
+          "prompt_eval_count": 404,
+          "prompt_eval_duration": 15608100000,
+          "eval_count": 104,
+          "eval_duration": 19621794000
+        }
+      },
+      {
+        "rep": 28,
+        "question_id": "Q-NL-08",
+        "language": "nl",
+        "sources": 3,
+        "outcome": "claims",
+        "claims": 2,
+        "wall_seconds": 47.4083,
+        "ollama": {
+          "total_duration": 47386202350,
+          "load_duration": 4885256324,
+          "prompt_eval_count": 332,
+          "prompt_eval_duration": 14503168000,
+          "eval_count": 150,
+          "eval_duration": 27991573000
+        }
+      },
+      {
+        "rep": 29,
+        "question_id": "Q-NL-09",
+        "language": "nl",
+        "sources": 3,
+        "outcome": "claims",
+        "claims": 2,
+        "wall_seconds": 53.3552,
+        "ollama": {
+          "total_duration": 53332799780,
+          "load_duration": 4360305212,
+          "prompt_eval_count": 332,
+          "prompt_eval_duration": 13701295000,
+          "eval_count": 205,
+          "eval_duration": 35266141000
+        }
+      },
+      {
+        "rep": 30,
+        "question_id": "Q-NL-10",
+        "language": "nl",
+        "sources": 3,
+        "outcome": "claims",
+        "claims": 3,
+        "wall_seconds": 70.0911,
+        "ollama": {
+          "total_duration": 70066786956,
+          "load_duration": 4358803801,
+          "prompt_eval_count": 323,
+          "prompt_eval_duration": 12664259000,
+          "eval_count": 268,
+          "eval_duration": 53033721000
+        }
+      }
+    ]
+  }
+}

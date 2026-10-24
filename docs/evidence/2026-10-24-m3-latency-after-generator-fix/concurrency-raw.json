@@ -1,0 +1,1020 @@
+{
+  "recorded_at": "2026-10-24T15:48:49+02:00",
+  "levels": {
+    "1": {
+      "requests": 30,
+      "succeeded": 24,
+      "elapsed_seconds": 1477.54,
+      "throughput_answers_per_minute": 0.975,
+      "latency_seconds_successful": {
+        "n": 24,
+        "min": 30.429,
+        "median": 45.364,
+        "p95": 69.499,
+        "max": 95.795,
+        "mean": 48.4333
+      },
+      "latency_seconds_all": {
+        "n": 30,
+        "min": 30.429,
+        "median": 46.8515,
+        "p95": 69.499,
+        "max": 95.795,
+        "mean": 49.2512
+      },
+      "statuses": {
+        "200": 24,
+        "503": 6
+      },
+      "samples": [
+        {
+          "user": 1,
+          "account": "officer-a",
+          "question_id": "Q-EN-01",
+          "status": 200,
+          "abstained": false,
+          "claims": 1,
+          "started": 727.298,
+          "seconds": 32.239
+        },
+        {
+          "user": 1,
+          "account": "officer-a",
+          "question_id": "Q-EN-02",
+          "status": 200,
+          "abstained": false,
+          "claims": 1,
+          "started": 759.537,
+          "seconds": 41.625
+        },
+        {
+          "user": 1,
+          "account": "officer-a",
+          "question_id": "Q-EN-03",
+          "status": 200,
+          "abstained": false,
+          "claims": 1,
+          "started": 801.162,
+          "seconds": 41.348
+        },
+        {
+          "user": 1,
+          "account": "officer-a",
+          "question_id": "Q-EN-04",
+          "status": 503,
+          "abstained": null,
+          "claims": 0,
+          "started": 842.511,
+          "seconds": 48.022
+        },
+        {
+          "user": 1,
+          "account": "officer-a",
+          "question_id": "Q-EN-05",
+          "status": 503,
+          "abstained": null,
+          "claims": 0,
+          "started": 890.533,
+          "seconds": 52.966
+        },
+        {
+          "user": 1,
+          "account": "officer-a",
+          "question_id": "Q-EN-06",
+          "status": 503,
+          "abstained": null,
+          "claims": 0,
+          "started": 943.499,
+          "seconds": 50.557
+        },
+        {
+          "user": 1,
+          "account": "officer-a",
+          "question_id": "Q-EN-07",
+          "status": 200,
+          "abstained": false,
+          "claims": 3,
+          "started": 994.055,
+          "seconds": 50.201
+        },
+        {
+          "user": 1,
+          "account": "officer-a",
+          "question_id": "Q-EN-08",
+          "status": 200,
+          "abstained": false,
+          "claims": 2,
+          "started": 1044.256,
+          "seconds": 45.23
+        },
+        {
+          "user": 1,
+          "account": "officer-a",
+          "question_id": "Q-EN-09",
+          "status": 200,
+          "abstained": false,
+          "claims": 1,
+          "started": 1089.486,
+          "seconds": 47.16
+        },
+        {
+          "user": 1,
+          "account": "officer-a",
+          "question_id": "Q-EN-10",
+          "status": 200,
+          "abstained": false,
+          "claims": 3,
+          "started": 1136.647,
+          "seconds": 60.544
+        },
+        {
+          "user": 1,
+          "account": "officer-a",
+          "question_id": "Q-FR-01",
+          "status": 200,
+          "abstained": false,
+          "claims": 1,
+          "started": 1197.191,
+          "seconds": 48.953
+        },
+        {
+          "user": 1,
+          "account": "officer-a",
+          "question_id": "Q-FR-02",
+          "status": 503,
+          "abstained": null,
+          "claims": 0,
+          "started": 1246.144,
+          "seconds": 56.384
+        },
+        {
+          "user": 1,
+          "account": "officer-a",
+          "question_id": "Q-FR-03",
+          "status": 503,
+          "abstained": null,
+          "claims": 0,
+          "started": 1302.528,
+          "seconds": 67.183
+        },
+        {
+          "user": 1,
+          "account": "officer-a",
+          "question_id": "Q-FR-04",
+          "status": 200,
+          "abstained": false,
+          "claims": 1,
+          "started": 1369.711,
+          "seconds": 40.395
+        },
+        {
+          "user": 1,
+          "account": "officer-a",
+          "question_id": "Q-FR-05",
+          "status": 200,
+          "abstained": false,
+          "claims": 1,
+          "started": 1410.106,
+          "seconds": 41.588
+        },
+        {
+          "user": 1,
+          "account": "officer-a",
+          "question_id": "Q-FR-06",
+          "status": 200,
+          "abstained": false,
+          "claims": 1,
+          "started": 1451.695,
+          "seconds": 30.429
+        },
+        {
+          "user": 1,
+          "account": "officer-a",
+          "question_id": "Q-FR-07",
+          "status": 200,
+          "abstained": false,
+          "claims": 2,
+          "started": 1482.124,
+          "seconds": 46.543
+        },
+        {
+          "user": 1,
+          "account": "officer-a",
+          "question_id": "Q-FR-08",
+          "status": 200,
+          "abstained": false,
+          "claims": 3,
+          "started": 1528.667,
+          "seconds": 69.499
+        },
+        {
+          "user": 1,
+          "account": "officer-a",
+          "question_id": "Q-FR-09",
+          "status": 200,
+          "abstained": false,
+          "claims": 1,
+          "started": 1598.166,
+          "seconds": 42.493
+        },
+        {
+          "user": 1,
+          "account": "officer-a",
+          "question_id": "Q-FR-10",
+          "status": 200,
+          "abstained": false,
+          "claims": 1,
+          "started": 1640.659,
+          "seconds": 45.498
+        },
+        {
+          "user": 1,
+          "account": "officer-a",
+          "question_id": "Q-NL-01",
+          "status": 200,
+          "abstained": false,
+          "claims": 3,
+          "started": 1686.158,
+          "seconds": 67.562
+        },
+        {
+          "user": 1,
+          "account": "officer-a",
+          "question_id": "Q-NL-02",
+          "status": 200,
+          "abstained": false,
+          "claims": 1,
+          "started": 1753.719,
+          "seconds": 42.543
+        },
+        {
+          "user": 1,
+          "account": "officer-a",
+          "question_id": "Q-NL-03",
+          "status": 200,
+          "abstained": false,
+          "claims": 3,
+          "started": 1796.262,
+          "seconds": 55.86
+        },
+        {
+          "user": 1,
+          "account": "officer-a",
+          "question_id": "Q-NL-04",
+          "status": 200,
+          "abstained": false,
+          "claims": 1,
+          "started": 1852.123,
+          "seconds": 47.369
+        },
+        {
+          "user": 1,
+          "account": "officer-a",
+          "question_id": "Q-NL-05",
+          "status": 503,
+          "abstained": null,
+          "claims": 0,
+          "started": 1899.491,
+          "seconds": 40.025
+        },
+        {
+          "user": 1,
+          "account": "officer-a",
+          "question_id": "Q-NL-06",
+          "status": 200,
+          "abstained": false,
+          "claims": 1,
+          "started": 1939.516,
+          "seconds": 33.504
+        },
+        {
+          "user": 1,
+          "account": "officer-a",
+          "question_id": "Q-NL-07",
+          "status": 200,
+          "abstained": false,
+          "claims": 1,
+          "started": 1973.02,
+          "seconds": 38.977
+        },
+        {
+          "user": 1,
+          "account": "officer-a",
+          "question_id": "Q-NL-08",
+          "status": 200,
+          "abstained": false,
+          "claims": 2,
+          "started": 2011.998,
+          "seconds": 41.805
+        },
+        {
+          "user": 1,
+          "account": "officer-a",
+          "question_id": "Q-NL-09",
+          "status": 200,
+          "abstained": false,
+          "claims": 2,
+          "started": 2053.803,
+          "seconds": 55.239
+        },
+        {
+          "user": 1,
+          "account": "officer-a",
+          "question_id": "Q-NL-10",
+          "status": 200,
+          "abstained": false,
+          "claims": 3,
+          "started": 2109.042,
+          "seconds": 95.795
+        }
+      ]
+    },
+    "2": {
+      "requests": 30,
+      "succeeded": 23,
+      "elapsed_seconds": 1122.406,
+      "throughput_answers_per_minute": 1.23,
+      "latency_seconds_successful": {
+        "n": 23,
+        "min": 30.665,
+        "median": 59.48,
+        "p95": 111.764,
+        "max": 118.296,
+        "mean": 68.2539
+      },
+      "latency_seconds_all": {
+        "n": 30,
+        "min": 30.665,
+        "median": 63.764,
+        "p95": 124.88,
+        "max": 126.731,
+        "mean": 73.9884
+      },
+      "statuses": {
+        "200": 23,
+        "503": 7
+      },
+      "samples": [
+        {
+          "user": 1,
+          "account": "officer-a",
+          "question_id": "Q-EN-01",
+          "status": 200,
+          "abstained": false,
+          "claims": 1,
+          "started": 2205.89,
+          "seconds": 41.119
+        },
+        {
+          "user": 2,
+          "account": "officer-b",
+          "question_id": "Q-FR-06",
+          "status": 503,
+          "abstained": null,
+          "claims": 0,
+          "started": 2205.891,
+          "seconds": 77.333
+        },
+        {
+          "user": 1,
+          "account": "officer-a",
+          "question_id": "Q-EN-02",
+          "status": 200,
+          "abstained": false,
+          "claims": 1,
+          "started": 2247.009,
+          "seconds": 101.892
+        },
+        {
+          "user": 2,
+          "account": "officer-b",
+          "question_id": "Q-FR-07",
+          "status": 200,
+          "abstained": false,
+          "claims": 2,
+          "started": 2283.224,
+          "seconds": 43.407
+        },
+        {
+          "user": 2,
+          "account": "officer-b",
+          "question_id": "Q-FR-08",
+          "status": 200,
+          "abstained": false,
+          "claims": 3,
+          "started": 2326.631,
+          "seconds": 107.166
+        },
+        {
+          "user": 1,
+          "account": "officer-a",
+          "question_id": "Q-EN-03",
+          "status": 200,
+          "abstained": false,
+          "claims": 1,
+          "started": 2348.901,
+          "seconds": 33.242
+        },
+        {
+          "user": 1,
+          "account": "officer-a",
+          "question_id": "Q-EN-04",
+          "status": 503,
+          "abstained": null,
+          "claims": 0,
+          "started": 2382.143,
+          "seconds": 124.88
+        },
+        {
+          "user": 2,
+          "account": "officer-b",
+          "question_id": "Q-FR-09",
+          "status": 200,
+          "abstained": false,
+          "claims": 1,
+          "started": 2433.797,
+          "seconds": 40.19
+        },
+        {
+          "user": 2,
+          "account": "officer-b",
+          "question_id": "Q-FR-10",
+          "status": 200,
+          "abstained": false,
+          "claims": 1,
+          "started": 2473.987,
+          "seconds": 111.171
+        },
+        {
+          "user": 1,
+          "account": "officer-a",
+          "question_id": "Q-EN-05",
+          "status": 503,
+          "abstained": null,
+          "claims": 0,
+          "started": 2507.023,
+          "seconds": 45.235
+        },
+        {
+          "user": 1,
+          "account": "officer-a",
+          "question_id": "Q-EN-06",
+          "status": 503,
+          "abstained": null,
+          "claims": 0,
+          "started": 2552.258,
+          "seconds": 126.731
+        },
+        {
+          "user": 2,
+          "account": "officer-b",
+          "question_id": "Q-NL-01",
+          "status": 200,
+          "abstained": false,
+          "claims": 3,
+          "started": 2585.159,
+          "seconds": 59.48
+        },
+        {
+          "user": 2,
+          "account": "officer-b",
+          "question_id": "Q-NL-02",
+          "status": 200,
+          "abstained": false,
+          "claims": 1,
+          "started": 2644.639,
+          "seconds": 111.764
+        },
+        {
+          "user": 1,
+          "account": "officer-a",
+          "question_id": "Q-EN-07",
+          "status": 200,
+          "abstained": false,
+          "claims": 3,
+          "started": 2678.989,
+          "seconds": 49.288
+        },
+        {
+          "user": 1,
+          "account": "officer-a",
+          "question_id": "Q-EN-08",
+          "status": 200,
+          "abstained": false,
+          "claims": 2,
+          "started": 2728.277,
+          "seconds": 64.138
+        },
+        {
+          "user": 2,
+          "account": "officer-b",
+          "question_id": "Q-NL-03",
+          "status": 200,
+          "abstained": false,
+          "claims": 3,
+          "started": 2756.403,
+          "seconds": 78.098
+        },
+        {
+          "user": 1,
+          "account": "officer-a",
+          "question_id": "Q-EN-09",
+          "status": 200,
+          "abstained": false,
+          "claims": 1,
+          "started": 2792.416,
+          "seconds": 118.296
+        },
+        {
+          "user": 2,
+          "account": "officer-b",
+          "question_id": "Q-NL-04",
+          "status": 200,
+          "abstained": false,
+          "claims": 1,
+          "started": 2834.502,
+          "seconds": 46.104
+        },
+        {
+          "user": 2,
+          "account": "officer-b",
+          "question_id": "Q-NL-05",
+          "status": 503,
+          "abstained": null,
+          "claims": 0,
+          "started": 2880.606,
+          "seconds": 110.839
+        },
+        {
+          "user": 1,
+          "account": "officer-a",
+          "question_id": "Q-EN-10",
+          "status": 200,
+          "abstained": false,
+          "claims": 3,
+          "started": 2910.711,
+          "seconds": 51.841
+        },
+        {
+          "user": 1,
+          "account": "officer-a",
+          "question_id": "Q-FR-01",
+          "status": 200,
+          "abstained": false,
+          "claims": 1,
+          "started": 2962.552,
+          "seconds": 61.82
+        },
+        {
+          "user": 2,
+          "account": "officer-b",
+          "question_id": "Q-NL-06",
+          "status": 200,
+          "abstained": false,
+          "claims": 1,
+          "started": 2991.445,
+          "seconds": 55.642
+        },
+        {
+          "user": 1,
+          "account": "officer-a",
+          "question_id": "Q-FR-02",
+          "status": 503,
+          "abstained": null,
+          "claims": 0,
+          "started": 3024.372,
+          "seconds": 63.39
+        },
+        {
+          "user": 2,
+          "account": "officer-b",
+          "question_id": "Q-NL-07",
+          "status": 200,
+          "abstained": false,
+          "claims": 1,
+          "started": 3047.087,
+          "seconds": 65.637
+        },
+        {
+          "user": 1,
+          "account": "officer-a",
+          "question_id": "Q-FR-03",
+          "status": 503,
+          "abstained": null,
+          "claims": 0,
+          "started": 3087.762,
+          "seconds": 101.404
+        },
+        {
+          "user": 2,
+          "account": "officer-b",
+          "question_id": "Q-NL-08",
+          "status": 200,
+          "abstained": false,
+          "claims": 2,
+          "started": 3112.724,
+          "seconds": 37.134
+        },
+        {
+          "user": 2,
+          "account": "officer-b",
+          "question_id": "Q-NL-09",
+          "status": 200,
+          "abstained": false,
+          "claims": 2,
+          "started": 3149.858,
+          "seconds": 105.443
+        },
+        {
+          "user": 1,
+          "account": "officer-a",
+          "question_id": "Q-FR-04",
+          "status": 200,
+          "abstained": false,
+          "claims": 1,
+          "started": 3189.166,
+          "seconds": 30.665
+        },
+        {
+          "user": 1,
+          "account": "officer-a",
+          "question_id": "Q-FR-05",
+          "status": 200,
+          "abstained": false,
+          "claims": 1,
+          "started": 3219.831,
+          "seconds": 108.465
+        },
+        {
+          "user": 2,
+          "account": "officer-b",
+          "question_id": "Q-NL-10",
+          "status": 200,
+          "abstained": false,
+          "claims": 3,
+          "started": 3255.301,
+          "seconds": 47.838
+        }
+      ]
+    },
+    "4": {
+      "requests": 32,
+      "succeeded": 25,
+      "elapsed_seconds": 996.497,
+      "throughput_answers_per_minute": 1.505,
+      "latency_seconds_successful": {
+        "n": 25,
+        "min": 24.808,
+        "median": 113.64,
+        "p95": 213.245,
+        "max": 216.879,
+        "mean": 116.8324
+      },
+      "latency_seconds_all": {
+        "n": 32,
+        "min": 24.808,
+        "median": 115.3525,
+        "p95": 213.245,
+        "max": 216.879,
+        "mean": 119.7017
+      },
+      "statuses": {
+        "200": 25,
+        "503": 7
+      },
+      "samples": [
+        {
+          "user": 1,
+          "account": "officer-a",
+          "question_id": "Q-EN-01",
+          "status": 200,
+          "abstained": false,
+          "claims": 1,
+          "started": 3329.435,
+          "seconds": 24.808
+        },
+        {
+          "user": 2,
+          "account": "officer-b",
+          "question_id": "Q-EN-09",
+          "status": 200,
+          "abstained": false,
+          "claims": 1,
+          "started": 3329.435,
+          "seconds": 91.124
+        },
+        {
+          "user": 3,
+          "account": "officer-a",
+          "question_id": "Q-FR-07",
+          "status": 200,
+          "abstained": false,
+          "claims": 2,
+          "started": 3329.436,
+          "seconds": 48.729
+        },
+        {
+          "user": 4,
+          "account": "officer-b",
+          "question_id": "Q-NL-05",
+          "status": 503,
+          "abstained": null,
+          "claims": 0,
+          "started": 3329.437,
+          "seconds": 71.934
+        },
+        {
+          "user": 1,
+          "account": "officer-a",
+          "question_id": "Q-EN-02",
+          "status": 200,
+          "abstained": false,
+          "claims": 1,
+          "started": 3354.243,
+          "seconds": 105.354
+        },
+        {
+          "user": 3,
+          "account": "officer-a",
+          "question_id": "Q-FR-08",
+          "status": 200,
+          "abstained": false,
+          "claims": 3,
+          "started": 3378.165,
+          "seconds": 143.787
+        },
+        {
+          "user": 4,
+          "account": "officer-b",
+          "question_id": "Q-NL-06",
+          "status": 200,
+          "abstained": false,
+          "claims": 1,
+          "started": 3401.371,
+          "seconds": 80.948
+        },
+        {
+          "user": 2,
+          "account": "officer-b",
+          "question_id": "Q-EN-10",
+          "status": 200,
+          "abstained": false,
+          "claims": 3,
+          "started": 3420.559,
+          "seconds": 127.907
+        },
+        {
+          "user": 1,
+          "account": "officer-a",
+          "question_id": "Q-EN-03",
+          "status": 200,
+          "abstained": false,
+          "claims": 1,
+          "started": 3459.597,
+          "seconds": 117.563
+        },
+        {
+          "user": 4,
+          "account": "officer-b",
+          "question_id": "Q-NL-07",
+          "status": 200,
+          "abstained": false,
+          "claims": 1,
+          "started": 3482.319,
+          "seconds": 117.065
+        },
+        {
+          "user": 3,
+          "account": "officer-a",
+          "question_id": "Q-FR-09",
+          "status": 200,
+          "abstained": false,
+          "claims": 1,
+          "started": 3521.951,
+          "seconds": 99.509
+        },
+        {
+          "user": 2,
+          "account": "officer-b",
+          "question_id": "Q-FR-01",
+          "status": 200,
+          "abstained": false,
+          "claims": 1,
+          "started": 3548.466,
+          "seconds": 94.346
+        },
+        {
+          "user": 1,
+          "account": "officer-a",
+          "question_id": "Q-EN-04",
+          "status": 503,
+          "abstained": null,
+          "claims": 0,
+          "started": 3577.16,
+          "seconds": 191.389
+        },
+        {
+          "user": 4,
+          "account": "officer-b",
+          "question_id": "Q-NL-08",
+          "status": 200,
+          "abstained": false,
+          "claims": 2,
+          "started": 3599.384,
+          "seconds": 81.185
+        },
+        {
+          "user": 3,
+          "account": "officer-a",
+          "question_id": "Q-FR-10",
+          "status": 200,
+          "abstained": false,
+          "claims": 1,
+          "started": 3621.461,
+          "seconds": 86.206
+        },
+        {
+          "user": 2,
+          "account": "officer-b",
+          "question_id": "Q-FR-02",
+          "status": 503,
+          "abstained": null,
+          "claims": 0,
+          "started": 3642.812,
+          "seconds": 95.247
+        },
+        {
+          "user": 4,
+          "account": "officer-b",
+          "question_id": "Q-NL-09",
+          "status": 200,
+          "abstained": false,
+          "claims": 2,
+          "started": 3680.569,
+          "seconds": 143.814
+        },
+        {
+          "user": 3,
+          "account": "officer-a",
+          "question_id": "Q-NL-01",
+          "status": 200,
+          "abstained": false,
+          "claims": 3,
+          "started": 3707.667,
+          "seconds": 200.254
+        },
+        {
+          "user": 2,
+          "account": "officer-b",
+          "question_id": "Q-FR-03",
+          "status": 503,
+          "abstained": null,
+          "claims": 0,
+          "started": 3738.059,
+          "seconds": 129.652
+        },
+        {
+          "user": 1,
+          "account": "officer-a",
+          "question_id": "Q-EN-05",
+          "status": 503,
+          "abstained": null,
+          "claims": 0,
+          "started": 3768.549,
+          "seconds": 183.245
+        },
+        {
+          "user": 4,
+          "account": "officer-b",
+          "question_id": "Q-NL-10",
+          "status": 200,
+          "abstained": false,
+          "claims": 3,
+          "started": 3824.382,
+          "seconds": 184.41
+        },
+        {
+          "user": 2,
+          "account": "officer-b",
+          "question_id": "Q-FR-04",
+          "status": 200,
+          "abstained": false,
+          "claims": 1,
+          "started": 3867.712,
+          "seconds": 216.879
+        },
+        {
+          "user": 3,
+          "account": "officer-a",
+          "question_id": "Q-NL-02",
+          "status": 200,
+          "abstained": false,
+          "claims": 1,
+          "started": 3907.921,
+          "seconds": 124.328
+        },
+        {
+          "user": 1,
+          "account": "officer-a",
+          "question_id": "Q-EN-06",
+          "status": 503,
+          "abstained": null,
+          "claims": 0,
+          "started": 3951.794,
+          "seconds": 108.33
+        },
+        {
+          "user": 4,
+          "account": "officer-b",
+          "question_id": "Q-EN-01",
+          "status": 200,
+          "abstained": false,
+          "claims": 1,
+          "started": 4008.792,
+          "seconds": 103.895
+        },
+        {
+          "user": 3,
+          "account": "officer-a",
+          "question_id": "Q-NL-03",
+          "status": 200,
+          "abstained": false,
+          "claims": 3,
+          "started": 4032.248,
+          "seconds": 113.64
+        },
+        {
+          "user": 1,
+          "account": "officer-a",
+          "question_id": "Q-EN-07",
+          "status": 200,
+          "abstained": false,
+          "claims": 3,
+          "started": 4060.124,
+          "seconds": 153.679
+        },
+        {
+          "user": 2,
+          "account": "officer-b",
+          "question_id": "Q-FR-05",
+          "status": 200,
+          "abstained": false,
+          "claims": 1,
+          "started": 4084.591,
+          "seconds": 88.564
+        },
+        {
+          "user": 4,
+          "account": "officer-b",
+          "question_id": "Q-EN-02",
+          "status": 200,
+          "abstained": false,
+          "claims": 1,
+          "started": 4112.687,
+          "seconds": 213.245
+        },
+        {
+          "user": 3,
+          "account": "officer-a",
+          "question_id": "Q-NL-04",
+          "status": 200,
+          "abstained": false,
+          "claims": 1,
+          "started": 4145.889,
+          "seconds": 127.312
+        },
+        {
+          "user": 2,
+          "account": "officer-b",
+          "question_id": "Q-FR-06",
+          "status": 503,
+          "abstained": null,
+          "claims": 0,
+          "started": 4173.154,
+          "seconds": 129.848
+        },
+        {
+          "user": 1,
+          "account": "officer-a",
+          "question_id": "Q-EN-08",
+          "status": 200,
+          "abstained": false,
+          "claims": 2,
+          "started": 4213.803,
+          "seconds": 32.258
+        }
+      ]
+    }
+  },
+  "method": "Each simulated user holds its own authenticated session and sends its share of the 30 questions one after another; users 1 and 3 are officer-a, users 2 and 4 officer-b on an identical corpus case.",
+  "warmup_first_question_with_indexing": {
+    "officer-a": {
+      "status": 200,
+      "seconds": 44.156
+    },
+    "officer-b": {
+      "status": 200,
+      "seconds": 34.026
+    }
+  }
+}

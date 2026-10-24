@@ -1,0 +1,51 @@
+{
+  "recorded_at": "2026-10-24T14:05:29+02:00",
+  "source_commit": "b138b95d7513c9bf67caab7dfef7147063b49b37",
+  "build": {
+    "name": "lab-app-13",
+    "phase": "Complete",
+    "output_image": "image-registry.openshift-image-registry.svc:5000/multimodal-ai-lab/lab-app:latest",
+    "image_digest": "sha256:497322ea83d7980a43ac311dc80e79bcb2dd4c03d95270b29e4e6085f4bcb6df"
+  },
+  "previous_image": "sha256:8cee7703d342f30dc04e730ff3b39dce13924551ee49dd005899f496d524a7c6",
+  "new_image": "sha256:497322ea83d7980a43ac311dc80e79bcb2dd4c03d95270b29e4e6085f4bcb6df",
+  "deployed": {
+    "lab-app": [
+      {
+        "pod": "lab-app-6cc4764847-kczqf",
+        "init": [
+          "image-registry.openshift-image-registry.svc:5000/multimodal-ai-lab/lab-app@sha256:497322ea83d7980a43ac311dc80e79bcb2dd4c03d95270b29e4e6085f4bcb6df"
+        ],
+        "containers": [
+          "image-registry.openshift-image-registry.svc:5000/multimodal-ai-lab/lab-app@sha256:497322ea83d7980a43ac311dc80e79bcb2dd4c03d95270b29e4e6085f4bcb6df"
+        ]
+      }
+    ],
+    "lab-inference-gateway": [
+      {
+        "pod": "lab-inference-gateway-6f5547bcdf-v8hkl",
+        "init": [],
+        "containers": [
+          "image-registry.openshift-image-registry.svc:5000/multimodal-ai-lab/lab-app@sha256:497322ea83d7980a43ac311dc80e79bcb2dd4c03d95270b29e4e6085f4bcb6df"
+        ]
+      }
+    ]
+  },
+  "source_check": "SHA-256 of /app/lab/*.py, app.py and requirements.txt in both running pods equals the files of the source commit (19 of 19).",
+  "unchanged": [
+    "lab-inference (Ollama 0.32.13, keep_alive 0, one parallel request, one loaded model, 3 CPUs, 5 GiB)",
+    "lab-vector",
+    "service LIMIT 3 and 0.45 similarity threshold",
+    "180 s inference timeout",
+    "lab-app resources (2 CPUs, 3 GiB)"
+  ],
+  "also_in_the_rebuilt_image": "Dependency pins already committed before this fix: Pillow 13.0.0 (was 12.3.0), pypdf 6.21.2 (was 6.19.0), MLflow client 3.17.2 (was 3.16.1); comment-only lab/cpe.py changes; browser UI files. None of them is on the generation path.",
+  "not_redeployed": {
+    "note": "The two CPE application deployments keep the previous image; only their gateway was updated.",
+    "images": {
+      "lab-cpe-a": "image-registry.openshift-image-registry.svc:5000/multimodal-ai-lab/lab-app@sha256:8cee7703d342f30dc04e730ff3b39dce13924551ee49dd005899f496d524a7c6",
+      "lab-cpe-b": "image-registry.openshift-image-registry.svc:5000/multimodal-ai-lab/lab-app@sha256:8cee7703d342f30dc04e730ff3b39dce13924551ee49dd005899f496d524a7c6"
+    }
+  },
+  "corpus_restored": "Passage P-EN-06 of the officer-a corpus case was reviewed back to its original text (case revision 121 to 122), undoing the correction made by the first M1 currency check."
+}
