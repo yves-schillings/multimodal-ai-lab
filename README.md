@@ -12,13 +12,17 @@ Optional local OKD deployment adds offline BGE-M3/pgvector/Qwen3 RAG, real passw
 
 The **offline RAG pipeline is implemented and accepted on the local OKD demonstrator**. BGE-M3 encodes reviewed passages, PostgreSQL with pgvector retrieves relevant evidence, and Qwen3:4b generates a cited answer. The application checks access and source revisions before delivery. Human review remains required.
 
+**Initial extended generation measurement:** with three passages per question, only **4 of 30 generations** passed the output and citation controls. The application withheld 26 prompt-copying or malformed outputs. This is separate from the earlier short-source acceptance and does not establish that all four accepted answers were factually correct. See the [frozen report, exact source snapshot and raw records](docs/evidence/article-v1.86-initial-m3/README.md). The laboratory implementation was not changed for this report.
+
+**Scope:** deployment of the full Red Hat OpenShift AI product has never been part of this Secloudis laboratory. Its views describe a reference architecture for a separately scoped project.
+
 | Capability | Current scope | Code and explanation |
 | --- | --- | --- |
 | Reviewed-source vector retrieval | Implemented per authorized case in the configured project database | [Vector index](lab/vector_retrieval.py), [RAG coordinator](lab/rag.py), [step-by-step request flow](docs/deployment/local-implementation.md#3-how-one-rag-request-works) |
 | Cited local generation | Implemented with pinned BGE-M3 and Qwen3:4b, with no remote fallback | [Model client](lab/local_inference.py), [scoped gateway](lab/inference_gateway.py), [accepted extension evidence](docs/evidence/2026-10-09-local-ai-extensions/README.md) |
 | Two isolated AI CPEs | Implemented with separate project vector databases and credentials | [CPE controller](scripts/local_cpe.py), [AI extension](scripts/extend_cpe_rag.py), [configuration and source map](docs/deployment/local-cpe.md) |
-| One authorized search across several project vector databases | Specified, not implemented or accepted. An allowed user must be checked independently by every contributing project | [Architecture and grants](https://secloudis.com/ai-lab-multimodal-cpe-configuration/#workspace-guide-3). Existing [case authorization](lab/store.py) is not a federated search coordinator |
-| Shared production OpenShift AI and remote GPU execution | Deployment targets, separate from accepted local OKD RAG | [Planning policy, not a live connector](lab/deployment_policy.py) |
+| One authorized search across several project vector databases | Specified, not implemented or accepted. An allowed user must be checked independently by every contributing project | [Architecture and grants](https://secloudis.com/ai-lab-multimodal-case-processing/#cpe-workspace-guide-3). Existing [case authorization](lab/store.py) is not a federated search coordinator |
+| Shared OpenShift AI and remote GPU execution | Reference architectures outside laboratory scope, separate from accepted local OKD RAG | [Planning policy, not a live connector](lab/deployment_policy.py) |
 
 The default direct-Python, browser-only and Compose demonstrations retain their documented execution profiles. Their lexical or extractive baseline does not mean that the separately configured OKD RAG is unimplemented.
 
