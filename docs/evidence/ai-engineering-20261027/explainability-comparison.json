@@ -1,0 +1,567 @@
+{
+  "ok": true,
+  "scenario": "Two fitted synthetic invoice-review models with local explanations",
+  "intended_use": "Engineering comparison only. Scores support review, not proof of wrongdoing.",
+  "production_approval": false,
+  "environment": {
+    "python_version": "3.12.14",
+    "packages": {
+      "numpy": "2.5.4",
+      "scipy": "1.18.1",
+      "scikit-learn": "1.9.1",
+      "shap": "0.54.1",
+      "lime": "0.2.0.1"
+    },
+    "device": "CPU",
+    "gpu_used": false
+  },
+  "parameters": {
+    "seed": 1729,
+    "n_samples": 800,
+    "test_fraction": 0.25,
+    "lime_samples": 4000,
+    "case_index": 0,
+    "threads_limit": 1
+  },
+  "case": {
+    "origin": "fixed fictional high-score example",
+    "features": {
+      "amount_ratio": 2.4,
+      "purchase_order_match": 0.0,
+      "supplier_history_days": 90.0,
+      "duplicate_reference": 1.0,
+      "delivery_confirmed": 0.0,
+      "recent_bank_change": 1.0
+    },
+    "feature_labels": {
+      "amount_ratio": "Amount versus supplier median",
+      "purchase_order_match": "Purchase order matched",
+      "supplier_history_days": "Supplier history",
+      "duplicate_reference": "Repeated invoice reference",
+      "delivery_confirmed": "Delivery confirmation recorded",
+      "recent_bank_change": "Recent bank-detail change"
+    },
+    "positive_class": 1,
+    "positive_class_label": "review suggested",
+    "decision_threshold": 0.5,
+    "ground_truth_label": null,
+    "ground_truth_note": "This explicit fictional input is not a labelled held-out observation."
+  },
+  "linear_baseline": {
+    "ok": true,
+    "scenario": "Synthetic invoice-review score with two local explanation methods",
+    "intended_use": "Engineering exercise only. The score supports review and is not proof of wrongdoing.",
+    "environment": {
+      "python_version": "3.12.14",
+      "packages": {
+        "numpy": "2.5.4",
+        "scipy": "1.18.1",
+        "scikit-learn": "1.9.1",
+        "shap": "0.54.1",
+        "lime": "0.2.0.1"
+      },
+      "device": "CPU",
+      "gpu_used": false
+    },
+    "parameters": {
+      "seed": 1729,
+      "n_samples": 800,
+      "test_fraction": 0.25,
+      "lime_samples": 4000,
+      "case_index": 0,
+      "threads_limit": 1
+    },
+    "training": {
+      "data_origin": "Entirely synthetic features and labels generated with a seeded probabilistic rule",
+      "dataset_sha256": "930fcf37c2ca6c854d8f1aec324d677ee1abaa8100f33efaec08b53e4687358a",
+      "model": "StandardScaler followed by sklearn LogisticRegression",
+      "model_parameters": {
+        "C": 1.0,
+        "solver": "lbfgs",
+        "max_iter": 1000
+      },
+      "train_rows": 600,
+      "test_rows": 200,
+      "train_test_index_overlap": 0,
+      "test_metrics": {
+        "accuracy": 0.86,
+        "roc_auc": 0.8186666666666667,
+        "brier_score": 0.12763486228359075
+      }
+    },
+    "case": {
+      "origin": "caller-provided numeric demonstration input",
+      "synthetic_record_index": null,
+      "features": {
+        "amount_ratio": 2.4,
+        "purchase_order_match": 0.0,
+        "supplier_history_days": 90.0,
+        "duplicate_reference": 1.0,
+        "delivery_confirmed": 0.0,
+        "recent_bank_change": 1.0
+      },
+      "feature_labels": {
+        "amount_ratio": "Amount versus supplier median",
+        "purchase_order_match": "Purchase order matched",
+        "supplier_history_days": "Supplier history",
+        "duplicate_reference": "Repeated invoice reference",
+        "delivery_confirmed": "Delivery confirmation recorded",
+        "recent_bank_change": "Recent bank-detail change"
+      },
+      "positive_class": 1,
+      "positive_class_label": "review suggested",
+      "probability_review_suggested": 0.9980986014276059,
+      "predicted_class": 1,
+      "predicted_label": "review suggested",
+      "decision_threshold": 0.5,
+      "synthetic_reference_label": null
+    },
+    "shap": {
+      "library": "shap",
+      "method": "LinearExplainer with Independent masker",
+      "explained_class": 1,
+      "explained_class_label": "review suggested",
+      "output_space": "log-odds of class 1, not additive probability points",
+      "background_source": "80 rows sampled only from the training split",
+      "background_rows": 80,
+      "base_value_log_odds": -1.5209681628700011,
+      "base_probability_after_sigmoid": 0.17931899674475374,
+      "background_mean_predicted_probability": 0.24149382387183027,
+      "base_value_note": "The base is the mean linear output over the supplied background. Sigmoid(base) need not equal the mean background probability.",
+      "contributions": [
+        {
+          "feature_key": "amount_ratio",
+          "feature": "Amount versus supplier median",
+          "value": 2.4,
+          "contribution_log_odds": 1.1794200180888634
+        },
+        {
+          "feature_key": "purchase_order_match",
+          "feature": "Purchase order matched",
+          "value": 0.0,
+          "contribution_log_odds": 1.4371903021965218
+        },
+        {
+          "feature_key": "supplier_history_days",
+          "feature": "Supplier history",
+          "value": 90.0,
+          "contribution_log_odds": 1.0323125114185507
+        },
+        {
+          "feature_key": "duplicate_reference",
+          "feature": "Repeated invoice reference",
+          "value": 1.0,
+          "contribution_log_odds": 1.8741743992558781
+        },
+        {
+          "feature_key": "delivery_confirmed",
+          "feature": "Delivery confirmation recorded",
+          "value": 0.0,
+          "contribution_log_odds": 1.2380464416060657
+        },
+        {
+          "feature_key": "recent_bank_change",
+          "feature": "Recent bank-detail change",
+          "value": 1.0,
+          "contribution_log_odds": 1.023086854636693
+        }
+      ],
+      "model_margin_log_odds": 6.263262364332571,
+      "reconstructed_margin_log_odds": 6.263262364332573,
+      "reconstruction_absolute_error": 1.7763568394002505e-15,
+      "reconstruction_tolerance": 1e-08,
+      "reconstruction_passed": true,
+      "probability_after_sigmoid": 0.9980986014276059
+    },
+    "lime": {
+      "library": "lime",
+      "method": "LimeTabularExplainer, local weighted linear surrogate",
+      "explained_class": 1,
+      "explained_class_label": "review suggested",
+      "output_space": "class-1 probability approximated by a local linear surrogate",
+      "num_samples": 4000,
+      "discretize_continuous": false,
+      "sample_around_instance": true,
+      "kernel_width": 1.8371173070873834,
+      "intercept": 0.09556920438097849,
+      "contributions": [
+        {
+          "condition": "Repeated invoice reference=repeated",
+          "weight": 0.281786114289947
+        },
+        {
+          "condition": "Purchase order matched=not matched",
+          "weight": 0.2806637465206034
+        },
+        {
+          "condition": "Delivery confirmation recorded=not confirmed",
+          "weight": 0.23939036368218278
+        },
+        {
+          "condition": "Recent bank-detail change=changed",
+          "weight": 0.15879006444295884
+        },
+        {
+          "condition": "Amount versus supplier median",
+          "weight": 0.14350816661697582
+        },
+        {
+          "condition": "Supplier history",
+          "weight": -0.09876784017965905
+        }
+      ],
+      "model_probability": 0.9980986014276059,
+      "surrogate_probability_at_case": 1.4251149187993795,
+      "case_absolute_error": 0.4270163173717736,
+      "fit_neighbourhood_weighted_r2": 0.9071983397885074,
+      "fit_metric_note": "LIME's score describes its fitted perturbation sample. It is not independent validation or global model accuracy.",
+      "independent_neighbourhood": {
+        "rows": 256,
+        "seed": 11030,
+        "generation": "Valid-domain numeric jitter and occasional binary flips around this case, separate from LIME fitting samples",
+        "weighted_mae_probability": 0.34908837749000177,
+        "weighted_rmse_probability": 0.37135319185069926,
+        "weighted_r2": -100.99591671855529,
+        "surrogate_outside_probability_range_count": 241
+      }
+    },
+    "checks": {
+      "same_explained_class": true,
+      "shap_reconstruction_passed": true,
+      "shap_probability_matches_model": true,
+      "train_test_separated": true
+    },
+    "quality_assessment": {
+      "execution_ok": true,
+      "shap_numerical_reconstruction_passed": true,
+      "lime_case_in_probability_range": false,
+      "lime_case_error": 0.4270163173717736,
+      "lime_illustrative_error_threshold": 0.05,
+      "lime_illustrative_gate_passed": false,
+      "illustrative_only": true,
+      "note": "The LIME threshold is a proposed teaching diagnostic, not production or business acceptance. SHAP reconstruction checks numerical additivity, not causal truth or model suitability."
+    },
+    "timing_seconds": {
+      "total": 5.429750399998738,
+      "shap": 0.001993799989577383,
+      "lime_with_fidelity": 0.07406569999875501
+    },
+    "limitations": [
+      "Synthetic labels and limited numeric features do not establish usefulness on real invoices.",
+      "The default classifier is a small transparent linear baseline, not XGBoost or a deployed decision system.",
+      "SHAP values are additive in class-1 log-odds. LIME weights describe a local probability surrogate and cannot be compared as identical units.",
+      "The SHAP background and the LIME perturbation distribution influence the explanations.",
+      "LIME's fitted weighted R2 is not global predictor accuracy. Independent local metrics remain limited to the stated artificial neighbourhood.",
+      "Continuous LIME fitting perturbations can be implausible, and local surrogate predictions need not stay within [0, 1].",
+      "Neither method proves real-world causation, fairness, legal compliance or wrongdoing.",
+      "This run uses CPU only. It does not claim that SHAP has no optional GPU implementation.",
+      "No MLflow registry, tracking server or production release gate is exercised by this helper.",
+      "Execution timings describe this local run and are not production performance benchmarks."
+    ]
+  },
+  "linear_coefficients": {
+    "output_space": "class-1 log-odds",
+    "intercept_standardized_space": -1.5128292132352,
+    "intercept_original_units": 0.804934471926807,
+    "reconstructed_margin_original_units": 6.263262364332571,
+    "interpretation": "Holding other inputs fixed, the coefficient is an association learned from synthetic data, not a causal effect. Positive coefficients increase class-1 log-odds when that input increases.",
+    "features": [
+      {
+        "feature_key": "amount_ratio",
+        "feature": "Amount versus supplier median",
+        "unit": "ratio",
+        "training_mean": 1.2063661387268176,
+        "training_standard_deviation": 0.8361843092763349,
+        "coefficient_per_training_standard_deviation": 0.8528576471850077,
+        "coefficient_per_original_unit": 1.0199397880631156,
+        "interpretation_increment": 1.0,
+        "log_odds_change_for_increment": 1.0199397880631156,
+        "odds_multiplier_for_increment": 2.7730277895631783,
+        "binary_interpretation": null
+      },
+      {
+        "feature_key": "purchase_order_match",
+        "feature": "Purchase order matched",
+        "unit": "0 or 1",
+        "training_mean": 0.795,
+        "training_standard_deviation": 0.40370162248868763,
+        "coefficient_per_training_standard_deviation": -0.7609128614055647,
+        "coefficient_per_original_unit": -1.884839740585602,
+        "interpretation_increment": 1.0,
+        "log_odds_change_for_increment": -1.884839740585602,
+        "odds_multiplier_for_increment": 0.15185339341540643,
+        "binary_interpretation": "Change from 0 to 1"
+      },
+      {
+        "feature_key": "supplier_history_days",
+        "feature": "Supplier history",
+        "unit": "days",
+        "training_mean": 1052.59,
+        "training_standard_deviation": 579.4981120763036,
+        "coefficient_per_training_standard_deviation": -0.5962109395189215,
+        "coefficient_per_original_unit": -0.001028840175825141,
+        "interpretation_increment": 365.0,
+        "log_odds_change_for_increment": -0.3755266641761765,
+        "odds_multiplier_for_increment": 0.6869274034509164,
+        "binary_interpretation": null
+      },
+      {
+        "feature_key": "duplicate_reference",
+        "feature": "Repeated invoice reference",
+        "unit": "0 or 1",
+        "training_mean": 0.11166666666666666,
+        "training_standard_deviation": 0.3149559052029686,
+        "coefficient_per_training_standard_deviation": 0.6381430210009352,
+        "coefficient_per_original_unit": 2.0261344856820305,
+        "interpretation_increment": 1.0,
+        "log_odds_change_for_increment": 2.0261344856820305,
+        "odds_multiplier_for_increment": 7.584710811319443,
+        "binary_interpretation": "Change from 0 to 1"
+      },
+      {
+        "feature_key": "delivery_confirmed",
+        "feature": "Delivery confirmation recorded",
+        "unit": "0 or 1",
+        "training_mean": 0.8216666666666667,
+        "training_standard_deviation": 0.38279309758086855,
+        "coefficient_per_training_standard_deviation": -0.6017976283572797,
+        "coefficient_per_original_unit": -1.5721224655315118,
+        "interpretation_increment": 1.0,
+        "log_odds_change_for_increment": -1.5721224655315118,
+        "odds_multiplier_for_increment": 0.2076040819043153,
+        "binary_interpretation": "Change from 0 to 1"
+      },
+      {
+        "feature_key": "recent_bank_change",
+        "feature": "Recent bank-detail change",
+        "unit": "0 or 1",
+        "training_mean": 0.09166666666666666,
+        "training_standard_deviation": 0.28855482821967876,
+        "coefficient_per_training_standard_deviation": 0.31075437009842355,
+        "coefficient_per_original_unit": 1.076933531196519,
+        "interpretation_increment": 1.0,
+        "log_odds_change_for_increment": 1.076933531196519,
+        "odds_multiplier_for_increment": 2.935663613696182,
+        "binary_interpretation": "Change from 0 to 1"
+      }
+    ]
+  },
+  "linear_contributors_increasing_score": [
+    {
+      "feature_key": "duplicate_reference",
+      "feature": "Repeated invoice reference",
+      "value": 1.0,
+      "contribution_log_odds": 1.8741743992558781
+    },
+    {
+      "feature_key": "purchase_order_match",
+      "feature": "Purchase order matched",
+      "value": 0.0,
+      "contribution_log_odds": 1.4371903021965218
+    },
+    {
+      "feature_key": "delivery_confirmed",
+      "feature": "Delivery confirmation recorded",
+      "value": 0.0,
+      "contribution_log_odds": 1.2380464416060657
+    },
+    {
+      "feature_key": "amount_ratio",
+      "feature": "Amount versus supplier median",
+      "value": 2.4,
+      "contribution_log_odds": 1.1794200180888634
+    },
+    {
+      "feature_key": "supplier_history_days",
+      "feature": "Supplier history",
+      "value": 90.0,
+      "contribution_log_odds": 1.0323125114185507
+    },
+    {
+      "feature_key": "recent_bank_change",
+      "feature": "Recent bank-detail change",
+      "value": 1.0,
+      "contribution_log_odds": 1.023086854636693
+    }
+  ],
+  "tree_model": {
+    "training": {
+      "model": "sklearn HistGradientBoostingClassifier",
+      "model_parameters": {
+        "max_iter": 80,
+        "max_leaf_nodes": 7,
+        "learning_rate": 0.08,
+        "l2_regularization": 1.0,
+        "early_stopping": false,
+        "random_state": 1729
+      },
+      "dataset_sha256": "930fcf37c2ca6c854d8f1aec324d677ee1abaa8100f33efaec08b53e4687358a",
+      "train_rows": 600,
+      "test_rows": 200,
+      "train_test_index_overlap": 0,
+      "test_metrics": {
+        "accuracy": 0.81,
+        "roc_auc": 0.8100666666666666,
+        "brier_score": 0.13816546807024463
+      }
+    },
+    "case": {
+      "probability_review_suggested": 0.909404959651305,
+      "predicted_class": 1,
+      "predicted_label": "review suggested",
+      "decision_threshold": 0.5
+    },
+    "shap": {
+      "library": "shap",
+      "method": "TreeExplainer with tree_path_dependent background",
+      "explained_class": 1,
+      "explained_class_label": "review suggested",
+      "output_space": "class-1 raw margin, verified as log-odds by sigmoid against predict_proba",
+      "background_source": "Training path counts stored in the fitted tree ensemble. No held-out background rows.",
+      "base_value_log_odds": -1.5782440762308396,
+      "base_probability_after_sigmoid": 0.17104430741847854,
+      "contributions": [
+        {
+          "feature_key": "amount_ratio",
+          "feature": "Amount versus supplier median",
+          "value": 2.4,
+          "contribution_log_odds": 0.830506163041926
+        },
+        {
+          "feature_key": "purchase_order_match",
+          "feature": "Purchase order matched",
+          "value": 0.0,
+          "contribution_log_odds": 0.6304534664038732
+        },
+        {
+          "feature_key": "supplier_history_days",
+          "feature": "Supplier history",
+          "value": 90.0,
+          "contribution_log_odds": 0.753446501043311
+        },
+        {
+          "feature_key": "duplicate_reference",
+          "feature": "Repeated invoice reference",
+          "value": 1.0,
+          "contribution_log_odds": 0.5761349945182731
+        },
+        {
+          "feature_key": "delivery_confirmed",
+          "feature": "Delivery confirmation recorded",
+          "value": 0.0,
+          "contribution_log_odds": 0.7263011888656672
+        },
+        {
+          "feature_key": "recent_bank_change",
+          "feature": "Recent bank-detail change",
+          "value": 1.0,
+          "contribution_log_odds": 0.36779278823360106
+        }
+      ],
+      "contributors_increasing_score": [
+        {
+          "feature_key": "amount_ratio",
+          "feature": "Amount versus supplier median",
+          "value": 2.4,
+          "contribution_log_odds": 0.830506163041926
+        },
+        {
+          "feature_key": "supplier_history_days",
+          "feature": "Supplier history",
+          "value": 90.0,
+          "contribution_log_odds": 0.753446501043311
+        },
+        {
+          "feature_key": "delivery_confirmed",
+          "feature": "Delivery confirmation recorded",
+          "value": 0.0,
+          "contribution_log_odds": 0.7263011888656672
+        },
+        {
+          "feature_key": "purchase_order_match",
+          "feature": "Purchase order matched",
+          "value": 0.0,
+          "contribution_log_odds": 0.6304534664038732
+        },
+        {
+          "feature_key": "duplicate_reference",
+          "feature": "Repeated invoice reference",
+          "value": 1.0,
+          "contribution_log_odds": 0.5761349945182731
+        },
+        {
+          "feature_key": "recent_bank_change",
+          "feature": "Recent bank-detail change",
+          "value": 1.0,
+          "contribution_log_odds": 0.36779278823360106
+        }
+      ],
+      "contributors_decreasing_score": [],
+      "model_margin_log_odds": 2.30639102587581,
+      "reconstructed_margin_log_odds": 2.3063910258758122,
+      "reconstruction_absolute_error": 2.220446049250313e-15,
+      "reconstruction_tolerance": 1e-08,
+      "reconstruction_passed": true,
+      "probability_after_sigmoid": 0.9094049596513052
+    }
+  },
+  "model_comparison": {
+    "evaluation_rows": 200,
+    "same_split_dataset_sha256": "930fcf37c2ca6c854d8f1aec324d677ee1abaa8100f33efaec08b53e4687358a",
+    "metrics": [
+      {
+        "model_id": "logistic_regression",
+        "model": "StandardScaler followed by sklearn LogisticRegression",
+        "accuracy": 0.86,
+        "roc_auc": 0.8186666666666667,
+        "brier_score": 0.12763486228359075
+      },
+      {
+        "model_id": "hist_gradient_boosting",
+        "model": "sklearn HistGradientBoostingClassifier",
+        "accuracy": 0.81,
+        "roc_auc": 0.8100666666666666,
+        "brier_score": 0.13816546807024463
+      }
+    ],
+    "metric_meaning": "Accuracy is thresholded correctness, AUROC measures ranking, and lower Brier score indicates better probability error on this split.",
+    "interpretation": "One fixed synthetic split is descriptive only. The label-generating rule is linear, so this exercise is not a neutral benchmark of model families. No real-data superiority is established."
+  },
+  "checks": {
+    "same_training_and_heldout_rows": true,
+    "train_test_separated": true,
+    "linear_shap_reconstruction_passed": true,
+    "tree_shap_reconstruction_passed": true,
+    "tree_sigmoid_matches_probability": true,
+    "linear_raw_coefficients_reconstruct_margin": true,
+    "same_explained_class": true
+  },
+  "quality_assessment": {
+    "execution_ok": true,
+    "numerical_checks_passed": true,
+    "lime_assessment": {
+      "execution_ok": true,
+      "shap_numerical_reconstruction_passed": true,
+      "lime_case_in_probability_range": false,
+      "lime_case_error": 0.4270163173717736,
+      "lime_illustrative_error_threshold": 0.05,
+      "lime_illustrative_gate_passed": false,
+      "illustrative_only": true,
+      "note": "The LIME threshold is a proposed teaching diagnostic, not production or business acceptance. SHAP reconstruction checks numerical additivity, not causal truth or model suitability."
+    },
+    "model_quality_accepted_for_real_use": false,
+    "illustrative_only": true
+  },
+  "timing_seconds": {
+    "total": 5.51293889999215
+  },
+  "limitations": [
+    "Entirely synthetic data, six limited numeric features and one fixed held-out split do not establish usefulness on real invoices.",
+    "The displayed high-score input has no observed ground-truth label and must not be described as a detected wrong invoice.",
+    "Both SHAP methods reconstruct class-1 log-odds. Their background assumptions differ, so their contribution sizes are not a direct causal comparison.",
+    "Linear coefficients are global fitted associations holding other inputs fixed. Tree SHAP values are local contributions relative to the ensemble background.",
+    "LIME is retained as a diagnostic counterexample. Its raw surrogate can exceed [0, 1] and must not replace the classifier's probability.",
+    "No SHAP value, coefficient or LIME explanation proves causation, fairness, wrongdoing or production readiness.",
+    "CPU execution, local model fitting and explanation are exercised. No MLflow tracking service, registry, real invoice ingestion or production deployment is exercised."
+  ]
+}

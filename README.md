@@ -8,6 +8,10 @@ A synthetic-data lab for document classification, speech transcription, reviewed
 
 Optional local OKD deployment adds offline BGE-M3/pgvector/Qwen3 RAG, real password sessions, case authorization and recurring MLflow classifier evaluation. See the [implementation guide](docs/deployment/local-implementation.md), [isolated CPE profiles](docs/deployment/local-cpe.md) and [free Jupyter/KServe/training platform](docs/deployment/local-ai-platform.md). These are opt-in server features; the default desktop demo still uses simulated actors. Exact deployment acceptance and remaining limits are recorded separately from unit tests.
 
+## AI Engineering exercises
+
+The [AI Engineering guide](docs/engineering/README.md) maps the executable bounded search, concurrent CPU/GPU vision tests, linear/tree explanations and evidence gate. Open `/engineering` in the optional local Python profile. The [retained results](docs/evidence/ai-engineering-20261027/README.md) include failed checks. The random-weight performance probe has no accepted detection quality, and the evidence gate does not grant production approval.
+
 ## RAG implementation and project scope
 
 The **offline RAG pipeline is implemented and accepted on the local OKD demonstrator**. BGE-M3 encodes reviewed passages, PostgreSQL with pgvector retrieves relevant evidence, and Qwen3:4b generates a cited answer. The application checks access and source revisions before delivery. Human review remains required.

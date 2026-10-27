@@ -1,0 +1,286 @@
+{
+  "schema_version": 1,
+  "started_at_utc": "2026-10-27T20:43:28.597967+00:00",
+  "scope": "Synthetic vision engineering demonstration, not a production quality or capacity acceptance",
+  "weights_downloaded": false,
+  "packages_installed": false,
+  "cluster_execution_claimed": false,
+  "gpu_tensor_allocator_budget_mib": 256,
+  "runtime": {
+    "python": "3.12.3",
+    "platform": "Linux",
+    "torch": "2.8.0+cu126",
+    "torch_compiled_cuda": "12.6",
+    "cuda_available": true,
+    "cpu_threads": 1,
+    "cudnn_enabled": false,
+    "gpu": "NVIDIA GeForce RTX 2080 Ti",
+    "gpu_compute_capability": [
+      7,
+      5
+    ]
+  },
+  "dataset": {
+    "synthetic_only": true,
+    "image_format": "32x32 grayscale unsigned 8-bit arrays",
+    "labels": [
+      "continuous_synthetic_seal",
+      "interrupted_synthetic_seal"
+    ],
+    "training_count": 256,
+    "held_out_count": 64,
+    "training_seed": 47,
+    "held_out_seed": 10047,
+    "image_hash_overlap": 0,
+    "task": "Distinguish continuous and interrupted synthetic seal stripes"
+  },
+  "training": {
+    "device": "cpu",
+    "seed": 47,
+    "epochs": 20,
+    "batch_size": 32,
+    "optimizer": "Adam",
+    "learning_rate": 0.01,
+    "loss_by_epoch": [
+      0.6695294827222824,
+      0.44424736127257347,
+      0.09463598090223968,
+      0.004106147898710333,
+      0.000311374138618703,
+      5.51637276657857e-05,
+      2.412508945326408e-05,
+      1.6610758905244438e-05,
+      1.2246312053321162e-05,
+      1.0598505127745739e-05,
+      9.524352321932383e-06,
+      9.241248847047245e-06,
+      8.960009154179716e-06,
+      8.747677156861755e-06,
+      8.542330249383667e-06,
+      8.364454714637759e-06,
+      8.158642970101937e-06,
+      7.982630705782867e-06,
+      7.80848048975713e-06,
+      7.625950502188061e-06
+    ],
+    "duration_seconds": 0.6845313060000002
+  },
+  "model": {
+    "architecture": "Conv2d(1,4)-ReLU-MaxPool-Conv2d(4,8)-ReLU-MaxPool-Linear(512,2)",
+    "parameters": 1362,
+    "weights_sha256": "8b86677ceff473789c923dcfff25a504d0797a6da3b5020743721117851364a4",
+    "checkpoint_file": "tiny_synthetic_seal_cnn.pt",
+    "checkpoint_sha256": "4ed3ab49b97b7535a77037f15cf8ce463ba09b1194c80c6815df2cf2336ea818",
+    "preprocessing_version": "gray32-u8-div255-v1",
+    "quality_threshold": 0.95
+  },
+  "quality": {
+    "cpu": {
+      "samples": 64,
+      "correct": 64,
+      "accuracy": 1.0,
+      "confusion_matrix": [
+        [
+          32,
+          0
+        ],
+        [
+          0,
+          32
+        ]
+      ]
+    },
+    "cuda:0": {
+      "samples": 64,
+      "correct": 64,
+      "accuracy": 1.0,
+      "confusion_matrix": [
+        [
+          32,
+          0
+        ],
+        [
+          0,
+          32
+        ]
+      ]
+    }
+  },
+  "benchmarks": [
+    {
+      "device": "cpu",
+      "batch_size_images": 1,
+      "model_call": {
+        "samples": 40,
+        "batch_size_images": 1,
+        "p50_ms": 0.12626,
+        "p95_ms": 0.16256044999999994,
+        "mean_ms": 0.13039355,
+        "throughput_images_per_second": 7669.0909941481
+      },
+      "full_pipeline": {
+        "samples": 40,
+        "batch_size_images": 1,
+        "p50_ms": 0.316351,
+        "p95_ms": 0.9555131499999999,
+        "mean_ms": 0.4024587,
+        "throughput_images_per_second": 2484.727004286403
+      },
+      "model_scope": "Synchronized wall time for forward call on an already prepared device tensor",
+      "pipeline_scope": "Input validation, tensor conversion/normalization, device transfer, forward call, softmax and CPU result conversion; cache disabled"
+    },
+    {
+      "device": "cpu",
+      "batch_size_images": 8,
+      "model_call": {
+        "samples": 40,
+        "batch_size_images": 8,
+        "p50_ms": 0.4786625,
+        "p95_ms": 0.8239501999999996,
+        "mean_ms": 0.538054775,
+        "throughput_images_per_second": 14868.37469289256
+      },
+      "full_pipeline": {
+        "samples": 40,
+        "batch_size_images": 8,
+        "p50_ms": 1.7520575000000003,
+        "p95_ms": 3.1654655499999977,
+        "mean_ms": 2.06406005,
+        "throughput_images_per_second": 3875.856228117006
+      },
+      "model_scope": "Synchronized wall time for forward call on an already prepared device tensor",
+      "pipeline_scope": "Input validation, tensor conversion/normalization, device transfer, forward call, softmax and CPU result conversion; cache disabled"
+    },
+    {
+      "device": "cuda:0",
+      "batch_size_images": 1,
+      "model_call": {
+        "samples": 40,
+        "batch_size_images": 1,
+        "p50_ms": 0.36055,
+        "p95_ms": 0.7468559999999999,
+        "mean_ms": 0.4226843,
+        "throughput_images_per_second": 2365.8318986534396
+      },
+      "full_pipeline": {
+        "samples": 40,
+        "batch_size_images": 1,
+        "p50_ms": 0.8331515,
+        "p95_ms": 1.8193889999999997,
+        "mean_ms": 1.065001975,
+        "throughput_images_per_second": 938.9653948763804
+      },
+      "model_scope": "Synchronized wall time for forward call on an already prepared device tensor",
+      "pipeline_scope": "Input validation, tensor conversion/normalization, device transfer, forward call, softmax and CPU result conversion; cache disabled"
+    },
+    {
+      "device": "cuda:0",
+      "batch_size_images": 8,
+      "model_call": {
+        "samples": 40,
+        "batch_size_images": 8,
+        "p50_ms": 0.9634365,
+        "p95_ms": 2.0226200499999982,
+        "mean_ms": 1.12016895,
+        "throughput_images_per_second": 7141.779818124756
+      },
+      "full_pipeline": {
+        "samples": 40,
+        "batch_size_images": 8,
+        "p50_ms": 2.3792385000000005,
+        "p95_ms": 5.0224820999999995,
+        "mean_ms": 2.96956705,
+        "throughput_images_per_second": 2693.995409196098
+      },
+      "model_scope": "Synchronized wall time for forward call on an already prepared device tensor",
+      "pipeline_scope": "Input validation, tensor conversion/normalization, device transfer, forward call, softmax and CPU result conversion; cache disabled"
+    }
+  ],
+  "http_benchmarks": [
+    {
+      "device": "cpu",
+      "samples": 30,
+      "batch_size_images": 1,
+      "p50_ms": 1.2301669999999998,
+      "p95_ms": 2.2083749999999998,
+      "mean_ms": 1.3800338666666667,
+      "throughput_images_per_second": 724.6198982169907,
+      "scope": "Sequential localhost HTTP request, JSON parsing, uncached pipeline and response. Test server closes after measurement.",
+      "bind_address": "127.0.0.1",
+      "authentication_claimed": false
+    },
+    {
+      "device": "cuda:0",
+      "samples": 30,
+      "batch_size_images": 1,
+      "p50_ms": 2.0280050000000003,
+      "p95_ms": 3.9085042499999982,
+      "mean_ms": 2.3507666666666664,
+      "throughput_images_per_second": 425.39313415481473,
+      "scope": "Sequential localhost HTTP request, JSON parsing, uncached pipeline and response. Test server closes after measurement.",
+      "bind_address": "127.0.0.1",
+      "authentication_claimed": false
+    }
+  ],
+  "cache_demonstration": {
+    "checks": {
+      "first_request_missed_cache": true,
+      "repeat_request_hit_cache": true,
+      "repeat_did_not_recompute": true,
+      "actual_weight_change_has_new_fingerprint": true,
+      "weight_change_has_no_cached_result": true,
+      "preprocessing_version_change_has_no_cached_result": true,
+      "input_change_has_no_cached_result": true
+    },
+    "passed": true,
+    "key_components": [
+      "actual weights fingerprint",
+      "preprocessing version",
+      "validated pixel digest"
+    ],
+    "cache_does_not_grant_access": true,
+    "scope": "Synthetic fixtures only. A changed preprocessor key demonstrates invalidation, not acceptance of a new preprocessing algorithm."
+  },
+  "gpu_memory": {
+    "peak_tensor_allocated_bytes": 18102272,
+    "peak_allocator_reserved_bytes": 25165824,
+    "scope": "PyTorch allocator only; excludes driver/context overhead and other processes"
+  },
+  "cpu_cuda_comparison": {
+    "same_weights": true,
+    "samples": 64,
+    "classification_agreement": 64,
+    "max_absolute_probability_difference": 1.0550138540565968e-10,
+    "probability_tolerance": 1e-05,
+    "passed": true
+  },
+  "timing_protocol": {
+    "warmup_calls": 10,
+    "measured_calls_per_case": 40,
+    "clock": "perf_counter_ns, synchronized at CUDA measurement boundaries",
+    "batch_sizes": [
+      1,
+      8
+    ],
+    "load": "One process, sequential calls. This does not establish concurrent peak service capacity.",
+    "cache_enabled_during_timings": false
+  },
+  "synthetic_acceptance": {
+    "quality_passed": true,
+    "cache_checks_passed": true,
+    "cpu_cuda_consistency_passed": true,
+    "production_approval": false
+  },
+  "limitations": [
+    "Fictional stripe images and a tiny trained CNN do not validate real packaging inspection.",
+    "This run does not execute YOLO, TensorRT or Triton.",
+    "The CUDA route is the host interpreter; it does not provision a GPU inside OKD.",
+    "Batching and cache effects are workload-specific. No speed-up is guaranteed.",
+    "The optional localhost HTTP demo has no authentication and must not serve sensitive or production data.",
+    "PyTorch allocator limits exclude CUDA driver/context overhead.",
+    "The memory-bounded exercise disables cuDNN. It does not measure an optimized production inference server."
+  ],
+  "status": "passed",
+  "completed_at_utc": "2026-10-27T20:43:33.761267+00:00",
+  "record_role": "Earlier trained synthetic micro-benchmark, not the ResNet open-loop load experiment"
+}

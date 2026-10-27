@@ -1,0 +1,280 @@
+{
+  "recorded_at": "2026-10-27T20:49:55.351560+00:00",
+  "purpose": "Actual bounded search-controller/CPU-LLM trial on synthetic reviewed case evidence.",
+  "retrieval": "reviewed-only lexical; no pgvector or embedding call exercised",
+  "identity": "simulated case actors; existing local-session controls have separate behavior tests",
+  "generation_model": "qwen3:4b",
+  "generation_digest": "359d7dd4bcdab3d86b87d73ac27966f4dbb9f5efdfcc75d34a8764a09474fae7",
+  "options": {
+    "num_gpu": 0,
+    "num_ctx_max": 4096,
+    "num_predict_max": 384,
+    "keep_alive": 0,
+    "max_attempts": 3,
+    "max_seconds_per_question": 90.0
+  },
+  "limitations": [
+    "Three synthetic questions cannot establish general answer quality.",
+    "Exact source quotes do not establish entailment or the truth of a statement.",
+    "The deadline rejects late output; phase timeouts do not cancel server computation.",
+    "Cluster serving, pgvector, GPU latency, real user identity and deployment are not accepted here."
+  ],
+  "trials": [
+    {
+      "id": "supported_location",
+      "question": "Where was the blue bicycle left?",
+      "expectation": "supported",
+      "result": {
+        "case_id": "demo-case-a",
+        "case_revision": 4,
+        "mode": "bounded_agentic_rag",
+        "generation_model": "qwen3:4b",
+        "generation_digest": "359d7dd4bcdab3d86b87d73ac27966f4dbb9f5efdfcc75d34a8764a09474fae7",
+        "simulated_identity": true,
+        "requires_human_validation": true,
+        "sources": [
+          {
+            "id": "segment-dd91f1e75ecd4aa2a243dab8ef9dc8d3",
+            "title": "Reviewed transcript segment 1",
+            "text": "I left my blue bicycle beside the library at about nine in the morning.",
+            "start": 0.0,
+            "end": 5.4,
+            "case_id": "demo-case-a",
+            "kind": "reviewed_transcript",
+            "score": 0.608245
+          },
+          {
+            "id": "segment-4711fd2dac064fd8ad66e71dcd616b0e",
+            "title": "Reviewed transcript segment 2",
+            "text": "When I returned at about eleven, the bicycle was no longer there.",
+            "start": 5.4,
+            "end": 11.2,
+            "case_id": "demo-case-a",
+            "kind": "reviewed_transcript",
+            "score": 0.109144
+          },
+          {
+            "id": "segment-bcec8b5d059541bda8a519aa57875013",
+            "title": "Reviewed transcript segment 3",
+            "text": "I did not see who removed it. I can provide a photograph of the bicycle.",
+            "start": 11.2,
+            "end": 16.0,
+            "case_id": "demo-case-a",
+            "kind": "reviewed_transcript",
+            "score": 0.109144
+          }
+        ],
+        "claims": [
+          {
+            "text": "The blue bicycle was left beside the library.",
+            "source": 1,
+            "quote": "I left my blue bicycle beside the library at about nine in the morning."
+          },
+          {
+            "text": "The blue bicycle was no longer there when the person returned at about eleven.",
+            "source": 2,
+            "quote": "When I returned at about eleven, the bicycle was no longer there."
+          }
+        ],
+        "abstained": false,
+        "answer": "The blue bicycle was left beside the library. [1]\nThe blue bicycle was no longer there when the person returned at about eleven. [2]",
+        "attempts": [
+          {
+            "attempt": 1,
+            "query": "Where was the blue bicycle left?",
+            "case_revision": 4,
+            "retrieved_source_ids": [
+              "segment-dd91f1e75ecd4aa2a243dab8ef9dc8d3",
+              "segment-4711fd2dac064fd8ad66e71dcd616b0e",
+              "segment-bcec8b5d059541bda8a519aa57875013"
+            ],
+            "selected_source_hashes": {
+              "segment-dd91f1e75ecd4aa2a243dab8ef9dc8d3": "1d5380c28598cd09309218644199a0b7c4d6bfa5df97bedbef1ab0182b93f12d",
+              "segment-4711fd2dac064fd8ad66e71dcd616b0e": "38577a39530e7bdf58dc9fa3808b2cf34cacf7572e27e51ba33c019339a0d444",
+              "segment-bcec8b5d059541bda8a519aa57875013": "87e064f7ec7a8513c66a653ff327d6f79304561dc55ed54e5b634382dffdd9a7"
+            },
+            "action": "answer",
+            "elapsed_ms": 11125.0
+          }
+        ],
+        "attempt_count": 1,
+        "max_attempts": 3,
+        "max_seconds": 90.0,
+        "stop_reason": "answered",
+        "authorization_mode": "store_only",
+        "notice": "One bounded local agent. Reviewed case sources only. Citation numbers and exact quotes are checked; these checks do not prove factual entailment. Human validation remains required.",
+        "retrieval_backend": "reviewed_only_tfidf_cosine",
+        "elapsed_ms": 37046.0
+      },
+      "checks": {
+        "same_case_revision": true,
+        "supporting_quotes_checked": true,
+        "bounded_attempts": true,
+        "case_specific_expected_behavior": true
+      },
+      "passed": true
+    },
+    {
+      "id": "paraphrase_needs_retrieval",
+      "question": "At what location was the cycle parked?",
+      "expectation": "refinement",
+      "result": {
+        "case_id": "demo-case-a",
+        "case_revision": 4,
+        "mode": "bounded_agentic_rag",
+        "generation_model": "qwen3:4b",
+        "generation_digest": "359d7dd4bcdab3d86b87d73ac27966f4dbb9f5efdfcc75d34a8764a09474fae7",
+        "simulated_identity": true,
+        "requires_human_validation": true,
+        "sources": [
+          {
+            "id": "segment-4711fd2dac064fd8ad66e71dcd616b0e",
+            "title": "Reviewed transcript segment 2",
+            "text": "When I returned at about eleven, the bicycle was no longer there.",
+            "start": 5.4,
+            "end": 11.2,
+            "case_id": "demo-case-a",
+            "kind": "reviewed_transcript",
+            "score": 0.283217
+          },
+          {
+            "id": "segment-bcec8b5d059541bda8a519aa57875013",
+            "title": "Reviewed transcript segment 3",
+            "text": "I did not see who removed it. I can provide a photograph of the bicycle.",
+            "start": 11.2,
+            "end": 16.0,
+            "case_id": "demo-case-a",
+            "kind": "reviewed_transcript",
+            "score": 0.283217
+          },
+          {
+            "id": "segment-dd91f1e75ecd4aa2a243dab8ef9dc8d3",
+            "title": "Reviewed transcript segment 1",
+            "text": "I left my blue bicycle beside the library at about nine in the morning.",
+            "start": 0.0,
+            "end": 5.4,
+            "case_id": "demo-case-a",
+            "kind": "reviewed_transcript",
+            "score": 0.2344
+          }
+        ],
+        "claims": [
+          {
+            "text": "The bicycle was parked beside the library.",
+            "source": 3,
+            "quote": "I left my blue bicycle beside the library at about nine in the morning."
+          }
+        ],
+        "abstained": false,
+        "answer": "The bicycle was parked beside the library. [3]",
+        "attempts": [
+          {
+            "attempt": 1,
+            "query": "At what location was the cycle parked?",
+            "case_revision": 4,
+            "retrieved_source_ids": [],
+            "selected_source_hashes": {},
+            "action": "retrieve",
+            "elapsed_ms": 13250.0
+          },
+          {
+            "attempt": 2,
+            "query": "location of parked cycle",
+            "case_revision": 4,
+            "retrieved_source_ids": [],
+            "selected_source_hashes": {},
+            "action": "retrieve",
+            "elapsed_ms": 25781.0
+          },
+          {
+            "attempt": 3,
+            "query": "parked bicycle location",
+            "case_revision": 4,
+            "retrieved_source_ids": [
+              "segment-4711fd2dac064fd8ad66e71dcd616b0e",
+              "segment-bcec8b5d059541bda8a519aa57875013",
+              "segment-dd91f1e75ecd4aa2a243dab8ef9dc8d3"
+            ],
+            "selected_source_hashes": {
+              "segment-4711fd2dac064fd8ad66e71dcd616b0e": "38577a39530e7bdf58dc9fa3808b2cf34cacf7572e27e51ba33c019339a0d444",
+              "segment-bcec8b5d059541bda8a519aa57875013": "87e064f7ec7a8513c66a653ff327d6f79304561dc55ed54e5b634382dffdd9a7",
+              "segment-dd91f1e75ecd4aa2a243dab8ef9dc8d3": "1d5380c28598cd09309218644199a0b7c4d6bfa5df97bedbef1ab0182b93f12d"
+            },
+            "action": "answer",
+            "elapsed_ms": 39156.0
+          }
+        ],
+        "attempt_count": 3,
+        "max_attempts": 3,
+        "max_seconds": 90.0,
+        "stop_reason": "answered",
+        "authorization_mode": "store_only",
+        "notice": "One bounded local agent. Reviewed case sources only. Citation numbers and exact quotes are checked; these checks do not prove factual entailment. Human validation remains required.",
+        "retrieval_backend": "reviewed_only_tfidf_cosine",
+        "elapsed_ms": 58484.0
+      },
+      "checks": {
+        "same_case_revision": true,
+        "supporting_quotes_checked": true,
+        "bounded_attempts": true,
+        "case_specific_expected_behavior": true
+      },
+      "passed": true
+    },
+    {
+      "id": "unsupported_vehicle_registration",
+      "question": "What is the registration number of the vehicle?",
+      "expectation": "abstain",
+      "result": {
+        "case_id": "demo-case-a",
+        "case_revision": 4,
+        "mode": "bounded_agentic_rag",
+        "generation_model": "qwen3:4b",
+        "generation_digest": "359d7dd4bcdab3d86b87d73ac27966f4dbb9f5efdfcc75d34a8764a09474fae7",
+        "simulated_identity": true,
+        "requires_human_validation": true,
+        "sources": [],
+        "claims": [],
+        "abstained": true,
+        "answer": "The reviewed evidence did not support an answer. Human review is required.",
+        "attempts": [
+          {
+            "attempt": 1,
+            "query": "What is the registration number of the vehicle?",
+            "case_revision": 4,
+            "retrieved_source_ids": [],
+            "selected_source_hashes": {},
+            "action": "retrieve",
+            "elapsed_ms": 13407.0
+          },
+          {
+            "attempt": 2,
+            "query": "vehicle registration number",
+            "case_revision": 4,
+            "retrieved_source_ids": [],
+            "selected_source_hashes": {},
+            "action": "retrieve",
+            "elapsed_ms": 25954.0
+          }
+        ],
+        "attempt_count": 2,
+        "max_attempts": 3,
+        "max_seconds": 90.0,
+        "stop_reason": "repeated_query",
+        "authorization_mode": "store_only",
+        "notice": "One bounded local agent. Reviewed case sources only. Citation numbers and exact quotes are checked; these checks do not prove factual entailment. Human validation remains required.",
+        "retrieval_backend": "reviewed_only_tfidf_cosine",
+        "elapsed_ms": 25969.0
+      },
+      "checks": {
+        "same_case_revision": true,
+        "supporting_quotes_checked": true,
+        "bounded_attempts": true,
+        "case_specific_expected_behavior": false
+      },
+      "passed": false
+    }
+  ],
+  "passed_trials": 2,
+  "completed_trials": 3
+}

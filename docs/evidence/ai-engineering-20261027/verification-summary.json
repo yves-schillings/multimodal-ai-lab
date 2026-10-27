@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-27",
+  "scope": "Synthetic local AI Engineering extension",
+  "native_suite": {
+    "passed": 188,
+    "skipped": 3,
+    "subtests_passed": 20,
+    "warnings": [
+      "Existing Starlette/httpx deprecation",
+      "Existing SQLAlchemy loader deprecation"
+    ]
+  },
+  "separate_wsl_cuda_tests": {
+    "passed": 8,
+    "skipped": 1
+  },
+  "live_loopback_routes": {
+    "tree_review_probability": 0.909404959651305,
+    "concurrent_vision_cases_loaded": 5,
+    "candidate_decision": "blocked",
+    "agentic_stop_reason": "answered",
+    "fictional_answer": "The MX-7 label printer uses cartridge C42 [1]",
+    "agentic_elapsed_seconds": 30.151259899997967,
+    "identity_profile": "simulated actors"
+  },
+  "production_approved": false,
+  "source_hash_scope": "Executed working-tree bytes. Git normalizes these text sources to LF, recorded separately.",
+  "source_sha256": {
+    "app.py": "84976193da2dd86160c3ddc71803e6e6fe9315c2834873dc421fdeee10de48f6",
+    "lab/local_inference.py": "507106a5aec7b4f5dff40421d220bb3923338183f5fdbc1af44dc3ed47da7dcf",
+    "lab/agentic_search.py": "ae8db16b3dd4084dac1fe3cef237415cee8cea21ac4d7a595f36b417330c42ca",
+    "lab/engineering_acceptance.py": "31e91babd383fb30a4dc918b0c830951446cf2206fc49498597a21b16eaff1dc",
+    "lab/engineering_api.py": "579fa2ab26960d4d773067b61985f600edbc930e07ea759c971d8f451ee296f4",
+    "lab/engineering_explainability.py": "62fc9e9fc3320bab5bb2fddd8c648aef199db696ccc33783370a14914e218549",
+    "lab/engineering_vision.py": "7c4536d2108eea41499a859d0df558f274c3d97d2e36e4870ee611d3e372c991",
+    "static/engineering.html": "018da35b53a68e068a4c5ec2b15118f8577c8416e9bf1debc4b21ecb9d888b25",
+    "static/engineering.js": "e74f2bbb80f4404063e4027bde2436f5580b41d0031bbf172524ae397a4adb9a",
+    "static/engineering.css": "9945348be22d62cde89a95671aeaa76c30294b3eda542911906765b49987033b",
+    "scripts/measure_agentic_engineering.py": "98be4dc779ed909afdf993e5ca788701c57157a8a419df64e99a819769789f8f",
+    "scripts/measure_explainability_engineering.py": "8260e58ee4b9f977d55fa7427a14a966fd3c2f9ca084478a96df93c0bbab48ba",
+    "scripts/measure_vision_engineering.py": "3d3fe166b88e2b1dc24d88433f93c5c09113546932f2f3f77aae9989e020766c",
+    "tests/test_engineering_api.py": "9f0719c84322a653533391f5e47d7791a22addf8f4044bf6f2154bd91669d229"
+  },
+  "git_lf_source_sha256": {
+    "app.py": "ca16a3fd548c11c451c67691aeca69e3986478b137e55e55280fb0e4971cc03c",
+    "lab/local_inference.py": "507106a5aec7b4f5dff40421d220bb3923338183f5fdbc1af44dc3ed47da7dcf",
+    "lab/agentic_search.py": "ae8db16b3dd4084dac1fe3cef237415cee8cea21ac4d7a595f36b417330c42ca",
+    "lab/engineering_acceptance.py": "31e91babd383fb30a4dc918b0c830951446cf2206fc49498597a21b16eaff1dc",
+    "lab/engineering_api.py": "579fa2ab26960d4d773067b61985f600edbc930e07ea759c971d8f451ee296f4",
+    "lab/engineering_explainability.py": "62fc9e9fc3320bab5bb2fddd8c648aef199db696ccc33783370a14914e218549",
+    "lab/engineering_vision.py": "7c4536d2108eea41499a859d0df558f274c3d97d2e36e4870ee611d3e372c991",
+    "static/engineering.html": "018da35b53a68e068a4c5ec2b15118f8577c8416e9bf1debc4b21ecb9d888b25",
+    "static/engineering.js": "e74f2bbb80f4404063e4027bde2436f5580b41d0031bbf172524ae397a4adb9a",
+    "static/engineering.css": "9945348be22d62cde89a95671aeaa76c30294b3eda542911906765b49987033b",
+    "scripts/measure_agentic_engineering.py": "98be4dc779ed909afdf993e5ca788701c57157a8a419df64e99a819769789f8f",
+    "scripts/measure_explainability_engineering.py": "8260e58ee4b9f977d55fa7427a14a966fd3c2f9ca084478a96df93c0bbab48ba",
+    "scripts/measure_vision_engineering.py": "3d3fe166b88e2b1dc24d88433f93c5c09113546932f2f3f77aae9989e020766c",
+    "tests/test_engineering_api.py": "9f0719c84322a653533391f5e47d7791a22addf8f4044bf6f2154bd91669d229"
+  },
+  "limitations": [
+    "The native suite has no Windows PyTorch runtime, so CUDA-specific tests run separately in WSL.",
+    "Unit tests and three measured RAG questions do not establish general model quality.",
+    "The larger random-weight vision probe measures execution only.",
+    "No new public inference service, trusted enterprise identity or production release was deployed."
+  ]
+}

@@ -1,0 +1,674 @@
+{
+  "schema_version": "vision-open-loop-v1",
+  "purpose": "performance_probe",
+  "started_at_utc": "2026-10-27T20:56:13.086470+00:00",
+  "production_approval": false,
+  "release_eligible": false,
+  "weights_downloaded": false,
+  "packages_installed": false,
+  "runtimes_not_exercised": [
+    "YOLO",
+    "TensorRT",
+    "Triton",
+    "OKD GPU"
+  ],
+  "cases": [
+    {
+      "device": "cpu",
+      "precision": "fp32",
+      "model_instances": 1,
+      "workers": 1,
+      "cache_enabled": false,
+      "quality_evaluated": false,
+      "actual_weights_sha256": "1541cea02e4c1b0956373bcb323fa16b4132549d473516ba40c0ba03bef0881b",
+      "finite_output_diagnostic": {
+        "top_class_index": 993,
+        "top_probability": 0.004244905896484852,
+        "random_weights": true,
+        "quality_claimed": false
+      },
+      "load": {
+        "offered_requests": 1000,
+        "submitted_requests": 1000,
+        "completed_requests": 1000,
+        "successful_requests": 177,
+        "error_requests": 823,
+        "client_safety_drops": 0,
+        "http_status_counts": {
+          "200": 177,
+          "429": 823
+        },
+        "offered_rate_per_second": 100,
+        "requested_duration_seconds": 10.0,
+        "injection_duration_seconds": 9.990257242000002,
+        "total_with_drain_seconds": 13.568465434,
+        "achieved_success_rate_during_window_per_second": 10.5,
+        "successful_requests_per_second_including_drain": 13.044953451882007,
+        "arrival_scheduler_lateness": {
+          "samples": 1000,
+          "p50_ms": 0.1461185000017906,
+          "p95_ms": 0.27208029999528077,
+          "p99_ms": 7.425519239999791,
+          "max_ms": 32.2397979999991
+        },
+        "http_end_to_end_latency": {
+          "samples": 177,
+          "p50_ms": 4920.140437000001,
+          "p95_ms": 6353.278961800001,
+          "p99_ms": 6700.8956352000005,
+          "max_ms": 6716.043562000003
+        },
+        "scheduled_arrival_to_response_latency": {
+          "samples": 177,
+          "p50_ms": 4922.026234000001,
+          "p95_ms": 6355.367990399999,
+          "p99_ms": 6701.215780999998,
+          "max_ms": 6718.654182000002
+        },
+        "queue_wait_latency": {
+          "samples": 177,
+          "p50_ms": 4331.950370000001,
+          "p95_ms": 5772.875131200001,
+          "p99_ms": 6077.890341119997,
+          "max_ms": 6089.311125000002
+        },
+        "service_queue_and_pipeline_latency": {
+          "samples": 177,
+          "p50_ms": 4909.847814999999,
+          "p95_ms": 6344.540541199998,
+          "p99_ms": 6692.305177119999,
+          "max_ms": 6703.725961000004
+        },
+        "all_response_latency": {
+          "samples": 1000,
+          "p50_ms": 1.816032499998954,
+          "p95_ms": 5806.5800911000015,
+          "p99_ms": 6346.570508089999,
+          "max_ms": 6716.043562000003
+        },
+        "error_types": [],
+        "accounting_complete": true,
+        "scope": "Open-loop localhost binary HTTP; end-to-end includes service queue, pipeline and response. No authentication or production SLA acceptance."
+      },
+      "batching": {
+        "batches": 23,
+        "images": 177,
+        "batch_occupancy_histogram": {
+          "1": 1,
+          "8": 22
+        },
+        "mean_batch_size": 7.695652173913044,
+        "queue_rejections": 823,
+        "max_queue_depth": 64,
+        "batch_model_latency": {
+          "samples": 23,
+          "p50_ms": 601.0832800000046,
+          "p95_ms": 804.2937614000017,
+          "p99_ms": 889.3801140000022,
+          "max_ms": 913.3151460000022
+        },
+        "batch_pipeline_latency": {
+          "samples": 23,
+          "p50_ms": 614.4148360000017,
+          "p95_ms": 816.9469887000016,
+          "p99_ms": 903.5846680800018,
+          "max_ms": 927.8727860000017
+        }
+      },
+      "status": "completed",
+      "owned_server_closed": true,
+      "owned_batch_workers_closed": true
+    },
+    {
+      "device": "cuda:0",
+      "precision": "fp32",
+      "model_instances": 1,
+      "workers": 1,
+      "cache_enabled": false,
+      "quality_evaluated": false,
+      "actual_weights_sha256": "1541cea02e4c1b0956373bcb323fa16b4132549d473516ba40c0ba03bef0881b",
+      "finite_output_diagnostic": {
+        "top_class_index": 993,
+        "top_probability": 0.004244901705533266,
+        "random_weights": true,
+        "quality_claimed": false
+      },
+      "load": {
+        "offered_requests": 1000,
+        "submitted_requests": 1000,
+        "completed_requests": 1000,
+        "successful_requests": 1000,
+        "error_requests": 0,
+        "client_safety_drops": 0,
+        "http_status_counts": {
+          "200": 1000
+        },
+        "offered_rate_per_second": 100,
+        "requested_duration_seconds": 10.0,
+        "injection_duration_seconds": 9.990240183999994,
+        "total_with_drain_seconds": 10.017776739999995,
+        "achieved_success_rate_during_window_per_second": 99.7,
+        "successful_requests_per_second_including_drain": 99.82254805171476,
+        "arrival_scheduler_lateness": {
+          "samples": 1000,
+          "p50_ms": 0.118579500000493,
+          "p95_ms": 0.29080019999625506,
+          "p99_ms": 0.5477519199925494,
+          "max_ms": 2.497072999993577
+        },
+        "http_end_to_end_latency": {
+          "samples": 1000,
+          "p50_ms": 18.677949499998903,
+          "p95_ms": 32.994470450001494,
+          "p99_ms": 41.430188809999315,
+          "max_ms": 56.850310000001514
+        },
+        "scheduled_arrival_to_response_latency": {
+          "samples": 1000,
+          "p50_ms": 19.0254504999956,
+          "p95_ms": 33.25789134999332,
+          "p99_ms": 42.14406151999568,
+          "max_ms": 57.0576929999973
+        },
+        "queue_wait_latency": {
+          "samples": 1000,
+          "p50_ms": 7.76330600000108,
+          "p95_ms": 16.64384674999972,
+          "p99_ms": 21.10355810999692,
+          "max_ms": 27.84258900000225
+        },
+        "service_queue_and_pipeline_latency": {
+          "samples": 1000,
+          "p50_ms": 16.264003499998125,
+          "p95_ms": 30.027178050000103,
+          "p99_ms": 37.20941992000057,
+          "max_ms": 52.75428099999857
+        },
+        "all_response_latency": {
+          "samples": 1000,
+          "p50_ms": 18.677949499998903,
+          "p95_ms": 32.994470450001494,
+          "p99_ms": 41.430188809999315,
+          "max_ms": 56.850310000001514
+        },
+        "error_types": [],
+        "accounting_complete": true,
+        "scope": "Open-loop localhost binary HTTP; end-to-end includes service queue, pipeline and response. No authentication or production SLA acceptance."
+      },
+      "batching": {
+        "batches": 667,
+        "images": 1000,
+        "batch_occupancy_histogram": {
+          "1": 352,
+          "3": 18,
+          "2": 297
+        },
+        "mean_batch_size": 1.4992503748125936,
+        "queue_rejections": 0,
+        "max_queue_depth": 3,
+        "batch_model_latency": {
+          "samples": 667,
+          "p50_ms": 6.6754560470581055,
+          "p95_ms": 13.670959854125975,
+          "p99_ms": 18.354391326904306,
+          "max_ms": 23.949119567871094
+        },
+        "batch_pipeline_latency": {
+          "samples": 667,
+          "p50_ms": 8.690981000000875,
+          "p95_ms": 16.182638500001897,
+          "p99_ms": 21.443916119994956,
+          "max_ms": 26.92504699999887
+        }
+      },
+      "status": "completed",
+      "gpu_memory": {
+        "peak_tensor_allocated_bytes": 111578112,
+        "peak_allocator_reserved_bytes": 148897792,
+        "scope": "PyTorch allocator only, excludes context/driver/other processes"
+      },
+      "owned_server_closed": true,
+      "owned_batch_workers_closed": true
+    },
+    {
+      "device": "cuda:0",
+      "precision": "fp32",
+      "model_instances": 2,
+      "workers": 2,
+      "cache_enabled": false,
+      "quality_evaluated": false,
+      "actual_weights_sha256": "1541cea02e4c1b0956373bcb323fa16b4132549d473516ba40c0ba03bef0881b",
+      "finite_output_diagnostic": {
+        "top_class_index": 993,
+        "top_probability": 0.004244901705533266,
+        "random_weights": true,
+        "quality_claimed": false
+      },
+      "load": {
+        "offered_requests": 1000,
+        "submitted_requests": 1000,
+        "completed_requests": 1000,
+        "successful_requests": 1000,
+        "error_requests": 0,
+        "client_safety_drops": 0,
+        "http_status_counts": {
+          "200": 1000
+        },
+        "offered_rate_per_second": 100,
+        "requested_duration_seconds": 10.0,
+        "injection_duration_seconds": 9.990161532999998,
+        "total_with_drain_seconds": 10.004887860000004,
+        "achieved_success_rate_during_window_per_second": 99.9,
+        "successful_requests_per_second_including_drain": 99.95114527950338,
+        "arrival_scheduler_lateness": {
+          "samples": 1000,
+          "p50_ms": 0.09849350000479262,
+          "p95_ms": 0.18683985000222925,
+          "p99_ms": 0.34031724001593483,
+          "max_ms": 0.962294000004249
+        },
+        "http_end_to_end_latency": {
+          "samples": 1000,
+          "p50_ms": 13.442287499998429,
+          "p95_ms": 17.95724899999804,
+          "p99_ms": 28.041302979999955,
+          "max_ms": 45.9827930000003
+        },
+        "scheduled_arrival_to_response_latency": {
+          "samples": 1000,
+          "p50_ms": 13.743208000001061,
+          "p95_ms": 18.288792150001143,
+          "p99_ms": 28.310799190002857,
+          "max_ms": 46.164209000004064
+        },
+        "queue_wait_latency": {
+          "samples": 1000,
+          "p50_ms": 5.262712000000391,
+          "p95_ms": 5.447660500001205,
+          "p99_ms": 7.812346129998601,
+          "max_ms": 16.107095000002403
+        },
+        "service_queue_and_pipeline_latency": {
+          "samples": 1000,
+          "p50_ms": 11.537245500001347,
+          "p95_ms": 15.442702350005177,
+          "p99_ms": 23.32827905000414,
+          "max_ms": 42.59506799999713
+        },
+        "all_response_latency": {
+          "samples": 1000,
+          "p50_ms": 13.442287499998429,
+          "p95_ms": 17.95724899999804,
+          "p99_ms": 28.041302979999955,
+          "max_ms": 45.9827930000003
+        },
+        "error_types": [],
+        "accounting_complete": true,
+        "scope": "Open-loop localhost binary HTTP; end-to-end includes service queue, pipeline and response. No authentication or production SLA acceptance."
+      },
+      "batching": {
+        "batches": 996,
+        "images": 1000,
+        "batch_occupancy_histogram": {
+          "1": 992,
+          "2": 4
+        },
+        "mean_batch_size": 1.0040160642570282,
+        "queue_rejections": 0,
+        "max_queue_depth": 2,
+        "batch_model_latency": {
+          "samples": 996,
+          "p50_ms": 5.057407855987549,
+          "p95_ms": 8.143887758255005,
+          "p99_ms": 14.36208934783931,
+          "max_ms": 27.978527069091797
+        },
+        "batch_pipeline_latency": {
+          "samples": 996,
+          "p50_ms": 6.255940500000889,
+          "p95_ms": 9.815462499993544,
+          "p99_ms": 16.8394562000035,
+          "max_ms": 31.724960999994778
+        }
+      },
+      "status": "completed",
+      "gpu_memory": {
+        "peak_tensor_allocated_bytes": 185080832,
+        "peak_allocator_reserved_bytes": 325058560,
+        "scope": "PyTorch allocator only, excludes context/driver/other processes"
+      },
+      "owned_server_closed": true,
+      "owned_batch_workers_closed": true
+    },
+    {
+      "device": "cuda:0",
+      "precision": "fp16",
+      "model_instances": 1,
+      "workers": 1,
+      "cache_enabled": false,
+      "quality_evaluated": false,
+      "actual_weights_sha256": "e9e2cc225ab9bd600ce84a0f0fc498e98542c240348e57720c42b2f885aab62e",
+      "finite_output_diagnostic": {
+        "top_class_index": 993,
+        "top_probability": 0.004248488694429398,
+        "random_weights": true,
+        "quality_claimed": false
+      },
+      "load": {
+        "offered_requests": 1000,
+        "submitted_requests": 1000,
+        "completed_requests": 1000,
+        "successful_requests": 1000,
+        "error_requests": 0,
+        "client_safety_drops": 0,
+        "http_status_counts": {
+          "200": 1000
+        },
+        "offered_rate_per_second": 100,
+        "requested_duration_seconds": 10.0,
+        "injection_duration_seconds": 9.990234634000004,
+        "total_with_drain_seconds": 10.014461245999996,
+        "achieved_success_rate_during_window_per_second": 99.7,
+        "successful_requests_per_second_including_drain": 99.855596365648,
+        "arrival_scheduler_lateness": {
+          "samples": 1000,
+          "p50_ms": 0.12189899999981435,
+          "p95_ms": 0.2839387500074508,
+          "p99_ms": 0.4514138899952512,
+          "max_ms": 1.429094000002351
+        },
+        "http_end_to_end_latency": {
+          "samples": 1000,
+          "p50_ms": 16.81144450000005,
+          "p95_ms": 28.36794914999103,
+          "p99_ms": 67.0059262499913,
+          "max_ms": 100.6928560000091
+        },
+        "scheduled_arrival_to_response_latency": {
+          "samples": 1000,
+          "p50_ms": 17.124460000005115,
+          "p95_ms": 28.610707050000165,
+          "p99_ms": 68.46319870998954,
+          "max_ms": 101.00251100000435
+        },
+        "queue_wait_latency": {
+          "samples": 1000,
+          "p50_ms": 7.105708500006358,
+          "p95_ms": 16.10513264999795,
+          "p99_ms": 30.428812159996845,
+          "max_ms": 50.82069099999842
+        },
+        "service_queue_and_pipeline_latency": {
+          "samples": 1000,
+          "p50_ms": 14.791611500001522,
+          "p95_ms": 26.148376999991996,
+          "p99_ms": 63.97766940999715,
+          "max_ms": 95.36916899999426
+        },
+        "all_response_latency": {
+          "samples": 1000,
+          "p50_ms": 16.81144450000005,
+          "p95_ms": 28.36794914999103,
+          "p99_ms": 67.0059262499913,
+          "max_ms": 100.6928560000091
+        },
+        "error_types": [],
+        "accounting_complete": true,
+        "scope": "Open-loop localhost binary HTTP; end-to-end includes service queue, pipeline and response. No authentication or production SLA acceptance."
+      },
+      "batching": {
+        "batches": 720,
+        "images": 1000,
+        "batch_occupancy_histogram": {
+          "1": 460,
+          "5": 3,
+          "2": 251,
+          "3": 3,
+          "4": 2,
+          "6": 1
+        },
+        "mean_batch_size": 1.3888888888888888,
+        "queue_rejections": 0,
+        "max_queue_depth": 5,
+        "batch_model_latency": {
+          "samples": 720,
+          "p50_ms": 5.4763360023498535,
+          "p95_ms": 11.69718518257141,
+          "p99_ms": 15.860470275878885,
+          "max_ms": 49.36038589477539
+        },
+        "batch_pipeline_latency": {
+          "samples": 720,
+          "p50_ms": 7.048320000002661,
+          "p95_ms": 13.671918599995081,
+          "p99_ms": 18.087692789999878,
+          "max_ms": 52.9602299999965
+        }
+      },
+      "status": "completed",
+      "gpu_memory": {
+        "peak_tensor_allocated_bytes": 115978752,
+        "peak_allocator_reserved_bytes": 226492416,
+        "scope": "PyTorch allocator only, excludes context/driver/other processes"
+      },
+      "owned_server_closed": true,
+      "owned_batch_workers_closed": true
+    },
+    {
+      "device": "cuda:0",
+      "precision": "fp16",
+      "model_instances": 2,
+      "workers": 2,
+      "cache_enabled": false,
+      "quality_evaluated": false,
+      "actual_weights_sha256": "e9e2cc225ab9bd600ce84a0f0fc498e98542c240348e57720c42b2f885aab62e",
+      "finite_output_diagnostic": {
+        "top_class_index": 993,
+        "top_probability": 0.004248488694429398,
+        "random_weights": true,
+        "quality_claimed": false
+      },
+      "load": {
+        "offered_requests": 1000,
+        "submitted_requests": 1000,
+        "completed_requests": 1000,
+        "successful_requests": 1000,
+        "error_requests": 0,
+        "client_safety_drops": 0,
+        "http_status_counts": {
+          "200": 1000
+        },
+        "offered_rate_per_second": 100,
+        "requested_duration_seconds": 10.0,
+        "injection_duration_seconds": 9.990227395999995,
+        "total_with_drain_seconds": 10.010006473999994,
+        "achieved_success_rate_during_window_per_second": 99.9,
+        "successful_requests_per_second_including_drain": 99.90003528942779,
+        "arrival_scheduler_lateness": {
+          "samples": 1000,
+          "p50_ms": 0.10748099999347005,
+          "p95_ms": 0.24138769999595408,
+          "p99_ms": 0.4788456499991866,
+          "max_ms": 1.671232999996164
+        },
+        "http_end_to_end_latency": {
+          "samples": 1000,
+          "p50_ms": 16.153075500000114,
+          "p95_ms": 29.926729549999457,
+          "p99_ms": 73.57757185999628,
+          "max_ms": 101.19425700000306
+        },
+        "scheduled_arrival_to_response_latency": {
+          "samples": 1000,
+          "p50_ms": 16.450585500003,
+          "p95_ms": 30.588188899994137,
+          "p99_ms": 73.83287994000095,
+          "max_ms": 101.52276999998833
+        },
+        "queue_wait_latency": {
+          "samples": 1000,
+          "p50_ms": 5.268544499998029,
+          "p95_ms": 8.884638499996099,
+          "p99_ms": 18.060745870002943,
+          "max_ms": 42.848398999993265
+        },
+        "service_queue_and_pipeline_latency": {
+          "samples": 1000,
+          "p50_ms": 14.06811050000556,
+          "p95_ms": 26.22770169999668,
+          "p99_ms": 71.06038108000757,
+          "max_ms": 95.07518600000253
+        },
+        "all_response_latency": {
+          "samples": 1000,
+          "p50_ms": 16.153075500000114,
+          "p95_ms": 29.926729549999457,
+          "p99_ms": 73.57757185999628,
+          "max_ms": 101.19425700000306
+        },
+        "error_types": [],
+        "accounting_complete": true,
+        "scope": "Open-loop localhost binary HTTP; end-to-end includes service queue, pipeline and response. No authentication or production SLA acceptance."
+      },
+      "batching": {
+        "batches": 958,
+        "images": 1000,
+        "batch_occupancy_histogram": {
+          "1": 927,
+          "4": 1,
+          "2": 23,
+          "3": 6,
+          "5": 1
+        },
+        "mean_batch_size": 1.0438413361169103,
+        "queue_rejections": 0,
+        "max_queue_depth": 4,
+        "batch_model_latency": {
+          "samples": 958,
+          "p50_ms": 7.146111965179443,
+          "p95_ms": 16.18644351959228,
+          "p99_ms": 30.51659824371287,
+          "max_ms": 58.61686325073242
+        },
+        "batch_pipeline_latency": {
+          "samples": 958,
+          "p50_ms": 8.66494000000273,
+          "p95_ms": 18.51472824999547,
+          "p99_ms": 39.8846337299986,
+          "max_ms": 61.52466199999651
+        }
+      },
+      "status": "completed",
+      "gpu_memory": {
+        "peak_tensor_allocated_bytes": 172289024,
+        "peak_allocator_reserved_bytes": 337641472,
+        "scope": "PyTorch allocator only, excludes context/driver/other processes"
+      },
+      "owned_server_closed": true,
+      "owned_batch_workers_closed": true
+    }
+  ],
+  "gpu_tensor_allocator_budget_mib": 512,
+  "limitations": [
+    "Random weights and synthetic RGB inputs: no model-quality or object-detection claim.",
+    "Local host/WSL experiment, not a cluster or production capacity acceptance.",
+    "One short offered-load point per configuration does not locate maximum sustainable throughput.",
+    "HTTP service has no authentication and only binds to 127.0.0.1.",
+    "Allocator cap excludes CUDA context/driver memory and other processes.",
+    "Each request opens an HTTP connection. No external network or production image decoder is included."
+  ],
+  "runtime": {
+    "torch": "2.8.0+cu126",
+    "compiled_cuda": "12.6",
+    "python": "3.12.3",
+    "platform": "Linux",
+    "cpu_threads_per_call": 1,
+    "interop_threads": 1,
+    "cudnn_enabled": true,
+    "cudnn_benchmark": false,
+    "cuda_available": true,
+    "cluster_execution_claimed": false,
+    "gpu": "NVIDIA GeForce RTX 2080 Ti",
+    "compute_capability": [
+      7,
+      5
+    ]
+  },
+  "model": {
+    "architecture": "ResNet-18-shaped: stem7x7, BasicBlock stages [2,2,2,2], channels [64,128,256,512], 1000 logits",
+    "parameters": 11689512,
+    "random_weights": true,
+    "trained": false,
+    "quality_evaluated": false,
+    "quality_claimed": false,
+    "seed": 47,
+    "base_fp32_weights_sha256": "1541cea02e4c1b0956373bcb323fa16b4132549d473516ba40c0ba03bef0881b",
+    "input_shape": [
+      224,
+      224,
+      3
+    ],
+    "preprocessing": "Validate exact RGB uint8 body; HWC to CHW; float /255; stack; transfer to requested device/dtype",
+    "postprocessing": "FP32 softmax, maximum class index and score; no semantic class names"
+  },
+  "inputs": {
+    "synthetic_only": true,
+    "count": 8,
+    "payload_sha256": [
+      "b6eff7dee703525694c860c5a8fd0367b8b8258f3c7902a609fe072e56ba15ee",
+      "f50cc5691cbe192c550400e53005698bbf708ae4a668a038b071fb4732acefde",
+      "9f6f7878c4f8ccdf948d218e7162045637a465f9dc5672ccd0432549d0754724",
+      "3a26cb912d0ae3ac14696d8c0281746bff951b7f58ffbd6749f63940266e6fbc",
+      "e46c6aefa3655da89d6f8813addafe64dc35a013c833ace0ba42247f3e2a4089",
+      "eee5485a779c115affe005e4a5dfb29bbe82dc1b6ff69ec02bf0f95aa65d9948",
+      "2a71896609693383359414719fb216a1949c449ad0b20c5cf602dcf61ce28733",
+      "bc9376a4e43cae32020eb535e1a0803e555a781f62c0eb553f95e2126ef76685"
+    ],
+    "bytes_per_image": 150528,
+    "cache_enabled": false
+  },
+  "protocol": {
+    "duration_seconds_per_case": 10.0,
+    "offered_rps": 100,
+    "queue_capacity_requests": 64,
+    "maximum_batch_size": 8,
+    "maximum_collection_wait_ms": 5.0,
+    "warmup_calls_per_worker": 10,
+    "warmup_batch_size": 8,
+    "one_worker": "One model snapshot and inference thread; one CUDA stream when CUDA selected",
+    "two_workers": "Two model snapshots and inference threads; two CUDA streams; shared bounded queue",
+    "clock": "perf_counter for wall time; CUDA events for model forward",
+    "concurrency": "ThreadingHTTPServer and open-loop scheduler, up to 128 client threads/256 pending requests"
+  },
+  "matrix_requested": [
+    {
+      "device": "cpu",
+      "precision": "fp32",
+      "workers": 1
+    },
+    {
+      "device": "cuda:0",
+      "precision": "fp32",
+      "workers": 1
+    },
+    {
+      "device": "cuda:0",
+      "precision": "fp32",
+      "workers": 2
+    },
+    {
+      "device": "cuda:0",
+      "precision": "fp16",
+      "workers": 1
+    },
+    {
+      "device": "cuda:0",
+      "precision": "fp16",
+      "workers": 2
+    }
+  ],
+  "status": "completed",
+  "completed_at_utc": "2026-10-27T20:57:19.852973+00:00",
+  "source_report_sha256": "69098297c12dcf6d255fbeb2fe5e2a17e6bfa54fcf1106e9deae7e842849c637",
+  "memory_provenance_note": "Retained peaks concern the process PyTorch allocator only. WSL-reported free/total device memory is omitted; it is not a physical free-capacity receipt."
+}

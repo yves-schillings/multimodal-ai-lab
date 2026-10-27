@@ -25,6 +25,7 @@ from lab.local_inference import InferenceUnavailable
 from lab.auth import COOKIE, AuthenticationError, configured_auth
 from lab.monitoring import QualityMonitor
 from lab.cpe import CpeInactive, configured_cpe
+from lab.engineering_api import install_engineering_routes
 
 BASE=Path(__file__).resolve().parent
 MAX_UPLOAD=25*1024*1024
@@ -418,6 +419,8 @@ def create_app(data_dir=None):
     def predict(body:PredictInput,actor:str):
         actor_check(actor)
         return registry.classify(body.text)
+
+    install_engineering_routes(app,store,auth,cpe,rag)
 
     if (BASE/'static').is_dir():
         app.mount('/static',StaticFiles(directory=BASE/'static'),name='static')
