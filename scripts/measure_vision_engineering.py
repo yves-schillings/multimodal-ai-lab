@@ -1,7 +1,12 @@
-"""Train and benchmark a tiny synthetic CNN on CPU and, when available, CUDA.
+"""Run bounded synthetic vision experiments and retain explicit evidence.
 
-No weights are downloaded. Evidence and checkpoints stay outside the checkout.
-The optional server binds only to 127.0.0.1 and processes synthetic fixture data.
+The default CLI path trains a tiny grayscale CNN, checks held-out fixtures, and
+compares sequential CPU/CUDA calls. --load-probe instead runs a random-weight
+ResNet-18-shaped RGB service under scheduled concurrent localhost traffic.
+Neither path downloads weights/packages or approves production use. Raw reports
+and checkpoints must be written to a new directory outside this Git checkout.
+The module adds the checkout root to sys.path at import, but experiments start
+only when main is called or the file is executed as a script.
 """
 from __future__ import annotations
 
@@ -29,6 +34,39 @@ from lab.engineering_vision import (
 
 
 def run_load_probe(args, output):
+    """Measure the random-weight RGB probe under one bounded offered-load point.
+
+    Args:
+        args (argparse.Namespace): CLI-validated configuration with seed (int),
+            require_cuda (bool), gpu_memory_mib (int, 64..512 MiB allocator cap),
+            input_size (int, 32..224 pixels per side), small_batch (int, 1..8 images),
+            warmup (int, calls per worker), queue_size (int, 1..256 requests),
+            batch_wait_ms (float, 0..5 ms after first dequeue), target_rps (int,
+            1..200 requests/second), and duration (float, 1..30 seconds per case).
+        output (pathlib.Path): Existing writable empty evidence directory, validated
+            and created by main outside the source checkout.
+
+    Returns:
+        int: 0 when all requested configurations complete their request accounting,
+        1 for a partial case failure, or 2 for a caught setup/execution failure.
+
+    Raises:
+        Evidence-write/cleanup failures can escape if they occur while handling
+        another error; otherwise Exception instances are recorded in report.json.
+
+    Side effects:
+        Sets process-global PyTorch thread/cuDNN settings and optional CUDA allocator
+        fraction. Builds random model weights and eight seeded RGB fixtures. Runs
+        CPU FP32/one-worker, then CUDA FP32/FP16 with one/two workers when available.
+        Creates and closes owned loopback servers and model-worker threads, prints
+        per-case JSON, saves incremental evidence, and collects unused allocations.
+
+    Limitations:
+        Completion means accounting completed, not that latency, model quality or a
+        release threshold passed. Random outputs have no detection meaning.
+        Model/driver overhead and other processes fall outside the allocator cap.
+        Settings are not restored for reuse as a general in-process application API.
+    """
     report = {"schema_version": "vision-open-loop-v1", "purpose": "performance_probe",
               "started_at_utc": datetime.now(timezone.utc).isoformat(),
               "production_approval": False, "release_eligible": False,
@@ -44,6 +82,19 @@ def run_load_probe(args, output):
     path = output / "report.json"
 
     def save():
+        """Write the captured current report as UTF-8 indented JSON.
+
+        Returns:
+            None.
+
+        Raises:
+            Serialization or filesystem errors propagate to the surrounding run logic.
+
+        Side effects:
+            Replaces this run's report.json, allowing partial progress to be retained.
+            The caller selected an initially empty directory; historical runs elsewhere
+            are not overwritten. Captures report and path; accepts no parameters.
+        """
         path.write_text(json.dumps(report, indent=2), encoding="utf-8")
 
     try:
@@ -98,6 +149,29 @@ def run_load_probe(args, output):
         save()
 
         def run_case(device, precision, workers):
+            """Warm and measure one device/precision/worker configuration.
+
+            Args:
+                device (str): cpu or cuda:0 from the captured configuration matrix.
+                precision (str): fp32, or fp16 on CUDA.
+                workers (int): Number of independent model copies/streams, one or two.
+
+            Returns:
+                dict: Device configuration, actual weight hash, finite-output diagnostic,
+                request accounting, batch metrics, optional CUDA memory counters and status.
+                Caught execution errors become status=failed with capped error details.
+
+            Raises:
+                Server/service cleanup errors in finally can propagate to the outer run.
+                They are not converted into a successful or apparently closed case.
+
+            Side effects:
+                Captures base model, synthetic payloads, torch and CLI settings. Allocates
+                worker-specific copies/streams, executes warm-ups and one diagnostic call,
+                then serves uncached synthetic RGB requests on an ephemeral loopback port.
+                Finally shuts down the owned HTTP server and batch service and records
+                closure flags. The diagnostic checks finiteness, never class accuracy.
+            """
             case = {"device": device, "precision": precision, "model_instances": workers,
                     "workers": workers, "cache_enabled": False, "quality_evaluated": False}
             service, server, server_thread = None, None, None
@@ -168,6 +242,39 @@ def run_load_probe(args, output):
 
 
 def main():
+    """Parse the vision CLI, enforce experiment bounds and retain measured evidence.
+
+    Parameters:
+        None. Reads process sys.argv using argparse. --output is required; remaining
+        options select seed, train/test fixture counts, epochs, warm-up/repeat counts,
+        small-batch size, GPU allocator MiB, optional HTTP timing/persistent localhost
+        serving, CUDA requirement, and the separate open-loop load-probe settings.
+
+    Returns:
+        int: Default tiny-model path returns 0 for its synthetic checks, 1 when a
+        synthetic check fails, or 2 for a caught runtime failure. --load-probe returns
+        that path's code: 0 completed, 1 partial failure, 2 caught failure.
+
+    Raises:
+        SystemExit: argparse help/usage/validation exits, normally 0 or 2.
+        Filesystem errors during output validation/creation or error-report writing
+        can propagate. KeyboardInterrupt stops an optional owned --serve loop.
+
+    Side effects:
+        Resolves and creates a fresh output directory outside the checkout. The tiny
+        path changes global PyTorch thread/cuDNN settings, sets an optional 64..512 MiB
+        allocator fraction, generates separate seeded train/test fixtures, rejects
+        image-hash overlap, trains on CPU, and writes model checkpoint/report JSON.
+        It measures CPU and available CUDA routes, optionally times an ephemeral
+        loopback server, prints a summary, and can keep --serve running until stopped.
+        Garbage collection runs on exit from the tiny-model try/finally.
+
+    Limitations:
+        Passing means only the declared synthetic fixture/cache/consistency checks
+        passed. No production approval, YOLO/TensorRT/Triton measurement, GPU-in-OKD
+        deployment or sustainable concurrent-capacity claim follows. The load probe
+        uses random weights and must not be interpreted as a trained detector.
+    """
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", required=True, type=Path)
     parser.add_argument("--seed", type=int, default=47)

@@ -480,7 +480,13 @@ def guard_trials(index, inference, store, demo, demo_texts):
     guards, question = [], "Where was the blue bicycle left?"
 
     def record(name, passed, **details):
-        """Store and print one guard result with its supporting details."""
+        """Store and print one guard result with its supporting details.
+
+        Args:
+            name: Stable guard-case ID.
+            passed: Condition converted to bool for the recorded pass/fail.
+            **details: Additional non-secret diagnostic fields copied into the guard record.
+        """
         guards.append({"id": name, "passed": bool(passed), **details})
         print(json.dumps({"guard": name, "passed": bool(passed)}), flush=True)
 

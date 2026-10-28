@@ -1,9 +1,18 @@
-"""A bounded, synthetic invoice-review exercise using real SHAP and LIME.
+"""Run bounded, fictional invoice experiments with real SHAP and LIME libraries.
 
-The module itself imports only the standard library. Optional scientific packages
-are loaded when a run is requested, so importing it does not change the base app.
-All generated records are fictional. A review score is not evidence of wrongdoing.
-"""
+The six FEATURES define numeric ratios, days and binary flags, not an invoice
+upload or a fraud-detection service. Public helpers validate caller inputs,
+fit reproducible synthetic classifiers on a stratified 75/25 train/test split,
+and return in-memory dictionaries suitable for finite JSON serialization.
+Scientific packages are imported lazily; importing this module uses only the
+standard library and does not install packages, read models, call a network
+service or write files. Requested runs perform CPU fitting/explanation and keep
+up to four fitted bundles per cached helper in process memory.
+
+SHAP contributions reconstruct class-1 log-odds within a numerical tolerance.
+LIME approximates class-1 probability and can fail or leave the [0, 1] range.
+Neither successful execution nor numerical reconstruction proves causality,
+real-invoice usefulness, fairness, legal compliance or production readiness."""
 from __future__ import annotations
 
 from functools import lru_cache
@@ -29,16 +38,38 @@ REQUIRED_DISTRIBUTIONS = ("numpy", "scipy", "scikit-learn", "shap", "lime")
 
 
 class ExplainabilityUnavailable(RuntimeError):
-    """The optional, isolated explainability dependencies are not available."""
+    """Signal that optional explainability distributions are unavailable.
+
+    Raised by _dependencies when installed-package metadata does not include every
+    required scientific distribution. This RuntimeError subclass carries the human
+    readable installation guidance in its normal exception message; it has no extra
+    attributes and does not install or repair packages. Import or ABI failures after
+    the metadata check can still propagate separately."""
 
 
 def invoice_schema() -> list[dict]:
-    """Return the six bounded numeric demonstration fields without extra imports."""
+    """Return independent copies of the six demonstration field definitions.
+
+    Returns:
+        list[dict]: Ordered field metadata with key, label, unit, inclusive minimum
+        and maximum, and a binary flag. Ratios/days are numeric; binary fields use
+        0 or 1. Changing a returned dictionary does not change the module's schema.
+
+    This helper has no arguments or I/O and does not import scientific packages."""
     return [dict(feature) for feature in FEATURES]
 
 
 def explainability_status() -> dict:
-    """Inspect installed distribution metadata without importing SHAP or LIME."""
+    """Inspect distribution metadata for the optional local experiment.
+
+    Returns:
+        dict: available, missing_dependencies, package_versions, the CPU exercise
+        description, fields from invoice_schema, and an intended-use warning.
+
+    The check reads installed-distribution metadata only; it does not import SHAP,
+    LIME or NumPy, train a model, or modify the environment. available confirms that
+    metadata exists, not that every package can import or is ABI-compatible. Other
+    metadata-access errors are not swallowed."""
     versions, missing = {}, []
     for name in REQUIRED_DISTRIBUTIONS:
         try:
@@ -56,7 +87,23 @@ def explainability_status() -> dict:
 
 
 def validate_invoice(invoice: Mapping[str, Real]) -> list[float]:
-    """Reject missing, extra, non-finite and out-of-domain demonstration inputs."""
+    """Validate one synthetic input and order its values for the classifiers.
+
+    Args:
+        invoice (Mapping[str, Real]): Exactly the six FEATURES keys. Values must be
+            finite and within each inclusive schema bound. Binary fields accept
+            numeric 0/1, including booleans; booleans are rejected for other fields.
+            Supplier history is expressed in days; amount_ratio is unitless.
+
+    Returns:
+        list[float]: Values in FEATURES order, independent of mapping key order.
+
+    Raises:
+        ValueError: The mapping, keys, numeric types, finite values, ranges or binary
+            domains violate the demonstration schema.
+
+    No model is loaded and the input mapping is not mutated. The field bounds are
+    teaching constraints, not validated business rules or evidence of wrongdoing."""
     if not isinstance(invoice, Mapping):
         raise ValueError("invoice must be a mapping of the six numeric demonstration fields")
     expected = {feature["key"] for feature in FEATURES}
@@ -78,12 +125,42 @@ def validate_invoice(invoice: Mapping[str, Real]) -> list[float]:
 
 
 def _bounded_int(name: str, value: int, minimum: int, maximum: int) -> int:
+    """Validate and return an integer resource or reproducibility parameter.
+
+    Args:
+        name (str): Parameter name used in the error message.
+        value (int): Candidate integer; bool is explicitly rejected.
+        minimum (int): Inclusive lower bound.
+        maximum (int): Inclusive upper bound.
+
+    Returns:
+        int: The original value when it is within the inclusive bounds.
+
+    Raises:
+        ValueError: value is boolean, non-integer or outside the stated bounds.
+
+    This pure helper does not convert strings or floating-point numbers."""
     if isinstance(value, bool) or not isinstance(value, int) or not minimum <= value <= maximum:
         raise ValueError(f"{name} must be an integer within [{minimum}, {maximum}]")
     return value
 
 
 def _dependencies():
+    """Lazily load the scientific implementations used by requested runs.
+
+    Returns:
+        dict: The local namespace containing np, shap, LimeTabularExplainer,
+        scikit-learn estimators/preprocessing/split and metric callables,
+        threadpool_limits, and the metadata status. Callers use these shared objects
+        without importing the scientific stack at module-import time.
+
+    Raises:
+        ExplainabilityUnavailable: At least one required distribution is missing.
+        ImportError: An installed dependency or one of its native dependencies fails
+            to import; other dependency initialization errors may also propagate.
+
+    Imports can initialize library state in this process. No packages are installed,
+    no model is downloaded, and no external service or file output is created."""
     status = explainability_status()
     if not status["available"]:
         raise ExplainabilityUnavailable(
@@ -105,6 +182,24 @@ def _dependencies():
 
 @lru_cache(maxsize=4)
 def _fit_synthetic_model(seed: int, n_samples: int):
+    """Generate one synthetic dataset and fit the cached linear baseline.
+
+    Args:
+        seed (int): NumPy/scikit-learn seed, validated by the public entry point.
+        n_samples (int): Total generated rows, of which 25 percent are held out.
+
+    Returns:
+        dict: Scientific dependencies, the StandardScaler/LogisticRegression
+        pipeline, train/test arrays and original row indices, a SHA-256 dataset
+        fingerprint, and held-out accuracy, ROC AUC and Brier score.
+
+    Feature distributions and the probabilistic label-generating logit are defined
+    here. The stratified split separates training from evaluation; scaling is fitted
+    only on training rows. Fitting and prediction use a one-thread numerical limit.
+    The lru_cache retains up to four mutable bundles: treat returned arrays/models as
+    read-only. Dependency, split or fitting errors propagate. There is no file/network
+    I/O. Reproducibility assumes compatible library versions; the deliberately linear
+    label rule makes this a teaching example, not a neutral model-family benchmark."""
     deps = _dependencies()
     np = deps["np"]
     rng = np.random.default_rng(seed)
@@ -145,7 +240,21 @@ def _fit_synthetic_model(seed: int, n_samples: int):
 
 @lru_cache(maxsize=4)
 def _fit_synthetic_tree_model(seed: int, n_samples: int):
-    """Fit an ensemble on exactly the baseline's training rows, never its test rows."""
+    """Fit a cached boosted-tree classifier on the baseline's exact split.
+
+    Args:
+        seed (int): Seed shared with _fit_synthetic_model and the tree estimator.
+        n_samples (int): Total synthetic rows used to identify the shared bundle.
+
+    Returns:
+        tuple: (fitted HistGradientBoostingClassifier, parameter dict, held-out
+        metric dict containing accuracy, roc_auc and brier_score).
+
+    Only baseline training rows are fitted; evaluation uses its untouched held-out
+    rows. HistGradientBoosting is imported lazily, numerical work is thread-limited,
+    and the fitted tuple is cached in process. Import/fitting errors propagate.
+    The same-split comparison is descriptive synthetic evidence, not a claim that a
+    more complex model improves operational quality."""
     bundle = _fit_synthetic_model(seed, n_samples)
     from sklearn.ensemble import HistGradientBoostingClassifier
     parameters = {
@@ -166,7 +275,23 @@ def _fit_synthetic_tree_model(seed: int, n_samples: int):
 
 
 def _linear_coefficients(bundle, row):
-    """Expose the fitted linear rule with standardized and original-unit meanings."""
+    """Translate the fitted logistic rule into original feature units.
+
+    Args:
+        bundle (dict): The linear bundle from _fit_synthetic_model, including its
+            fitted scaler/estimator and NumPy dependency.
+        row (numpy.ndarray): One six-value input in original FEATURES order/units.
+
+    Returns:
+        dict: Standardized/original intercepts, the reconstructed class-1 log-odds
+        margin, interpretation warnings, and per-feature training statistics,
+        coefficients, interpretation increments, log-odds changes and odds ratios.
+
+    Coefficients are divided by scaler.scale_; the original intercept subtracts
+    coefficient times training mean. History uses a 365-day interpretation increment,
+    other inputs one original unit. The caller supplies validated arrays; missing
+    bundle members or incompatible shapes propagate errors. No inputs or files are
+    modified. Associations hold other inputs fixed and do not establish causation."""
     deps, model = bundle["deps"], bundle["model"]
     np = deps["np"]
     scaler, estimator = model.steps[0][1], model.steps[1][1]
@@ -198,7 +323,27 @@ def _linear_coefficients(bundle, row):
 
 
 def _explain_tree_shap(bundle, model, row):
-    """Reconstruct the binary gradient-boosting margin with actual Tree SHAP."""
+    """Explain one boosted-tree margin and check numerical reconstruction.
+
+    Args:
+        bundle (dict): Shared training bundle supplying NumPy and SHAP.
+        model: Fitted binary HistGradientBoostingClassifier.
+        row (numpy.ndarray): One six-feature validated input in original units.
+
+    Returns:
+        dict: TreeExplainer configuration/background description, base value,
+        per-feature contributions and sorted positive/negative contributors,
+        model/reconstructed margins, absolute reconstruction error, 1e-8 tolerance
+        and pass flag, plus sigmoid-converted reference/result probabilities.
+
+    Raises:
+        RuntimeError: SHAP does not return one contribution per declared feature.
+
+    SHAP's own additivity check and dependency/model errors may also propagate. The
+    path-dependent background uses training path counts stored in the trees, not
+    held-out rows. Values add in raw class-1 margin/log-odds; converted base probability
+    is not asserted to equal the average predicted probability. Inputs/files are not
+    modified, and additivity does not validate usefulness, causality or release."""
     np, shap = bundle["deps"]["np"], bundle["deps"]["shap"]
     explainer = shap.TreeExplainer(
         model, model_output="raw", feature_perturbation="tree_path_dependent",
@@ -224,8 +369,8 @@ def _explain_tree_shap(bundle, model, row):
         "base_value_log_odds": base,
         "base_probability_after_sigmoid": float(1.0 / (1.0 + np.exp(-base))),
         "contributions": contributions,
-        "contributors_increasing_score": sorted((item for item in contributions if item["contribution_log_odds"] > 0), key=lambda item: item["contribution_log_odds"], reverse=True),
-        "contributors_decreasing_score": sorted((item for item in contributions if item["contribution_log_odds"] < 0), key=lambda item: item["contribution_log_odds"]),
+        "contributors_increasing_score": sorted((item for item in contributions if item["contribution_log_odds"] > 0), key=lambda item: item["contribution_log_odds"], reverse=True),  # Rank positive SHAP shares from largest to smallest.
+        "contributors_decreasing_score": sorted((item for item in contributions if item["contribution_log_odds"] < 0), key=lambda item: item["contribution_log_odds"]),  # Rank negative SHAP shares from most negative upward.
         "model_margin_log_odds": margin, "reconstructed_margin_log_odds": reconstructed,
         "reconstruction_absolute_error": error, "reconstruction_tolerance": 1e-8,
         "reconstruction_passed": bool(error <= 1e-8),
@@ -234,6 +379,27 @@ def _explain_tree_shap(bundle, model, row):
 
 
 def _explain_shap(bundle, row, seed: int):
+    """Explain a logistic margin with a training-only independent background.
+
+    Args:
+        bundle (dict): Fitted linear pipeline and shared training/test bundle.
+        row (numpy.ndarray): One six-feature validated input in original units.
+        seed (int): Seed whose offset selects up to 80 background training rows.
+
+    Returns:
+        dict: LinearExplainer/Independent-masker settings, background size, base and
+        per-feature log-odds contributions, model/reconstructed margin, absolute
+        error and 1e-8 reconstruction verdict, and sigmoid-derived probabilities.
+
+    Raises:
+        RuntimeError: SHAP returns an unexpected contribution shape.
+
+    The background and explained row are transformed with the training-fitted scaler.
+    The reported mean background probability is separate from sigmoid(base); these
+    quantities need not be equal. Dependency/model errors propagate. The helper reads
+    but does not mutate the bundle and performs no I/O. Independent-background SHAP
+    is a model explanation under that assumption, not a causal or correlated-feature
+    analysis."""
     deps, model = bundle["deps"], bundle["model"]
     np, shap = deps["np"], deps["shap"]
     scaler, estimator = model.steps[0][1], model.steps[1][1]
@@ -275,6 +441,27 @@ def _explain_shap(bundle, row, seed: int):
 
 
 def _explain_lime(bundle, row, seed: int, lime_samples: int):
+    """Fit a local probability surrogate and evaluate a separate neighbourhood.
+
+    Args:
+        bundle (dict): Linear-model bundle with training data and dependencies.
+        row (numpy.ndarray): One six-feature validated case in original units.
+        seed (int): Seed for LIME fitting; seed + 9301 generates evaluation neighbours.
+        lime_samples (int): Requested fitting perturbations, bounded by the caller.
+
+    Returns:
+        dict: LIME configuration, class-1 model/surrogate values and case error,
+        local coefficients, fitted-neighbourhood weighted R2, and independent metrics
+        over 256 valid-domain neighbours: weighted probability MAE/RMSE, weighted R2
+        and a count of surrogate predictions outside [0, 1].
+
+    Binary inputs are treated categorically. Independent evaluation jitters continuous
+    features, clips them to schema bounds, occasionally flips binary flags, and uses
+    LIME's own scaling/kernel for the surrogate comparison. These are fresh artificial
+    points, not LIME's fitting sample or real observations. LIME's linear output is
+    not clipped into a probability; out-of-range values must remain visible. Scientific
+    errors propagate. The helper has CPU cost but no file/network I/O, and neither R2
+    nor a small local error establishes global accuracy or real-world fidelity."""
     deps, model = bundle["deps"], bundle["model"]
     np = deps["np"]
     categorical = [index for index, feature in enumerate(FEATURES) if feature["binary"]]
@@ -351,12 +538,32 @@ def run_explainability_lab(
     invoice: Mapping[str, Real] | None = None, *, seed: int = 1729,
     n_samples: int = 800, lime_samples: int = 4000, case_index: int = 0,
 ) -> dict:
-    """Train a synthetic model, then explain one class-1 score with real libraries.
+    """Fit a synthetic logistic baseline and explain one score with SHAP/LIME.
 
-    The default case is a held-out record. Parameters are bounded for local use.
-    SHAP additivity is checked in log-odds. LIME estimates probability locally.
-    Neither explanation establishes causation or suitability for a real decision.
-    """
+    Args:
+        invoice (Mapping[str, Real] | None): Validated six-field fictional input, or
+            None to explain the held-out row selected by case_index.
+        seed (int): Inclusive range 0 through 2**31 - 1; default 1729.
+        n_samples (int): Total synthetic rows, inclusive range 200 through 5000.
+        lime_samples (int): LIME fitting perturbations, range 500 through 20000.
+        case_index (int): Zero-based position within the 25-percent held-out split.
+            Its range is checked even when invoice supplies the explained row.
+
+    Returns:
+        dict: Finite-JSON-compatible environment/parameters, split fingerprint and
+        held-out metrics, case features/probability/class, SHAP and LIME reports,
+        numerical checks, illustrative LIME assessment, timing_seconds and limits.
+
+    Raises:
+        ValueError: Inputs, budgets or held-out index violate the bounded schema.
+        ExplainabilityUnavailable: Optional scientific distributions are missing.
+
+    Other import/fitting/explainer failures propagate. Work runs on CPU with a
+    one-thread numerical limit and may populate the in-process fitted-model cache.
+    No files, remote services or MLflow registry are used. ok/execution_ok indicate
+    execution, not an accepted explanation: LIME's illustrative gate may still fail.
+    SHAP checks log-odds reconstruction, while LIME approximates probability; neither
+    proves causality, useful real-invoice performance or production readiness."""
     started = time.perf_counter()
     _bounded_int("seed", seed, 0, 2**31 - 1)
     _bounded_int("n_samples", n_samples, 200, 5000)
@@ -444,12 +651,31 @@ def run_explainability_comparison(
     invoice: Mapping[str, Real] | None = None, *, seed: int = 1729,
     n_samples: int = 800, lime_samples: int = 4000, case_index: int = 0,
 ) -> dict:
-    """Compare a transparent linear baseline and a tree ensemble on one split.
+    """Compare a linear baseline and boosted trees on the same synthetic split.
 
-    The default is a deliberately high-score, fictional review example. The
-    existing lab helper and its schema remain unchanged under linear_baseline.
-    More model complexity is not presumed to improve accuracy or explainability.
-    """
+    Args:
+        invoice (Mapping[str, Real] | None): Six-field fictional input. None selects
+            the explicit high-score demonstration invoice, not a held-out example.
+        seed (int): Shared generation/fitting seed; validated by run_explainability_lab.
+        n_samples (int): Total synthetic rows, range 200 through 5000.
+        lime_samples (int): Linear-baseline LIME fitting rows, range 500 through 20000.
+        case_index (int): Valid held-out position passed through to the baseline;
+            it is still validated although the comparison always supplies an input.
+
+    Returns:
+        dict: The unchanged-schema report under linear_baseline, original-unit
+        coefficients, positive linear contributors, tree_model/Tree SHAP results,
+        same-split metric table, numerical checks, illustrative quality assessment,
+        total timing_seconds and explicit production_approval=False.
+
+    The comparison has no observed label for its explicit displayed input. Both fits
+    use identical training and evaluation rows; LIME belongs to the linear model and
+    Tree SHAP to the tree model. Their outcomes are not a direct same-model explainer
+    comparison. Public-input/dependency/model errors propagate as in the baseline.
+    Fitting and explanation use CPU/cache memory only; no files, registry or release
+    state change. All numerical checks can pass while LIME's fidelity diagnostic
+    fails. Synthetic data and the linear label rule cannot establish model-family
+    superiority, causality or operational acceptance."""
     started = time.perf_counter()
     demonstration = {
         "amount_ratio": 2.4, "purchase_order_match": 0, "supplier_history_days": 90,
@@ -495,7 +721,7 @@ def run_explainability_comparison(
         "linear_coefficients": coefficients,
         "linear_contributors_increasing_score": sorted(
             (item for item in linear_shap["contributions"] if item["contribution_log_odds"] > 0),
-            key=lambda item: item["contribution_log_odds"], reverse=True,
+            key=lambda item: item["contribution_log_odds"], reverse=True,  # Order the displayed positive local contributions by size.
         ),
         "tree_model": {
             "training": {

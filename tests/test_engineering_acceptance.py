@@ -138,7 +138,11 @@ def test_tree_comparison_checks_tree_shap_reconstruction_numerically():
 
 @pytest.mark.parametrize("change", ["criterion", "quote", "cross_case", "attempts"])
 def test_rag_counter_or_self_rating_does_not_override_failed_evidence(change):
-    """A failed criterion, an invented quote, a source from another case or four searches block the gate."""
+    """A failed criterion, an invented quote, a source from another case or four searches block the gate.
+
+    Args:
+        change: Parametrized mutation of the synthetic RAG report intended to bypass its real checks.
+    """
     manifest = fixture_manifest()
     trial = manifest["rag"]["trials"][0]
     if change == "criterion":
@@ -163,7 +167,11 @@ def test_missing_evidence_blocks_and_approval_fields_or_paths_are_rejected():
 
 
 def test_hashes_are_stable_for_key_order_and_change_with_evidence_without_file_io(monkeypatch):
-    """Hashes ignore key order, change only with the evidence they cover, and no file is opened."""
+    """Hashes ignore key order, change only with the evidence they cover, and no file is opened.
+
+    Args:
+        monkeypatch: pytest fixture replacing open to prove that gate evaluation performs no file I/O.
+    """
     import builtins
 
     manifest = fixture_manifest()
@@ -180,7 +188,11 @@ def test_hashes_are_stable_for_key_order_and_change_with_evidence_without_file_i
 @pytest.mark.parametrize("value", [float("nan"), float("inf"), "x" * (513 * 1024)],
                          ids=["nan", "infinity", "oversized"])
 def test_nonfinite_or_oversized_manifest_is_rejected(value):
-    """NaN, infinity and a manifest over 512 KiB are refused."""
+    """NaN, infinity and a manifest over 512 KiB are refused.
+
+    Args:
+        value: Parametrized non-finite value or oversized report fixture that canonicalization must reject.
+    """
     manifest = fixture_manifest()
     manifest["rag"]["unexpected_value"] = value
     with pytest.raises(ValueError):

@@ -2,6 +2,17 @@
 
 This extension adds three executable engineering exercises and one evidence gate to the existing case-processing lab. Every example is synthetic. Executed code, measured behavior and human approval remain separate.
 
+## Read and reproduce the code
+
+- [Runbook](RUNBOOK.md): preparation, model pins, database access, each measurement, interpretation, errors and cleanup.
+- [Complete function index](FUNCTION_INDEX.md): every scoped class, named function, method, nested helper and associated test, linked to its source contract.
+- [Search reference](search-reference.md): TF-IDF, BGE-M3/pgvector, pinned inference, access/revision checks and the comparison/gate scripts.
+- [Vision reference](vision-reference.md): models, cache, queues, HTTP handlers, timing and load procedures.
+- [Explanation and acceptance reference](explainability-acceptance-reference.md): inputs, numerical scales, SHAP/LIME checks, model comparison and evidence-gate contracts.
+- [Portal reference](portal-reference.md): every optional API route, browser procedure, event handler and callback.
+
+Run `python -B scripts/check_engineering_documentation.py` to check coverage. Documentation describes the current implementation and its known failures; it does not implement the planned identifier-chain correction.
+
 | Exercise | User-visible function | Application components | Actual execution scope |
 | --- | --- | --- | --- |
 | Bounded agentic search | Refine a search when reviewed evidence is insufficient, then answer or abstain | `AgenticSearch`, a reviewed-source retriever, pinned `LocalInference`, existing case/session controls | Local Ollama CPU generation was measured with reviewed-only lexical retrieval, then with BGE-M3 + pgvector on the local OKD cluster. A two-step question failed with both and blocks the gate. No cluster model serving is exercised. |
@@ -71,7 +82,7 @@ These HTTP durations include the service queue, preprocessing, model call, postp
 
 This probe uses random weights and meaningless class indices, so it provides no semantic label, object-detection or classifier-quality proof. It did not run YOLO, TensorRT, Triton or an OKD GPU workload. The maximum retained PyTorch reservation was approximately 322 MiB and excludes driver/context memory. WSL-reported free/total device memory is omitted from the public record because it is not an independent physical-capacity receipt.
 
-The command-line search measurement used a 90-second question budget. The optional portal currently configures a 60-second budget. The command-line result does not accept that portal profile: additional authorization overhead can cause a legitimate deadline abstention.
+The command-line comparison and the optional portal both currently configure a 90-second question budget. Their execution profiles still differ: the portal includes its current request/session/CPE checks and a shared model lock. The command-line result does not accept the portal profile; additional authorization overhead can cause a legitimate deadline abstention. The portal's acceptance endpoint also uses fixed older evidence filenames rather than automatically discovering the 28 October comparison.
 
 ## Reproduce without mixing environments
 

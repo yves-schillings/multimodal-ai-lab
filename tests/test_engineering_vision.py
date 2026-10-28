@@ -1,4 +1,12 @@
-"""Meaningful cache, input-boundary and optional CPU/CUDA checks."""
+"""Verify synthetic vision input, cache, concurrency and optional device behavior.
+
+Base tests validate boundaries/cache identities and deliberately overload owned
+localhost services with scripted callbacks. PyTorch tests are skipped when torch
+is absent; CUDA consistency is skipped when no CUDA device is accessible.
+Tests use fictional fixtures only, but concurrency cases create local sockets
+and threads, and optional model cases allocate tensors/change torch settings.
+A passing suite does not validate image-model quality or production capacity.
+"""
 import copy
 import importlib.util
 import threading
@@ -15,10 +23,37 @@ from lab.engineering_vision import (
 
 
 class InputAndCacheTests(unittest.TestCase):
+    """Check pure input validation and cache identity without requiring PyTorch.
+
+    unittest creates a fresh instance and invokes setUp for each case. Tests require
+    no model download, HTTP service, GPU, real user identity or external dataset.
+    """
     def setUp(self):
+        """Prepare one seeded grayscale image for each pure boundary/cache test.
+
+        Returns:
+            None.
+
+        Side effects:
+            Stores a SyntheticImage pixel tuple on self.image using two fixtures seeded
+            with 123. Fixture-generation/validation errors propagate as setup failures.
+        """
         self.image = generate_synthetic_examples(2, 123)[0].pixels
 
     def test_rejects_wrong_shape_and_non_integer_pixels(self):
+        """Assert rejection of malformed shapes and invalid grayscale pixel types/ranges.
+
+        Returns:
+            None.
+
+        Raises:
+            AssertionError: A 31-row/31-column image, boolean pixel, value 256 or float
+            pixel fails to raise ValueError.
+
+        Side effects:
+            Runs separate subtests over deliberately invalid in-memory arrays.
+            It verifies representative invalid boundaries, not every possible input type.
+        """
         for pixels in ([[0] * 32] * 31, [[0] * 31] * 32,
                        [[False] * 32] * 32, [[256] * 32] * 32,
                        [[0.1] * 32] * 32):
@@ -26,6 +61,20 @@ class InputAndCacheTests(unittest.TestCase):
                 validate_image(pixels)
 
     def test_cache_invalidates_on_weights_preprocessing_and_input(self):
+        """Assert that changing any cache-identity component yields a miss.
+
+        Returns:
+            None.
+
+        Raises:
+            AssertionError: The original key does not retrieve its stored value, or a
+            changed weight label, preprocessing label or pixel still hits that entry.
+
+        Side effects:
+            Creates a two-entry cache, inserts a synthetic result and reads it under
+            several keys. Mutates a copied image only. This checks key isolation, not
+            model execution, authorization or a new preprocessing implementation.
+        """
         cache = PredictionCache(max_entries=2)
         key = make_cache_key(self.image, "weights-v1", "prep-v1")
         cache.put(key, {"result": 1})
@@ -38,11 +87,37 @@ class InputAndCacheTests(unittest.TestCase):
             self.assertIsNone(cache.get(changed_key))
 
     def test_held_out_images_are_disjoint_from_training(self):
+        """Check pixel-hash disjointness for the two selected synthetic fixture seeds.
+
+        Returns:
+            None.
+
+        Raises:
+            AssertionError: Any of 32 training hashes equals a held-out hash.
+
+        Side effects:
+            Generates two in-memory fixture sets seeded with 47 and 10047.
+            The result applies to these selected sets; it is not a universal guarantee
+            of statistical independence or absence of real-data leakage.
+        """
         train = {make_cache_key(x.pixels, "w", "p")[2] for x in generate_synthetic_examples(32, 47, "train")}
         held_out = {make_cache_key(x.pixels, "w", "p")[2] for x in generate_synthetic_examples(32, 10047, "test")}
         self.assertFalse(train.intersection(held_out))
 
     def test_missing_optional_runtime_has_a_clear_error(self):
+        """Verify the explanatory exception when this interpreter lacks PyTorch.
+
+        Returns:
+            None.
+
+        Raises:
+            unittest.SkipTest: PyTorch can already be located in this interpreter.
+            AssertionError: require_torch does not raise VisionDependencyUnavailable.
+
+        Side effects:
+            Performs import discovery and, on the missing-runtime path, an attempted
+            import. It neither installs a package nor checks CUDA capability.
+        """
         if optional_runtime_status()["torch_installed"]:
             self.skipTest("This interpreter already has the optional runtime")
         with self.assertRaises(VisionDependencyUnavailable):
@@ -50,10 +125,43 @@ class InputAndCacheTests(unittest.TestCase):
 
 
 class ConcurrentServiceTests(unittest.TestCase):
+    """Exercise bounded queue overload and localhost accounting with fake models.
+
+    The callbacks simulate service time; they do not execute PyTorch or prove model
+    latency. Each test owns and closes its worker threads and any HTTP socket.
+    """
     def test_bounded_queue_rejects_and_closes_workers(self):
+        """Verify nonblocking overload rejection, payload validation and worker cleanup.
+
+        Returns:
+            None.
+
+        Raises:
+            AssertionError: Expected future values, queue metrics, rejection, input
+            failure or final stopped-worker condition differ from the fixture contract.
+
+        Side effects:
+            Starts one batching worker with a one-slot queue. A gated fake callback holds
+            the first request while a second waits; the third must raise ProbeQueueFull.
+            Finally releases the event and closes the service even after an assertion.
+        """
         entered, release = threading.Event(), threading.Event()
 
         def blocked_call(worker, payloads):
+            """Hold a scripted model batch until released or its three-second wait expires.
+
+            Args:
+                worker (int): Worker index supplied by the service; unused by this fixture.
+                payloads (Sequence[bytes]): Synthetic images whose count determines results.
+
+            Returns:
+                tuple[list[dict], dict]: One value=1 result per payload and model_ms=0.0.
+
+            Side effects:
+                Sets the captured entered event and waits up to three seconds on release.
+                The zero timing is deliberate test metadata, not measured inference time.
+                Unexpected callback errors propagate into the service's future handling.
+            """
             entered.set()
             release.wait(3)
             return [{"value": 1} for _ in payloads], {"model_ms": 0.0}
@@ -80,7 +188,35 @@ class ConcurrentServiceTests(unittest.TestCase):
         self.assertFalse(any(t.is_alive() for t in service.worker_threads))
 
     def test_http_open_loop_accounts_for_overload_and_queue_time(self):
+        """Verify that scheduled arrivals retain rejections and queue latency under overload.
+
+        Returns:
+            None.
+
+        Raises:
+            AssertionError: The run loses any of 40 offered requests, reports no HTTP 429,
+            serves none, hides expected waiting, or leaves its serving thread alive.
+
+        Side effects:
+            Starts a fake one-worker, two-slot service and an ephemeral loopback server.
+            Offers 40 requests/second for one second against an 80-millisecond callback,
+            checks response/queue timing, and finally shuts down sockets and all workers.
+            Timing thresholds are behavioral checks; this is not a performance benchmark.
+        """
         def slow_call(worker, payloads):
+            """Simulate a slow model batch for the overload test.
+
+            Args:
+                worker (int): Service worker index, unused by the fixture.
+                payloads (Sequence[bytes]): Synthetic bodies; one result is made per body.
+
+            Returns:
+                tuple[list[dict], dict]: finite=True results and a reported model_ms of 80.0.
+
+            Side effects:
+                Sleeps approximately 0.08 seconds. The reported duration is a fixed fixture
+                value, not a timer measurement or evidence of GPU/model performance.
+            """
             time.sleep(.08)
             return [{"finite": True} for _ in payloads], {"model_ms": 80.0}
 
@@ -107,8 +243,30 @@ class ConcurrentServiceTests(unittest.TestCase):
 
 @unittest.skipUnless(importlib.util.find_spec("torch"), "Optional torch is not installed")
 class PredictionTests(unittest.TestCase):
+    """Run optional real PyTorch snapshot, shape and CPU/CUDA consistency checks.
+
+    The entire class is skipped if torch cannot be located. Tests use untrained
+    models and synthetic fixtures; output consistency does not establish detection
+    quality. The CUDA-specific case has its own device-availability skip.
+    """
     @classmethod
     def setUpClass(cls):
+        """Create shared untrained model/fixtures in the optional PyTorch interpreter.
+
+        Args:
+            cls (type[PredictionTests]): unittest class receiving torch/model/images.
+
+        Returns:
+            None.
+
+        Raises:
+            VisionDependencyUnavailable: PyTorch import fails despite discovery.
+            PyTorch or fixture setup errors propagate as class setup failures.
+
+        Side effects:
+            Sets global torch intra-op threads to one, disables cuDNN, constructs a
+            seeded tiny CNN and four synthetic images. These settings are not restored.
+        """
         cls.torch = require_torch()
         cls.torch.set_num_threads(1)
         cls.torch.backends.cudnn.enabled = False
@@ -116,6 +274,20 @@ class PredictionTests(unittest.TestCase):
         cls.images = generate_synthetic_examples(4, 103)[0:4]
 
     def test_realistic_probe_shape_without_quality_claim(self):
+        """Check the larger random probe's parameter count and finite output shape.
+
+        Returns:
+            None.
+
+        Raises:
+            AssertionError: Parameter count is not 11689512, output is not (1,1000), or
+            any output is non-finite.
+
+        Side effects:
+            Allocates a random ResNet-shaped CPU model and one zero RGB input of shape
+            (1,3,224,224), then executes inference_mode. No weights are downloaded and
+            no expected class label or model-quality threshold is asserted.
+        """
         model = build_resnet18_probe(47)
         self.assertEqual(sum(p.numel() for p in model.parameters()), 11689512)
         with self.torch.inference_mode():
@@ -124,6 +296,20 @@ class PredictionTests(unittest.TestCase):
         self.assertTrue(bool(self.torch.isfinite(result).all()))
 
     def test_cache_hit_and_new_weight_snapshot(self):
+        """Check repeated-image reuse and cache isolation after an actual weight change.
+
+        Returns:
+            None.
+
+        Raises:
+            AssertionError: Cold/warm cache flags, compute count or changed fingerprint
+            contradict the expected snapshot behavior.
+
+        Side effects:
+            Creates predictors sharing one cache, performs synthetic inference and
+            perturbs a separate model copy by 0.001 in one parameter. The class's original
+            model is not mutated. A new weight snapshot must not reuse an old prediction.
+        """
         cache = PredictionCache()
         first = VisionPredictor(self.model, cache=cache)
         cold = first.predict(self.images[0].pixels)
@@ -140,6 +326,23 @@ class PredictionTests(unittest.TestCase):
         self.assertFalse(second.predict(self.images[0].pixels)["cache_hit"])
 
     def test_cpu_cuda_consistency_for_same_weights(self):
+        """Compare synthetic predictions of equal model snapshots on CPU and CUDA.
+
+        Returns:
+            None.
+
+        Raises:
+            unittest.SkipTest: This torch interpreter has no available CUDA device.
+            AssertionError: Weight fingerprints/classes differ or any corresponding
+            probability differs by more than 0.00001.
+            PyTorch allocation/device errors propagate as test failures.
+
+        Side effects:
+            Sets this process's CUDA tensor-allocator fraction to a 256 MiB budget,
+            allocates CPU/GPU model copies and executes four synthetic images. The cap
+            excludes CUDA context/driver memory and other processes; it is not restored.
+            This proves fixture consistency within tolerance, not GPU production quality.
+        """
         if not self.torch.cuda.is_available():
             self.skipTest("No accessible CUDA device in this interpreter")
         total = self.torch.cuda.get_device_properties(0).total_memory

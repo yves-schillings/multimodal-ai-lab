@@ -1,7 +1,16 @@
-"""One model-driven, bounded search agent over authorized reviewed case evidence.
+"""Bounded model-driven search over authorised, human-reviewed case evidence.
 
-The controller owns identity, case, limits and source validation. The model may
-only ask for another query, answer, or abstain. Traces record actions, not thoughts.
+The retriever selects passages; a pinned model proposes another search, an
+answer, or abstention; this controller owns identity, case, revision, budgets
+and citation validation. The lexical adapter is explicit and does not invoke
+an embedding model or vector database. Real inference clients receive the
+remaining deadline and per-call token bounds through their request context.
+
+Access and evidence integrity are checked repeatedly. Exact quotes establish
+that cited text exists, not that it entails the generated claim or identifies
+the correct object. The known wrong-identifier/multi-passage failure therefore
+remains possible. Traces record actions and source hashes, not model thoughts.
+No function in this module provisions infrastructure or approves production.
 """
 from contextlib import ExitStack
 import math
@@ -15,16 +24,48 @@ from .vector_retrieval import reviewed_sources, source_hash
 
 
 def _manifest(case):
+    """Return the reviewed-source identity/hash mapping for one case snapshot.
+
+    Args:
+        case (dict): Authoritative case data accepted by ``reviewed_sources``.
+    Returns:
+        dict[str, str]: Source IDs mapped to SHA-256 hashes of source metadata/text.
+    Raises:
+        ValueError: More than 128 reviewed chunks would be included.
+    This is an in-memory helper; it neither authorises the case nor reads a store.
+    """
     return {source["id"]: source_hash(source) for source in reviewed_sources(case)}
 
 
 class ReviewedLexicalRetriever:
-    """Explicit fallback adapter: reviewed sources only, no vector database or LLM.
+    """Explicit reviewed-only lexical retrieval adapter for bounded case searches.
 
-    Unlike the older extractive demo, synthetic procedure cards are not added.
+    Each call fits TF-IDF to the currently authorised case's reviewed passages.
+    If scikit-learn is unavailable or its vocabulary is empty, the explicitly
+    reported backend is lexical count cosine instead. No synthetic procedure
+    cards, vector database or language-model calls are added by this adapter.
+    The result implements the source/revision contract consumed by AgenticSearch.
     """
 
     def retrieve(self, store, actor, case_id, question):
+        """Rank reviewed passages for an authorised case and recheck its snapshot.
+
+        Args:
+            store (StatementStore-like): Provides permission-checked ``get_case``.
+            actor (str): Server-selected actor, never a model-selected identity.
+            case_id (str): Case to search, scoped through the authoritative store.
+            question (str): Nonblank query, at most 2,000 characters.
+        Returns:
+            dict: Case ID/revision, explicit backend, at most three source dictionaries
+            with cosine scores, and an abstention flag when no passage qualifies.
+            A match needs a finite score >= 0.10 and at least one shared token.
+        Raises:
+            PermissionError/KeyError: Store denies access or cannot find the case.
+            ValueError: Query or reviewed-source bound is invalid.
+            ConflictError: Revision or source hashes change while ranking.
+        Reads the case store twice and computes local lexical scores. It does not
+        call Ollama or pgvector. Relevance scores do not prove factual support.
+        """
         case = store.get_case(actor, case_id)
         if not isinstance(question, str) or not question.strip() or len(question) > 2000:
             raise ValueError("Provide a question of 1 to 2000 characters.")
@@ -44,6 +85,7 @@ class ReviewedLexicalRetriever:
         tokens = set(_tokens(question))
         matches = [(score, source) for score, source in zip(scores, sources)
                    if math.isfinite(score) and score >= 0.10 and tokens.intersection(_tokens(source["text"]))]
+        # Pure sort key: higher cosine score first, then source ID for stable ties.
         matches.sort(key=lambda pair: (-pair[0], pair[1]["id"]))
         current = store.get_case(actor, case_id)
         if current["revision"] != case["revision"] or _manifest(current) != original:
@@ -57,8 +99,29 @@ class ReviewedLexicalRetriever:
 
 
 class AgenticSearch:
+    """Orchestrate one agent while retaining control outside the language model.
+
+    The injected retriever and inference client supply search and model calls;
+    this class supplies case/revision integrity, optional session reauthorisation,
+    three-chunk evidence windows, stop rules and verbatim-citation checks.
+    Its returned answer still requires human review: it has no semantic-entailment
+    or entity-join verifier, and a valid quote can accompany a false claim.
+    """
     def __init__(self, retriever, inference, max_attempts=3, max_seconds=60, cpu_only=False,
                  clock=monotonic):
+        """Store dependencies and validate the search/time bounds; perform no I/O.
+
+        Args:
+            retriever: Object implementing ``retrieve(store, actor, case_id, query)``.
+            inference: Client exposing model identity, ``plan_search`` and ``generate``;
+                optionally ``request_budget`` for per-HTTP-call limits and guards.
+            max_attempts (int): Maximum searches, from one to three, excluding bool.
+            max_seconds (float): Elapsed-time budget in seconds, > 0 and <= 300.
+            cpu_only (bool): Requested CPU-only policy for budget-aware clients.
+            clock (callable): Monotonic seconds; injectable for deterministic tests.
+        Raises:
+            ValueError: Search count or elapsed-time budget violates these bounds.
+        """
         if type(max_attempts) is not int or not 1 <= max_attempts <= 3:
             raise ValueError("Search attempts must be an integer from 1 to 3.")
         if (isinstance(max_seconds, bool) or not isinstance(max_seconds, (int, float))
@@ -69,11 +132,33 @@ class AgenticSearch:
         self.cpu_only, self.clock = cpu_only, clock
 
     def answer(self, store, actor, case_id, question, reauthorize=None):
-        """Actor and case are server-selected; the model cannot replace either.
+        """Search a case, ask for bounded actions and return a cited answer or stop.
 
-        Reauthorize should recheck the existing authenticated session/CPE and raise
-        PermissionError on revocation. It may return None, True, or a principal
-        dict containing the same actor/id. Store permissions are always checked too.
+        Args:
+            store (StatementStore-like): Authoritative, permission-checked case store.
+            actor (str): Server-selected actor for every store/retriever call.
+            case_id (str): Fixed case ID; neither model action can replace it.
+            question (str): Original nonblank question, at most 2,000 characters.
+            reauthorize (callable | None): Rechecks the existing session/project.
+                May raise PermissionError, return False, or return an actor/id dict;
+                a different identity is rejected. None/True keep the current actor.
+        Returns:
+            dict: Model identity, case revision, at most three selected sources/claims,
+            numbered cited answer, action trace, attempt count, elapsed milliseconds,
+            stop reason and ``requires_human_validation=True``. Abstention can retain
+            authorised sources; deadline/invalid-plan/model-failure paths clear them.
+        Raises:
+            PermissionError/KeyError: Session/case access fails or case is missing.
+            ConflictError: Case revision or reviewed-source manifest changes.
+            ValueError: Query or retriever source contract violates local bounds.
+        Side effects:
+            Reads the case repeatedly, invokes retrieval and model inference, and
+            keeps an in-memory trace. Budget-aware clients receive <= 4,096 context
+            tokens and <= 384 generated tokens per call; these are not a cumulative
+            token-accounting system. A late result is withheld, not server cancellation.
+        Repeated queries, attempt/deadline limits and model abstention end the loop.
+        Model/protocol failures become explicit stop results. Verbatim quote checks
+        protect citation integrity, not entity identity, entailment or claim truth.
         """
         if not isinstance(question, str) or not question.strip() or len(question) > 2000:
             raise ValueError("Provide a question of 1 to 2000 characters.")
@@ -81,6 +166,12 @@ class AgenticSearch:
         deadline = started + self.max_seconds
 
         def authorization():
+            """Invoke the optional session guard and reject a revoked/changed actor.
+
+            Uses the outer reauthorize callback and actor. Returns None on acceptance;
+            propagates callback errors and raises PermissionError on False or an actor/id
+            mismatch. This helper does not replace the separate store permission check.
+            """
             if reauthorize is not None:
                 principal = reauthorize()
                 if principal is False or (isinstance(principal, dict)
@@ -92,6 +183,18 @@ class AgenticSearch:
         revision, manifest = baseline["revision"], _manifest(baseline)
 
         def checkpoint(check_time=True):
+            """Reauthorise and compare current case evidence with the initial snapshot.
+
+            Args:
+                check_time (bool): Also reject an expired monotonic deadline when True.
+            Returns:
+                dict: Current authorised case with unchanged revision and source hashes.
+            Raises:
+                PermissionError/KeyError: Access is denied or the case disappears.
+                ConflictError: Revision or reviewed evidence changes.
+                InferenceDeadlineExceeded: Time is exhausted and check_time is True.
+            Reads the store and may call the session callback; no model call is made.
+            """
             authorization()
             current = store.get_case(actor, case_id)
             if current["revision"] != revision or _manifest(current) != manifest:
@@ -116,6 +219,19 @@ class AgenticSearch:
         selected, seen, query = [], set(), question
 
         def validate_sources(retrieval):
+            """Validate a retriever payload against the initial authoritative manifest.
+
+            Args:
+                retrieval (dict): Case/revision and a list of source dictionaries.
+            Returns:
+                list[dict]: Copied, validated sources, preserving optional score fields.
+            Raises:
+            ConflictError: Case/revision, duplicate/unknown source identity or hash is wrong.
+            ValueError: More than three sources, malformed source objects,
+                    or a combined source text longer than 4,500 characters is supplied.
+            Performs in-memory structural/integrity checks only. It does not prove that
+            a source is relevant or that a generated assertion follows from its text.
+            """
             if retrieval.get("case_id", case_id) != case_id or retrieval.get("case_revision") != revision:
                 raise ConflictError("Retriever returned another case or revision; answer withheld.")
             sources = retrieval.get("sources")
@@ -139,6 +255,17 @@ class AgenticSearch:
         def stop(reason, clear_sources=False):
             # Recheck access even when the budget is exhausted or a model failed.
             # Never return a trace or cached source after logout/revocation/edit.
+            """Finalise a stop result after checking access and evidence once more.
+
+            Args:
+                reason (str): Stop code to retain in the result and action evidence.
+                clear_sources (bool): Clear sources/claims and force abstention when True.
+            Returns:
+                dict: The shared result with stop reason, attempts and elapsed milliseconds.
+            Permission/revision errors still propagate after the time budget is exhausted.
+            The final check skips time enforcement so a stop reason can be returned safely;
+            it never skips reauthorisation. It writes no files and cancels no remote work.
+            """
             checkpoint(check_time=False)
             result["stop_reason"] = reason
             result["attempt_count"] = len(result["attempts"])

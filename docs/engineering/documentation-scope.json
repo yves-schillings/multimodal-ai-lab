@@ -1,0 +1,25 @@
+{
+  "python": [
+    "lab/agentic_search.py",
+    "lab/local_inference.py",
+    "lab/vector_retrieval.py",
+    "lab/rag.py",
+    "lab/engineering_vision.py",
+    "lab/engineering_explainability.py",
+    "lab/engineering_acceptance.py",
+    "lab/engineering_api.py",
+    "scripts/measure_agentic_engineering.py",
+    "scripts/compare_agentic_retrieval.py",
+    "scripts/gate_agentic_retrieval.py",
+    "scripts/measure_explainability_engineering.py",
+    "scripts/measure_vision_engineering.py",
+    "scripts/check_engineering_documentation.py",
+    "tests/test_agentic_search.py",
+    "tests/test_engineering_acceptance.py",
+    "tests/test_engineering_api.py",
+    "tests/test_engineering_explainability.py",
+    "tests/test_engineering_vision.py",
+    "tests/test_engineering_documentation.py"
+  ],
+  "javascript": "static/engineering.js"
+}

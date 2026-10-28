@@ -14,7 +14,11 @@ _MAX_BYTES = 512 * 1024
 
 
 def _number(value):
-    """Return True only for a finite int or float; booleans, strings, NaN and infinity are refused."""
+    """Return True only for a finite int or float; booleans, strings, NaN and infinity are refused.
+
+    Args:
+        value: Candidate scalar; only finite built-in int/float values count, excluding bool.
+    """
     return type(value) in (int, float) and math.isfinite(value)
 
 
@@ -55,6 +59,9 @@ def evaluate_candidate_evidence(manifest):
     relevant cases; this helper cannot detect omitted or selectively chosen runs.
     Missing evidence blocks the candidate. Approval fields are deliberately not
     accepted; a separate authorized human decision is still required afterwards.
+
+    Args:
+        manifest: Trusted in-memory rag, vision and explainability reports; no paths, URLs, uploads or human approval fields.
     """
     if not isinstance(manifest, dict) or set(manifest) - {"rag", "vision", "explainability"}:
         raise ValueError("Only rag, vision and explainability measurement reports are accepted.")
@@ -64,11 +71,22 @@ def evaluate_candidate_evidence(manifest):
     checks = []
 
     def check(identifier, passed, detail):
-        """Record a technical check as "pass" or "fail"; a single failure makes the decision "blocked"."""
+        """Record a technical check as "pass" or "fail"; a single failure makes the decision "blocked".
+
+        Args:
+            identifier: Stable check ID appended to the enclosing checks list.
+            passed: Condition selecting pass when true and fail otherwise.
+            detail: Human-readable explanation of the criterion.
+        """
         checks.append({"id": identifier, "status": "pass" if passed else "fail", "detail": detail})
 
     def pending(identifier, detail):
-        """Record a review that code cannot perform; it never passes and is left to people."""
+        """Record a review that code cannot perform; it never passes and is left to people.
+
+        Args:
+            identifier: Stable review check ID appended to the enclosing checks list.
+            detail: Reason that a separate human review remains necessary.
+        """
         checks.append({"id": identifier, "status": "review_pending", "detail": detail})
 
     hashes = {key: hashlib.sha256(_canonical(value)).hexdigest() for key, value in manifest.items()}

@@ -1,8 +1,18 @@
-"""Genuine CPU Ollama + reviewed-only lexical trials; never pgvector acceptance.
+"""Run the historical three-question CPU/Ollama agent demonstration.
 
-Runs synthetic fixtures with simulated actors, not authentication acceptance.
-Each reported pass is a narrow case-specific check, not a general quality score.
-No model pulls, service changes, remote fallback, or model-unload requests.
+Uses reviewed synthetic case fixtures, simulated actors and the explicit
+ReviewedLexicalRetriever. It never exercises BGE-M3 or pgvector despite retaining
+an embedding-model pin in the configured inference client. The real Qwen3:4b
+planner/generator is called with at most three searches and a deadline per
+question. Local inference must already be running with the pinned model.
+
+Writes a new JSON record incrementally and prints compact progress; existing
+outputs are never overwritten. The historical paraphrase rule requires more
+than one search, and the answer oracle includes a simple library substring
+check. Passes are narrow fixture checks, not general factual/semantic accuracy.
+The CLI exits 0 only if all three trial checks pass; otherwise it exits 1.
+No pulls, provisioning, cluster acceptance or server-computation cancellation
+is performed. The code requests keep_alive=0 for its inference calls.
 """
 import argparse
 from datetime import datetime, timezone
@@ -28,6 +38,29 @@ TRIALS = (
 
 
 def measure(out, max_seconds=90):
+    """Execute and record the three historical reviewed-only lexical trials.
+
+    Args:
+        out (str | Path): New JSON evidence filename outside the product source
+            tree; its parent is created. Existing output is refused.
+        max_seconds (float): Per-question elapsed budget in seconds, default 90;
+            AgenticSearch validates > 0 and <= 300. At most three searches occur.
+    Returns:
+        dict: Synthetic scope, fixed model/options, per-trial result/checks,
+        completed count and number meeting the historical fixture rules.
+    Raises:
+        ValueError: Output already exists or the controller budget is invalid.
+        OSError: Parent/temp/store/output operations fail.
+    Side effects:
+        Creates/deletes a temporary StatementStore under the output parent, marks
+        its seeded passages reviewed, calls local Ollama on CPU, writes the JSON
+        after each trial and prints progress/final location. Expected inference,
+        input, permission and missing-case errors become failed trial records.
+    The quote check is verbatim membership; the location check is a substring.
+    Neither checks entailment or the correct owner/object, and the simulated actor
+    is not authentication. A deadline withholds late output rather than stopping
+    server work. Returned failures must remain visible in any published summary.
+    """
     out = Path(out).resolve()
     if out.exists():
         raise ValueError("Choose a new evidence filename; existing results are preserved.")
