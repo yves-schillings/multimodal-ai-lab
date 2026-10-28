@@ -19,9 +19,9 @@
   "primary_outcome": {
     "name": "strict success",
     "answer_expected": "The answer is correct (every expected value, no forbidden, injected or unauthorised value), every expected value also appears in a cited quote (support), and no cited passage names another item's identifier (entity link).",
-    "abstention_expected": "The strategy abstains.",
+    "abstention_expected": "The strategy abstains deliberately.",
     "abstain_or_answer": "The strategy abstains, or it answers and meets the answer-expected rule.",
-    "failures": "An error, a deadline at 90 seconds, a withheld answer and a missing answer all count as no success. They are also reported as separate categories."
+    "failures": "An error, a deadline at 90 seconds, an invalid agent plan and an answer withheld by an output check all count as no success, also when abstention was expected. They are the stop reasons deadline, invalid_model_plan and model_unavailable (which names both a withheld output and an unavailable service). Any other abstention (model_abstained, answer_abstained, no_reviewed_evidence, identifier not found or ambiguous, repeated_query, attempt_limit) is deliberate. The failures are also reported as separate categories."
   },
   "repeats": "For each question and strategy, the score is the mean of its three repeats (0, 1/3, 2/3 or 1). Neither the best repeat nor a majority vote is used.",
   "weighting": "Each question weighs the same. The estimate, the case bootstrap and the sign-flip check all use this weighting.",
@@ -60,5 +60,9 @@
     "Apply the frozen judge and this plan without change.",
     "Independent review of judgements: every trial in the review queue, plus a sample fixed now: from repeat 1, 3 trials judged a strict success and 3 judged a failure per strategy (24 trials), drawn with seed 20261028. Strategy names are hidden and the order shuffled. The reviewer's disagreements are recorded before any arbitration. Until that review is done, published results say that the judgements are automatic.",
     "Publication with all results, good or bad, and the failure analysis."
-  ]
+  ],
+  "precision_added": {
+    "at": "2026-10-28T22:42:49+00:00",
+    "what": "The stop reasons behind 'failure' and 'deliberate abstention' were listed, so that a withheld or failed output never counts as a correct abstention. Added while writing the analysis code, still without reading the test run record or its log."
+  }
 }
