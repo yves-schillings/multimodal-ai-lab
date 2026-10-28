@@ -87,4 +87,6 @@ python scripts/compare_agentic_retrieval.py --persistence bge.json --fixture-dir
 python scripts/gate_agentic_retrieval.py --run bge.json --vision vision-resnet-open-loop.json --explainability explainability-comparison.json --out gate.json
 ```
 
+The runs used `compare_agentic_retrieval.py` as committed in `598a5b5` (SHA-256 `82a56e8c…`, recorded in each run file). A later commit only adds docstrings and comments to the comparison script, the gate script, the gate and its tests: their syntax trees, once docstrings are removed, are identical to the versions used for the runs.
+
 The pgvector run reads `LAB_VECTOR_HOST`, `LAB_VECTOR_PORT`, `LAB_VECTOR_DATABASE`, `LAB_VECTOR_USER` and `LAB_VECTOR_PASSWORD_FILE`. Keep the password file outside the repository. Each run record holds its commit, source hashes, model digests, versions, hardware, ranked passages, actions, per-step timings and stop reasons. The synthetic case store used for the restart check is not included.

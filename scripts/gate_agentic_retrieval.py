@@ -4,6 +4,14 @@ The search trials come from a compare_agentic_retrieval.py run record. Each tria
 the protocol before the run: the answer rule for the three basic questions, the loop rule for the two-step question.
 The vision and explanation reports are the existing records, supplied unchanged. A failed or missing two-step case
 keeps the gate blocked until a corrected run passes it.
+
+Usage::
+
+    python scripts/gate_agentic_retrieval.py --run bge.json --vision vision-resnet-open-loop.json \\
+        --explainability explainability-comparison.json --out gate.json
+
+The output keeps the SHA-256 of the three input files, the mapping from protocol expectations to gate
+expectations, the rule applied to each trial, and the full gate result with every check.
 """
 import argparse
 from datetime import datetime, timezone
@@ -20,10 +28,24 @@ from lab.engineering_acceptance import evaluate_candidate_evidence  # noqa: E402
 # Protocol expectation -> gate expectation. "refinement" is judged with the answer rule written before the run,
 # so it becomes "paraphrase" (one to three searches); the historical verdict stays in the run record.
 EXPECTATIONS = {"supported": "supported", "refinement": "paraphrase", "abstain": "abstain", "loop": "multi_step"}
+# Protocol expectation -> the verdict of compare_agentic_retrieval.judge that decides whether the trial passed.
 RULES = {"supported": "answer_rule", "refinement": "answer_rule", "abstain": "answer_rule", "loop": "loop_rule"}
 
 
 def gate_trial(trial):
+    """Turn one trial of a comparison run into the trial format that the evidence gate expects.
+
+    The gate recomputes bounds, quotes and outcomes from ``result`` itself. ``passed`` and ``checks`` carry
+    the protocol verdict, so a trial that failed its rule can never pass the gate.
+
+    Args:
+        trial: one entry of the run record's ``trials`` list (expectation, result and verdicts).
+
+    Returns:
+        A dictionary with the trial id, the gate expectation, the agent's result unchanged, ``passed`` (the
+        verdict of the rule in ``RULES``) and ``checks`` (that verdict, plus whether the two-step answer
+        named the expected place).
+    """
     verdicts = trial["verdicts"]
     rule = RULES[trial["expectation"]]
     checks = {rule: verdicts[rule] is True}
@@ -34,10 +56,26 @@ def gate_trial(trial):
 
 
 def sha256(path):
+    """Return the SHA-256 hex digest of the file at ``path``, read as raw bytes."""
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
 
 def evaluate(run, vision, explainability, out):
+    """Apply the evidence gate to one comparison run and write the gate record.
+
+    Args:
+        run: the run record written by compare_agentic_retrieval.py (one backend).
+        vision: the existing vision measurement record.
+        explainability: the existing explanation comparison record.
+        out: a new JSON file for the gate record; an existing file is never overwritten.
+
+    Returns:
+        The gate record: inputs and their SHA-256, the expectation mapping, the rule and checks of each
+        search trial, and the result of ``evaluate_candidate_evidence``.
+
+    Raises:
+        ValueError: when ``out`` already exists.
+    """
     out = Path(out).resolve()
     if out.exists():
         raise ValueError("Choose a new evidence filename; existing results are preserved.")
@@ -68,4 +106,5 @@ if __name__ == "__main__":
     args = parser.parse_args()
     report = evaluate(args.run, args.vision, args.explainability, args.out)
     gate = report["gate"]
+    # Print the decision and the search checks; the full result is in the output file.
     print(gate["decision"], {c["id"]: c["status"] for c in gate["checks"] if c["id"].startswith("rag.")})

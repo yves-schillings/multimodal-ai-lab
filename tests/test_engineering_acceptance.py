@@ -41,10 +41,12 @@ def fixture_manifest():
 
 
 def statuses(result):
+    """Map each check id of a gate result to its status ("pass", "fail" or "review_pending")."""
     return {check["id"]: check["status"] for check in result["checks"]}
 
 
 def test_passing_technical_evidence_still_requires_separate_human_approval():
+    """Passing evidence gives only "technical_candidate"; human approval stays pending and production is not approved."""
     result = evaluate_candidate_evidence(fixture_manifest())
     assert result["decision"] == "technical_candidate"
     assert result["manual_review_required"] is True and result["production_approved"] is False
@@ -53,6 +55,7 @@ def test_passing_technical_evidence_still_requires_separate_human_approval():
 
 
 def test_fast_random_weight_benchmark_does_not_pass_quality_or_release():
+    """Fast timings measured with random weights pass the timing check but block quality and release."""
     manifest = fixture_manifest()
     manifest["vision"]["model"]["weights_origin"] = "random weights; timing probe only"
     manifest["vision"].pop("training")
@@ -65,6 +68,7 @@ def test_fast_random_weight_benchmark_does_not_pass_quality_or_release():
 
 
 def test_open_loop_probe_accounting_and_latency_do_not_release_random_weights():
+    """Complete request accounting passes, random weights still block, and a broken accounting fails."""
     manifest = fixture_manifest()
     manifest["vision"] = {
         "schema_version": "vision-open-loop-v1", "release_eligible": False,
@@ -86,6 +90,7 @@ def test_open_loop_probe_accounting_and_latency_do_not_release_random_weights():
 
 
 def test_quality_failure_is_not_hidden_by_fast_timing_or_global_ok():
+    """A held-out quality below the threshold blocks, even with good timings and a global "ok" flag."""
     manifest = fixture_manifest()
     manifest["vision"]["ok"] = True
     manifest["vision"]["quality"]["cpu"].update(correct=5, accuracy=0.5)
@@ -96,6 +101,7 @@ def test_quality_failure_is_not_hidden_by_fast_timing_or_global_ok():
 
 
 def test_failed_lime_case_blocks_even_if_report_claims_success():
+    """A LIME output outside the probability range blocks, even when the report claims success."""
     manifest = fixture_manifest()
     manifest["explainability"]["lime"]["surrogate_probability_at_case"] = 1.425
     # Both ok and illustrative_gate remain true to prove raw numeric checks matter.
@@ -106,6 +112,7 @@ def test_failed_lime_case_blocks_even_if_report_claims_success():
 
 
 def test_all_supplied_explanation_cases_are_evaluated_without_hiding_failure():
+    """Every supplied explanation case is checked, so one failing case blocks beside a passing one."""
     manifest = fixture_manifest()
     first = manifest["explainability"]
     second = deepcopy(first)
@@ -118,6 +125,7 @@ def test_all_supplied_explanation_cases_are_evaluated_without_hiding_failure():
 
 
 def test_tree_comparison_checks_tree_shap_reconstruction_numerically():
+    """The Tree SHAP sum is recomputed from the numbers, so a self-declared pass cannot hide an error."""
     manifest = fixture_manifest()
     manifest["explainability"] = {"linear_baseline": manifest["explainability"],
                                   "tree_model": {"shap": {"reconstruction_absolute_error": 0.1,
@@ -130,6 +138,7 @@ def test_tree_comparison_checks_tree_shap_reconstruction_numerically():
 
 @pytest.mark.parametrize("change", ["criterion", "quote", "cross_case", "attempts"])
 def test_rag_counter_or_self_rating_does_not_override_failed_evidence(change):
+    """A failed criterion, an invented quote, a source from another case or four searches block the gate."""
     manifest = fixture_manifest()
     trial = manifest["rag"]["trials"][0]
     if change == "criterion":
@@ -145,6 +154,7 @@ def test_rag_counter_or_self_rating_does_not_override_failed_evidence(change):
 
 
 def test_missing_evidence_blocks_and_approval_fields_or_paths_are_rejected():
+    """Missing evidence blocks; approval fields and file paths are refused as input."""
     assert evaluate_candidate_evidence({})["decision"] == "blocked"
     with pytest.raises(ValueError):
         evaluate_candidate_evidence({**fixture_manifest(), "approved_by": "invented"})
@@ -153,6 +163,7 @@ def test_missing_evidence_blocks_and_approval_fields_or_paths_are_rejected():
 
 
 def test_hashes_are_stable_for_key_order_and_change_with_evidence_without_file_io(monkeypatch):
+    """Hashes ignore key order, change only with the evidence they cover, and no file is opened."""
     import builtins
 
     manifest = fixture_manifest()
@@ -169,6 +180,7 @@ def test_hashes_are_stable_for_key_order_and_change_with_evidence_without_file_i
 @pytest.mark.parametrize("value", [float("nan"), float("inf"), "x" * (513 * 1024)],
                          ids=["nan", "infinity", "oversized"])
 def test_nonfinite_or_oversized_manifest_is_rejected(value):
+    """NaN, infinity and a manifest over 512 KiB are refused."""
     manifest = fixture_manifest()
     manifest["rag"]["unexpected_value"] = value
     with pytest.raises(ValueError):
@@ -176,10 +188,12 @@ def test_nonfinite_or_oversized_manifest_is_rejected(value):
 
 
 def two_step_trial(manifest):
+    """Return the two-step ("multi_step") trial of a fixture manifest."""
     return next(t for t in manifest["rag"]["trials"] if t["expectation"] == "multi_step")
 
 
 def test_missing_two_step_case_blocks_even_when_the_three_basic_cases_pass():
+    """Without a two-step case, the three basic questions still pass, but the gate stays blocked."""
     manifest = fixture_manifest()
     manifest["rag"]["trials"].remove(two_step_trial(manifest))
     result = evaluate_candidate_evidence(manifest)
@@ -189,6 +203,7 @@ def test_missing_two_step_case_blocks_even_when_the_three_basic_cases_pass():
 
 
 def test_wrong_two_step_answer_blocks_although_its_quote_is_exact():
+    """A wrong two-step answer with an exact quote keeps the quote check green and still blocks the gate."""
     manifest = fixture_manifest()
     trial = two_step_trial(manifest)
     trial["passed"] = False
@@ -201,6 +216,7 @@ def test_wrong_two_step_answer_blocks_although_its_quote_is_exact():
 
 
 def test_two_step_answer_after_a_single_search_does_not_pass():
+    """A two-step answer found after a single search does not pass the two-step check."""
     manifest = fixture_manifest()
     trial = two_step_trial(manifest)
     trial["result"].update(attempt_count=1, attempts=trial["result"]["attempts"][:1])
@@ -208,6 +224,7 @@ def test_two_step_answer_after_a_single_search_does_not_pass():
 
 
 def test_paraphrase_rule_accepts_one_search_but_historical_refinement_rule_does_not():
+    """One search fails the historical "refinement" rule and passes the "paraphrase" answer rule."""
     manifest = fixture_manifest()
     trial = next(t for t in manifest["rag"]["trials"] if t["expectation"] == "refinement")
     trial["result"].update(attempt_count=1, attempts=trial["result"]["attempts"][:1])

@@ -14,14 +14,29 @@ _MAX_BYTES = 512 * 1024
 
 
 def _number(value):
+    """Return True only for a finite int or float; booleans, strings, NaN and infinity are refused."""
     return type(value) in (int, float) and math.isfinite(value)
 
 
 def _object(value):
+    """Return ``value`` when it is a dictionary, otherwise an empty dictionary, so that lookups never fail."""
     return value if isinstance(value, dict) else {}
 
 
 def _canonical(value):
+    """Serialise a report to canonical JSON bytes: sorted keys, no spaces, UTF-8, finite numbers only.
+
+    The same content always gives the same bytes, so its SHA-256 does not depend on key order.
+
+    Args:
+        value: the report or manifest to serialise.
+
+    Returns:
+        The canonical JSON as bytes.
+
+    Raises:
+        ValueError: when the value is not plain finite JSON data, or when it exceeds 512 KiB.
+    """
     try:
         data = json.dumps(value, sort_keys=True, separators=(",", ":"),
                           ensure_ascii=False, allow_nan=False).encode("utf-8")
@@ -49,9 +64,11 @@ def evaluate_candidate_evidence(manifest):
     checks = []
 
     def check(identifier, passed, detail):
+        """Record a technical check as "pass" or "fail"; a single failure makes the decision "blocked"."""
         checks.append({"id": identifier, "status": "pass" if passed else "fail", "detail": detail})
 
     def pending(identifier, detail):
+        """Record a review that code cannot perform; it never passes and is left to people."""
         checks.append({"id": identifier, "status": "review_pending", "detail": detail})
 
     hashes = {key: hashlib.sha256(_canonical(value)).hexdigest() for key, value in manifest.items()}
@@ -60,10 +77,14 @@ def evaluate_candidate_evidence(manifest):
 
     # RAG: recompute boundedness/citations; do not accept model self-ratings or
     # an aggregate passed counter as substitutes for per-trial observations.
+    # Search trials. Each trial carries the agent's result, the expectation set
+    # before the run, and the protocol verdict ("passed" and "checks").
     # A "paraphrase" trial applies the answer rule written before the run: any one
     # to three searches. "refinement" keeps the historical rule: more than one.
     # A "multi_step" trial has its own blocking check: it needs more than one
     # search and its predefined answer, so a look-alike quote cannot pass.
+    # The three basic outcomes and the two-step outcome are accumulated apart,
+    # so that the two-step case can never hide behind the basic questions.
     rag = _object(manifest.get("rag"))
     trials = rag.get("trials", [])
     valid_trials = isinstance(trials, list) and 1 <= len(trials) <= 16
@@ -207,6 +228,12 @@ def evaluate_candidate_evidence(manifest):
               "Successful execution is required but does not prove a useful explanation.")
 
         def shap_check(explanation, suffix):
+            """Check that the SHAP shares add up to the model score within a tolerance of at most 1e-8.
+
+            Args:
+                explanation: the SHAP part of one explanation report.
+                suffix: the end of the check id, for example ".shap_reconstruction".
+            """
             error = explanation.get("reconstruction_absolute_error")
             tolerance = explanation.get("reconstruction_tolerance")
             passed = (_number(error) and _number(tolerance) and 0 <= error <= tolerance <= 1e-8
