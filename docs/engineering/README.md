@@ -22,18 +22,13 @@ Run `python -B scripts/check_engineering_documentation.py` to check coverage. Do
 
 ## Search control and architecture
 
-```mermaid
-flowchart TD
-    U[Authorized user and original question] --> A[Existing session, CSRF, CPE and case checks]
-    A --> R[Retrieve reviewed sources in the fixed case]
-    R --> V[Recheck identity, revision and source hashes]
-    V --> P[Pinned local model chooses retrieve, answer or abstain]
-    P -->|different query and budget remains| R
-    P -->|answer| G[Generate from bounded sources and ORIGINAL question]
-    P -->|abstain or bound reached| W[Withhold answer and record stop reason]
-    G --> C[Recheck authorization, revision, hashes and exact quotes]
-    C --> H[Return cited claims for human validation]
-```
+The figures in this guide come from the article [AI Engineering in Practice](https://secloudis.com/ai-engineering-in-practice/), where each one is explained in full.
+
+![Figure 1d: the lab agent with its five functions, the two moments of RAG and the search loop](../images/engineering/figure-1d-lab-agent.png)
+
+*Figure 1d: the lab agent. BGE-M3 encodes the passages and the questions, pgvector stores and searches the vectors, Qwen3:4b plans and then writes the cited answer, `AgenticSearch` orchestrates, controls and bounds the run, and Ollama runs both models on the CPU. The passages are indexed once (moment 1); each question is then answered, with at most three searches (moment 2).*
+
+Before the first search, the existing session, CSRF, CPE and case checks run. The model then chooses to search again with a different query, to answer from the bounded sources and the original question, or to withhold. Before an answer is returned, authorization, revision, source hashes and exact quotes are checked again, and the cited claims still require human validation.
 
 One model controls one agent. It cannot select an actor, another case, a destination or a new tool. At most three retrievals and three reviewed chunks, totaling at most 4,500 characters, enter the evidence window. Repeated queries, source changes, invalid plans, unavailable models and expired deadlines stop the controller. The trace contains actions, queries and source hashes, not a reasoning transcript.
 
@@ -62,11 +57,19 @@ The optional portal is `/engineering`. Its routes include `GET /api/engineering/
 
 The [dated evidence package](../evidence/ai-engineering-20261027/README.md) retains the selected source records and exact limits. The [28 October search comparison](../evidence/agentic-retrieval-20261028/README.md) adds the BGE-M3 + pgvector run, a TF-IDF rerun and the two-step case, in separate files.
 
+![Figure 1e: the four test questions with TF-IDF and with BGE-M3 and pgvector, the failed two-step case, the planned fix and the gate](../images/engineering/figure-1e-lab-results.png)
+
+*Figure 1e: with BGE-M3 and pgvector, the three basic questions passed (two correct answers and one appropriate abstention). The two-step question failed with both search methods: the quotes were exact but concerned other bicycles. The planned fix is not implemented or tested yet, and the gate stays blocked until a new recorded run passes this case.*
+
 - With BGE-M3 + pgvector, the three basic questions met the answer rule written before the run: the paraphrase was answered at the first search and Qwen3:4b abstained on the unsupported question. A separate two-step question failed with both TF-IDF and BGE-M3 + pgvector: each answer cited an exact quote from a look-alike register entry. The gate check `rag.multi_step_case` stays failed until a corrected agent passes it.
 - The final 27 October three-question search run produced two supported answers. A paraphrase required three searches. The unsupported question was withheld by the repeated-query control, but failed the measurement's stricter expected model-abstention criterion. CPU durations for the supported answers were 37.046 and 58.484 seconds; this is not low-latency acceptance.
 - The explanation comparison used the same 600 training and 200 held-out synthetic rows. Logistic regression recorded accuracy 0.86, AUROC 0.818667 and Brier score 0.127635; histogram gradient boosting recorded 0.81, 0.810067 and 0.138165. This artificial label-generating rule is linear, so the comparison does not establish general model-family superiority.
 - SHAP numerical checks passed. The positive-case LIME surrogate returned approximately 1.425 for a model probability approximately 0.998, outside the probability range and about 0.427 away. That local explanation fails the proposed 0.05 teaching diagnostic. It is not clipped into an apparently valid probability.
 - The earlier tiny vision model reached 64/64 correct classifications on its held-out synthetic fixtures on CPU and CUDA. Its sequential localhost timing is an earlier micro-benchmark, not a peak-load service result or a real object detector.
+
+![Figure 3c: an interpretable model, the Tree SHAP waterfall of the lab case, and the failed LIME check](../images/engineering/figure-3c-explanation-methods.png)
+
+*Figure 3c: the Tree SHAP shares of one fictional invoice, in log-odds, add up to its 91 % score and pass the additivity check. On the logistic regression, LIME returned 1.425 for a case scored 0.998, outside the probability range, so its check failed and that explanation is not shown.*
 
 The separate 11,689,512-parameter ResNet-shaped probe offered 100 requests per second for 10 seconds to each configuration, with a bounded queue and batching. Each GPU configuration completed 1,000 successful requests with no errors or client safety drops. CPU completed 177 successful requests and rejected 823 with HTTP 429. Successful-request p95/p99 HTTP durations were:
 
@@ -77,6 +80,10 @@ The separate 11,689,512-parameter ResNet-shaped probe offered 100 requests per s
 | GPU | FP32 | 2 | 17.96 | 28.04 |
 | GPU | FP16 | 1 | 28.37 | 67.01 |
 | GPU | FP16 | 2 | 29.93 | 73.58 |
+
+![Figure 2b: six latency levers in the order to try them, with the lab load probe](../images/engineering/figure-2b-latency-levers.png)
+
+*Figure 2b: measure first, lighten the model, serve smart, scale out, cache and precompute, then work on the network and resilience. Each lever is kept only when a measurement on the real service path shows a gain. The lab probe offered 100 requests per second with random weights, so it shows service behaviour only.*
 
 These HTTP durations include the service queue, preprocessing, model call, postprocessing and response over localhost. The report also records latency from the scheduled arrival, counts every rejection and includes drain time. The percentiles above concern successful responses; CPU rejections must not disappear from the interpretation. One short load point does not locate maximum sustainable capacity. FP16 and extra workers do not guarantee an improvement.
 
@@ -115,6 +122,10 @@ For vision, select an existing Linux/WSL interpreter with the required PyTorch/C
 The load probe uses a ResNet-18-shaped network with random weights and synthetic RGB inputs. It can measure queues, scheduling, precision and worker effects; it is ineligible as a quality-validated model release.
 
 ## Evidence and approval
+
+![Figure 5: from a measured candidate to a controlled project, through the acceptance gate and a recorded human decision](../images/engineering/figure-5-gate-and-project.png)
+
+*Figure 5: the lab measures one candidate, the acceptance gate compares its evidence with explicit criteria, the owner records a separate human decision, and an accepted service then runs in its own controlled project. This is a proposed practice; the code below implements only the gate.*
 
 ```python
 from lab.engineering_acceptance import evaluate_candidate_evidence
