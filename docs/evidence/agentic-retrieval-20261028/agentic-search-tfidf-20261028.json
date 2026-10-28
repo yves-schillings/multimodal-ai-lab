@@ -1,0 +1,734 @@
+{
+  "recorded_at": "2026-10-28T12:10:25.122135+00:00",
+  "backend": "lexical",
+  "protocol_sha256": "f11e8f454a4b94f4c5cb1884c162c9a60d6a42ccb86317a9589652891a10e460",
+  "environment": {
+    "commit": "3a40e6cad5b8beede86d0f28c78b2a9fcb35fbd1",
+    "uncommitted": [
+      "?? scripts/compare_agentic_retrieval.py"
+    ],
+    "source_sha256": {
+      "lab/agentic_search.py": "ae8db16b3dd4084dac1fe3cef237415cee8cea21ac4d7a595f36b417330c42ca",
+      "lab/vector_retrieval.py": "1b9bdf63710159d0bab3960dab52a1092d134051318c9019a2d48cd98bf4e38d",
+      "lab/local_inference.py": "507106a5aec7b4f5dff40421d220bb3923338183f5fdbc1af44dc3ed47da7dcf",
+      "lab/retrieval.py": "07057d3b43382d29f13145e6cd2e95b27cddae7c43d03f5f7574c6a3d7649a93",
+      "scripts/compare_agentic_retrieval.py": "82a56e8c9389f150539d9d201d294846c6ba269ad1014cd7f10fdedefd092f0a"
+    },
+    "python": "3.12.10",
+    "os": "Windows-11-10.0.26300-SP0",
+    "machine": "Intel(R) Core(TM) i9-9900K CPU @ 3.60GHz | 64 GB RAM",
+    "logical_cpus": 16,
+    "ollama": "0.32.13",
+    "httpx": "0.28.1",
+    "psycopg": "3.3.4",
+    "scikit_learn": "1.8.0",
+    "gpu_policy": "num_gpu 0 forced on every embedding and generation call (CPU only)"
+  },
+  "generation_model": "qwen3:4b",
+  "generation_digest": "359d7dd4bcdab3d86b87d73ac27966f4dbb9f5efdfcc75d34a8764a09474fae7",
+  "retrieval": "reviewed-only TF-IDF cosine fitted at each search; score >= 0.10 and at least one shared word; top 3; no embedding call",
+  "options": {
+    "num_gpu": 0,
+    "num_ctx_max": 4096,
+    "num_predict_max": 384,
+    "keep_alive": 0,
+    "max_attempts": 3,
+    "max_seconds_per_question": 90
+  },
+  "limitations": [
+    "Four synthetic English questions cannot establish general or multilingual answer quality.",
+    "Timings are single CPU runs with model reloads (keep_alive 0); they are observations, not capacity figures.",
+    "An exact quote does not prove that the cited passage supports the claim.",
+    "Simulated actors, not real authentication; local OKD pgvector, not a deployment acceptance."
+  ],
+  "cases": {
+    "demo": {
+      "id": "demo-case-a",
+      "revision": 4
+    },
+    "loop": {
+      "id": "case-5ce5db820f6d4f66a8cf3c0c403d5f72",
+      "revision": 8
+    }
+  },
+  "trials": [
+    {
+      "id": "supported_location",
+      "question": "Where was the blue bicycle left?",
+      "expectation": "supported",
+      "result": {
+        "case_id": "demo-case-a",
+        "case_revision": 4,
+        "mode": "bounded_agentic_rag",
+        "generation_model": "qwen3:4b",
+        "generation_digest": "359d7dd4bcdab3d86b87d73ac27966f4dbb9f5efdfcc75d34a8764a09474fae7",
+        "simulated_identity": true,
+        "requires_human_validation": true,
+        "sources": [
+          {
+            "id": "segment-7db3e8e0be31412799085784c926cb3b",
+            "title": "Reviewed transcript segment 1",
+            "text": "I left my blue bicycle beside the library at about nine in the morning.",
+            "start": 0.0,
+            "end": 5.4,
+            "case_id": "demo-case-a",
+            "kind": "reviewed_transcript",
+            "score": 0.608245
+          },
+          {
+            "id": "segment-462e49edcf1f4aec9a42e1781b1d7fd4",
+            "title": "Reviewed transcript segment 2",
+            "text": "When I returned at about eleven, the bicycle was no longer there.",
+            "start": 5.4,
+            "end": 11.2,
+            "case_id": "demo-case-a",
+            "kind": "reviewed_transcript",
+            "score": 0.109144
+          },
+          {
+            "id": "segment-dd4bdb1e94e04575a2d6428c49d08d50",
+            "title": "Reviewed transcript segment 3",
+            "text": "I did not see who removed it. I can provide a photograph of the bicycle.",
+            "start": 11.2,
+            "end": 16.0,
+            "case_id": "demo-case-a",
+            "kind": "reviewed_transcript",
+            "score": 0.109144
+          }
+        ],
+        "claims": [
+          {
+            "text": "The blue bicycle was left beside the library.",
+            "source": 1,
+            "quote": "I left my blue bicycle beside the library at about nine in the morning."
+          },
+          {
+            "text": "The blue bicycle was no longer there when the person returned at about eleven.",
+            "source": 2,
+            "quote": "When I returned at about eleven, the bicycle was no longer there."
+          }
+        ],
+        "abstained": false,
+        "answer": "The blue bicycle was left beside the library. [1]\nThe blue bicycle was no longer there when the person returned at about eleven. [2]",
+        "attempts": [
+          {
+            "attempt": 1,
+            "query": "Where was the blue bicycle left?",
+            "case_revision": 4,
+            "retrieved_source_ids": [
+              "segment-7db3e8e0be31412799085784c926cb3b",
+              "segment-462e49edcf1f4aec9a42e1781b1d7fd4",
+              "segment-dd4bdb1e94e04575a2d6428c49d08d50"
+            ],
+            "selected_source_hashes": {
+              "segment-7db3e8e0be31412799085784c926cb3b": "995f59c03933e64cc91753369ada3baab6f619e7cb9d68cb307b6466ead94ecf",
+              "segment-462e49edcf1f4aec9a42e1781b1d7fd4": "67fadb4eec76ff823420f3a2a07441d1a82fdd3e58a6c7f4acafe4451e9455e4",
+              "segment-dd4bdb1e94e04575a2d6428c49d08d50": "06a03c8b21aab86d7d4fccfb05fbe39ce73e7c72b5f72d4452ee8d4bfb586d2f"
+            },
+            "action": "answer",
+            "elapsed_ms": 17000.0
+          }
+        ],
+        "attempt_count": 1,
+        "max_attempts": 3,
+        "max_seconds": 90,
+        "stop_reason": "answered",
+        "authorization_mode": "store_only",
+        "notice": "One bounded local agent. Reviewed case sources only. Citation numbers and exact quotes are checked; these checks do not prove factual entailment. Human validation remains required.",
+        "retrieval_backend": "reviewed_only_tfidf_cosine",
+        "elapsed_ms": 43531.0
+      },
+      "steps": [
+        {
+          "phase": "retrieve",
+          "ms": 5.5
+        },
+        {
+          "phase": "plan",
+          "ms": 16994.0
+        },
+        {
+          "phase": "generate",
+          "ms": 26533.1
+        }
+      ],
+      "searches": [
+        {
+          "query": "Where was the blue bicycle left?",
+          "backend": "reviewed_only_tfidf_cosine",
+          "passages": [
+            {
+              "id": "segment-7db3e8e0be31412799085784c926cb3b",
+              "score": 0.608245,
+              "text": "I left my blue bicycle beside the library at about nine in the morning."
+            },
+            {
+              "id": "segment-462e49edcf1f4aec9a42e1781b1d7fd4",
+              "score": 0.109144,
+              "text": "When I returned at about eleven, the bicycle was no longer there."
+            },
+            {
+              "id": "segment-dd4bdb1e94e04575a2d6428c49d08d50",
+              "score": 0.109144,
+              "text": "I did not see who removed it. I can provide a photograph of the bicycle."
+            }
+          ]
+        }
+      ],
+      "stop_kind": "answered",
+      "verdicts": {
+        "historical_rule": true,
+        "answer_rule": true
+      }
+    },
+    {
+      "id": "paraphrase_needs_retrieval",
+      "question": "At what location was the cycle parked?",
+      "expectation": "refinement",
+      "result": {
+        "case_id": "demo-case-a",
+        "case_revision": 4,
+        "mode": "bounded_agentic_rag",
+        "generation_model": "qwen3:4b",
+        "generation_digest": "359d7dd4bcdab3d86b87d73ac27966f4dbb9f5efdfcc75d34a8764a09474fae7",
+        "simulated_identity": true,
+        "requires_human_validation": true,
+        "sources": [
+          {
+            "id": "segment-462e49edcf1f4aec9a42e1781b1d7fd4",
+            "title": "Reviewed transcript segment 2",
+            "text": "When I returned at about eleven, the bicycle was no longer there.",
+            "start": 5.4,
+            "end": 11.2,
+            "case_id": "demo-case-a",
+            "kind": "reviewed_transcript",
+            "score": 0.283217
+          },
+          {
+            "id": "segment-dd4bdb1e94e04575a2d6428c49d08d50",
+            "title": "Reviewed transcript segment 3",
+            "text": "I did not see who removed it. I can provide a photograph of the bicycle.",
+            "start": 11.2,
+            "end": 16.0,
+            "case_id": "demo-case-a",
+            "kind": "reviewed_transcript",
+            "score": 0.283217
+          },
+          {
+            "id": "segment-7db3e8e0be31412799085784c926cb3b",
+            "title": "Reviewed transcript segment 1",
+            "text": "I left my blue bicycle beside the library at about nine in the morning.",
+            "start": 0.0,
+            "end": 5.4,
+            "case_id": "demo-case-a",
+            "kind": "reviewed_transcript",
+            "score": 0.2344
+          }
+        ],
+        "claims": [
+          {
+            "text": "The bicycle was parked beside the library.",
+            "source": 3,
+            "quote": "I left my blue bicycle beside the library at about nine in the morning."
+          }
+        ],
+        "abstained": false,
+        "answer": "The bicycle was parked beside the library. [3]",
+        "attempts": [
+          {
+            "attempt": 1,
+            "query": "At what location was the cycle parked?",
+            "case_revision": 4,
+            "retrieved_source_ids": [],
+            "selected_source_hashes": {},
+            "action": "retrieve",
+            "elapsed_ms": 11328.0
+          },
+          {
+            "attempt": 2,
+            "query": "location of parked cycle",
+            "case_revision": 4,
+            "retrieved_source_ids": [],
+            "selected_source_hashes": {},
+            "action": "retrieve",
+            "elapsed_ms": 23422.0
+          },
+          {
+            "attempt": 3,
+            "query": "parked bicycle location",
+            "case_revision": 4,
+            "retrieved_source_ids": [
+              "segment-462e49edcf1f4aec9a42e1781b1d7fd4",
+              "segment-dd4bdb1e94e04575a2d6428c49d08d50",
+              "segment-7db3e8e0be31412799085784c926cb3b"
+            ],
+            "selected_source_hashes": {
+              "segment-462e49edcf1f4aec9a42e1781b1d7fd4": "67fadb4eec76ff823420f3a2a07441d1a82fdd3e58a6c7f4acafe4451e9455e4",
+              "segment-dd4bdb1e94e04575a2d6428c49d08d50": "06a03c8b21aab86d7d4fccfb05fbe39ce73e7c72b5f72d4452ee8d4bfb586d2f",
+              "segment-7db3e8e0be31412799085784c926cb3b": "995f59c03933e64cc91753369ada3baab6f619e7cb9d68cb307b6466ead94ecf"
+            },
+            "action": "answer",
+            "elapsed_ms": 36390.0
+          }
+        ],
+        "attempt_count": 3,
+        "max_attempts": 3,
+        "max_seconds": 90,
+        "stop_reason": "answered",
+        "authorization_mode": "store_only",
+        "notice": "One bounded local agent. Reviewed case sources only. Citation numbers and exact quotes are checked; these checks do not prove factual entailment. Human validation remains required.",
+        "retrieval_backend": "reviewed_only_tfidf_cosine",
+        "elapsed_ms": 55312.0
+      },
+      "steps": [
+        {
+          "phase": "retrieve",
+          "ms": 4.3
+        },
+        {
+          "phase": "plan",
+          "ms": 11330.3
+        },
+        {
+          "phase": "retrieve",
+          "ms": 5.9
+        },
+        {
+          "phase": "plan",
+          "ms": 12078.6
+        },
+        {
+          "phase": "retrieve",
+          "ms": 6.2
+        },
+        {
+          "phase": "plan",
+          "ms": 12948.9
+        },
+        {
+          "phase": "generate",
+          "ms": 18924.7
+        }
+      ],
+      "searches": [
+        {
+          "query": "At what location was the cycle parked?",
+          "backend": "reviewed_only_tfidf_cosine",
+          "passages": []
+        },
+        {
+          "query": "location of parked cycle",
+          "backend": "reviewed_only_tfidf_cosine",
+          "passages": []
+        },
+        {
+          "query": "parked bicycle location",
+          "backend": "reviewed_only_tfidf_cosine",
+          "passages": [
+            {
+              "id": "segment-462e49edcf1f4aec9a42e1781b1d7fd4",
+              "score": 0.283217,
+              "text": "When I returned at about eleven, the bicycle was no longer there."
+            },
+            {
+              "id": "segment-dd4bdb1e94e04575a2d6428c49d08d50",
+              "score": 0.283217,
+              "text": "I did not see who removed it. I can provide a photograph of the bicycle."
+            },
+            {
+              "id": "segment-7db3e8e0be31412799085784c926cb3b",
+              "score": 0.2344,
+              "text": "I left my blue bicycle beside the library at about nine in the morning."
+            }
+          ]
+        }
+      ],
+      "stop_kind": "answered",
+      "verdicts": {
+        "historical_rule": true,
+        "answer_rule": true
+      }
+    },
+    {
+      "id": "unsupported_vehicle_registration",
+      "question": "What is the registration number of the vehicle?",
+      "expectation": "abstain",
+      "result": {
+        "case_id": "demo-case-a",
+        "case_revision": 4,
+        "mode": "bounded_agentic_rag",
+        "generation_model": "qwen3:4b",
+        "generation_digest": "359d7dd4bcdab3d86b87d73ac27966f4dbb9f5efdfcc75d34a8764a09474fae7",
+        "simulated_identity": true,
+        "requires_human_validation": true,
+        "sources": [],
+        "claims": [],
+        "abstained": true,
+        "answer": "The reviewed evidence did not support an answer. Human review is required.",
+        "attempts": [
+          {
+            "attempt": 1,
+            "query": "What is the registration number of the vehicle?",
+            "case_revision": 4,
+            "retrieved_source_ids": [],
+            "selected_source_hashes": {},
+            "action": "retrieve",
+            "elapsed_ms": 12422.0
+          },
+          {
+            "attempt": 2,
+            "query": "vehicle registration number",
+            "case_revision": 4,
+            "retrieved_source_ids": [],
+            "selected_source_hashes": {},
+            "action": "retrieve",
+            "elapsed_ms": 24766.0
+          }
+        ],
+        "attempt_count": 2,
+        "max_attempts": 3,
+        "max_seconds": 90,
+        "stop_reason": "repeated_query",
+        "authorization_mode": "store_only",
+        "notice": "One bounded local agent. Reviewed case sources only. Citation numbers and exact quotes are checked; these checks do not prove factual entailment. Human validation remains required.",
+        "retrieval_backend": "reviewed_only_tfidf_cosine",
+        "elapsed_ms": 24782.0
+      },
+      "steps": [
+        {
+          "phase": "retrieve",
+          "ms": 5.7
+        },
+        {
+          "phase": "plan",
+          "ms": 12402.9
+        },
+        {
+          "phase": "retrieve",
+          "ms": 6.0
+        },
+        {
+          "phase": "plan",
+          "ms": 12337.9
+        }
+      ],
+      "searches": [
+        {
+          "query": "What is the registration number of the vehicle?",
+          "backend": "reviewed_only_tfidf_cosine",
+          "passages": []
+        },
+        {
+          "query": "vehicle registration number",
+          "backend": "reviewed_only_tfidf_cosine",
+          "passages": []
+        }
+      ],
+      "stop_kind": "imposed_by_controller",
+      "verdicts": {
+        "historical_rule": false,
+        "answer_rule": false,
+        "unsupported_answer_returned": false
+      }
+    },
+    {
+      "id": "two_step_recovered_bicycle",
+      "question": "Where was the complainant's bicycle recovered?",
+      "expectation": "loop",
+      "result": {
+        "case_id": "case-5ce5db820f6d4f66a8cf3c0c403d5f72",
+        "case_revision": 8,
+        "mode": "bounded_agentic_rag",
+        "generation_model": "qwen3:4b",
+        "generation_digest": "359d7dd4bcdab3d86b87d73ac27966f4dbb9f5efdfcc75d34a8764a09474fae7",
+        "simulated_identity": true,
+        "requires_human_validation": true,
+        "sources": [
+          {
+            "id": "segment-6d5f4fb96b7d409e8e8e7b251a94f369",
+            "title": "Reviewed transcript segment 3",
+            "text": "Recovery register entry 4: frame number RB-1120 was recovered at the train station on Tuesday.",
+            "start": 10.0,
+            "end": 15.0,
+            "case_id": "case-5ce5db820f6d4f66a8cf3c0c403d5f72",
+            "kind": "reviewed_transcript",
+            "score": 0.510537
+          },
+          {
+            "id": "segment-416ff1e436fd4eb3b7fd350073f717fc",
+            "title": "Reviewed transcript segment 1",
+            "text": "My bicycle is a green city bike. The frame number engraved under the saddle is GX-5530.",
+            "start": 0.0,
+            "end": 5.0,
+            "case_id": "case-5ce5db820f6d4f66a8cf3c0c403d5f72",
+            "kind": "reviewed_transcript",
+            "score": 0.335006
+          }
+        ],
+        "claims": [
+          {
+            "text": "The complainant's bicycle was recovered at the train station on Tuesday.",
+            "source": 1,
+            "quote": "Recovery register entry 4: frame number RB-1120 was recovered at the train station on Tuesday."
+          }
+        ],
+        "abstained": false,
+        "answer": "The complainant's bicycle was recovered at the train station on Tuesday. [1]",
+        "attempts": [
+          {
+            "attempt": 1,
+            "query": "Where was the complainant's bicycle recovered?",
+            "case_revision": 8,
+            "retrieved_source_ids": [
+              "segment-416ff1e436fd4eb3b7fd350073f717fc",
+              "segment-6d5f4fb96b7d409e8e8e7b251a94f369"
+            ],
+            "selected_source_hashes": {
+              "segment-416ff1e436fd4eb3b7fd350073f717fc": "16c06e27898aa06de08c76d56954f9f47c1c9b7c1725c034f72721f48ebbb63a",
+              "segment-6d5f4fb96b7d409e8e8e7b251a94f369": "7dbb1841ebd447b2675d98ab22cbdd170d353477996022dadef54f3133d93d72"
+            },
+            "action": "retrieve",
+            "elapsed_ms": 14812.0
+          },
+          {
+            "attempt": 2,
+            "query": "bicycle recovery location train station",
+            "case_revision": 8,
+            "retrieved_source_ids": [
+              "segment-6d5f4fb96b7d409e8e8e7b251a94f369",
+              "segment-416ff1e436fd4eb3b7fd350073f717fc"
+            ],
+            "selected_source_hashes": {
+              "segment-6d5f4fb96b7d409e8e8e7b251a94f369": "7dbb1841ebd447b2675d98ab22cbdd170d353477996022dadef54f3133d93d72",
+              "segment-416ff1e436fd4eb3b7fd350073f717fc": "16c06e27898aa06de08c76d56954f9f47c1c9b7c1725c034f72721f48ebbb63a"
+            },
+            "action": "answer",
+            "elapsed_ms": 27468.0
+          }
+        ],
+        "attempt_count": 2,
+        "max_attempts": 3,
+        "max_seconds": 90,
+        "stop_reason": "answered",
+        "authorization_mode": "store_only",
+        "notice": "One bounded local agent. Reviewed case sources only. Citation numbers and exact quotes are checked; these checks do not prove factual entailment. Human validation remains required.",
+        "retrieval_backend": "reviewed_only_tfidf_cosine",
+        "elapsed_ms": 49125.0
+      },
+      "steps": [
+        {
+          "phase": "retrieve",
+          "ms": 6.9
+        },
+        {
+          "phase": "plan",
+          "ms": 14797.4
+        },
+        {
+          "phase": "retrieve",
+          "ms": 9.3
+        },
+        {
+          "phase": "plan",
+          "ms": 12641.5
+        },
+        {
+          "phase": "generate",
+          "ms": 21651.0
+        }
+      ],
+      "searches": [
+        {
+          "query": "Where was the complainant's bicycle recovered?",
+          "backend": "reviewed_only_tfidf_cosine",
+          "passages": [
+            {
+              "id": "segment-416ff1e436fd4eb3b7fd350073f717fc",
+              "score": 0.534853,
+              "text": "My bicycle is a green city bike. The frame number engraved under the saddle is GX-5530."
+            },
+            {
+              "id": "segment-6d5f4fb96b7d409e8e8e7b251a94f369",
+              "score": 0.10359,
+              "text": "Recovery register entry 4: frame number RB-1120 was recovered at the train station on Tuesday."
+            }
+          ]
+        },
+        {
+          "query": "bicycle recovery location train station",
+          "backend": "reviewed_only_tfidf_cosine",
+          "passages": [
+            {
+              "id": "segment-6d5f4fb96b7d409e8e8e7b251a94f369",
+              "score": 0.510537,
+              "text": "Recovery register entry 4: frame number RB-1120 was recovered at the train station on Tuesday."
+            },
+            {
+              "id": "segment-416ff1e436fd4eb3b7fd350073f717fc",
+              "score": 0.335006,
+              "text": "My bicycle is a green city bike. The frame number engraved under the saddle is GX-5530."
+            }
+          ]
+        }
+      ],
+      "stop_kind": "answered",
+      "verdicts": {
+        "loop_rule": false,
+        "answer_named_expected_place": false
+      }
+    }
+  ],
+  "retrieval_only": [
+    {
+      "id": "supported_location",
+      "question": "Where was the blue bicycle left?",
+      "ranking": [
+        {
+          "rank": 1,
+          "score": 0.608245,
+          "kept": true,
+          "text": "I left my blue bicycle beside the library at about nine in the morning."
+        },
+        {
+          "rank": 2,
+          "score": 0.109144,
+          "kept": true,
+          "text": "When I returned at about eleven, the bicycle was no longer there."
+        },
+        {
+          "rank": 3,
+          "score": 0.109144,
+          "kept": true,
+          "text": "I did not see who removed it. I can provide a photograph of the bicycle."
+        }
+      ],
+      "expected": [
+        {
+          "text": "I left my blue bicycle beside the library at about nine in the morning.",
+          "rank": 1,
+          "score": 0.608245,
+          "kept": true
+        }
+      ]
+    },
+    {
+      "id": "paraphrase_needs_retrieval",
+      "question": "At what location was the cycle parked?",
+      "ranking": [
+        {
+          "rank": 1,
+          "score": 0.0,
+          "kept": false,
+          "text": "When I returned at about eleven, the bicycle was no longer there."
+        },
+        {
+          "rank": 2,
+          "score": 0.0,
+          "kept": false,
+          "text": "I left my blue bicycle beside the library at about nine in the morning."
+        },
+        {
+          "rank": 3,
+          "score": 0.0,
+          "kept": false,
+          "text": "I did not see who removed it. I can provide a photograph of the bicycle."
+        }
+      ],
+      "expected": [
+        {
+          "text": "I left my blue bicycle beside the library at about nine in the morning.",
+          "rank": 2,
+          "score": 0.0,
+          "kept": false
+        }
+      ]
+    },
+    {
+      "id": "unsupported_vehicle_registration",
+      "question": "What is the registration number of the vehicle?",
+      "ranking": [
+        {
+          "rank": 1,
+          "score": 0.0,
+          "kept": false,
+          "text": "When I returned at about eleven, the bicycle was no longer there."
+        },
+        {
+          "rank": 2,
+          "score": 0.0,
+          "kept": false,
+          "text": "I left my blue bicycle beside the library at about nine in the morning."
+        },
+        {
+          "rank": 3,
+          "score": 0.0,
+          "kept": false,
+          "text": "I did not see who removed it. I can provide a photograph of the bicycle."
+        }
+      ],
+      "expected": []
+    },
+    {
+      "id": "two_step_recovered_bicycle",
+      "question": "Where was the complainant's bicycle recovered?",
+      "ranking": [
+        {
+          "rank": 1,
+          "score": 0.534853,
+          "kept": true,
+          "text": "My bicycle is a green city bike. The frame number engraved under the saddle is GX-5530."
+        },
+        {
+          "rank": 2,
+          "score": 0.10359,
+          "kept": true,
+          "text": "Recovery register entry 4: frame number RB-1120 was recovered at the train station on Tuesday."
+        },
+        {
+          "rank": 3,
+          "score": 0.09604,
+          "kept": false,
+          "text": "Recovery register entry 7: frame number KT-8812 was recovered behind the market hall on Tuesday."
+        },
+        {
+          "rank": 4,
+          "score": 0.092856,
+          "kept": false,
+          "text": "Recovery register entry 12: frame number MZ-6604 was recovered beside the cathedral on Thursday."
+        },
+        {
+          "rank": 5,
+          "score": 0.09245,
+          "kept": false,
+          "text": "Recovery register entry 9: frame number GX-5530 was recovered near the old harbour on Wednesday morning."
+        },
+        {
+          "rank": 6,
+          "score": 0.088921,
+          "kept": false,
+          "text": "Recovery register entry 11: frame number PL-3307 was recovered in the university car park on Wednesday."
+        },
+        {
+          "rank": 7,
+          "score": 0.0,
+          "kept": false,
+          "text": "I locked it outside the swimming pool on Monday evening and it was gone on Tuesday."
+        }
+      ],
+      "expected": [
+        {
+          "text": "My bicycle is a green city bike. The frame number engraved under the saddle is GX-5530.",
+          "rank": 1,
+          "score": 0.534853,
+          "kept": true
+        },
+        {
+          "text": "Recovery register entry 9: frame number GX-5530 was recovered near the old harbour on Wednesday morning.",
+          "rank": 5,
+          "score": 0.09245,
+          "kept": false
+        }
+      ]
+    }
+  ]
+}

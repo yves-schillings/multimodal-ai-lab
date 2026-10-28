@@ -4,10 +4,10 @@ This extension adds three executable engineering exercises and one evidence gate
 
 | Exercise | User-visible function | Application components | Actual execution scope |
 | --- | --- | --- | --- |
-| Bounded agentic search | Refine a search when reviewed evidence is insufficient, then answer or abstain | `AgenticSearch`, a reviewed-source retriever, pinned `LocalInference`, existing case/session controls | Local Ollama CPU generation and reviewed-only lexical retrieval were measured. The current run does not exercise pgvector or cluster serving. |
+| Bounded agentic search | Refine a search when reviewed evidence is insufficient, then answer or abstain | `AgenticSearch`, a reviewed-source retriever, pinned `LocalInference`, existing case/session controls | Local Ollama CPU generation was measured with reviewed-only lexical retrieval, then with BGE-M3 + pgvector on the local OKD cluster. A two-step question failed with both and blocks the gate. No cluster model serving is exercised. |
 | Vision performance | Compare model-call, pipeline and service timing; observe batching, queues, precision and worker effects | `VisionPredictor`, `BoundedBatchVisionService`, temporary loopback HTTP services | An earlier tiny trained classifier and a separate ResNet-shaped load probe have different scopes. Random-weight timing never proves image-classification quality. |
 | Individual explanations | Compare a linear baseline and a tree model; inspect SHAP reconstruction and LIME fidelity | `run_explainability_comparison`, scikit-learn, SHAP and LIME | Native CPU, one fixed synthetic split. Numerical reconstruction can pass while a local explanation fails its fidelity diagnostic. |
-| Candidate evidence gate | Show pass, fail and review-pending checks before a separate human decision | `evaluate_candidate_evidence` | Pure in-memory checks and content hashes. No registry release or production approval is performed. |
+| Candidate evidence gate | Show pass, fail and review-pending checks before a separate human decision | `evaluate_candidate_evidence` | Pure in-memory checks and content hashes. A failed or missing two-step search case blocks. No registry release or production approval is performed. |
 
 ## Search control and architecture
 
@@ -28,7 +28,7 @@ One model controls one agent. It cannot select an actor, another case, a destina
 
 `LocalInference.request_budget` carries the remaining deadline and authorization guard to model-verification, planning, embedding and generation HTTP requests. Phase timeouts are capped and late output is rejected; this does not cancel model computation already running on the server or a database query. The CPU measurement explicitly used `num_gpu=0`, a 4,096-token context cap, a 384-token generation cap and `keep_alive=0`.
 
-The reviewed-only lexical adapter uses the authoritative case sources and excludes the older demonstration's synthetic procedure cards. The existing vector retriever remains an alternative integration point. Using that code path requires its own reachable pgvector/model deployment and acceptance evidence.
+The reviewed-only lexical adapter uses the authoritative case sources and excludes the older demonstration's synthetic procedure cards. The existing vector retriever is the second backend: BGE-M3 encodes each reviewed passage once and each query, and pgvector stores the vectors with their case, revision, content hash and model digest. The 28 October comparison ran it against a pgvector pod on the local OKD cluster; that is not a deployment acceptance.
 
 ## Source map
 
@@ -41,15 +41,18 @@ The reviewed-only lexical adapter uses the authoritative case sources and exclud
 | [`engineering_explainability.py`](../../lab/engineering_explainability.py) | Synthetic training, linear/tree comparison and actual SHAP/LIME calculations |
 | [`engineering_acceptance.py`](../../lab/engineering_acceptance.py) | Pure laboratory evidence checks and canonical JSON SHA-256 hashes |
 | [`engineering_api.py`](../../lab/engineering_api.py) | Optional routes over the existing authentication, case and CPE controls |
+| [`compare_agentic_retrieval.py`](../../scripts/compare_agentic_retrieval.py) | Same agent and Qwen3:4b with TF-IDF or BGE-M3 + pgvector, retrieval-only ranks, guard and persistence checks |
+| [`gate_agentic_retrieval.py`](../../scripts/gate_agentic_retrieval.py) | Applies the evidence gate to one recorded comparison run |
 | [`scripts/`](../../scripts/) and [`tests/`](../../tests/) | Measurement commands and behavior tests; fake clients test control flow and do not prove LLM quality |
 
 The optional portal is `/engineering`. Its routes include `GET /api/engineering/status`, `POST /api/engineering/example`, `POST /api/cases/{case_id}/agent-question`, `POST /api/engineering/explain`, `GET /api/engineering/vision` and the read-only `GET /api/engineering/acceptance`. Missing optional capabilities return an explicit unavailable response. The live explanation route is restricted to the reviewer role. A retained vision report is a measured record, not a live GPU deployment.
 
 ## What was observed
 
-The [dated evidence package](../evidence/ai-engineering-20261027/README.md) retains the selected source records and exact limits.
+The [dated evidence package](../evidence/ai-engineering-20261027/README.md) retains the selected source records and exact limits. The [28 October search comparison](../evidence/agentic-retrieval-20261028/README.md) adds the BGE-M3 + pgvector run, a TF-IDF rerun and the two-step case, in separate files.
 
-- The final three-question search run produced two supported answers. A paraphrase required three searches. The unsupported question was withheld by the repeated-query control, but failed the measurement's stricter expected model-abstention criterion. CPU durations for the supported answers were 37.046 and 58.484 seconds; this is not low-latency acceptance.
+- With BGE-M3 + pgvector, the three basic questions met the answer rule written before the run: the paraphrase was answered at the first search and Qwen3:4b abstained on the unsupported question. A separate two-step question failed with both TF-IDF and BGE-M3 + pgvector: each answer cited an exact quote from a look-alike register entry. The gate check `rag.multi_step_case` stays failed until a corrected agent passes it.
+- The final 27 October three-question search run produced two supported answers. A paraphrase required three searches. The unsupported question was withheld by the repeated-query control, but failed the measurement's stricter expected model-abstention criterion. CPU durations for the supported answers were 37.046 and 58.484 seconds; this is not low-latency acceptance.
 - The explanation comparison used the same 600 training and 200 held-out synthetic rows. Logistic regression recorded accuracy 0.86, AUROC 0.818667 and Brier score 0.127635; histogram gradient boosting recorded 0.81, 0.810067 and 0.138165. This artificial label-generating rule is linear, so the comparison does not establish general model-family superiority.
 - SHAP numerical checks passed. The positive-case LIME surrogate returned approximately 1.425 for a model probability approximately 0.998, outside the probability range and about 0.427 away. That local explanation fails the proposed 0.05 teaching diagnostic. It is not clipped into an apparently valid probability.
 - The earlier tiny vision model reached 64/64 correct classifications on its held-out synthetic fixtures on CPU and CUDA. Its sequential localhost timing is an earlier micro-benchmark, not a peak-load service result or a real object detector.
@@ -112,7 +115,7 @@ result = evaluate_candidate_evidence({
 })
 ```
 
-The helper accepts bounded report values in memory, not arbitrary paths or model self-ratings. It returns `blocked` or `technical_candidate`, per-check `pass`, `fail` or `review_pending`, content hashes, `manual_review_required=True` and `production_approved=False`. Include relevant failed explanation cases rather than selecting only a successful illustration. Hashes identify the supplied content; they do not prove report authenticity, completeness or independence.
+The helper accepts bounded report values in memory, not arbitrary paths or model self-ratings. It returns `blocked` or `technical_candidate`, per-check `pass`, `fail` or `review_pending`, content hashes, `manual_review_required=True` and `production_approved=False`. Include relevant failed explanation cases rather than selecting only a successful illustration. The search report must include a predefined two-step case (`multi_step`): a wrong answer with an exact quote, an answer after a single search or a missing case keeps the decision `blocked`. A `paraphrase` trial follows the answer rule (one to three searches); a `refinement` trial keeps the historical rule (more than one search). Hashes identify the supplied content; they do not prove report authenticity, completeness or independence.
 
 The existing inference-gateway unit test exhausts project A's per-process 32-request counter and checks that project B still reaches input validation. This is an in-process behavior test. It does not measure two real projects over a network, monetary spend, consumed tokens, GPU seconds, distributed quotas or production isolation.
 

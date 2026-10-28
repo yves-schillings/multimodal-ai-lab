@@ -1,0 +1,171 @@
+{
+  "recorded_at": "2026-10-28T14:54:49.672816+00:00",
+  "purpose": "Laboratory evidence gate for one recorded search backend; not a human approval.",
+  "backend": "pgvector",
+  "inputs": {
+    "agentic-search-bge-m3-pgvector-20261028.json": "35605b9994ab8196dd68b5838270ae2ca0d0d5eeace1c340ba56d5471efbbf70",
+    "vision-resnet-open-loop.json": "9b27d5e8f66630ff3b9c28ff1cb6816d9fb014e1cf7fe49891c6951802fbd6bf",
+    "explainability-comparison.json": "117e95e2aade4d3c64c4a73250205e38977be41ed6a64833b087ff130011f054"
+  },
+  "expectation_mapping": {
+    "supported": "supported",
+    "refinement": "paraphrase",
+    "abstain": "abstain",
+    "loop": "multi_step"
+  },
+  "rules_applied": {
+    "supported": "answer_rule",
+    "refinement": "answer_rule",
+    "abstain": "answer_rule",
+    "loop": "loop_rule"
+  },
+  "rag_trials": [
+    {
+      "id": "supported_location",
+      "expectation": "supported",
+      "passed": true,
+      "checks": {
+        "answer_rule": true
+      }
+    },
+    {
+      "id": "paraphrase_needs_retrieval",
+      "expectation": "paraphrase",
+      "passed": true,
+      "checks": {
+        "answer_rule": true
+      }
+    },
+    {
+      "id": "unsupported_vehicle_registration",
+      "expectation": "abstain",
+      "passed": true,
+      "checks": {
+        "answer_rule": true
+      }
+    },
+    {
+      "id": "two_step_recovered_bicycle",
+      "expectation": "multi_step",
+      "passed": false,
+      "checks": {
+        "loop_rule": false,
+        "answer_named_expected_place": false
+      }
+    }
+  ],
+  "gate": {
+    "schema_version": 1,
+    "decision": "blocked",
+    "manual_review_required": true,
+    "production_approved": false,
+    "checks": [
+      {
+        "id": "rag.evidence_present",
+        "status": "pass",
+        "detail": "A trusted measurement report is required."
+      },
+      {
+        "id": "vision.evidence_present",
+        "status": "pass",
+        "detail": "A trusted measurement report is required."
+      },
+      {
+        "id": "explainability.evidence_present",
+        "status": "pass",
+        "detail": "A trusted measurement report is required."
+      },
+      {
+        "id": "rag.bounded_case_evidence",
+        "status": "pass",
+        "detail": "Every trial must remain within three searches and three case-scoped sources."
+      },
+      {
+        "id": "rag.supporting_quotes",
+        "status": "pass",
+        "detail": "Every returned claim requires an exact quote from its numbered source."
+      },
+      {
+        "id": "rag.expected_outcomes",
+        "status": "pass",
+        "detail": "Supported, paraphrased and unsupported questions must meet the predefined measurement criteria; counters alone do not pass."
+      },
+      {
+        "id": "rag.multi_step_case",
+        "status": "fail",
+        "detail": "A predefined two-step question must reach its expected answer after more than one search. An exact quote from a look-alike passage does not pass, and a missing case blocks until a corrected run passes."
+      },
+      {
+        "id": "rag.semantic_review",
+        "status": "review_pending",
+        "detail": "Human review of entailment, relevance and representative questions remains required."
+      },
+      {
+        "id": "vision.open_loop_accounting",
+        "status": "pass",
+        "detail": "All offered, submitted, successful, failed and dropped requests must be accounted for; rejections are not hidden."
+      },
+      {
+        "id": "vision.performance_measured",
+        "status": "pass",
+        "detail": "Measured latency scope is checked separately from model quality and service acceptance."
+      },
+      {
+        "id": "vision.trained_weights",
+        "status": "fail",
+        "detail": "Random-weight timing benchmarks cannot qualify a model candidate for release."
+      },
+      {
+        "id": "vision.held_out_quality",
+        "status": "fail",
+        "detail": "Observed held-out quality must meet the recorded laboratory threshold without split overlap."
+      },
+      {
+        "id": "vision.operational_acceptance",
+        "status": "review_pending",
+        "detail": "Synthetic classification and sequential timings do not accept real object detection, peak load or a service latency target."
+      },
+      {
+        "id": "explainability.case_1.execution",
+        "status": "pass",
+        "detail": "Successful execution is required but does not prove a useful explanation."
+      },
+      {
+        "id": "explainability.case_1.shap_reconstruction",
+        "status": "pass",
+        "detail": "SHAP numerical reconstruction is checked; additivity does not prove causality or suitability."
+      },
+      {
+        "id": "explainability.case_1.lime_case_fidelity",
+        "status": "fail",
+        "detail": "Out-of-range or inaccurate local surrogate output blocks a reliable-explanation claim; no clipping is accepted."
+      },
+      {
+        "id": "explainability.case_1.tree_shap_reconstruction",
+        "status": "pass",
+        "detail": "SHAP numerical reconstruction is checked; additivity does not prove causality or suitability."
+      },
+      {
+        "id": "explainability.domain_review",
+        "status": "review_pending",
+        "detail": "Domain experts must review explanation usefulness, stability, perturbations and limitations."
+      },
+      {
+        "id": "governance.human_approval",
+        "status": "review_pending",
+        "detail": "A separate authorized human approval has not been recorded by this evaluator."
+      }
+    ],
+    "evidence_hashes": {
+      "rag": "b6d8ed70a905a55eb28b38e0145888e3fa944e8a0915b01543f86b3a4009b558",
+      "vision": "7916334523e017ff5a2c7646d438391bc57892523fe075f6fb70cfaf55601852",
+      "explainability": "786a263055d959b75e7a67a706697de2352c8e710935a6efd7b75a81ed649228"
+    },
+    "limitations": [
+      "The caller must supply trusted measurement reports; this is not a signature or source-authenticity verifier.",
+      "Completeness, independence and representativeness of the supplied evidence are not established here.",
+      "Technical-candidate status concerns this laboratory evidence only and is not permission to deploy.",
+      "No human approval, model registry release, production capacity, compliance or business acceptance is performed."
+    ]
+  }
+}

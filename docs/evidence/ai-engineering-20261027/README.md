@@ -32,7 +32,7 @@ The earlier 1,362-parameter classifier was trained on 256 fictional stripe image
 
 ## Gate and provenance
 
-The final recorded gate evaluates the current search run, the random-weight ResNet probe, and the single linear/tree comparison explanation record. Its 18 checks return `blocked`: the search's expected-abstention criterion, untrained vision weights, absent vision quality evaluation and the comparison positive-case LIME fidelity fail. This preserves successful performance/accounting checks without converting them into a valid model release. Human/domain and operational acceptance remain pending regardless of the technical checks. The API uses these same three input files and the same 18-check manifest.
+The final recorded gate evaluates the current search run, the random-weight ResNet probe, and the single linear/tree comparison explanation record. Its 18 checks return `blocked`: the search's expected-abstention criterion, untrained vision weights, absent vision quality evaluation and the comparison positive-case LIME fidelity fail. This preserves successful performance/accounting checks without converting them into a valid model release. Human/domain and operational acceptance remain pending regardless of the technical checks. The API uses these same three input files and the same 18-check manifest. Since 28 October 2026, the gate also requires a passing two-step search case (`rag.multi_step_case`), so the same three files now return 19 checks and stay `blocked`. See the [search comparison of 28 October](../agentic-retrieval-20261028/README.md).
 
 ## Open-loop vision protocol
 

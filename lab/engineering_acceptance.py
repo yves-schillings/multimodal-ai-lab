@@ -60,10 +60,15 @@ def evaluate_candidate_evidence(manifest):
 
     # RAG: recompute boundedness/citations; do not accept model self-ratings or
     # an aggregate passed counter as substitutes for per-trial observations.
+    # A "paraphrase" trial applies the answer rule written before the run: any one
+    # to three searches. "refinement" keeps the historical rule: more than one.
+    # A "multi_step" trial has its own blocking check: it needs more than one
+    # search and its predefined answer, so a look-alike quote cannot pass.
     rag = _object(manifest.get("rag"))
     trials = rag.get("trials", [])
     valid_trials = isinstance(trials, list) and 1 <= len(trials) <= 16
     bounds_ok, citations_ok, outcomes_ok = bool(valid_trials), bool(valid_trials), bool(valid_trials)
+    multi_step_ok = bool(valid_trials)
     expectations = set()
     if valid_trials:
         for trial_value in trials:
@@ -99,19 +104,28 @@ def evaluate_candidate_evidence(manifest):
             citations_ok = citations_ok and cited
             if expectation == "abstain":
                 observed = result.get("abstained") is True and not claims
-            elif expectation in ("supported", "refinement"):
+            elif expectation in ("supported", "refinement", "paraphrase", "multi_step"):
                 observed = (result.get("abstained") is False and bool(claims)
                             and result.get("stop_reason") == "answered"
-                            and (expectation != "refinement" or (type(count) is int and count > 1)))
+                            and (expectation not in ("refinement", "multi_step")
+                                 or (type(count) is int and count > 1)))
             else:
                 observed = False
             observations = _object(trial.get("checks"))
-            outcomes_ok = (outcomes_ok and observed and trial.get("passed") is True
-                           and bool(observations) and all(value is True for value in observations.values()))
+            met = (observed and trial.get("passed") is True
+                   and bool(observations) and all(value is True for value in observations.values()))
+            if expectation == "multi_step":
+                multi_step_ok = multi_step_ok and met
+            else:
+                outcomes_ok = outcomes_ok and met
     check("rag.bounded_case_evidence", bounds_ok, "Every trial must remain within three searches and three case-scoped sources.")
     check("rag.supporting_quotes", citations_ok, "Every returned claim requires an exact quote from its numbered source.")
-    check("rag.expected_outcomes", outcomes_ok and {"supported", "refinement", "abstain"} <= expectations,
-          "Supported, refined and unsupported questions must meet the predefined measurement criteria; counters alone do not pass.")
+    check("rag.expected_outcomes", outcomes_ok and {"supported", "abstain"} <= expectations
+          and bool(expectations & {"refinement", "paraphrase"}),
+          "Supported, paraphrased and unsupported questions must meet the predefined measurement criteria; counters alone do not pass.")
+    check("rag.multi_step_case", multi_step_ok and "multi_step" in expectations,
+          "A predefined two-step question must reach its expected answer after more than one search. An exact quote "
+          "from a look-alike passage does not pass, and a missing case blocks until a corrected run passes.")
     pending("rag.semantic_review", "Human review of entailment, relevance and representative questions remains required.")
 
     # Vision: execution time and classifier quality are independent checks.

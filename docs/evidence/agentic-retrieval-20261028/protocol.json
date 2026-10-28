@@ -1,0 +1,92 @@
+{
+  "title": "Agentic search: reviewed-only TF-IDF versus BGE-M3 + pgvector, same agent and same Qwen3:4b",
+  "written_before_any_run": "2026-10-28",
+  "purpose": "Replay the three historical questions with both retrieval backends under the same controller, prompts, limits, model versions and CPU-only conditions, then test the search loop on a separate case. A small synthetic demonstration, not a quality or production acceptance.",
+  "unchanged_conditions": {
+    "controller": "lab.agentic_search.AgenticSearch at the recorded commit, unchanged",
+    "generation_model": "qwen3:4b, digest 359d7dd4bcdab3d86b87d73ac27966f4dbb9f5efdfcc75d34a8764a09474fae7, used as planner and generator",
+    "prompts_and_schemas": "lab.local_inference.LocalInference plan_search and generate, unchanged",
+    "limits": "max_attempts 3, max_seconds 90 per question, num_ctx at most 4096, num_predict at most 384, keep_alive 0",
+    "hardware": "same workstation, num_gpu 0 for every generation and embedding call (CPU only)",
+    "actor": "simulated actor officer-a, owner of the synthetic cases"
+  },
+  "changed_parameter": {
+    "retriever": "historical ReviewedLexicalRetriever (TF-IDF cosine, score >= 0.10, at least one shared word, top 3) versus the existing lab.vector_retrieval.VectorIndex (BGE-M3 1024-dimension embeddings, pgvector cosine distance, score = 1 - distance >= 0.45, top 3)",
+    "index_preparation": "the pgvector run indexes the reviewed passages once before the questions (moment 1 of RAG); the TF-IDF retriever fits its vocabulary at each search, as before"
+  },
+  "no_fallback": "If BGE-M3, Ollama or pgvector fails, the trial records the failure and its error type. The pgvector run never falls back to TF-IDF.",
+  "trials": [
+    {
+      "id": "supported_location",
+      "case": "demo-case-a (three reviewed synthetic statement segments)",
+      "question": "Where was the blue bicycle left?",
+      "expected_passages": [
+        "I left my blue bicycle beside the library at about nine in the morning."
+      ],
+      "historical_rule": "not abstained, answer names the library, every quote found in its cited passage, same case revision, at most three searches",
+      "answer_rule": "same as the historical rule",
+      "expectation": "supported",
+      "expected_answer_word": "library"
+    },
+    {
+      "id": "paraphrase_needs_retrieval",
+      "case": "demo-case-a",
+      "question": "At what location was the cycle parked?",
+      "expected_passages": [
+        "I left my blue bicycle beside the library at about nine in the morning."
+      ],
+      "historical_rule": "as supported_location, and more than one search (the paraphrase shares no useful word with the evidence for TF-IDF)",
+      "answer_rule": "as supported_location, with any number of searches from one to three. Finding the evidence at the first search is a success of the answer and is not counted as a loop failure. The historical verdict is still reported beside it.",
+      "expectation": "refinement",
+      "expected_answer_word": "library"
+    },
+    {
+      "id": "unsupported_vehicle_registration",
+      "case": "demo-case-a",
+      "question": "What is the registration number of the vehicle?",
+      "expected_passages": [],
+      "historical_rule": "abstained with stop reason model_abstained, answer_abstained or no_reviewed_evidence",
+      "answer_rule": "same as the historical rule. The report also states whether the stop was chosen by Qwen3:4b (model_abstained, answer_abstained) or imposed by the controller (no_reviewed_evidence, repeated_query, attempt_limit, deadline, model_unavailable, invalid_model_plan), and whether any unsupported answer was returned.",
+      "expectation": "abstain",
+      "expected_answer_word": null
+    }
+  ],
+  "loop_trial": {
+    "id": "two_step_recovered_bicycle",
+    "case": "new synthetic case, reviewed segments below, owner officer-a",
+    "segments": [
+      "My bicycle is a green city bike. The frame number engraved under the saddle is GX-5530.",
+      "I locked it outside the swimming pool on Monday evening and it was gone on Tuesday.",
+      "Recovery register entry 4: frame number RB-1120 was recovered at the train station on Tuesday.",
+      "Recovery register entry 7: frame number KT-8812 was recovered behind the market hall on Tuesday.",
+      "Recovery register entry 9: frame number GX-5530 was recovered near the old harbour on Wednesday morning.",
+      "Recovery register entry 11: frame number PL-3307 was recovered in the university car park on Wednesday.",
+      "Recovery register entry 12: frame number MZ-6604 was recovered beside the cathedral on Thursday."
+    ],
+    "question": "Where was the complainant's bicycle recovered?",
+    "expected_passages": [
+      "My bicycle is a green city bike. The frame number engraved under the saddle is GX-5530.",
+      "Recovery register entry 9: frame number GX-5530 was recovered near the old harbour on Wednesday morning."
+    ],
+    "why_it_needs_two_steps": "The place is only linked to the complainant through the frame number, which sits in another passage. Several register entries look similar to the question.",
+    "loop_rule": "passes when the agent performs more than one search, the answer names the old harbour, every quote is found in its cited passage and the case revision is unchanged. A wrong place with a valid quote is a failure: an exact quote does not prove that the passage answers the question.",
+    "expectation": "loop",
+    "expected_answer_word": "harbour"
+  },
+  "retrieval_only_comparison": "For each question, both backends rank the same reviewed passages without any language model. The report gives the rank and score of each expected passage, the top three and the passages kept above each backend's threshold.",
+  "guard_trials": [
+    "forbidden case: officer-b asks about demo-case-a; access is refused before any embedding or model call",
+    "unreviewed evidence: a case whose segments are not reviewed gives no passage to the models",
+    "source change: a reviewed segment is edited (library to station); the index is rebuilt for the new revision and the old passage is not cited",
+    "revocation: the session callback is revoked during the search; no result is returned and no later model step runs",
+    "index reuse: synchronising an unchanged case makes no embedding call",
+    "persistence: the indexed rows survive a restart of the pgvector pod and are reused without new embeddings"
+  ],
+  "controller_stops_covered_by_unit_tests": "repeated query, attempt limit, deadline, invalid plan and invalid quote are forced in tests/test_agentic_search.py with scripted models; the real runs report the stops they actually reach",
+  "limits_stated_in_advance": [
+    "Four synthetic English questions cannot establish general or multilingual answer quality.",
+    "Timings are single CPU runs with model reloads (keep_alive 0); they are observations, not capacity figures.",
+    "An exact quote does not prove that the cited passage supports the claim.",
+    "Simulated actors, not real authentication; local OKD pgvector, not a deployment acceptance."
+  ]
+}

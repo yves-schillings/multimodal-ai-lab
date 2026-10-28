@@ -11,8 +11,8 @@ def fixture_manifest():
     """A minimal unit fixture, not a claim about an executed lab measurement."""
     source = {"case_id": "synthetic-unit-case", "text": "The synthetic bicycle was beside the library."}
     trials = []
-    for expectation in ("supported", "refinement", "abstain"):
-        count = 2 if expectation == "refinement" else 1
+    for expectation in ("supported", "refinement", "abstain", "multi_step"):
+        count = 2 if expectation in ("refinement", "multi_step") else 1
         unsupported = expectation == "abstain"
         result = {"case_id": "synthetic-unit-case", "max_attempts": 3, "attempt_count": count,
                   "attempts": [{"query": "query " + str(i)} for i in range(count)],
@@ -173,3 +173,44 @@ def test_nonfinite_or_oversized_manifest_is_rejected(value):
     manifest["rag"]["unexpected_value"] = value
     with pytest.raises(ValueError):
         evaluate_candidate_evidence(manifest)
+
+
+def two_step_trial(manifest):
+    return next(t for t in manifest["rag"]["trials"] if t["expectation"] == "multi_step")
+
+
+def test_missing_two_step_case_blocks_even_when_the_three_basic_cases_pass():
+    manifest = fixture_manifest()
+    manifest["rag"]["trials"].remove(two_step_trial(manifest))
+    result = evaluate_candidate_evidence(manifest)
+    assert statuses(result)["rag.expected_outcomes"] == "pass"
+    assert statuses(result)["rag.multi_step_case"] == "fail"
+    assert result["decision"] == "blocked"
+
+
+def test_wrong_two_step_answer_blocks_although_its_quote_is_exact():
+    manifest = fixture_manifest()
+    trial = two_step_trial(manifest)
+    trial["passed"] = False
+    trial["checks"]["case_specific_expected_behavior"] = False
+    result = evaluate_candidate_evidence(manifest)
+    assert statuses(result)["rag.supporting_quotes"] == "pass"
+    assert statuses(result)["rag.expected_outcomes"] == "pass"
+    assert statuses(result)["rag.multi_step_case"] == "fail"
+    assert result["decision"] == "blocked"
+
+
+def test_two_step_answer_after_a_single_search_does_not_pass():
+    manifest = fixture_manifest()
+    trial = two_step_trial(manifest)
+    trial["result"].update(attempt_count=1, attempts=trial["result"]["attempts"][:1])
+    assert statuses(evaluate_candidate_evidence(manifest))["rag.multi_step_case"] == "fail"
+
+
+def test_paraphrase_rule_accepts_one_search_but_historical_refinement_rule_does_not():
+    manifest = fixture_manifest()
+    trial = next(t for t in manifest["rag"]["trials"] if t["expectation"] == "refinement")
+    trial["result"].update(attempt_count=1, attempts=trial["result"]["attempts"][:1])
+    assert statuses(evaluate_candidate_evidence(manifest))["rag.expected_outcomes"] == "fail"
+    trial["expectation"] = "paraphrase"
+    assert statuses(evaluate_candidate_evidence(manifest))["rag.expected_outcomes"] == "pass"

@@ -1,0 +1,30 @@
+{
+  "recorded_at": "2026-10-28T12:17:32.217855+00:00",
+  "run_sha256": "35605b9994ab8196dd68b5838270ae2ca0d0d5eeace1c340ba56d5471efbbf70",
+  "checks": [
+    {
+      "case_id": "demo-case-a",
+      "rows_match_reviewed_sources": true,
+      "rows": 3,
+      "embedding_calls_on_resync": 0,
+      "passed": true
+    },
+    {
+      "case_id": "case-c9401f6fab7c48f689405ec29b235a29",
+      "rows_match_reviewed_sources": true,
+      "rows": 7,
+      "embedding_calls_on_resync": 0,
+      "passed": true
+    }
+  ],
+  "postgres_started_at": "2026-10-28 12:17:13.379137+00:00",
+  "cleanup": {
+    "case_ids": [
+      "demo-case-a",
+      "case-c9401f6fab7c48f689405ec29b235a29",
+      "case-6ffeabc9790c48c9b2c88a843878cc8b",
+      "case-9c6ed79ac2174ef481614e28381a0327"
+    ],
+    "rows_remaining": 0
+  }
+}
