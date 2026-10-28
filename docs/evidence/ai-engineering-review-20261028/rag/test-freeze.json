@@ -1,0 +1,42 @@
+{
+ "frozen_at": "2026-10-28T22:37:07.037918+00:00",
+ "input_sha256": {
+  "eval_set.json": "5f677fa66353a18b5ff5c20ca3d9a6d34cd4637f7915e3586142cd45841f2208",
+  "protocol.json": "742792ef46c2349f98521d4e569c32c198b12d8c2a1d63d5af4fb7bc8bfdad1b"
+ },
+ "source_sha256": {
+  "lab/rag_variants.py": "77d92597f7ccec1fef7f12f255e3048775426eacafa27f348b4d2c537bf7a505",
+  "lab/rag_benchmark.py": "fb8e18ba63bb64d0f8ae5e08b1ef39afb85525fe1b19b5c1fb6be4eb4bfd0cba",
+  "lab/agentic_search.py": "a8d469cb937e8d5c986d53bd0c4a700928fca1bd1c04f20e2a66c4e4053b792a",
+  "lab/local_inference.py": "4419d665a0146b8646fd779d764a0c5debe039c4d5fc0a38d8ecd6e5f0a78254",
+  "lab/vector_retrieval.py": "870fb6062c92aacfdcce1c5c4c790e3e42c4e7a744463ac095018bef3dcc1121",
+  "lab/store.py": "d964afbcd72b6dc503ff5e067571eaa38e7799fd19765ae992dcf2d0f6d7e3c3",
+  "scripts/benchmark_rag_variants.py": "f1785fb09136272512151369e9387e0e89c079821cb99e1404fd78959c50ff15",
+  "scripts/serve_reranker.py": "d0367d89b0b64e50fed45a2c45ea976ffad07390fa3d8d8e3796c4368aced96e"
+ },
+ "purpose": "Freeze before the held-out test run on C06-C15 (71 questions, 2 access probes). The code, evaluation set and protocol hashed here are the ones of dev-run-3 and of public commit 5fe88d0. No change after this freeze; a bug found during the test run is reported, not fixed in the same run.",
+ "final_settings": {
+  "split": "test",
+  "variants": [
+   "fixed",
+   "fixed_reranked",
+   "agentic",
+   "identifier_linked"
+  ],
+  "reranker_min_probability": 0.0,
+  "link_candidates": 6,
+  "cpu_only": true,
+  "repeats": 3,
+  "variant_order": "rotated at each repeat, as the protocol states",
+  "max_seconds_per_question": 90,
+  "agentic_max_searches": 3,
+  "ollama": "GPU hidden (CUDA_VISIBLE_DEVICES=-1, Vulkan off), num_gpu 0 and keep_alive 0 on every call, one request at a time",
+  "reranker": "BAAI/bge-reranker-v2-m3 at revision 953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e, on the CPU, fp32"
+ },
+ "change_from_development_record": {
+  "change": "Repeats on the test split: 3, not the 1 written in development-changes.json",
+  "reason": "protocol.json, written before any run, sets 3 repeats per variant on the test split. The protocol prevails. On the CPU with temperature 0 the repeats are expected to give nearly identical outcomes; they measure run-to-run variation, not sampling variety."
+ },
+ "development_changes": "Listed in development-changes.json of the same folder; all were made on C01-C05 only.",
+ "test_cases_never_run_before": "C06-C15 have never been run by any variant before this freeze."
+}

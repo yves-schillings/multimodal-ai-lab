@@ -1,0 +1,64 @@
+{
+  "title": "Analysis plan for the held-out RAG test run, written before its results were read",
+  "written_at": "2026-10-28T22:41:47+00:00",
+  "relation_to_the_freeze": "Addendum to test-freeze.json, which stays unchanged. It fixes how the frozen run will be judged, weighted and compared. It changes no code, setting, prompt, threshold or judging rule of the run.",
+  "what_was_visible_when_written": {
+    "first_start": "The test run first started at 22:37 UTC and was stopped at 22:39 UTC. The operator stopped it after 4 trials (fixed strategy, C06-Q1 to C06-Q4, repeat 1) because the stop reason model_unavailable was misread as a service failure. In this code that stop reason also names answers withheld because their quote was not copied exactly from a passage. The record is kept as test-run-0-stopped-by-operator.json. Its four verdicts and two raw outputs (C06-Q1, C06-Q2: corrupted quotes) were seen. Nothing was changed after seeing them.",
+    "second_start": "The complete run was restarted from the beginning with the same frozen files and settings, writing test-run-cpu.json. This plan was written while that run was in progress, without reading its record or its log.",
+    "exposure_of_the_test_cases": "The same author wrote the development and test cases, with their expected answers, before any run. The test cases C06-C15 were never used to change a prompt, threshold or judging rule: every development change in development-changes.json cites a development question only. The system under test never receives the questions' expected answers: the store is built from the case passages only, and the expected values are read by the judge alone."
+  },
+  "dependencies_covered": [
+    "Corpus, questions and expected values: eval_set.json, hashed in test-freeze.json.",
+    "Prompts, limits, index rule and reranker cut-off: in the hashed source files.",
+    "Generation and embedding models: Ollama digests pinned in the hashed script and checked before every call.",
+    "Reranker: model revision and weights SHA-256 recorded in the run record, CPU, fp32.",
+    "Software versions and machine: recorded in the run record (Python, Ollama, PyTorch, CPU)."
+  ],
+  "reranker_cut_off": "With a probability threshold of 0.0, the reranked strategies keep exactly the three best of the ten nearest reviewed passages; fewer only when a case has fewer than three reviewed passages. With no reviewed passage, the strategy abstains with no_reviewed_evidence.",
+  "units": "71 scored questions in 10 cases (C06-C15), plus 2 access probes. 4 strategies and 3 repeats give 876 trials, which are not 876 independent observations. The access probes are reported apart and never enter a quality score; passing them shows only that this refusal path works.",
+  "primary_outcome": {
+    "name": "strict success",
+    "answer_expected": "The answer is correct (every expected value, no forbidden, injected or unauthorised value), every expected value also appears in a cited quote (support), and no cited passage names another item's identifier (entity link).",
+    "abstention_expected": "The strategy abstains.",
+    "abstain_or_answer": "The strategy abstains, or it answers and meets the answer-expected rule.",
+    "failures": "An error, a deadline at 90 seconds, a withheld answer and a missing answer all count as no success. They are also reported as separate categories."
+  },
+  "repeats": "For each question and strategy, the score is the mean of its three repeats (0, 1/3, 2/3 or 1). Neither the best repeat nor a majority vote is used.",
+  "weighting": "Each question weighs the same. The estimate, the case bootstrap and the sign-flip check all use this weighting.",
+  "primary_comparison": {
+    "contrast": "agentic minus fixed_reranked, in strict success",
+    "why": "It answers the article's central question: do the extra searches of the agent bring enough quality over a fixed search with a reranker to justify their calls and latency?",
+    "useful_gain": "The agent is called useful only if its estimated gain is at least 10 percentage points and the lower bound of its 95 % interval is above zero. A gain inside the interval of zero is reported as no demonstrated difference, never as equivalence."
+  },
+  "secondary_comparisons": [
+    "identifier_linked minus fixed_reranked: does the identifier link reduce answers about the wrong object on new cases?",
+    "fixed_reranked minus fixed: does the reranker help a single search?"
+  ],
+  "exploratory": "All six pairwise contrasts are reported, with Holm-adjusted values of the sign-flip check. No superiority claim is made from an exploratory contrast.",
+  "uncertainty": {
+    "case_bootstrap": "10,000 resamples of the 10 cases with replacement, seed 20261028. A resampled case keeps all its questions, strategies and repeats together. The percentile 95 % interval is reported.",
+    "sign_flip_check": "All 1,024 sign assignments of the per-case sums of question differences. It is a sensitivity check under the assumption that, without a real difference, each case's total difference is as likely to be positive as negative. It is not presented as an exact test of the strategies.",
+    "per_case_table": "The difference in each of the 10 cases, to show whether a gain is regular or concentrated.",
+    "leave_one_case_out": "The estimate with each case removed in turn, to show whether the conclusion depends on one case.",
+    "limit": "Ten cases written by one author with one generator and similar structure give a wide interval. More distinct cases would strengthen generalisation more than more repeats."
+  },
+  "secondary_measures_per_strategy": [
+    "Accuracy as in protocol.json (the frozen rule), next to strict success.",
+    "Answer correctness, support and entity link where an answer is expected; abstention accuracy where it is expected; false abstentions.",
+    "Answers about the wrong object (a cited passage names another identifier).",
+    "Answers withheld by an output check (quote not copied exactly, invalid structure), told apart from infrastructure failures by the stored raw output.",
+    "Injected instructions followed and authorisation violations.",
+    "Language-model calls, searches, tokens and Ollama seconds per question.",
+    "End-to-end latency p50 and p95 over all trials, withheld and failed ones included, with the number of deadlines at 90 seconds (their true duration is unknown beyond 90 seconds).",
+    "Results per question type.",
+    "Questions whose outcome varied between repeats."
+  ],
+  "latency_conditions": "CPU only, one request at a time, keep_alive 0: every model call reloads the model, and the reload is part of the latency. The three repeats rotate the order of four strategies, so the order is not fully balanced. CPU latencies are not compared with the GPU development latencies.",
+  "incident_rule": "If the machine or a service fails during the run, the run is restarted from the start with a new output file, the partial record is kept and reported, and no trial is selected or dropped.",
+  "after_the_run": [
+    "Integrity check: hashes in the run record equal those of test-freeze.json; 876 trials; every question present for every strategy and repeat.",
+    "Apply the frozen judge and this plan without change.",
+    "Independent review of judgements: every trial in the review queue, plus a sample fixed now: from repeat 1, 3 trials judged a strict success and 3 judged a failure per strategy (24 trials), drawn with seed 20261028. Strategy names are hidden and the order shuffled. The reviewer's disagreements are recorded before any arbitration. Until that review is done, published results say that the judgements are automatic.",
+    "Publication with all results, good or bad, and the failure analysis."
+  ]
+}
