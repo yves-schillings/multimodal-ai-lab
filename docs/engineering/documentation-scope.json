@@ -19,7 +19,16 @@
     "tests/test_engineering_api.py",
     "tests/test_engineering_explainability.py",
     "tests/test_engineering_vision.py",
-    "tests/test_engineering_documentation.py"
+    "tests/test_engineering_documentation.py",
+    "lab/rag_variants.py",
+    "lab/rag_benchmark.py",
+    "lab/explainability_review.py",
+    "scripts/benchmark_rag_variants.py",
+    "scripts/serve_reranker.py",
+    "scripts/check_generation_integrity.py",
+    "scripts/review_explainability_engineering.py",
+    "tests/test_rag_variants.py",
+    "tests/test_explainability_review.py"
   ],
   "javascript": "static/engineering.js"
 }

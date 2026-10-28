@@ -3,7 +3,11 @@
 The default CLI path trains a tiny grayscale CNN, checks held-out fixtures, and
 compares sequential CPU/CUDA calls. --load-probe instead runs a random-weight
 ResNet-18-shaped RGB service under scheduled concurrent localhost traffic.
-Neither path downloads weights/packages or approves production use. Raw reports
+--train-packaging trains the same ResNet-18 shape on procedural packaging-line
+images and evaluates it on an untouched test split. --ramp serves those trained
+weights through the batched service and climbs an open-loop offered-load ladder
+from separate client processes for one named configuration.
+No path downloads weights/packages or approves production use. Raw reports
 and checkpoints must be written to a new directory outside this Git checkout.
 The module adds the checkout root to sys.path at import, but experiments start
 only when main is called or the file is executed as a script.
@@ -14,6 +18,7 @@ import argparse
 import gc
 import hashlib
 import json
+import os
 import platform
 import random
 import sys
@@ -30,7 +35,51 @@ from lab.engineering_vision import (
     require_torch, train_tiny_model, weights_fingerprint,
     BoundedBatchVisionService, build_resnet18_probe, create_batched_http_server,
     fast_weights_fingerprint, make_resnet_batch_runtime, run_open_loop_http,
+    PACKAGING_CLASS_NAMES, PACKAGING_PREPROCESS_VERSION, NvidiaSmiSampler, PredictionCache,
+    classification_metrics, generate_packaging_images, packaging_images_to_uint8,
+    packaging_split_report, predict_packaging_logits, ramp_should_stop,
+    run_open_loop_ramp_step, select_sustainable_capacity, summarize_gpu_samples,
+    summarize_open_loop_step, train_packaging_classifier,
 )
+
+# Each GPU configuration changes one lever relative to gpu_fp32_dynamic. Thread
+# settings: None keeps the PyTorch default (all physical cores on the test host);
+# an integer is passed to torch.set_num_threads / set_num_interop_threads.
+RAMP_CONFIGURATIONS = {
+    "cpu_fp32_dynamic": {"device": "cpu", "precision": "fp32", "workers": 1, "max_batch": 8,
+                         "batch_wait_ms": 2.0, "cache_repeat_share": None,
+                         "intra_op_threads": None, "interop_threads": None,
+                         "description": "CPU, FP32, one worker, dynamic batching up to 8 with a 2 ms collection wait; PyTorch default threads (all physical cores)"},
+    "cpu_fp32_dynamic_1thread": {"device": "cpu", "precision": "fp32", "workers": 1, "max_batch": 8,
+                                 "batch_wait_ms": 2.0, "cache_repeat_share": None,
+                                 "intra_op_threads": 1, "interop_threads": 1,
+                                 "description": "Historical comparison only: the 27 October probe's one intra-op and one inter-op thread, otherwise cpu_fp32_dynamic"},
+    "gpu_fp32_batch1": {"device": "cuda:0", "precision": "fp32", "workers": 1, "max_batch": 1,
+                        "batch_wait_ms": 0.0, "cache_repeat_share": None,
+                        "intra_op_threads": 4, "interop_threads": 1,
+                        "description": "GPU, FP32, one worker, batch size 1 (batching lever off)"},
+    "gpu_fp32_dynamic": {"device": "cuda:0", "precision": "fp32", "workers": 1, "max_batch": 8,
+                         "batch_wait_ms": 2.0, "cache_repeat_share": None,
+                         "intra_op_threads": 4, "interop_threads": 1,
+                         "description": "GPU, FP32, one worker, dynamic batching up to 8 with a 2 ms collection wait (reference)"},
+    "gpu_fp16_dynamic": {"device": "cuda:0", "precision": "fp16", "workers": 1, "max_batch": 8,
+                         "batch_wait_ms": 2.0, "cache_repeat_share": None,
+                         "intra_op_threads": 4, "interop_threads": 1,
+                         "description": "GPU, FP16 weights and inputs, otherwise the reference configuration"},
+    "gpu_fp32_dynamic_2workers": {"device": "cuda:0", "precision": "fp32", "workers": 2, "max_batch": 8,
+                                  "batch_wait_ms": 2.0, "cache_repeat_share": None,
+                                  "intra_op_threads": 4, "interop_threads": 1,
+                                  "description": "GPU, FP32, two model copies and CUDA streams in one process on one GPU; not multi-node replication"},
+    "gpu_fp32_dynamic_cache50": {"device": "cuda:0", "precision": "fp32", "workers": 1, "max_batch": 8,
+                                 "batch_wait_ms": 2.0, "cache_repeat_share": 0.5,
+                                 "intra_op_threads": 4, "interop_threads": 1,
+                                 "description": "Reference configuration plus an exact-body result cache; 50 % of requests repeat 32 hot images, the rest are byte-unique"},
+}
+INPUT_SIZE_JUSTIFICATION = (
+    "224 x 224 RGB keeps per-image compute and the 150,528-byte body identical to the 27 October "
+    "random-weight probe, so the two series are comparable; trained weights do not change dense "
+    "convolution cost. The thinnest scratches are 0.9 to 1.8 px wide at 224 px and would fall below "
+    "one pixel at 112 px.")
 
 
 def run_load_probe(args, output):
@@ -241,6 +290,576 @@ def run_load_probe(args, output):
         return 2
 
 
+def query_gpu_once():
+    """Read one device-wide nvidia-smi sample for GPU 0.
+
+    Returns:
+        dict | None: utilization_percent, memory_used_mib and memory_total_mib, or
+        None when nvidia-smi is missing, times out or prints an unexpected line.
+
+    Raises:
+        Nothing for a missing tool or malformed output.
+
+    Side effects:
+        Runs one short nvidia-smi subprocess with a 15-second timeout. The values
+        include other processes and Windows desktop applications.
+    """
+    import subprocess
+    try:
+        completed = subprocess.run(["nvidia-smi", "-i", "0", "--query-gpu=utilization.gpu,memory.used,memory.total",
+                                    "--format=csv,noheader,nounits"], capture_output=True, text=True, timeout=15)
+    except (OSError, subprocess.TimeoutExpired):
+        return None
+    parts = [part.strip() for part in completed.stdout.strip().split(",")]
+    try:
+        return {"utilization_percent": float(parts[0]), "memory_used_mib": float(parts[1]),
+                "memory_total_mib": float(parts[2])}
+    except (ValueError, IndexError):
+        return None
+
+
+def cpu_topology():
+    """Describe the CPUs visible to this process.
+
+    Returns:
+        dict: logical_cpus (os.cpu_count), cpus_in_affinity_mask, physical_cores
+        counted as unique (physical id, core id) pairs in /proc/cpuinfo (None when
+        unavailable) and the model name.
+
+    Raises:
+        Nothing for a missing /proc/cpuinfo or affinity API.
+
+    Limitations:
+        Under WSL these are the VM's virtual CPUs; the Windows host shares them.
+    """
+    pairs, model, physical = set(), None, None
+    try:
+        with open("/proc/cpuinfo", encoding="utf-8") as handle:
+            for line in handle:
+                key, _, value = line.partition(":")
+                key, value = key.strip(), value.strip()
+                if key == "physical id":
+                    physical = value
+                elif key == "core id":
+                    pairs.add((physical, value))
+                elif key == "model name" and model is None:
+                    model = value
+    except OSError:
+        pass
+    try:
+        affinity = len(os.sched_getaffinity(0))
+    except (AttributeError, OSError):
+        affinity = None
+    return {"logical_cpus": os.cpu_count(), "cpus_in_affinity_mask": affinity,
+            "physical_cores": len(pairs) or None, "model_name": model}
+
+
+def raise_open_file_limit(wanted=65536):
+    """Raise this process's soft open-file limit toward a requested value.
+
+    Args:
+        wanted (int): Desired soft limit; the hard limit is never exceeded.
+
+    Returns:
+        list[int] | None: [soft, hard] after the attempt, or None where the
+        resource module is unavailable.
+
+    Raises:
+        Nothing: ValueError/OSError from setrlimit leave the limit unchanged.
+
+    Side effects:
+        Changes a process-wide resource limit used by server sockets.
+    """
+    try:
+        import resource
+    except ImportError:
+        return None
+    soft, hard = resource.getrlimit(resource.RLIMIT_NOFILE)
+    target = min(hard, wanted)
+    if soft < target:
+        try:
+            resource.setrlimit(resource.RLIMIT_NOFILE, (target, hard))
+        except (ValueError, OSError):
+            pass
+    return list(resource.getrlimit(resource.RLIMIT_NOFILE))
+
+
+def run_packaging_training(args, output):
+    """Generate the packaging splits, train the ResNet-18 shape and test it once.
+
+    Args:
+        args (argparse.Namespace): CLI-validated settings: seed (int, dataset and
+            model seed), train_per_class/val_per_class/test_per_class (int images
+            per class), input_size (int pixels), epochs (int), training_batch
+            (int), learning_rate (float), cpu_threads (int), require_cuda (bool)
+            and train_gpu_memory_mib (int allocator cap for training).
+        output (pathlib.Path): Existing empty evidence directory outside the
+            checkout; receives training-report.json, the weights file and its
+            metadata sidecar.
+
+    Returns:
+        int: 0 when training and test evaluation completed, 2 for a caught failure.
+
+    Raises:
+        Evidence-write failures while recording another error can escape.
+
+    Side effects:
+        Sets process-global torch thread/cuDNN settings and an optional CUDA
+        allocator fraction. Generates train, validation and test splits from
+        disjoint seeds (seed, seed + 100000, seed + 200000), refuses any image-hash
+        overlap, trains on the GPU when available, selects the epoch on validation
+        only, then evaluates the untouched test split once in FP32 and, on CUDA,
+        FP16. Writes weights with SHA-256 and prints one line per epoch.
+
+    Limitations:
+        Procedural images and fictional defect rules: test accuracy describes
+        this generator only, not a real packaging line.
+    """
+    report = {"schema_version": "vision-packaging-training-v1", "purpose": "trained_synthetic_inspection_model",
+              "started_at_utc": datetime.now(timezone.utc).isoformat(), "synthetic_only": True,
+              "personal_data": False, "production_approval": False, "weights_downloaded": False,
+              "packages_installed": False}
+    path = output / "training-report.json"
+
+    def save():
+        """Write the captured training report as UTF-8 indented JSON.
+
+        Returns:
+            None.
+
+        Raises:
+            Serialization or filesystem errors propagate.
+
+        Side effects:
+            Replaces this run's training-report.json so partial progress survives.
+        """
+        path.write_text(json.dumps(report, indent=2), encoding="utf-8")
+
+    try:
+        torch = require_torch()
+        torch.set_num_threads(args.cpu_threads)
+        torch.backends.cudnn.benchmark = False
+        torch.backends.cudnn.enabled = True
+        cuda = torch.cuda.is_available()
+        if args.require_cuda and not cuda:
+            raise RuntimeError("CUDA required but unavailable in the selected interpreter")
+        device = "cuda:0" if cuda else "cpu"
+        report["runtime"] = {"torch": torch.__version__, "compiled_cuda": torch.version.cuda,
+                             "python": platform.python_version(), "platform": platform.system(),
+                             "torch_get_num_threads": torch.get_num_threads(),
+                             "torch_get_num_interop_threads": torch.get_num_interop_threads(),
+                             "cpu_topology": cpu_topology(), "cudnn_benchmark": False, "device": device,
+                             "gpu_before_training": query_gpu_once() if cuda else None}
+        if cuda:
+            props = torch.cuda.get_device_properties(0)
+            free, total = torch.cuda.mem_get_info()
+            report["runtime"].update(gpu=props.name, compute_capability=[props.major, props.minor],
+                                     total_device_memory_mib=total / 1024**2,
+                                     free_device_memory_before_mib=free / 1024**2,
+                                     training_allocator_cap_mib=args.train_gpu_memory_mib)
+            if free < (args.train_gpu_memory_mib + 512) * 1024**2:
+                raise RuntimeError("Insufficient currently free device memory for the training cap plus margin")
+            torch.cuda.set_per_process_memory_fraction(args.train_gpu_memory_mib * 1024**2 / props.total_memory, 0)
+            torch.cuda.reset_peak_memory_stats(0)
+        seeds = {"train": args.seed, "validation": args.seed + 100000, "test": args.seed + 200000}
+        counts = {"train": 4 * args.train_per_class, "validation": 4 * args.val_per_class,
+                  "test": 4 * args.test_per_class}
+        started = time.perf_counter()
+        splits = {name: generate_packaging_images(counts[name], seeds[name], name, args.input_size) for name in seeds}
+        check = packaging_split_report(splits)
+        report["dataset"] = {"task": "Classify a procedural bottle image as good, missing_cap, scratch or misaligned_label",
+                             "class_names": list(PACKAGING_CLASS_NAMES), "image_size": args.input_size,
+                             "input_size_justification": INPUT_SIZE_JUSTIFICATION,
+                             "image_format": "Raw interleaved HWC RGB uint8, no compression or decoder",
+                             "generator": "lab.engineering_vision.draw_packaging_image", "seeds": seeds,
+                             "generation_seconds": time.perf_counter() - started, "split_check": check}
+        save()
+        if check["cross_split_overlap_total"] or any(x["duplicates_within_split"] for x in check["splits"].values()):
+            raise RuntimeError("Split image hashes overlap or repeat")
+
+        def progress(record):
+            """Print one epoch record as a JSON line.
+
+            Args:
+                record (dict): Epoch metrics produced by train_packaging_classifier.
+
+            Returns:
+                None.
+            """
+            print(json.dumps({"epoch": record}), flush=True)
+
+        model, training = train_packaging_classifier(
+            splits["train"], splits["validation"], image_size=args.input_size, epochs=args.epochs,
+            batch_size=args.training_batch, seed=args.seed, device=device,
+            learning_rate=args.learning_rate, progress=progress)
+        report["training"] = training
+        report["training"]["total_seconds"] = sum(x["duration_seconds"] for x in training["history"])
+        if cuda:
+            report["training"]["peak_tensor_allocated_mib"] = torch.cuda.max_memory_allocated(0) / 1024**2
+            report["training"]["peak_allocator_reserved_mib"] = torch.cuda.max_memory_reserved(0) / 1024**2
+        save()
+        test_tensor = packaging_images_to_uint8(splits["test"], args.input_size)
+        labels = [item.label for item in splits["test"]]
+        evaluations, predictions = {}, {"labels": labels}
+        for precision in (("fp32", "fp16") if cuda else ("fp32",)):
+            logits = predict_packaging_logits(model, test_tensor, device, precision, 64)
+            predicted = logits.argmax(dim=1).tolist()
+            predictions[precision] = predicted
+            evaluations[precision] = {"device": device, "batch_size": 64,
+                                      "metrics": classification_metrics(labels, predicted)}
+        if cuda:
+            agree = sum(a == b for a, b in zip(predictions["fp32"], predictions["fp16"]))
+            evaluations["fp16_vs_fp32"] = {
+                "agreement": agree / len(labels), "disagreements": len(labels) - agree,
+                "accuracy_change": evaluations["fp16"]["metrics"]["accuracy"] - evaluations["fp32"]["metrics"]["accuracy"]}
+        report["test_evaluation"] = evaluations
+        report["test_predictions"] = predictions
+        weights_path = output / f"packaging_resnet18_{args.input_size}.pt"
+        torch.save({k: v.detach().cpu() for k, v in model.state_dict().items()}, weights_path)
+        file_sha = hashlib.sha256(weights_path.read_bytes()).hexdigest()
+        metadata = {"architecture": "ResNet-18-shaped (lab.engineering_vision.build_resnet18_probe)",
+                    "class_names": list(PACKAGING_CLASS_NAMES), "num_classes": len(PACKAGING_CLASS_NAMES),
+                    "input_size": args.input_size, "input_layout": "HWC RGB uint8 body",
+                    "preprocessing_version": PACKAGING_PREPROCESS_VERSION, "model_seed": args.seed,
+                    "weights_file": weights_path.name, "weights_file_sha256": file_sha,
+                    "state_fingerprint_sha256": fast_weights_fingerprint(model.cpu()),
+                    "parameters": sum(p.numel() for p in model.parameters()),
+                    "selected_epoch": training["selected_epoch"],
+                    "test_split": {"seed": seeds["test"], "count": counts["test"],
+                                   "aggregate_sha256": check["splits"]["test"]["aggregate_sha256"]}}
+        weights_path.with_suffix(".json").write_text(json.dumps(metadata, indent=2), encoding="utf-8")
+        report["model"] = metadata
+        report["status"] = "completed"
+        report["completed_at_utc"] = datetime.now(timezone.utc).isoformat()
+        report["limitations"] = [
+            "Procedural images with fictional defect rules; accuracy describes this generator only.",
+            "Training is not bit-reproducible on GPU; the weights file hash identifies the evaluated weights.",
+            "Random horizontal flip is the only augmentation; no real camera, lens or lighting model is simulated.",
+            "Test split was evaluated once after epoch selection on validation."]
+        save()
+        print(json.dumps({"status": "completed", "report": str(path), "weights": str(weights_path),
+                          "weights_sha256": file_sha,
+                          "test_accuracy": {k: v["metrics"]["accuracy"] for k, v in evaluations.items() if "metrics" in v}}),
+              flush=True)
+        return 0
+    except Exception as exc:
+        report.update(status="failed", error_type=type(exc).__name__, error=str(exc)[:1500],
+                      completed_at_utc=datetime.now(timezone.utc).isoformat())
+        save()
+        print(json.dumps({"status": "failed", "error": str(exc), "report": str(path)}), flush=True)
+        return 2
+
+
+def run_packaging_ramp(args, output):
+    """Serve the trained weights for one configuration and climb the load ladder.
+
+    Args:
+        args (argparse.Namespace): CLI-validated settings: ramp_config (str key of
+            RAMP_CONFIGURATIONS), trained_weights (Path with a .json sidecar),
+            weights_sha256 (optional expected file hash), ramp_steps (list[int]
+            offered req/s), duration (float measured seconds per step),
+            ramp_warmup_seconds (float), key_point_repeats (int total runs at key
+            points), slo_p99_ms, slo_max_failure_share, stop_failure_share,
+            deadline_ms (floats), queue_size (int), warmup (int model warm-up
+            calls per batch size), gpu_memory_mib (int allocator cap),
+            cache_hot_images (int), step_cooldown_seconds (float). Torch thread
+            counts come from the configuration, not from args.cpu_threads.
+        output (pathlib.Path): Existing empty evidence directory outside the
+            checkout; receives ramp-<config>.json and the test payload file.
+
+    Returns:
+        int: 0 when every step executed, 1 when a step failed to execute, 2 for a
+        caught setup failure. SLO failures are results, not execution failures.
+
+    Raises:
+        Evidence-write failures while recording another error can escape.
+
+    Side effects:
+        Verifies the weights file hash and regenerates the test split, refusing a
+        mismatch. Sets process-global torch settings, raises the open-file limit,
+        allocates model copies, starts one loopback server and batching service per
+        step, spawns client processes and an nvidia-smi sampler, and closes them.
+        Climbs the ladder until a step's failure share exceeds the stop share, it
+        is generator-limited or the ladder ends; then reruns the highest passing
+        and first failing rates until each has key_point_repeats runs.
+    """
+    config = RAMP_CONFIGURATIONS[args.ramp_config]
+    report = {"schema_version": "vision-trained-ramp-v1", "purpose": "trained_model_load_ramp",
+              "configuration_name": args.ramp_config, "configuration": config,
+              "started_at_utc": datetime.now(timezone.utc).isoformat(), "synthetic_only": True,
+              "production_approval": False, "weights_downloaded": False, "packages_installed": False,
+              "steps": []}
+    path = output / f"ramp-{args.ramp_config}.json"
+
+    def save():
+        """Write the captured ramp report as UTF-8 indented JSON.
+
+        Returns:
+            None.
+
+        Raises:
+            Serialization or filesystem errors propagate.
+
+        Side effects:
+            Replaces this run's ramp JSON so partial progress survives a failure.
+        """
+        path.write_text(json.dumps(report, indent=2), encoding="utf-8")
+
+    try:
+        report["open_file_limit"] = raise_open_file_limit()
+        weights = args.trained_weights.expanduser().resolve()
+        metadata = json.loads(weights.with_suffix(".json").read_text(encoding="utf-8"))
+        file_sha = hashlib.sha256(weights.read_bytes()).hexdigest()
+        if file_sha != metadata["weights_file_sha256"] or (args.weights_sha256 and file_sha != args.weights_sha256):
+            raise RuntimeError("Trained weights file hash does not match its metadata or the expected value")
+        cuda_config = config["device"].startswith("cuda")
+        gpu_before = query_gpu_once() if cuda_config else None
+        torch = require_torch()
+        default_threads = {"intra_op": torch.get_num_threads(), "interop": torch.get_num_interop_threads()}
+        if config["intra_op_threads"] is not None:
+            torch.set_num_threads(config["intra_op_threads"])
+        if config["interop_threads"] is not None:
+            torch.set_num_interop_threads(config["interop_threads"])
+        torch.backends.cudnn.benchmark = False
+        torch.backends.cudnn.enabled = True
+        if cuda_config and not torch.cuda.is_available():
+            raise RuntimeError("This configuration needs CUDA, which the selected interpreter cannot access")
+        size = metadata["input_size"]
+        class_names = tuple(metadata["class_names"])
+        test = generate_packaging_images(metadata["test_split"]["count"], metadata["test_split"]["seed"], "test", size)
+        aggregate = packaging_split_report({"test": test})["splits"]["test"]["aggregate_sha256"]
+        if aggregate != metadata["test_split"]["aggregate_sha256"]:
+            raise RuntimeError("Regenerated test split differs from the split recorded at training time")
+        payloads = [item.payload for item in test]
+        labels = [item.label for item in test]
+        payload_path = output / "test_payloads.u8"
+        payload_path.write_bytes(b"".join(payloads))
+        model = build_resnet18_probe(metadata["model_seed"], num_classes=len(class_names))
+        model.load_state_dict(torch.load(weights, map_location="cpu", weights_only=True))
+        model.eval()
+        weights_version = fast_weights_fingerprint(model)
+        report["runtime"] = {"torch": torch.__version__, "compiled_cuda": torch.version.cuda,
+                             "python": platform.python_version(), "platform": platform.system(),
+                             "torch_default_threads_before_setting": default_threads,
+                             "torch_get_num_threads": torch.get_num_threads(),
+                             "torch_get_num_interop_threads": torch.get_num_interop_threads(),
+                             "thread_setting": "PyTorch default" if config["intra_op_threads"] is None else "explicit",
+                             "cpu_topology": cpu_topology(), "cudnn_benchmark": False,
+                             "gpu_before_model_load": gpu_before}
+        report["model"] = {"weights_file": weights.name, "weights_file_sha256": file_sha,
+                           "state_fingerprint_sha256": weights_version, "class_names": list(class_names),
+                           "input_size": size, "selected_epoch": metadata.get("selected_epoch"),
+                           "trained": True, "random_weights": False}
+        report["inputs"] = {"test_split_seed": metadata["test_split"]["seed"], "test_images": len(test),
+                            "test_split_aggregate_sha256": aggregate, "bytes_per_image": len(payloads[0]),
+                            "class_counts": {n: labels.count(i) for i, n in enumerate(class_names)}}
+        if cuda_config:
+            props = torch.cuda.get_device_properties(0)
+            free, total = torch.cuda.mem_get_info()
+            if free < (args.gpu_memory_mib + 256) * 1024**2:
+                raise RuntimeError("Insufficient currently free device memory for the bounded service plus margin")
+            torch.cuda.set_per_process_memory_fraction(args.gpu_memory_mib * 1024**2 / props.total_memory, 0)
+            torch.cuda.reset_peak_memory_stats(0)
+            report["runtime"].update(gpu=props.name, compute_capability=[props.major, props.minor],
+                                     total_device_memory_mib=total / 1024**2,
+                                     free_device_memory_before_mib=free / 1024**2,
+                                     allocator_cap_mib=args.gpu_memory_mib)
+        batch_call, models, streams = make_resnet_batch_runtime(model, config["device"], config["precision"],
+                                                                config["workers"], size, class_names=class_names)
+        warm_started = time.perf_counter()
+        for worker in range(config["workers"]):
+            for batch in range(1, config["max_batch"] + 1):
+                for _ in range(args.warmup):
+                    batch_call(worker, payloads[:batch])
+        offline = []
+        for offset in range(0, len(payloads), config["max_batch"]):
+            results, _ = batch_call(0, payloads[offset:offset + config["max_batch"]])
+            offline.extend(result["predicted_class"] for result in results)
+        report["offline_quality"] = {"runtime": "Same batch_call, worker 0, batch size max_batch, before serving",
+                                     "batch_size": config["max_batch"], "predictions": offline,
+                                     "metrics": classification_metrics(labels, offline, class_names)}
+        report["warmup"] = {"calls_per_batch_size_per_worker": args.warmup,
+                            "seconds_including_offline_predictions": time.perf_counter() - warm_started}
+        if cuda_config:
+            report["memory_after_warmup"] = {
+                "peak_tensor_allocated_mib": torch.cuda.max_memory_allocated(0) / 1024**2,
+                "peak_allocator_reserved_mib": torch.cuda.max_memory_reserved(0) / 1024**2,
+                "device_memory_used_by_all_processes_mib": (query_gpu_once() or {}).get("memory_used_mib"),
+                "scope": "PyTorch allocator figures cover this process only; device figure includes desktop applications"}
+        hot_images = []
+        if config["cache_repeat_share"] is not None:
+            stride = max(1, len(payloads) // args.cache_hot_images)
+            hot_images = [i * stride for i in range(args.cache_hot_images)]
+        report["protocol"] = {
+            "ladder_rps": args.ramp_steps, "warmup_seconds_per_step": args.ramp_warmup_seconds,
+            "measured_seconds_per_step": args.duration, "key_point_total_runs": args.key_point_repeats,
+            "slo": {"p99_end_to_end_ms_max": args.slo_p99_ms, "failure_share_max": args.slo_max_failure_share,
+                    "deadline_ms": args.deadline_ms,
+                    "latency_origin": "Scheduled arrival time, so client lag counts against the service"},
+            "stop_rule": f"Stop climbing after a step with failure share above {args.stop_failure_share}, a generator-limited step or a step execution failure",
+            "generator_limited_rule": "Achieved send rate in the measured window below 95 % of the offered rate; such points are not used for capacity",
+            "p99_reliability_rule": "p99 flagged unreliable below 1,000 observations",
+            "queue_capacity_requests": args.queue_size, "max_batch": config["max_batch"],
+            "batch_wait_ms": config["batch_wait_ms"], "workers": config["workers"],
+            "cache_repeat_share": config["cache_repeat_share"], "cache_hot_images": hot_images,
+            "client": "Spawned asyncio processes, min(4, ceil(rate / 500)); raw HTTP/1.0, one connection per request, 256 open requests per process, 5 s request timeout",
+            "server": "One process: ThreadingHTTPServer (listen backlog 128) plus BoundedBatchVisionService worker thread(s)",
+            "server_torch_threads": {"intra_op": torch.get_num_threads(), "interop": torch.get_num_interop_threads(),
+                                     "configured_intra_op": config["intra_op_threads"],
+                                     "configured_interop": config["interop_threads"]},
+            "step_cooldown_seconds": args.step_cooldown_seconds}
+        save()
+
+        def run_step(rate, run_kind, repeat_index):
+            """Serve and measure one offered-load step on a fresh server/service pair.
+
+            Args:
+                rate (int): Offered requests per second.
+                run_kind (str): ladder or key_point_repeat.
+                repeat_index (int): 0 for the ladder run, then 1, 2, ... for repeats.
+
+            Returns:
+                dict: summarize_open_loop_step output plus run metadata, client
+                process figures, CPU and GPU usage over the measured window,
+                batching metrics, cache counters and allocator peaks; or a failed
+                record with error details.
+
+            Raises:
+                Cleanup errors from server or service closure can propagate.
+
+            Side effects:
+                Starts and stops a loopback server, batching service, optional cache,
+                nvidia-smi sampler and client processes; sleeps for the cool-down.
+            """
+            step = {"target_rps": rate, "run_kind": run_kind, "repeat_index": repeat_index,
+                    "started_at_utc": datetime.now(timezone.utc).isoformat()}
+            service = server = server_thread = None
+            sampler = NvidiaSmiSampler() if cuda_config else None
+            cache = PredictionCache(4096) if config["cache_repeat_share"] is not None else None
+            try:
+                if cuda_config:
+                    torch.cuda.reset_peak_memory_stats(0)
+                service = BoundedBatchVisionService(batch_call, image_size=size, workers=config["workers"],
+                                                    max_batch=config["max_batch"], max_wait_ms=config["batch_wait_ms"],
+                                                    queue_size=args.queue_size)
+                server = create_batched_http_server(service, cache=cache,
+                                                    cache_scope=(weights_version, PACKAGING_PREPROCESS_VERSION) if cache else None)
+                server_thread = threading.Thread(target=server.serve_forever, daemon=True)
+                server_thread.start()
+                if sampler is not None:
+                    sampler.start()
+                raw = run_open_loop_ramp_step(server.server_address[1], payload_path, image_bytes=len(payloads[0]),
+                                              image_count=len(payloads), target_rps=rate,
+                                              warmup_seconds=args.ramp_warmup_seconds, measure_seconds=args.duration,
+                                              repeat_share=config["cache_repeat_share"], hot_images=hot_images,
+                                              plan_seed=rate * 10 + repeat_index)
+                samples = sampler.stop() if sampler is not None else []
+                step.update(summarize_open_loop_step(
+                    raw["records"], target_rps=rate, warmup_seconds=args.ramp_warmup_seconds,
+                    measure_seconds=args.duration, slo_p99_ms=args.slo_p99_ms,
+                    slo_max_failure_share=args.slo_max_failure_share, deadline_ms=args.deadline_ms,
+                    labels=labels, offline_predictions=offline))
+                window = [raw["t0"] + x for x in raw["window_offsets_seconds"]]
+                step["client"] = {"processes": raw["process_count"], "scheduled_requests_including_warmup": raw["scheduled_requests"],
+                                  "returned_records": len(raw["records"]),
+                                  "accounting_complete": len(raw["records"]) == raw["scheduled_requests"],
+                                  "cpu_seconds_per_process": raw["client_cpu_seconds"], "errors": raw["client_errors"]}
+                step["cpu_window"] = raw["cpu_window"]
+                step["gpu_window"] = summarize_gpu_samples(samples, *window) if cuda_config else None
+                metrics = service.metrics()
+                step["batching_whole_step"] = {k: metrics[k] for k in ("batches", "images", "batch_occupancy_histogram",
+                                                                         "mean_batch_size", "queue_rejections",
+                                                                         "max_queue_depth", "batch_model_latency",
+                                                                         "batch_pipeline_latency")}
+                step["batching_whole_step"]["scope"] = "Whole step including warm-up seconds"
+                if cache is not None:
+                    lookups = cache.hits + cache.misses
+                    step["cache_counters_whole_step"] = {"hits": cache.hits, "misses": cache.misses,
+                                                         "hit_rate": cache.hits / lookups if lookups else None,
+                                                         "entries_capacity": cache.max_entries}
+                if cuda_config:
+                    step["gpu_allocator"] = {"peak_tensor_allocated_mib": torch.cuda.max_memory_allocated(0) / 1024**2,
+                                             "peak_allocator_reserved_mib": torch.cuda.max_memory_reserved(0) / 1024**2}
+                step["status"] = "completed" if step["client"]["accounting_complete"] and not raw["client_errors"] else "failed"
+            except Exception as exc:
+                step.update(status="failed", error_type=type(exc).__name__, error=str(exc)[:1500])
+            finally:
+                if sampler is not None:
+                    sampler.stop()
+                if server is not None:
+                    server.shutdown()
+                    server.server_close()
+                    server_thread.join(timeout=5)
+                if service is not None:
+                    service.close()
+                gc.collect()
+                time.sleep(args.step_cooldown_seconds)
+            return step
+
+        def announce(step):
+            """Print a one-line progress summary for a finished step.
+
+            Args:
+                step (dict): run_step output.
+
+            Returns:
+                None.
+            """
+            latency = step.get("latency_from_scheduled_arrival_ms") or {}
+            print(json.dumps({"config": args.ramp_config, "rps": step["target_rps"], "kind": step["run_kind"],
+                              "status": step.get("status"), "slo_met": step.get("slo_met"),
+                              "failure_share": step.get("failure_share"), "p50": latency.get("p50_ms"),
+                              "p99": latency.get("p99_ms"), "achieved_send": step.get("achieved_send_rate_rps"),
+                              "generator_limited": step.get("generator_limited"),
+                              "gpu_util": (step.get("gpu_window") or {}).get("utilization_percent_mean"),
+                              "error": step.get("error")}), flush=True)
+
+        for rate in args.ramp_steps:
+            step = run_step(rate, "ladder", 0)
+            report["steps"].append(step)
+            save()
+            announce(step)
+            stop, reason = ramp_should_stop(step, args.stop_failure_share)
+            if stop:
+                report["ladder_stopped"] = {"at_rps": rate, "reason": reason}
+                break
+        else:
+            report["ladder_stopped"] = {"at_rps": None, "reason": "ladder_exhausted"}
+        first = select_sustainable_capacity([s for s in report["steps"] if s.get("status") == "completed"] or report["steps"])
+        key_rates = [r for r in (first["max_sustainable_offered_rps"], first["first_failing_offered_rps"]) if r is not None]
+        report["key_point_rates"] = key_rates
+        for rate in key_rates:
+            ladder_step = next(s for s in report["steps"] if s["target_rps"] == rate)
+            if ladder_step.get("generator_limited") or ladder_step.get("status") == "failed":
+                continue
+            for repeat in range(1, args.key_point_repeats):
+                step = run_step(rate, "key_point_repeat", repeat)
+                report["steps"].append(step)
+                save()
+                announce(step)
+        report["capacity_at_slo"] = select_sustainable_capacity(report["steps"])
+        executed = all(s.get("status") == "completed" for s in report["steps"])
+        report["status"] = "completed" if executed else "partial_failure"
+        report["completed_at_utc"] = datetime.now(timezone.utc).isoformat()
+        report["limitations"] = [
+            "Procedural synthetic images; served accuracy describes this generator only.",
+            "One WSL host: server and client processes share the same 8-core/16-thread CPU and Windows desktop load.",
+            "The GPU also drives the Windows desktop; nvidia-smi values are device-wide.",
+            "Raw RGB bodies over loopback: no image decoding, TLS, authentication or real network.",
+            "Capacity resolution is limited to the ladder rates; the true limit lies between the highest passing and first failing rate.",
+            "Two workers share one GPU and one Python process; this is not multi-node replication."]
+        save()
+        print(json.dumps({"status": report["status"], "report": str(path),
+                          "max_sustainable_offered_rps": report["capacity_at_slo"]["max_sustainable_offered_rps"]}), flush=True)
+        return 0 if executed else 1
+    except Exception as exc:
+        report.update(status="failed", error_type=type(exc).__name__, error=str(exc)[:1500],
+                      completed_at_utc=datetime.now(timezone.utc).isoformat())
+        save()
+        print(json.dumps({"status": "failed", "error": str(exc), "report": str(path)}), flush=True)
+        return 2
+
+
 def main():
     """Parse the vision CLI, enforce experiment bounds and retain measured evidence.
 
@@ -249,11 +868,16 @@ def main():
         options select seed, train/test fixture counts, epochs, warm-up/repeat counts,
         small-batch size, GPU allocator MiB, optional HTTP timing/persistent localhost
         serving, CUDA requirement, and the separate open-loop load-probe settings.
+        --train-packaging and --ramp select the trained packaging-model paths and
+        their own options (split sizes, training batch/rate/allocator cap, trained
+        weights, configuration, ladder, SLO, stop share, deadline, CPU threads).
 
     Returns:
         int: Default tiny-model path returns 0 for its synthetic checks, 1 when a
         synthetic check fails, or 2 for a caught runtime failure. --load-probe returns
         that path's code: 0 completed, 1 partial failure, 2 caught failure.
+        --train-packaging returns 0 or 2; --ramp returns 0, 1 or 2 as documented
+        in run_packaging_training and run_packaging_ramp.
 
     Raises:
         SystemExit: argparse help/usage/validation exits, normally 0 or 2.
@@ -295,6 +919,27 @@ def main():
     parser.add_argument("--queue-size", type=int, default=64)
     parser.add_argument("--batch-wait-ms", type=float, default=5)
     parser.add_argument("--input-size", type=int, default=224)
+    parser.add_argument("--train-packaging", action="store_true", help="Train and test the ResNet-18 shape on procedural packaging images")
+    parser.add_argument("--train-per-class", type=int, default=1000)
+    parser.add_argument("--val-per-class", type=int, default=250)
+    parser.add_argument("--test-per-class", type=int, default=250)
+    parser.add_argument("--training-batch", type=int, default=64)
+    parser.add_argument("--learning-rate", type=float, default=1e-3)
+    parser.add_argument("--train-gpu-memory-mib", type=int, default=4096)
+    parser.add_argument("--cpu-threads", type=int, default=4, help="torch intra-op threads for --train-packaging; --ramp uses each configuration's own thread setting")
+    parser.add_argument("--ramp", action="store_true", help="Serve trained weights and climb an open-loop load ladder")
+    parser.add_argument("--trained-weights", type=Path, help="State-dict file written by --train-packaging (with its .json sidecar)")
+    parser.add_argument("--weights-sha256", help="Optional expected SHA-256 of the trained weights file")
+    parser.add_argument("--ramp-config", choices=sorted(RAMP_CONFIGURATIONS))
+    parser.add_argument("--ramp-steps", default="10,25,50,100,200,400,800,1600,3200")
+    parser.add_argument("--ramp-warmup-seconds", type=float, default=5)
+    parser.add_argument("--key-point-repeats", type=int, default=3)
+    parser.add_argument("--slo-p99-ms", type=float, default=100)
+    parser.add_argument("--slo-max-failure-share", type=float, default=0.01)
+    parser.add_argument("--stop-failure-share", type=float, default=0.20)
+    parser.add_argument("--deadline-ms", type=float, default=1000)
+    parser.add_argument("--cache-hot-images", type=int, default=32)
+    parser.add_argument("--step-cooldown-seconds", type=float, default=2)
     args = parser.parse_args()
     output = args.output.expanduser().resolve()
     checkout = Path(__file__).resolve().parents[1]
@@ -302,6 +947,31 @@ def main():
         parser.error("Keep raw evidence and model checkpoints outside the Git checkout")
     if output.exists() and any(output.iterdir()):
         parser.error("Use an empty output directory; existing evidence is preserved")
+    if sum(map(bool, (args.load_probe, args.train_packaging, args.ramp))) > 1:
+        parser.error("Choose at most one of --load-probe, --train-packaging and --ramp")
+    if args.train_packaging and not 1 <= args.cpu_threads <= 16:
+        parser.error("Use 1..16 CPU threads")
+    if args.train_packaging and (not 1 <= args.train_per_class <= 5000 or not 1 <= args.val_per_class <= 2500
+                                 or not 1 <= args.test_per_class <= 2500 or not 2 <= args.training_batch <= 256
+                                 or not 1 <= args.epochs <= 100 or not 512 <= args.train_gpu_memory_mib <= 8192
+                                 or not 32 <= args.input_size <= 224 or not 0 < args.learning_rate <= 1):
+        parser.error("Packaging training: 1..5000 train and 1..2500 val/test per class, batch 2..256, epochs 1..100, cap 512..8192 MiB, image 32..224, rate 0..1")
+    if args.ramp:
+        try:
+            args.ramp_steps = [int(x) for x in args.ramp_steps.split(",")]
+        except ValueError:
+            parser.error("--ramp-steps must be comma-separated integers")
+        if (args.ramp_config is None or args.trained_weights is None
+                or not args.trained_weights.expanduser().is_file()
+                or not args.trained_weights.expanduser().with_suffix(".json").is_file()):
+            parser.error("--ramp needs --ramp-config and an existing --trained-weights file with its .json sidecar")
+        if (args.ramp_steps != sorted(set(args.ramp_steps)) or not all(1 <= x <= 10000 for x in args.ramp_steps)
+                or not 5 <= args.duration <= 60 or not 0 <= args.ramp_warmup_seconds <= 30
+                or not 1 <= args.key_point_repeats <= 5 or not 1 <= args.queue_size <= 256
+                or not 0 < args.slo_p99_ms <= args.deadline_ms or not 0 <= args.slo_max_failure_share < 1
+                or not 0 < args.stop_failure_share < 1 or not 1 <= args.cache_hot_images <= 256
+                or not 0 <= args.step_cooldown_seconds <= 30):
+            parser.error("Ramp: ascending unique rates 1..10000, duration 5..60 s, warm-up 0..30 s, repeats 1..5, queue 1..256, 0 < SLO <= deadline, shares in 0..1, hot images 1..256, cool-down 0..30 s")
     if not 1 <= args.small_batch <= 32 or not 5 <= args.repeats <= 1000 or not 1 <= args.warmup <= 100:
         parser.error("Use batch 1..32, repeats 5..1000 and warm-up 1..100")
     if not 64 <= args.gpu_memory_mib <= 512:
@@ -317,6 +987,10 @@ def main():
     output.mkdir(parents=True, exist_ok=True)
     if args.load_probe:
         return run_load_probe(args, output)
+    if args.train_packaging:
+        return run_packaging_training(args, output)
+    if args.ramp:
+        return run_packaging_ramp(args, output)
     report = {"schema_version": 1, "started_at_utc": datetime.now(timezone.utc).isoformat(),
               "scope": "Synthetic vision engineering demonstration, not a production quality or capacity acceptance",
               "weights_downloaded": False, "packages_installed": False,

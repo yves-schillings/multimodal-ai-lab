@@ -155,6 +155,14 @@ The command prints the report and optionally writes identical JSON. **Unlike the
 
 The six optional invoice inputs are documented in the [explanation reference](explainability-acceptance-reference.md). Only bounded numeric synthetic features are accepted. The linear baseline and tree model use the same synthetic split; Tree SHAP and LIME in the retained illustration explain different models. SHAP sums in its selected output scale, here log-odds, and its reconstruction check does not prove causal or useful explanations.
 
+The separate review compares SHAP and LIME on **both** models, the same 20 stratified test cases and the same output, on log-odds and on probability, with one check per quality (performance and calibration, additivity, local fidelity, range, stability, reference sensitivity, agreement) plus coefficients, interactions and bounded counterfactuals:
+
+```powershell
+..\multimodal-xai-venv\Scripts\python.exe -B scripts\review_explainability_engineering.py --output "$evidenceDir\explainability-review.json"
+```
+
+It reads its parameters and thresholds from the [review protocol](../evidence/ai-engineering-review-20261028/explainability/protocol.json) and stops with exit 2 if they differ from the code. **It refuses an existing output file.** It runs on the CPU with one thread in about 75 seconds. Exit 0 means every check passed and 1 means the report was written with at least one failed check; failures are findings. The [review README](../evidence/ai-engineering-review-20261028/explainability/README.md) explains the retained results and their scales.
+
 ## 10. Run the vision probes
 
 Select an already prepared Linux/WSL interpreter by setting `VISION_PYTHON`, and an evidence path outside the checkout in `EVIDENCE_DIR`. Run from the repository as visible to that Linux environment. Do not combine Windows drive syntax with Linux CLI paths.
@@ -173,7 +181,25 @@ The separate retained-style load probe is:
 
 Use a new/empty output directory. The CLI refuses evidence inside the checkout. The [vision reference](vision-reference.md) documents every limit, return code, report and handler. The probe starts temporary loopback HTTP services, workers and queues, then closes them. `--serve` is a separate opt-in small-demo mode and is incompatible with `--load-probe`; stop that persistent demo normally with Ctrl+C.
 
-Read offered, completed, rejected and successful counts together. Successful-request percentiles do not include rejected requests. Five milliseconds is the batch-filling wait, not a bound on total queueing. FP16 or another worker is an experimental setting, not a promised improvement. The ResNet-shaped probe has random weights: its latency result cannot qualify image-detection quality. Allocator reservations do not include all GPU driver/context memory.
+Read offered, completed, rejected and successful counts together. Successful-request percentiles do not include rejected requests. Five milliseconds is the batch-filling wait, not a bound on total queueing. FP16 or another worker is an experimental setting, not a promised improvement. The ResNet-shaped probe has random weights: its latency result cannot qualify image-detection quality. Allocator reservations do not include all GPU driver/context memory. That probe also fixes **one CPU thread per call** (`cpu_threads_per_call: 1`), so its CPU row is not a fair CPU baseline.
+
+### 10.1 Trained packaging model and load ramp
+
+The protocol for this procedure is [`docs/evidence/ai-engineering-review-20261028/vision/protocol.json`](../evidence/ai-engineering-review-20261028/vision/protocol.json); read it before running. First train and test the ResNet-18 shape on procedural packaging images (train/validation/test from disjoint seeds, hash-checked):
+
+```bash
+"$VISION_PYTHON" -B scripts/measure_vision_engineering.py --train-packaging --output "$EVIDENCE_DIR/training" --require-cuda --epochs 15 --training-batch 64 --cpu-threads 4 --train-gpu-memory-mib 4096
+```
+
+The weights file and its `.json` sidecar (file SHA-256, test-split hash, input size) land in that directory. Then run one configuration per command, each in a new output directory:
+
+```bash
+"$VISION_PYTHON" -B scripts/measure_vision_engineering.py --ramp --ramp-config gpu_fp32_dynamic --trained-weights "$EVIDENCE_DIR/training/packaging_resnet18_224.pt" --output "$EVIDENCE_DIR/ramp/gpu_fp32_dynamic" --duration 20 --ramp-warmup-seconds 5 --key-point-repeats 3 --gpu-memory-mib 512 --queue-size 64
+```
+
+Configurations: `cpu_fp32_dynamic` (PyTorch default threads, all physical cores), `cpu_fp32_dynamic_1thread` (historical one-thread comparison), `gpu_fp32_batch1`, `gpu_fp32_dynamic`, `gpu_fp16_dynamic`, `gpu_fp32_dynamic_2workers` and `gpu_fp32_dynamic_cache50`. Thread settings belong to each configuration and are recorded in the report; `--cpu-threads` applies to training only. The ramp verifies the weights hash, regenerates the test split and refuses a mismatch, then climbs 10 to 3,200 req/s from separate client processes and stops after a step with more than 20 % failures or a generator-limited step. It reruns the key rates to three runs. Each step takes about 30 seconds; a GPU configuration takes 4 to 7 minutes.
+
+Read `capacity_at_slo` together with each step's `failure_share`, `within_slo_share_of_offered`, `generator_limited`, `p99_observations` and `quality_under_load`. Latency is measured from the scheduled arrival, and late, rejected and unsent requests count as failures. If another job shares the GPU, serialize access to it; the scripts do not take a lock themselves.
 
 ## 11. Recompute the candidate evidence gate
 
@@ -214,7 +240,7 @@ Base-environment tests do not need a running model or database:
 Run explanation tests in the separate Python 3.12 environment and vision tests in the selected PyTorch environment:
 
 ```powershell
-..\multimodal-xai-venv\Scripts\python.exe -B -m pytest tests\test_engineering_explainability.py -q -p no:cacheprovider
+..\multimodal-xai-venv\Scripts\python.exe -B -m pytest tests\test_engineering_explainability.py tests\test_explainability_review.py -q -p no:cacheprovider
 ```
 
 ```bash

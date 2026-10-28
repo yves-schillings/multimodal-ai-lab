@@ -1,0 +1,140 @@
+{
+  "protocol_id": "vision-trained-ramp-20261028",
+  "written_before_runs": true,
+  "written_at_utc": "2026-10-28T19:52:24Z",
+  "purpose": "Replace the random-weight-only evidence behind Part 2 (Low latency outside language models) with a trained, evaluated model served under a stepped open-loop load, while keeping the 27 October random-weight technical probe and its evidence unchanged.",
+  "unchanged_evidence": "docs/evidence/ai-engineering-20261027/vision-resnet-open-loop.json remains the technical probe; this protocol adds a separate series and does not reinterpret it.",
+  "environment": {
+    "host": "One Windows 11 workstation running WSL2 Ubuntu (kernel 5.15.167.4-microsoft-standard-WSL2)",
+    "cpu": "Intel Core i9-9900K, 8 cores / 16 threads visible to WSL",
+    "gpu": "NVIDIA GeForce RTX 2080 Ti, 11 GB; it also drives the Windows desktop (about 4.7 GB used and 15-17 % utilization before any run)",
+    "python": "3.12.3",
+    "torch": "2.8.0+cu126 (existing environment; nothing installed or downloaded)",
+    "gpu_lock": "Before each GPU batch (training, each ramp configuration, the CUDA unit test) wait until the shared gpu.lock file is absent, create it atomically with the content 'vision', and delete it when the batch ends, including on error. Another benchmark uses the same lock. The CPU configuration also takes the lock so the other benchmark cannot load the shared CPU during it.",
+    "gpu_time_budget_minutes": 45,
+    "gpu_time_budget_minutes_after_restart": 60
+  },
+  "dataset": {
+    "task": "Classify one procedural image of a bottle on a conveyor as good, missing_cap, scratch or misaligned_label.",
+    "classes": ["good", "missing_cap", "scratch", "misaligned_label"],
+    "generator": "lab.engineering_vision.draw_packaging_image / generate_packaging_images",
+    "rules": {
+      "shared_nuisance": "Background tint and gradient, conveyor slats, bottle position (+/-14 px), body width 70-88 px, four glass colours, cylindrical shading, a soft vertical glare band, 2-4 thin dark label print lines, 0-6 dust specks, global gain 0.88-1.12 and Gaussian noise sigma 2-6 grey levels.",
+      "good": "Cap present; label within +/-2 degrees and +/-4 px of the body centre.",
+      "missing_cap": "No cap; dark neck opening and two thread lines.",
+      "scratch": "One to three line segments on the body, 14-55 px long, 0.9-1.8 px wide, 22-70 grey levels brighter (60 %) or darker (40 %).",
+      "misaligned_label": "Label rotated 6-15 degrees, shifted 12-22 px, or rotated 4-8 degrees and shifted 8-13 px."
+    },
+    "fictional": "All rules are invented for the exercise. No real product, line specification, camera image or personal data is used.",
+    "image_format": "224 x 224 RGB, raw interleaved HWC uint8 (150,528 bytes per request body); no image codec.",
+    "input_size": 224,
+    "input_size_justification": "224 x 224 keeps per-image compute and body size identical to the 27 October random-weight probe, so the two series are comparable; trained weights do not change dense convolution cost. The thinnest scratches are 0.9-1.8 px wide at 224 px and would fall below one pixel at 112 px.",
+    "splits": {
+      "train": {"images": 4000, "per_class": 1000, "seed": 47},
+      "validation": {"images": 1000, "per_class": 250, "seed": 100047},
+      "test": {"images": 1000, "per_class": 250, "seed": 200047}
+    },
+    "leakage_check": "SHA-256 of every image's raw bytes. Training aborts if any hash appears in two splits or twice in one split. Aggregate hashes are recorded so the ramp can verify it regenerated the identical test split.",
+    "test_split_use": "The test split is evaluated once after the epoch is selected on validation. It is never used for training, epoch selection or generator changes."
+  },
+  "model_and_training": {
+    "architecture": "ResNet-18-shaped network from build_resnet18_probe (stem 7x7, BasicBlock stages [2,2,2,2], channels 64-512) with a 4-class head",
+    "initialization": "Kaiming-normal random initialization, seed 47; no pretrained weights downloaded",
+    "optimizer": "AdamW, weight decay 1e-4, OneCycleLR peak 1e-3 with 15 % warm-up",
+    "epochs": 15,
+    "batch_size": 64,
+    "augmentation": "Random horizontal flip only",
+    "preprocessing": "uint8 HWC to CHW, float32 divided by 255; identical in training and serving",
+    "selection_rule": "Epoch with the highest validation accuracy; ties broken by lower validation loss",
+    "test_report": ["number of test images", "accuracy", "per-class precision and recall", "confusion matrix (rows true, columns predicted)", "FP16 accuracy and FP16/FP32 agreement on the same test images"],
+    "weights_storage": "Outside the repository under /root/vision-review-20261028/; the report records the file SHA-256, a state fingerprint and the input size"
+  },
+  "service_under_test": {
+    "server": "One Python process: ThreadingHTTPServer on 127.0.0.1 (listen backlog 128), POST /predict-rgb with a raw 150,528-byte body, bounded queue of 64 waiting requests (HTTP 429 when full), BoundedBatchVisionService worker thread(s), make_resnet_batch_runtime with the trained weights",
+    "server_settings": "Torch threads per configuration (see configurations): the CPU baseline keeps PyTorch's default, which on this host is 8 intra-op and 8 inter-op threads (8 physical cores, 16 logical CPUs; hyper-threads are not added); GPU configurations use 4 intra-op and 1 inter-op thread for host-side preprocessing; the historical CPU comparison uses 1 and 1 like the 27 October probe. cuDNN enabled, cudnn.benchmark false, PyTorch allocator cap 512 MiB on CUDA. Every report records torch.get_num_threads, torch.get_num_interop_threads and the physical/logical core counts.",
+    "client": "Separate spawned processes, min(4, ceil(rate / 500)), asyncio raw HTTP/1.0, one TCP connection per request, absolute arrival schedule independent of responses, at most 256 open requests per process (excess recorded as not_sent), 5 s timeout per request",
+    "model_warmup": "10 calls for every batch size 1..max_batch per worker before serving, then offline predictions on the whole test split with the same runtime"
+  },
+  "configurations": [
+    {"name": "cpu_fp32_dynamic", "device": "CPU", "precision": "FP32", "workers": 1, "max_batch": 8, "batch_wait_ms": 2, "cache": false, "intra_op_threads": "PyTorch default = 8 (all physical cores)", "interop_threads": "PyTorch default = 8", "isolates": "fair CPU baseline"},
+    {"name": "cpu_fp32_dynamic_1thread", "device": "CPU", "precision": "FP32", "workers": 1, "max_batch": 8, "batch_wait_ms": 2, "cache": false, "intra_op_threads": 1, "interop_threads": 1, "isolates": "historical comparison point only: the 27 October probe's one-thread CPU setting; run if GPU-lock time allows"},
+    {"name": "gpu_fp32_batch1", "device": "GPU", "precision": "FP32", "workers": 1, "max_batch": 1, "batch_wait_ms": 0, "cache": false, "intra_op_threads": 4, "interop_threads": 1, "isolates": "batching lever (off)"},
+    {"name": "gpu_fp32_dynamic", "device": "GPU", "precision": "FP32", "workers": 1, "max_batch": 8, "batch_wait_ms": 2, "cache": false, "intra_op_threads": 4, "interop_threads": 1, "isolates": "reference"},
+    {"name": "gpu_fp16_dynamic", "device": "GPU", "precision": "FP16", "workers": 1, "max_batch": 8, "batch_wait_ms": 2, "cache": false, "intra_op_threads": 4, "interop_threads": 1, "isolates": "precision lever"},
+    {"name": "gpu_fp32_dynamic_2workers", "device": "GPU", "precision": "FP32", "workers": 2, "max_batch": 8, "batch_wait_ms": 2, "cache": false, "intra_op_threads": 4, "interop_threads": 1, "isolates": "concurrency lever; two model copies and CUDA streams in one process on one GPU, not multi-node replication"},
+    {"name": "gpu_fp32_dynamic_cache50", "device": "GPU", "precision": "FP32", "workers": 1, "max_batch": 8, "batch_wait_ms": 2, "cache": true, "intra_op_threads": 4, "interop_threads": 1, "isolates": "cache lever with a stated 50 % share of byte-identical repeats"}
+  ],
+  "revisions_before_ramp_runs": [
+    {"at_utc": "2026-10-28T19:54:33Z", "change": "At the coordinator's request, after an audit found that the 27 October CPU probe used one thread per call: the CPU baseline now keeps PyTorch's default threads (all 8 physical cores) instead of 4, a labelled one-thread historical configuration was added, and every configuration's thread setting is stated. Made before any ramp step ran; training (which uses 4 intra-op threads for host-side data handling) was queued behind the GPU lock and had not started."},
+    {"at_utc": "2026-10-28T19:57:35Z", "change": "A CPU-only smoke run (tiny 64 px model, 10 req/s, not evidence) showed the /proc/stat aggregate reporting 0.1 % busy while the server process alone used 0.44 cores. CPU utilisation is therefore reported from per-process accounting summed over all Linux processes; the /proc/stat share is retained only as a labelled tick-sampled figure."},
+    {"at_utc": "2026-10-28T20:55:00Z", "change": "Interrupted first training run. It acquired the lock at 20:03:36 UTC, but another job's command ignored the lock, so the GPU ran this training, two Ollama servers and a reranker service at once. Epochs 2-5 took 77-88 s instead of about 26 s. During epoch 7 PyTorch raised 'CUDA error: unknown error' (recorded at 20:12:03 UTC) and the workstation then restarted after a graphics-kernel bugcheck (Windows System log: Kernel-Power 41 at 20:12:40 UTC, then WER 1001 'rebooted from a bugcheck 0x00000113 (0x19, 0x1, 0x10de, 0x1e07)'; 0x10de/0x1e07 are the NVIDIA vendor and RTX 2080 Ti device identifiers). Its six epoch records and failed report are kept as training-interrupted-run1.* and are not used for any result. Training is rerun from the start with the same seeds, data and 15 epochs."},
+    {"at_utc": "2026-10-28T20:55:00Z", "change": "GPU sequence rules after the crash: the shared lock is taken once and held for the whole sequence (training, test evaluation, every ramp configuration, the CUDA unit test), with no other GPU job running. The total GPU budget is about 60 minutes. Run order: training, gpu_fp32_dynamic, gpu_fp32_batch1, gpu_fp16_dynamic, gpu_fp32_dynamic_2workers, gpu_fp32_dynamic_cache50, cpu_fp32_dynamic, CUDA unit test, cpu_fp32_dynamic_1thread. If the budget would be exceeded, key-point repeats are dropped first (remaining configurations run with one run per key rate), then the one-thread CPU comparison. Every drop is recorded in the README."},
+    {"at_utc": "2026-10-28T21:00:00Z", "change": "Second training attempt, alone on the GPU under the single lock from 20:55:25 UTC (nvidia-smi before: 7 % utilization, 3,229 MiB used, no compute process listed). The split check reproduced the first attempt's aggregate hashes exactly with zero overlap. Epochs 1-3 took 5.5-6.5 s, then epoch time rose steadily to 12.6 s by epoch 9. During epoch 10 PyTorch again raised 'CUDA error: unknown error' (report written 20:57:39 UTC). Afterwards NVML failed inside WSL and the Windows driver reported 'GPU is lost. Reboot the system to recover this GPU'. The sequence stopped and released the lock at 20:57:40 UTC. No weights were saved, so no test-split evaluation, ramp configuration or CUDA unit test was run. GPU work is suspended until the workstation is rebooted and the card is checked under load (temperature, power and throttle reasons). The rising epoch time is consistent with throttling, but no temperature was recorded, so the cause is not established."}
+  ],
+  "cache_workload": "Each request is a repeat with probability 0.5 (deterministic hash of its index); repeats cycle over 32 fixed test images. Every other request is a test image whose first pixel carries a unique 24-bit marker, so its bytes, and therefore its cache key, are unique. The cache key is (weights fingerprint, preprocessing version, SHA-256 of the body). Concurrent identical misses are not coalesced.",
+  "load_ladder": {
+    "offered_rps": [10, 25, 50, 100, 200, 400, 800, 1600, 3200],
+    "warmup_seconds_per_step": 5,
+    "measured_seconds_per_step": 20,
+    "cooldown_seconds_between_steps": 2,
+    "fresh_server_and_queue_per_step": true,
+    "stop_rules": [
+      "Stop climbing after a step whose failure share exceeds 20 %",
+      "Stop climbing after a generator-limited step (higher rates would also be unusable)",
+      "Stop after a step that failed to execute"
+    ],
+    "repeats": "After the ladder, rerun the highest SLO-passing rate and the first failing rate (unless generator-limited) until each has 3 runs in total."
+  },
+  "slo": {
+    "defined_before_runs": true,
+    "latency": "p99 of end-to-end latency <= 100 ms, measured at the client from the scheduled arrival time to the complete response, over every HTTP 200 answer in the measured cohort (late answers included)",
+    "failures": "failure share <= 1 % of all offered requests in the measured cohort",
+    "failure_definition": "HTTP 429 rejection, any other HTTP status, client error or timeout, not_sent because the client in-flight cap was reached, or an HTTP 200 later than the 1,000 ms deadline",
+    "within_slo_share": "Answers with HTTP 200 and latency <= 100 ms divided by all offered requests; reported for every step",
+    "generator_limited": "Requests actually sent during the measured window divided by its length below 95 % of the offered rate; such a point is flagged with its reason and never used for capacity",
+    "p99_reliability": "p99 is flagged unreliable below 1,000 observations",
+    "capacity_rule": "Maximum sustainable throughput at the SLO = the highest offered rate, visited in ascending order, at which every run met the SLO, before the first rate with any failing run. The true limit lies between that rate and the next ladder rate."
+  },
+  "recorded_per_step": [
+    "offered rate and offered requests in the measured cohort",
+    "achieved send rate and generator_limited flag with reason",
+    "successful throughput (HTTP 200 within the deadline per measured second) and HTTP 200 completions inside the window",
+    "outcomes: ok, deadline_miss, rejected, error, not_sent; HTTP status and error-type counts",
+    "failure share and share of all offered requests answered within the SLO",
+    "p50, p95, p99 and max from scheduled arrival and from send time; observation count and p99 reliability flag",
+    "client send lateness",
+    "server queue wait and server compute-plus-response time per request; batch occupancy, batch model and pipeline latency",
+    "GPU utilization and device memory at 1 Hz from nvidia-smi (device-wide), PyTorch allocator peaks",
+    "CPU cores used by the server process and by all Linux processes (per-process scheduler accounting from /proc/<pid>/stat) during the measured window; the tick-sampled /proc/stat busy share is kept but labelled, because in this WSL VM it undercounted millisecond bursts in a pre-run check; client CPU seconds per process",
+    "accuracy of served predictions under load, offline accuracy on the same requests and agreement with offline predictions",
+    "cache hits and repeat requests for the cache configuration"
+  ],
+  "levers": {
+    "batching": "gpu_fp32_batch1 vs gpu_fp32_dynamic",
+    "precision": "gpu_fp32_dynamic vs gpu_fp16_dynamic, plus FP16 vs FP32 accuracy and agreement on the test split",
+    "cache": "gpu_fp32_dynamic vs gpu_fp32_dynamic_cache50, with the measured hit rate at a stated 50 % repeat share",
+    "concurrency": "gpu_fp32_dynamic vs gpu_fp32_dynamic_2workers",
+    "reported_for_each": ["gain in capacity at the SLO", "latency at low load (10 req/s)", "memory cost", "effect on quality"]
+  },
+  "sizing_scenario_100000_rps": {
+    "nature": "Formula only, never a measurement",
+    "formula": "replicas = ceil(target / (capacity_at_SLO * (1 - headroom))); N+1 = replicas + 1; zone variant = ceil(replicas / (zones - 1)) * zones",
+    "assumed_headroom": 0.3,
+    "assumed_zones": 3,
+    "capacity_input": "The measured capacity at the SLO of the best GPU configuration, as a per-replica figure",
+    "shared_components_not_measured": ["load balancer", "network bandwidth (raw RGB bodies are 150,528 bytes)", "image decoding (not present in this lab)", "storage and logging", "control plane and autoscaling"]
+  },
+  "can_show": [
+    "Test-split quality of a trained ResNet-18-shaped classifier on this procedural task",
+    "How this single-host Python HTTP service behaves as offered load rises, with every failed request counted",
+    "The relative effect of batching, FP16, an exact-body cache and a second worker on this host",
+    "Whether served predictions under load match offline predictions"
+  ],
+  "cannot_show": [
+    "Real packaging-line quality, defect frequencies or camera conditions",
+    "Production capacity, multi-node scaling or behaviour behind a real load balancer",
+    "Optimized serving stacks (TensorRT, Triton, ONNX Runtime) or JPEG/PNG decoding cost",
+    "Isolation from the Windows desktop, which shares the GPU and CPU",
+    "That the 100,000 req/s scenario is achievable"
+  ]
+}

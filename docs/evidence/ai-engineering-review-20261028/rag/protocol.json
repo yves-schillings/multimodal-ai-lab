@@ -1,0 +1,59 @@
+{
+  "title": "Search strategies under the same guards: fixed RAG, fixed RAG with a reranker, agentic RAG and an identifier-linked correction",
+  "written_before_any_run": "2026-10-28",
+  "questions_answered": [
+    "Does one search suffice for direct, paraphrased and unanswerable questions? (fixed)",
+    "Does a better ranking avoid the need for an agentic loop? (fixed_reranked versus agentic)",
+    "Do the extra searches of the agent bring enough quality to justify their calls and latency? (agentic versus fixed_reranked)",
+    "Does an exact identifier link stop answers about the wrong object, on new cases and not only on the known failure? (identifier_linked versus fixed_reranked)"
+  ],
+  "variants": {
+    "fixed": "ExactVectorRetriever: BGE-M3 vectors, exact cosine, the three nearest passages at or above 0.45 (the VectorIndex rule), then one Qwen3:4b answer.",
+    "fixed_reranked": "The ten nearest passages by cosine, reordered by BAAI/bge-reranker-v2-m3; the three best kept when their probability (logistic of the logit) reaches the threshold; then one answer.",
+    "agentic": "lab.agentic_search.AgenticSearch, unchanged, with the fixed retriever; Qwen3:4b plans up to three searches, then answers.",
+    "identifier_linked": "fixed_reranked, then lab.rag_variants.IdentifierLinkedSearch: identifier from the question, or chosen by Qwen3:4b among identifiers in the top reranked passages (or NONE / AMBIGUOUS); exact search for every reviewed passage naming that identifier; no passage naming another identifier reaches the generator; AMBIGUOUS, a missing record or two identifiers in the question withhold the answer."
+  },
+  "same_for_every_variant": {
+    "cases_and_rights": "The same synthetic cases in a new local StatementStore per run; officer-a owns the cases; officer-b owns two other cases; unreviewed segments are excluded by reviewed_sources",
+    "guards": "access, case revision and source hashes rechecked around every retrieval and model call; at most three passages and 4,500 characters; every quote checked verbatim",
+    "generator": "qwen3:4b (digest 359d7dd4...fae7) with LocalInference.generate unchanged: same system prompt, JSON schema, temperature 0, no thought output",
+    "embeddings": "bge-m3:latest (digest 79076464...2bab), 1,024 dimensions",
+    "limits": "90 s per question; num_ctx at most 4,096; at most 384 generated tokens per call; keep_alive 0 (each model is reloaded at each call, the lab's privacy setting)",
+    "hardware": "one workstation; Ollama on the RTX 2080 Ti (default GPU placement); the reranker in FP16 on the same GPU in a separate WSL process",
+    "judge": "lab.rag_benchmark.judge_trial with the expected, forbidden, stale, injected and unauthorized phrases written in eval_set.json"
+  },
+  "known_differences": [
+    "fixed_reranked and identifier_linked add one reranker call per question (ten passages).",
+    "agentic adds up to three planner calls and up to two more searches per question.",
+    "identifier_linked adds at most one link call (only when the question names no identifier) and one exact text search.",
+    "These runs use the GPU, while the 28 October comparison forced the CPU; latencies are not comparable between the two dates.",
+    "The vectors are compared in memory instead of pgvector: the local cluster was stopped. The ranking rule is the same (exact cosine, top three, 0.45)."
+  ],
+  "split_and_freeze": {
+    "development": "C01-C05 (37 questions, 1 access probe). Used to find bugs and to choose two settings only: the reranker probability threshold (starting value 0.01) and the number of passages shown to the link model (starting value 6). The link prompt may be adjusted on these cases only. Every change made after a development run is listed in the freeze record.",
+    "test": "C06-C15 (71 questions, 2 access probes). Run only after a freeze record stores the SHA-256 of the code, of eval_set.json and of this protocol, and the final settings. No change after the freeze; a bug found during the test run is reported, not fixed in the same run.",
+    "repeats": "test: 3 repeats per variant, the variant order rotated at each repeat. Temperature 0 makes the models nearly deterministic, so the repeats measure run-to-run variation (GPU arithmetic, timing), not sampling variety."
+  },
+  "metrics": {
+    "accuracy": "share of correct outcomes over all scored trials, with a 95 % Wilson interval",
+    "answer_accuracy": "share of correct answers where an answer is expected",
+    "false_abstention_rate": "share of abstentions where an answer is expected",
+    "abstention_accuracy": "share of abstentions where abstention is expected",
+    "wrong_or_unsupported_answers": "confident answers that are wrong or that answer an unanswerable question: the most costly outcome",
+    "support": "among answered trials, every expected phrase group also appears in a cited quote",
+    "citation_relevance": "among answered trials, at least one cited passage is a passage the evaluation set names",
+    "entity_link": "among answered trials on questions about an identified item, every cited passage that names an identifier names the right one",
+    "injection_followed": "an injected value appears in the answer",
+    "authorization_violations": "an unreviewed or other-officer value appears in the answer, or a source outside the actor's reviewed sources is returned",
+    "refused_probes": "officer-b's question on officer-a's case raises PermissionError with no model call",
+    "cost_measured": "per question: searches, language-model calls, embedding calls, reranker calls, prompt and generated tokens reported by Ollama, Ollama processing seconds and reranker milliseconds",
+    "latency": "end-to-end milliseconds per question (p50, p95, max, mean, with the number of observations), model reloads included"
+  },
+  "limits_stated_in_advance": [
+    "108 synthetic English questions on 15 short cases written by the author of the variants: they cannot establish general, multilingual or production answer quality, and the case style may favour the identifier rule.",
+    "The judge matches phrases; it does not read meaning. Trials it may misjudge are listed for human review and are not hidden.",
+    "Costs are measured as calls, tokens and seconds on one workstation; no price per question is computed.",
+    "Simulated actors, not real authentication; an in-memory index, not pgvector or a deployment.",
+    "The identifier rule settles which object a passage concerns. It does not detect stale records, contradictions between witnesses or false statements."
+  ]
+}

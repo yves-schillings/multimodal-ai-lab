@@ -1,0 +1,42 @@
+{
+  "status": "The held-out test run (C06-C15, 71 questions) was not done. These are the development changes and the settings that a future test run would freeze first.",
+  "settings_for_a_future_test_run": {
+    "reranker_min_probability": 0.0,
+    "link_candidates": 6,
+    "cpu_only": true,
+    "repeats_on_test": 1,
+    "max_seconds_per_question": 90,
+    "agentic_max_searches": 3
+  },
+  "development_changes": [
+    {
+      "change": "Reranker probability threshold lowered from 0.01 to 0.0 (keep the three best reranked passages)",
+      "reason": "dev-reranker-threshold-analysis.json: the reranker gave some expected passages a probability as low as 0.00003, so a threshold would have removed correct evidence"
+    },
+    {
+      "change": "Development run 1 stopped after 66 trials",
+      "reason": "Corrupted quotes were first attributed to the GPU; dev-run-2 showed the same five failures after a reboot, and the raw outputs showed that Qwen3:4b corrupts some long quotes it copies under the JSON schema (for example 'Rue des Tanne: 17:40'). The quote check withholds these answers. The generator is unchanged."
+    },
+    {
+      "change": "Raw language-model outputs are stored for trials withheld by a check",
+      "reason": "Diagnosis only; no effect on any answer or verdict"
+    },
+    {
+      "change": "The synthetic store moved from the evidence folder to the system temporary folder",
+      "reason": "A crash left a temporary store beside the evidence; no effect on any result"
+    },
+    {
+      "change": "IdentifierLinkedSearch: allowed evidence = passages naming the linked identifier or no identifier, in reranker order; the best identifier passage replaces the third one when none of the three names it",
+      "reason": "In dev-run-2 the identifier passages filled every slot, so the identifier-free passage that answered the question was left out (C03-Q7, C03-Q4)"
+    },
+    {
+      "change": "Link prompt: choose the identifier of the passage that describes the item itself, never one that only appears in a list, register or log entry",
+      "reason": "In dev-run-2 the link chose a register identifier (KT-8812) instead of the complainant's (GX-5530) on C01-Q6"
+    },
+    {
+      "change": "Development run 3 (the corrected identifier-linked strategy) on the CPU only",
+      "reason": "The workstation crashed twice under GPU load on 28 October (bugcheck 0x113, then a hard reset after the driver reported the GPU as lost). Ollama ran with the GPU hidden and num_gpu 0, and the reranker on the CPU. With temperature 0, dev-run-1 and dev-run-2 gave the same outcome on 65 of 66 shared trials, so device changes are not expected to change outcomes much, but timings on the CPU are not comparable with dev-run-2."
+    }
+  ],
+  "unchanged": "eval_set.json and protocol.json are unchanged since they were written before any run; the test cases C06-C15 were never run before the freeze."
+}
