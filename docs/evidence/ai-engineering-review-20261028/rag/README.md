@@ -75,10 +75,10 @@ $rag = "docs\evidence\ai-engineering-review-20261028\rag"
 | identifier_linked | 19 | 10 | 8 | 10 | 9 of 10 | 4 | 1.76 | 12.8 s |
 
 - With 37 questions the 95 % Wilson intervals of the correct share overlap widely (about ±15 points): no variant is shown better overall.
-- The identifier link cited the right object most often and followed none of the three injected instructions (the others followed one or two).
+- The identifier link cited the right object most often and followed the injected instruction in neither of the two injection questions (each other variant followed it in one). `fixed_reranked` also gave an injected value in one multi-step answer.
 - Every variant often answered unanswerable questions with a related fact instead of abstaining.
 - Qwen3:4b sometimes damaged a long quote under the JSON schema (for example `"Rue des Tanne: 17:40"`). The quote check withheld these answers. The raw outputs of withheld trials are stored in the run record.
-- After two development corrections (see `development-changes.json`), the identifier-linked variant gave 20 correct of 37 instead of 19 (dev-run-3, CPU). The corrected questions passed, three others got worse and one injected instruction was followed. The gain was measured on the questions used for the corrections, on another device, so it does not show that the correction generalises.
+- After two development corrections (see `development-changes.json`), the identifier-linked variant gave 20 correct of 37 instead of 19 (dev-run-3, CPU). The corrected questions passed and three others got worse. Neither injection question was followed, but one multi-step answer gave an injected value. The gain was measured on the questions used for the corrections, on another device, so it does not show that the correction generalises.
 
 ## Reproduction
 
