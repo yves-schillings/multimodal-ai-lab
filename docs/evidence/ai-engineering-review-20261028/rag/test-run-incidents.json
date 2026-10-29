@@ -1,0 +1,27 @@
+{
+  "title": "Interruptions of the held-out test run, applied under the incident rule of test-analysis-plan.json",
+  "rule": "If the machine or a service fails during the run, the run is restarted from the start with a new output file, the partial record is kept and reported, and no trial is selected or dropped.",
+  "attempts": [
+    {
+      "file": "test-run-0-stopped-by-operator.json",
+      "started_utc": "2026-10-28T22:37",
+      "trials": 4,
+      "reason": "Stopped by the operator, who misread the stop reason model_unavailable (it also names answers withheld by the quote check) as a service failure."
+    },
+    {
+      "file": "test-run-cpu.json",
+      "started_utc": "2026-10-28T22:40",
+      "trials": "839 of 876 (fixed_reranked repeat 3 stopped after C10-Q6)",
+      "reason": "Windows Update restarted the workstation at 05:05 local time (event 1074, MoUsoCoreWorker, 'Service pack (Planned)'). No crash was logged."
+    },
+    {
+      "file": "test-run-cpu-restart-20261029.json",
+      "started_utc": "2026-10-29T07:28",
+      "trials": "479 of 876 (identifier_linked repeat 2 stopped after C11-Q4)",
+      "reason": "The workstation was restarted from the Start menu of the user session at 11:55 local time (event 1074, StartMenuExperienceHost). No crash was logged."
+    }
+  ],
+  "hashes": "All three partial records carry the source and input hashes of test-freeze.json.",
+  "use_of_partial_records": "They are not pooled with the complete run and no trial is taken from them. They serve only to report how often the same trial gave the same verdict across attempts, after the complete run is analysed.",
+  "next_attempt": "A complete run restarted from the start on 2026-10-29, with the same frozen files and settings, during the Windows active hours so that an update restart is not expected."
+}
