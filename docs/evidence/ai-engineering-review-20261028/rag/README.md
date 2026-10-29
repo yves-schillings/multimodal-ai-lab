@@ -7,7 +7,7 @@ This package compares four search strategies on the same synthetic cases, rights
 | `fixed` | One search with the question: the three nearest passages at or above 0.45 cosine similarity (the `VectorIndex` rule), then one Qwen3:4b answer |
 | `fixed_reranked` | The ten nearest passages, reordered by BAAI/bge-reranker-v2-m3; the three best are kept; then one answer |
 | `agentic` | The unchanged `AgenticSearch` with the `fixed` retriever: Qwen3:4b may search again up to three times |
-| `identifier_linked` | `fixed_reranked` plus the identifier link of `lab/rag_variants.py`: no passage that names another identifier reaches the generator, and a missing or ambiguous link withholds the answer |
+| `identifier_linked` | `fixed_reranked` plus the identifier link of `lab/rag_variants.py`: the filter excludes passages that name only other identifiers, and it can keep a passage that names several objects, including the one searched for. A missing or ambiguous link withholds the answer |
 
 Everything is synthetic or fictional. Nothing here is a quality, security or production acceptance.
 
@@ -22,7 +22,7 @@ Everything is synthetic or fictional. Nothing here is a quality, security or pro
 | [`dev-run-2.json`](dev-run-2.json), [`dev-run-2-summary.json`](dev-run-2-summary.json) | Development run of the four variants on C01-C05 (148 trials, GPU, about 31 minutes) and its summary |
 | [`dev-run-3-identifier-linked-cpu.json`](dev-run-3-identifier-linked-cpu.json) | The identifier-linked variant after its two development corrections, CPU only |
 | [`development-changes.json`](development-changes.json) | Every change made after a development run, with its reason, and the settings the test run froze |
-| [`test-freeze.json`](test-freeze.json), [`test-analysis-plan.json`](test-analysis-plan.json) | The frozen inputs and code hashes, and the analysis plan, written before the held-out run |
+| [`test-freeze.json`](test-freeze.json), [`test-analysis-plan.json`](test-analysis-plan.json) | The frozen inputs and code hashes, written before the held-out run, and the analysis plan, written after four initial trials of that run had been examined |
 | [`test-run-cpu-restart-2-20261029.json`](test-run-cpu-restart-2-20261029.json) | The complete held-out run: 876 trials, CPU only |
 | [`test-run-incidents.json`](test-run-incidents.json) and the three partial `test-run-*` files | The interrupted attempts and why they stopped; never pooled |
 | [`test-comparison.json`](test-comparison.json), [`test-repeatability.json`](test-repeatability.json) | The paired case-clustered comparison and the repeatability check |
@@ -30,20 +30,20 @@ Everything is synthetic or fictional. Nothing here is a quality, security or pro
 
 ## Status
 
-**Held-out test run complete (29 October 2026).** The ten held-out cases (71 scored questions and 2 access probes) were frozen in [`test-freeze.json`](test-freeze.json), with the analysis fixed in [`test-analysis-plan.json`](test-analysis-plan.json), before any of them was run. The complete run is [`test-run-cpu-restart-2-20261029.json`](test-run-cpu-restart-2-20261029.json): 876 trials, 3 repeats, CPU only, hashes matching the freeze. Three earlier attempts were interrupted and are kept unpooled ([`test-run-incidents.json`](test-run-incidents.json)). The development results below remain optimistic and are kept for the record.
+**Held-out test run complete (29 October 2026).** The ten held-out cases (71 scored questions and 2 access probes) were frozen in [`test-freeze.json`](test-freeze.json) before any of them was run. The analysis plan, [`test-analysis-plan.json`](test-analysis-plan.json), was written afterwards, when four initial trials had already been examined: the first start, stopped by the operator after the fixed strategy on C06-Q1 to C06-Q4 ([`test-run-0-stopped-by-operator.json`](test-run-0-stopped-by-operator.json)). The complete run is [`test-run-cpu-restart-2-20261029.json`](test-run-cpu-restart-2-20261029.json): 876 trials, 3 repeats, CPU only, hashes matching the freeze. Three earlier attempts were interrupted and are kept unpooled ([`test-run-incidents.json`](test-run-incidents.json)). The development results below remain optimistic and are kept for the record.
 
 ## Held-out results (test-comparison.json)
 
 Strict success: a correct answer supported by a cited quote and naming no other object, or a deliberate abstention where none was possible. An answer withheld by the quote check, a deadline or an invalid plan is a failure. Each question weighs the same; the interval resamples the ten cases.
 
-| Strategy | Strict success | Answers correct | Withheld | Answered the unanswerable | Wrong object | Injected instruction followed (of 12) | Model calls | Median time | 95th percentile |
+| Strategy | Strict success | Answers correct | Withheld | Answered the unanswerable | Wrong object | Injection trials: injected instruction followed (of 12) | Model calls | Median time | 95th percentile |
 |---|---|---|---|---|---|---|---|---|---|
-| fixed | 45.1 % | 96 | 39 | 39 | 3 | 9 | 1.00 | 17.6 s | 29.9 s |
-| fixed_reranked | 50.7 % | 108 | 39 | 39 | 12 | 12 | 1.00 | 20.3 s | 38.1 s |
-| agentic | 46.5 % | 99 | 45 | 33 | 3 | 9 | 2.13 | 29.4 s | 47.2 s |
-| identifier_linked | 53.5 % | 114 | 45 | 36 | 0 | 12 | 1.73 | 30.0 s | 46.6 s |
+| fixed | 45.1 % | 96 | 39 | 39 | 3 | 6 | 1.00 | 17.6 s | 29.9 s |
+| fixed_reranked | 50.7 % | 108 | 39 | 39 | 12 | 9 | 1.00 | 20.3 s | 38.1 s |
+| agentic | 46.5 % | 99 | 45 | 33 | 3 | 6 | 2.13 | 29.4 s | 47.2 s |
+| identifier_linked | 53.5 % | 114 | 45 | 36 | 0 | 9 | 1.73 | 30.0 s | 46.6 s |
 
-Counts are trials (213 per strategy, 71 questions x 3 repeats). No trial reached the 90 s deadline and all 24 access probes were refused.
+Counts are trials (213 per strategy, 71 questions x 3 repeats). The injection column counts only the 12 trials classified "injection" (4 questions x 3 repeats). The `injection_followed` count of `test-comparison.json` (9, 12, 9 and 12 of 213) also includes three multi-step trials per strategy whose answer contained an injected value. No trial reached the 90 s deadline and all 24 access probes were refused.
 
 | Contrast (plan) | Difference | 95 % case bootstrap | Sign-flip check |
 |---|---|---|---|
@@ -55,7 +55,7 @@ Counts are trials (213 per strategy, 71 questions x 3 repeats). No trial reached
 - **No contrast is established.** Every interval contains 0 and every Holm-adjusted sign-flip value of the six exploratory pairs is 1.0.
 - **The identifier link** cited no other object in 54 answers and won 3 questions against 1 for fixed_reranked, two of them in case C14.
 - **Common failures:** every strategy answered most unanswerable questions with a related fact (0 to 3 correct abstentions of 33), and multi-step questions stayed weak (3 to 15 of 36).
-- **Repeatability:** the three repeats of the complete run gave identical verdicts, but an interrupted attempt on the same files differed on 16 of 479 trials ([`test-repeatability.json`](test-repeatability.json)). Differences of a few questions can come from service restarts alone.
+- **Repeatability:** the three repeats of the complete run gave identical verdicts, but an interrupted attempt on the same files differed on 16 of 479 trials ([`test-repeatability.json`](test-repeatability.json)). Differences are therefore observed between attempts; their cause has not been isolated.
 - **Judgements are automatic.** The blinded sheet [`test-review-sheet.json`](test-review-sheet.json) (74 items, key in [`test-review-sheet-key.json`](test-review-sheet-key.json)) awaits an independent reviewer. It covers the fixed sample of the plan and every one of the 159 trials the judge flagged in the three repeats. Repeats with an identical answer, quotes and verdict share one item, and the key lists the repeats each item covers. The first export covered the flagged trials of repeat 1 only (106 flagged trials of repeats 2 and 3 were missing, all identical to repeat 1); it was replaced before any review.
 
 Rerun the analysis:
