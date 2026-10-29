@@ -56,7 +56,7 @@ Counts are trials (213 per strategy, 71 questions x 3 repeats). No trial reached
 - **The identifier link** cited no other object in 54 answers and won 3 questions against 1 for fixed_reranked, two of them in case C14.
 - **Common failures:** every strategy answered most unanswerable questions with a related fact (0 to 3 correct abstentions of 33), and multi-step questions stayed weak (3 to 15 of 36).
 - **Repeatability:** the three repeats of the complete run gave identical verdicts, but an interrupted attempt on the same files differed on 16 of 479 trials ([`test-repeatability.json`](test-repeatability.json)). Differences of a few questions can come from service restarts alone.
-- **Judgements are automatic.** The blinded sheet [`test-review-sheet.json`](test-review-sheet.json) (74 items, key in [`test-review-sheet-key.json`](test-review-sheet-key.json)) awaits an independent reviewer.
+- **Judgements are automatic.** The blinded sheet [`test-review-sheet.json`](test-review-sheet.json) (74 items, key in [`test-review-sheet-key.json`](test-review-sheet-key.json)) awaits an independent reviewer. It covers the fixed sample of the plan and every one of the 159 trials the judge flagged in the three repeats. Repeats with an identical answer, quotes and verdict share one item, and the key lists the repeats each item covers. The first export covered the flagged trials of repeat 1 only (106 flagged trials of repeats 2 and 3 were missing, all identical to repeat 1); it was replaced before any review.
 
 Rerun the analysis:
 

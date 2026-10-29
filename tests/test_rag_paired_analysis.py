@@ -101,3 +101,24 @@ def test_compare_reports_the_difference_and_its_cases():
     assert result["difference"] == 0.5
     assert result["questions_better_first"] == ["C06-Q1"]
     assert result["per_case"]["C07"] == {"questions": 1, "difference": 0.0}
+
+
+def test_review_sheet_covers_every_queued_repeat_once_per_distinct_output():
+    """Every queued trial of every repeat is covered, and identical repeats share one sheet item."""
+    import importlib.util
+    from pathlib import Path
+    path = Path(__file__).resolve().parents[1] / "scripts" / "compare_rag_strategies.py"
+    spec = importlib.util.spec_from_file_location("compare_rag_strategies", path)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    trials = []
+    for repeat in (1, 2, 3):
+        flagged = trial("C06-Q1", correct=False, repeat=repeat)
+        flagged["verdict"]["review"] = ["answer given where abstention was expected"]
+        flagged.update(question="q", answer="same" if repeat < 3 else "different")
+        plain = trial("C06-Q2", repeat=repeat)
+        plain.update(question="q", answer="ok")
+        trials += [flagged, plain]
+    sheet, key = module.review_sample({"fixed": trials}, per_side=0)
+    assert len(sheet) == 2
+    assert sorted(r for item in key.values() for r in item["queued_repeats_covered"]) == [1, 2, 3]

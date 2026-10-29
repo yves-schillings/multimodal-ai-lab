@@ -127,8 +127,24 @@ def describe(trials):
     }
 
 
+def output_signature(trial):
+    """Return what a reviewer sees of a trial, so that identical outputs of several repeats are judged once.
+
+    Args:
+        trial (dict): A run-record trial.
+    Returns:
+        tuple: Strategy, question, answer, cited claims and automatic verdict kind.
+    """
+    return (trial["variant"], trial["question_id"], trial.get("answer", ""),
+            json.dumps(trial.get("claims", []), sort_keys=True), trial["verdict"]["kind"])
+
+
 def review_sample(by_strategy, per_side=3, seed=SEED):
-    """Draw the blinded review sample of the plan from repeat 1.
+    """Draw the blinded review sample of the plan: every trial in the review queue, plus a fixed sample.
+
+    The fixed sample takes, from repeat 1, ``per_side`` strict successes and failures per strategy. Every
+    queued trial of every repeat is then covered. Repeats with an identical output (same answer, quotes and
+    automatic verdict) share one sheet item, and the key lists every repeat that item covers.
 
     Args:
         by_strategy (dict[str, list[dict]]): Trials per strategy.
@@ -136,7 +152,7 @@ def review_sample(by_strategy, per_side=3, seed=SEED):
         seed (int): Seed of the draw, fixed in the plan.
     Returns:
         tuple[list[dict], dict]: The blinded sheet (shuffled, without strategy names or verdicts) and the
-        key mapping each sheet item to its strategy, question, repeat and automatic outcome.
+        key mapping each sheet item to its strategy, question, covered repeats and automatic outcome.
     """
     generator, picked = random.Random(seed), []
     for name in STRATEGIES:
@@ -144,21 +160,28 @@ def review_sample(by_strategy, per_side=3, seed=SEED):
         good = [t for t in first if strict_success(t)]
         bad = [t for t in first if not strict_success(t)]
         picked += generator.sample(good, min(per_side, len(good))) + generator.sample(bad, min(per_side, len(bad)))
-    queued = {(t["variant"], t["question_id"]) for trials in by_strategy.values() for t in trials
-              if t["repeat"] == 1 and t["verdict"].get("review")}
-    picked += [t for trials in by_strategy.values() for t in trials
-               if t["repeat"] == 1 and (t["variant"], t["question_id"]) in queued and t not in picked]
+    queued = sorted((t for trials in by_strategy.values() for t in trials if t["verdict"].get("review")),
+                    key=lambda t: (t["variant"], t["question_id"], t["repeat"]))
+    signatures = {output_signature(t) for t in picked}
+    for trial in queued:
+        if output_signature(trial) not in signatures:
+            picked.append(trial)
+            signatures.add(output_signature(trial))
     generator.shuffle(picked)
+    every = [t for trials in by_strategy.values() for t in trials if t["expect"] != "refused"]
     sheet, key = [], {}
     for number, trial in enumerate(picked, 1):
         item = f"R{number:02d}"
+        covered = [t for t in every if output_signature(t) == output_signature(trial)]
         sheet.append({"item": item, "question_id": trial["question_id"], "question": trial["question"],
                       "expected_outcome": trial["expect"], "answer": trial.get("answer", ""),
                       "cited_quotes": [c.get("quote", "") for c in trial.get("claims", [])],
                       "reviewer_outcome": "", "reviewer_note": ""})
-        key[item] = {"strategy": trial["variant"], "question_id": trial["question_id"], "repeat": trial["repeat"],
+        key[item] = {"strategy": trial["variant"], "question_id": trial["question_id"],
+                     "repeats_covered": sorted(t["repeat"] for t in covered),
+                     "queued_repeats_covered": sorted(t["repeat"] for t in covered if t["verdict"].get("review")),
                      "automatic_strict_success": strict_success(trial), "automatic_kind": trial["verdict"]["kind"],
-                     "in_review_queue": bool(trial["verdict"].get("review"))}
+                     "in_review_queue": any(t["verdict"].get("review") for t in covered)}
     return sheet, key
 
 
