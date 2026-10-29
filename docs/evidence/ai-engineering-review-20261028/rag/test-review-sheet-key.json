@@ -1,0 +1,594 @@
+{
+ "R01": {
+  "strategy": "fixed",
+  "question_id": "C15-Q7",
+  "repeat": 1,
+  "automatic_strict_success": false,
+  "automatic_kind": "unsupported_answer",
+  "in_review_queue": true
+ },
+ "R02": {
+  "strategy": "fixed",
+  "question_id": "C10-Q6",
+  "repeat": 1,
+  "automatic_strict_success": false,
+  "automatic_kind": "unsupported_answer",
+  "in_review_queue": true
+ },
+ "R03": {
+  "strategy": "agentic",
+  "question_id": "C09-Q1",
+  "repeat": 1,
+  "automatic_strict_success": false,
+  "automatic_kind": "wrong_answer",
+  "in_review_queue": false
+ },
+ "R04": {
+  "strategy": "fixed",
+  "question_id": "C08-Q7",
+  "repeat": 1,
+  "automatic_strict_success": false,
+  "automatic_kind": "unsupported_answer",
+  "in_review_queue": true
+ },
+ "R05": {
+  "strategy": "agentic",
+  "question_id": "C15-Q7",
+  "repeat": 1,
+  "automatic_strict_success": false,
+  "automatic_kind": "unsupported_answer",
+  "in_review_queue": true
+ },
+ "R06": {
+  "strategy": "agentic",
+  "question_id": "C08-Q3",
+  "repeat": 1,
+  "automatic_strict_success": false,
+  "automatic_kind": "unsupported_answer",
+  "in_review_queue": true
+ },
+ "R07": {
+  "strategy": "fixed_reranked",
+  "question_id": "C09-Q4",
+  "repeat": 1,
+  "automatic_strict_success": false,
+  "automatic_kind": "false_abstention",
+  "in_review_queue": false
+ },
+ "R08": {
+  "strategy": "identifier_linked",
+  "question_id": "C07-Q6",
+  "repeat": 1,
+  "automatic_strict_success": false,
+  "automatic_kind": "unsupported_answer",
+  "in_review_queue": true
+ },
+ "R09": {
+  "strategy": "fixed_reranked",
+  "question_id": "C08-Q3",
+  "repeat": 1,
+  "automatic_strict_success": false,
+  "automatic_kind": "unsupported_answer",
+  "in_review_queue": true
+ },
+ "R10": {
+  "strategy": "agentic",
+  "question_id": "C11-Q6",
+  "repeat": 1,
+  "automatic_strict_success": false,
+  "automatic_kind": "unsupported_answer",
+  "in_review_queue": true
+ },
+ "R11": {
+  "strategy": "agentic",
+  "question_id": "C10-Q5",
+  "repeat": 1,
+  "automatic_strict_success": false,
+  "automatic_kind": "unsupported_answer",
+  "in_review_queue": true
+ },
+ "R12": {
+  "strategy": "fixed",
+  "question_id": "C15-Q6",
+  "repeat": 1,
+  "automatic_strict_success": true,
+  "automatic_kind": "correct_answer",
+  "in_review_queue": false
+ },
+ "R13": {
+  "strategy": "identifier_linked",
+  "question_id": "C07-Q2",
+  "repeat": 1,
+  "automatic_strict_success": true,
+  "automatic_kind": "correct_answer",
+  "in_review_queue": false
+ },
+ "R14": {
+  "strategy": "fixed",
+  "question_id": "C09-Q3",
+  "repeat": 1,
+  "automatic_strict_success": false,
+  "automatic_kind": "false_abstention",
+  "in_review_queue": false
+ },
+ "R15": {
+  "strategy": "fixed",
+  "question_id": "C12-Q3",
+  "repeat": 1,
+  "automatic_strict_success": false,
+  "automatic_kind": "unsupported_answer",
+  "in_review_queue": true
+ },
+ "R16": {
+  "strategy": "fixed_reranked",
+  "question_id": "C13-Q2",
+  "repeat": 1,
+  "automatic_strict_success": false,
+  "automatic_kind": "wrong_answer",
+  "in_review_queue": true
+ },
+ "R17": {
+  "strategy": "fixed_reranked",
+  "question_id": "C06-Q6",
+  "repeat": 1,
+  "automatic_strict_success": false,
+  "automatic_kind": "unsupported_answer",
+  "in_review_queue": true
+ },
+ "R18": {
+  "strategy": "fixed_reranked",
+  "question_id": "C13-Q3",
+  "repeat": 1,
+  "automatic_strict_success": false,
+  "automatic_kind": "unsupported_answer",
+  "in_review_queue": true
+ },
+ "R19": {
+  "strategy": "fixed",
+  "question_id": "C11-Q6",
+  "repeat": 1,
+  "automatic_strict_success": false,
+  "automatic_kind": "unsupported_answer",
+  "in_review_queue": true
+ },
+ "R20": {
+  "strategy": "agentic",
+  "question_id": "C13-Q3",
+  "repeat": 1,
+  "automatic_strict_success": false,
+  "automatic_kind": "unsupported_answer",
+  "in_review_queue": true
+ },
+ "R21": {
+  "strategy": "fixed_reranked",
+  "question_id": "C13-Q6",
+  "repeat": 1,
+  "automatic_strict_success": false,
+  "automatic_kind": "wrong_answer",
+  "in_review_queue": true
+ },
+ "R22": {
+  "strategy": "fixed_reranked",
+  "question_id": "C14-Q7",
+  "repeat": 1,
+  "automatic_strict_success": false,
+  "automatic_kind": "unsupported_answer",
+  "in_review_queue": true
+ },
+ "R23": {
+  "strategy": "identifier_linked",
+  "question_id": "C06-Q6",
+  "repeat": 1,
+  "automatic_strict_success": false,
+  "automatic_kind": "unsupported_answer",
+  "in_review_queue": true
+ },
+ "R24": {
+  "strategy": "agentic",
+  "question_id": "C09-Q6",
+  "repeat": 1,
+  "automatic_strict_success": false,
+  "automatic_kind": "unsupported_answer",
+  "in_review_queue": true
+ },
+ "R25": {
+  "strategy": "agentic",
+  "question_id": "C15-Q2",
+  "repeat": 1,
+  "automatic_strict_success": true,
+  "automatic_kind": "correct_answer",
+  "in_review_queue": false
+ },
+ "R26": {
+  "strategy": "agentic",
+  "question_id": "C10-Q6",
+  "repeat": 1,
+  "automatic_strict_success": false,
+  "automatic_kind": "unsupported_answer",
+  "in_review_queue": true
+ },
+ "R27": {
+  "strategy": "agentic",
+  "question_id": "C10-Q4",
+  "repeat": 1,
+  "automatic_strict_success": true,
+  "automatic_kind": "correct_answer",
+  "in_review_queue": false
+ },
+ "R28": {
+  "strategy": "fixed_reranked",
+  "question_id": "C11-Q6",
+  "repeat": 1,
+  "automatic_strict_success": false,
+  "automatic_kind": "unsupported_answer",
+  "in_review_queue": true
+ },
+ "R29": {
+  "strategy": "fixed_reranked",
+  "question_id": "C08-Q7",
+  "repeat": 1,
+  "automatic_strict_success": false,
+  "automatic_kind": "unsupported_answer",
+  "in_review_queue": true
+ },
+ "R30": {
+  "strategy": "fixed",
+  "question_id": "C10-Q5",
+  "repeat": 1,
+  "automatic_strict_success": false,
+  "automatic_kind": "unsupported_answer",
+  "in_review_queue": true
+ },
+ "R31": {
+  "strategy": "fixed",
+  "question_id": "C06-Q8",
+  "repeat": 1,
+  "automatic_strict_success": true,
+  "automatic_kind": "correct_answer",
+  "in_review_queue": false
+ },
+ "R32": {
+  "strategy": "fixed_reranked",
+  "question_id": "C07-Q6",
+  "repeat": 1,
+  "automatic_strict_success": false,
+  "automatic_kind": "unsupported_answer",
+  "in_review_queue": true
+ },
+ "R33": {
+  "strategy": "fixed_reranked",
+  "question_id": "C10-Q1",
+  "repeat": 1,
+  "automatic_strict_success": false,
+  "automatic_kind": "wrong_answer",
+  "in_review_queue": true
+ },
+ "R34": {
+  "strategy": "identifier_linked",
+  "question_id": "C10-Q5",
+  "repeat": 1,
+  "automatic_strict_success": false,
+  "automatic_kind": "unsupported_answer",
+  "in_review_queue": true
+ },
+ "R35": {
+  "strategy": "fixed",
+  "question_id": "C14-Q7",
+  "repeat": 1,
+  "automatic_strict_success": false,
+  "automatic_kind": "unsupported_answer",
+  "in_review_queue": true
+ },
+ "R36": {
+  "strategy": "fixed_reranked",
+  "question_id": "C06-Q1",
+  "repeat": 1,
+  "automatic_strict_success": false,
+  "automatic_kind": "correct_abstention",
+  "in_review_queue": false
+ },
+ "R37": {
+  "strategy": "fixed_reranked",
+  "question_id": "C10-Q6",
+  "repeat": 1,
+  "automatic_strict_success": false,
+  "automatic_kind": "unsupported_answer",
+  "in_review_queue": true
+ },
+ "R38": {
+  "strategy": "fixed",
+  "question_id": "C10-Q7",
+  "repeat": 1,
+  "automatic_strict_success": true,
+  "automatic_kind": "correct_answer",
+  "in_review_queue": false
+ },
+ "R39": {
+  "strategy": "fixed",
+  "question_id": "C14-Q6",
+  "repeat": 1,
+  "automatic_strict_success": false,
+  "automatic_kind": "unsupported_answer",
+  "in_review_queue": true
+ },
+ "R40": {
+  "strategy": "fixed_reranked",
+  "question_id": "C10-Q2",
+  "repeat": 1,
+  "automatic_strict_success": true,
+  "automatic_kind": "correct_answer",
+  "in_review_queue": false
+ },
+ "R41": {
+  "strategy": "agentic",
+  "question_id": "C14-Q6",
+  "repeat": 1,
+  "automatic_strict_success": false,
+  "automatic_kind": "unsupported_answer",
+  "in_review_queue": true
+ },
+ "R42": {
+  "strategy": "agentic",
+  "question_id": "C12-Q3",
+  "repeat": 1,
+  "automatic_strict_success": false,
+  "automatic_kind": "unsupported_answer",
+  "in_review_queue": true
+ },
+ "R43": {
+  "strategy": "fixed_reranked",
+  "question_id": "C12-Q3",
+  "repeat": 1,
+  "automatic_strict_success": false,
+  "automatic_kind": "unsupported_answer",
+  "in_review_queue": true
+ },
+ "R44": {
+  "strategy": "fixed",
+  "question_id": "C13-Q3",
+  "repeat": 1,
+  "automatic_strict_success": false,
+  "automatic_kind": "unsupported_answer",
+  "in_review_queue": true
+ },
+ "R45": {
+  "strategy": "fixed_reranked",
+  "question_id": "C14-Q6",
+  "repeat": 1,
+  "automatic_strict_success": false,
+  "automatic_kind": "unsupported_answer",
+  "in_review_queue": true
+ },
+ "R46": {
+  "strategy": "fixed",
+  "question_id": "C07-Q6",
+  "repeat": 1,
+  "automatic_strict_success": false,
+  "automatic_kind": "unsupported_answer",
+  "in_review_queue": true
+ },
+ "R47": {
+  "strategy": "identifier_linked",
+  "question_id": "C15-Q7",
+  "repeat": 1,
+  "automatic_strict_success": false,
+  "automatic_kind": "unsupported_answer",
+  "in_review_queue": true
+ },
+ "R48": {
+  "strategy": "agentic",
+  "question_id": "C12-Q7",
+  "repeat": 1,
+  "automatic_strict_success": false,
+  "automatic_kind": "unsupported_answer",
+  "in_review_queue": true
+ },
+ "R49": {
+  "strategy": "identifier_linked",
+  "question_id": "C10-Q1",
+  "repeat": 1,
+  "automatic_strict_success": false,
+  "automatic_kind": "wrong_answer",
+  "in_review_queue": true
+ },
+ "R50": {
+  "strategy": "agentic",
+  "question_id": "C07-Q6",
+  "repeat": 1,
+  "automatic_strict_success": false,
+  "automatic_kind": "unsupported_answer",
+  "in_review_queue": true
+ },
+ "R51": {
+  "strategy": "fixed_reranked",
+  "question_id": "C06-Q5",
+  "repeat": 1,
+  "automatic_strict_success": true,
+  "automatic_kind": "correct_answer",
+  "in_review_queue": false
+ },
+ "R52": {
+  "strategy": "identifier_linked",
+  "question_id": "C08-Q7",
+  "repeat": 1,
+  "automatic_strict_success": false,
+  "automatic_kind": "unsupported_answer",
+  "in_review_queue": true
+ },
+ "R53": {
+  "strategy": "agentic",
+  "question_id": "C14-Q3",
+  "repeat": 1,
+  "automatic_strict_success": true,
+  "automatic_kind": "correct_answer",
+  "in_review_queue": false
+ },
+ "R54": {
+  "strategy": "fixed_reranked",
+  "question_id": "C06-Q3",
+  "repeat": 1,
+  "automatic_strict_success": false,
+  "automatic_kind": "false_abstention",
+  "in_review_queue": false
+ },
+ "R55": {
+  "strategy": "identifier_linked",
+  "question_id": "C10-Q6",
+  "repeat": 1,
+  "automatic_strict_success": false,
+  "automatic_kind": "unsupported_answer",
+  "in_review_queue": true
+ },
+ "R56": {
+  "strategy": "identifier_linked",
+  "question_id": "C15-Q3",
+  "repeat": 1,
+  "automatic_strict_success": false,
+  "automatic_kind": "wrong_answer",
+  "in_review_queue": false
+ },
+ "R57": {
+  "strategy": "identifier_linked",
+  "question_id": "C13-Q3",
+  "repeat": 1,
+  "automatic_strict_success": false,
+  "automatic_kind": "unsupported_answer",
+  "in_review_queue": true
+ },
+ "R58": {
+  "strategy": "identifier_linked",
+  "question_id": "C12-Q3",
+  "repeat": 1,
+  "automatic_strict_success": false,
+  "automatic_kind": "unsupported_answer",
+  "in_review_queue": true
+ },
+ "R59": {
+  "strategy": "fixed",
+  "question_id": "C09-Q6",
+  "repeat": 1,
+  "automatic_strict_success": false,
+  "automatic_kind": "unsupported_answer",
+  "in_review_queue": true
+ },
+ "R60": {
+  "strategy": "fixed_reranked",
+  "question_id": "C10-Q5",
+  "repeat": 1,
+  "automatic_strict_success": false,
+  "automatic_kind": "unsupported_answer",
+  "in_review_queue": true
+ },
+ "R61": {
+  "strategy": "fixed",
+  "question_id": "C08-Q3",
+  "repeat": 1,
+  "automatic_strict_success": false,
+  "automatic_kind": "unsupported_answer",
+  "in_review_queue": true
+ },
+ "R62": {
+  "strategy": "identifier_linked",
+  "question_id": "C14-Q6",
+  "repeat": 1,
+  "automatic_strict_success": false,
+  "automatic_kind": "unsupported_answer",
+  "in_review_queue": true
+ },
+ "R63": {
+  "strategy": "agentic",
+  "question_id": "C11-Q2",
+  "repeat": 1,
+  "automatic_strict_success": false,
+  "automatic_kind": "false_abstention",
+  "in_review_queue": false
+ },
+ "R64": {
+  "strategy": "identifier_linked",
+  "question_id": "C06-Q7",
+  "repeat": 1,
+  "automatic_strict_success": false,
+  "automatic_kind": "false_abstention",
+  "in_review_queue": false
+ },
+ "R65": {
+  "strategy": "identifier_linked",
+  "question_id": "C08-Q3",
+  "repeat": 1,
+  "automatic_strict_success": false,
+  "automatic_kind": "unsupported_answer",
+  "in_review_queue": true
+ },
+ "R66": {
+  "strategy": "fixed",
+  "question_id": "C12-Q7",
+  "repeat": 1,
+  "automatic_strict_success": false,
+  "automatic_kind": "unsupported_answer",
+  "in_review_queue": true
+ },
+ "R67": {
+  "strategy": "identifier_linked",
+  "question_id": "C09-Q2",
+  "repeat": 1,
+  "automatic_strict_success": false,
+  "automatic_kind": "wrong_answer",
+  "in_review_queue": false
+ },
+ "R68": {
+  "strategy": "fixed_reranked",
+  "question_id": "C15-Q7",
+  "repeat": 1,
+  "automatic_strict_success": false,
+  "automatic_kind": "unsupported_answer",
+  "in_review_queue": true
+ },
+ "R69": {
+  "strategy": "identifier_linked",
+  "question_id": "C08-Q1",
+  "repeat": 1,
+  "automatic_strict_success": true,
+  "automatic_kind": "correct_answer",
+  "in_review_queue": false
+ },
+ "R70": {
+  "strategy": "identifier_linked",
+  "question_id": "C12-Q7",
+  "repeat": 1,
+  "automatic_strict_success": false,
+  "automatic_kind": "unsupported_answer",
+  "in_review_queue": true
+ },
+ "R71": {
+  "strategy": "identifier_linked",
+  "question_id": "C09-Q7",
+  "repeat": 1,
+  "automatic_strict_success": true,
+  "automatic_kind": "correct_answer",
+  "in_review_queue": false
+ },
+ "R72": {
+  "strategy": "fixed_reranked",
+  "question_id": "C12-Q7",
+  "repeat": 1,
+  "automatic_strict_success": false,
+  "automatic_kind": "unsupported_answer",
+  "in_review_queue": true
+ },
+ "R73": {
+  "strategy": "identifier_linked",
+  "question_id": "C11-Q6",
+  "repeat": 1,
+  "automatic_strict_success": false,
+  "automatic_kind": "unsupported_answer",
+  "in_review_queue": true
+ },
+ "R74": {
+  "strategy": "fixed_reranked",
+  "question_id": "C14-Q3",
+  "repeat": 1,
+  "automatic_strict_success": true,
+  "automatic_kind": "correct_answer",
+  "in_review_queue": false
+ }
+}

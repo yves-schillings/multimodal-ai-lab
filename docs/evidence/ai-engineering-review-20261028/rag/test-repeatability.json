@@ -1,0 +1,147 @@
+{
+  "title": "Repeatability of the held-out trials within the complete run and across the interrupted attempts",
+  "written_after": "the complete run and its comparison (test-comparison.json)",
+  "within_complete_run": "Each strategy gave the same verdict in its three repeats for every one of the 71 questions (questions_with_varying_outcome is empty for all four strategies). The repeats therefore do not measure variation between service starts.",
+  "across_attempts": [
+    {
+      "file": "test-run-0-stopped-by-operator.json",
+      "trials_compared": 4,
+      "same_verdict": 4,
+      "different": []
+    },
+    {
+      "file": "test-run-cpu.json",
+      "trials_compared": 839,
+      "same_verdict": 838,
+      "different": [
+        {
+          "variant": "fixed_reranked",
+          "repeat": 3,
+          "question_id": "C10-Q6",
+          "partial": "correct_abstention",
+          "complete": "unsupported_answer"
+        }
+      ]
+    },
+    {
+      "file": "test-run-cpu-restart-20261029.json",
+      "trials_compared": 479,
+      "same_verdict": 463,
+      "different": [
+        {
+          "variant": "fixed",
+          "repeat": 1,
+          "question_id": "C09-Q6",
+          "partial": "correct_abstention",
+          "complete": "unsupported_answer"
+        },
+        {
+          "variant": "fixed",
+          "repeat": 1,
+          "question_id": "C15-Q1",
+          "partial": "wrong_answer",
+          "complete": "false_abstention"
+        },
+        {
+          "variant": "fixed_reranked",
+          "repeat": 1,
+          "question_id": "C15-Q1",
+          "partial": "wrong_answer",
+          "complete": "false_abstention"
+        },
+        {
+          "variant": "agentic",
+          "repeat": 1,
+          "question_id": "C06-Q4",
+          "partial": "false_abstention",
+          "complete": "correct_answer"
+        },
+        {
+          "variant": "agentic",
+          "repeat": 1,
+          "question_id": "C08-Q7",
+          "partial": "unsupported_answer",
+          "complete": "correct_abstention"
+        },
+        {
+          "variant": "agentic",
+          "repeat": 1,
+          "question_id": "C09-Q6",
+          "partial": "correct_abstention",
+          "complete": "unsupported_answer"
+        },
+        {
+          "variant": "agentic",
+          "repeat": 1,
+          "question_id": "C14-Q7",
+          "partial": "unsupported_answer",
+          "complete": "correct_abstention"
+        },
+        {
+          "variant": "agentic",
+          "repeat": 1,
+          "question_id": "C15-Q1",
+          "partial": "wrong_answer",
+          "complete": "false_abstention"
+        },
+        {
+          "variant": "identifier_linked",
+          "repeat": 1,
+          "question_id": "C15-Q1",
+          "partial": "wrong_answer",
+          "complete": "false_abstention"
+        },
+        {
+          "variant": "fixed_reranked",
+          "repeat": 2,
+          "question_id": "C15-Q1",
+          "partial": "wrong_answer",
+          "complete": "false_abstention"
+        },
+        {
+          "variant": "agentic",
+          "repeat": 2,
+          "question_id": "C06-Q4",
+          "partial": "false_abstention",
+          "complete": "correct_answer"
+        },
+        {
+          "variant": "agentic",
+          "repeat": 2,
+          "question_id": "C08-Q7",
+          "partial": "unsupported_answer",
+          "complete": "correct_abstention"
+        },
+        {
+          "variant": "agentic",
+          "repeat": 2,
+          "question_id": "C09-Q6",
+          "partial": "correct_abstention",
+          "complete": "unsupported_answer"
+        },
+        {
+          "variant": "agentic",
+          "repeat": 2,
+          "question_id": "C14-Q7",
+          "partial": "unsupported_answer",
+          "complete": "correct_abstention"
+        },
+        {
+          "variant": "agentic",
+          "repeat": 2,
+          "question_id": "C15-Q1",
+          "partial": "wrong_answer",
+          "complete": "false_abstention"
+        },
+        {
+          "variant": "identifier_linked",
+          "repeat": 2,
+          "question_id": "C11-Q4",
+          "partial": "false_abstention",
+          "complete": "correct_answer"
+        }
+      ]
+    }
+  ],
+  "reading": "The attempt of 28 October gave the same verdict on 838 of 839 trials. The attempt of the morning of 29 October differed on 16 of 479, ten of them in the agentic strategy, in both directions. Temperature 0 on the same files did not give identical outputs after every service start, so a difference of a few questions between strategies can come from this variation alone. Partial attempts are not pooled and change no result."
+}

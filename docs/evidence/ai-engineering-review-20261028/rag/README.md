@@ -21,11 +21,49 @@ Everything is synthetic or fictional. Nothing here is a quality, security or pro
 | [`dev-run-1-stopped-gpu-fa.json`](dev-run-1-stopped-gpu-fa.json) | First development run, stopped after 66 trials when stray characters appeared in generated quotes |
 | [`dev-run-2.json`](dev-run-2.json), [`dev-run-2-summary.json`](dev-run-2-summary.json) | Development run of the four variants on C01-C05 (148 trials, GPU, about 31 minutes) and its summary |
 | [`dev-run-3-identifier-linked-cpu.json`](dev-run-3-identifier-linked-cpu.json) | The identifier-linked variant after its two development corrections, CPU only |
-| [`development-changes.json`](development-changes.json) | Every change made after a development run, with its reason, and the settings a future test run would freeze |
+| [`development-changes.json`](development-changes.json) | Every change made after a development run, with its reason, and the settings the test run froze |
+| [`test-freeze.json`](test-freeze.json), [`test-analysis-plan.json`](test-analysis-plan.json) | The frozen inputs and code hashes, and the analysis plan, written before the held-out run |
+| [`test-run-cpu-restart-2-20261029.json`](test-run-cpu-restart-2-20261029.json) | The complete held-out run: 876 trials, CPU only |
+| [`test-run-incidents.json`](test-run-incidents.json) and the three partial `test-run-*` files | The interrupted attempts and why they stopped; never pooled |
+| [`test-comparison.json`](test-comparison.json), [`test-repeatability.json`](test-repeatability.json) | The paired case-clustered comparison and the repeatability check |
+| [`test-review-sheet.json`](test-review-sheet.json), [`test-review-sheet-key.json`](test-review-sheet-key.json) | The blinded sample for an independent reviewer and its key |
 
 ## Status
 
-**Development results only.** The five development cases (37 questions) served to find bugs and tune the variants, so their numbers are optimistic. **The held-out test run on the ten other cases (71 questions) was not done**: the workstation GPU became unstable under load, and the article was closed on the results already acquired. The held-out questions have never been run.
+**Held-out test run complete (29 October 2026).** The ten held-out cases (71 scored questions and 2 access probes) were frozen in [`test-freeze.json`](test-freeze.json), with the analysis fixed in [`test-analysis-plan.json`](test-analysis-plan.json), before any of them was run. The complete run is [`test-run-cpu-restart-2-20261029.json`](test-run-cpu-restart-2-20261029.json): 876 trials, 3 repeats, CPU only, hashes matching the freeze. Three earlier attempts were interrupted and are kept unpooled ([`test-run-incidents.json`](test-run-incidents.json)). The development results below remain optimistic and are kept for the record.
+
+## Held-out results (test-comparison.json)
+
+Strict success: a correct answer supported by a cited quote and naming no other object, or a deliberate abstention where none was possible. An answer withheld by the quote check, a deadline or an invalid plan is a failure. Each question weighs the same; the interval resamples the ten cases.
+
+| Strategy | Strict success | Answers correct | Withheld | Answered the unanswerable | Wrong object | Injected instruction followed (of 12) | Model calls | Median time | 95th percentile |
+|---|---|---|---|---|---|---|---|---|---|
+| fixed | 45.1 % | 96 | 39 | 39 | 3 | 9 | 1.00 | 17.6 s | 29.9 s |
+| fixed_reranked | 50.7 % | 108 | 39 | 39 | 12 | 12 | 1.00 | 20.3 s | 38.1 s |
+| agentic | 46.5 % | 99 | 45 | 33 | 3 | 9 | 2.13 | 29.4 s | 47.2 s |
+| identifier_linked | 53.5 % | 114 | 45 | 36 | 0 | 12 | 1.73 | 30.0 s | 46.6 s |
+
+Counts are trials (213 per strategy, 71 questions x 3 repeats). No trial reached the 90 s deadline and all 24 access probes were refused.
+
+| Contrast (plan) | Difference | 95 % case bootstrap | Sign-flip check |
+|---|---|---|---|
+| **Primary:** agentic minus fixed_reranked | -4.2 points | -14.3 to +5.7 | 0.63 |
+| identifier_linked minus fixed_reranked | +2.8 points | -2.8 to +10.0 | 0.75 |
+| fixed_reranked minus fixed | +5.6 points | -4.2 to +15.5 | 0.44 |
+
+- **The primary criterion is not met.** The plan required a gain of at least 10 points with a lower bound above 0; the agentic strategy was 4.2 points below the reranked one. Leaving out any one case keeps the difference negative.
+- **No contrast is established.** Every interval contains 0 and every Holm-adjusted sign-flip value of the six exploratory pairs is 1.0.
+- **The identifier link** cited no other object in 54 answers and won 3 questions against 1 for fixed_reranked, two of them in case C14.
+- **Common failures:** every strategy answered most unanswerable questions with a related fact (0 to 3 correct abstentions of 33), and multi-step questions stayed weak (3 to 15 of 36).
+- **Repeatability:** the three repeats of the complete run gave identical verdicts, but an interrupted attempt on the same files differed on 16 of 479 trials ([`test-repeatability.json`](test-repeatability.json)). Differences of a few questions can come from service restarts alone.
+- **Judgements are automatic.** The blinded sheet [`test-review-sheet.json`](test-review-sheet.json) (74 items, key in [`test-review-sheet-key.json`](test-review-sheet-key.json)) awaits an independent reviewer.
+
+Rerun the analysis:
+
+```powershell
+$rag = "docs\evidence\ai-engineering-review-20261028\rag"
+.\.venv\Scripts\python.exe -B scripts\compare_rag_strategies.py --run "$rag\test-run-cpu-restart-2-20261029.json" --freeze "$rag\test-freeze.json" --plan "$rag\test-analysis-plan.json" --eval-set "$rag\eval_set.json" --out "$env:TEMP\test-comparison.json" --review-out "$env:TEMP\test-review-sheet.json"
+```
 
 ## Development results (dev-run-2, one run, GPU)
 
@@ -64,4 +102,5 @@ The reranker weights are BAAI/bge-reranker-v2-m3 at revision `953dc6f6f85a1b2dbf
 - [`scripts/benchmark_rag_variants.py`](../../../../scripts/benchmark_rag_variants.py): builds the store, runs the variants, writes the run record and the summary.
 - [`scripts/serve_reranker.py`](../../../../scripts/serve_reranker.py): the loopback reranker service, run in the WSL PyTorch environment.
 - [`scripts/check_generation_integrity.py`](../../../../scripts/check_generation_integrity.py): the generation integrity check.
+- [`lab/rag_paired_analysis.py`](../../../../lab/rag_paired_analysis.py) and [`scripts/compare_rag_strategies.py`](../../../../scripts/compare_rag_strategies.py): the paired analysis of the plan.
 - [`tests/test_rag_variants.py`](../../../../tests/test_rag_variants.py): scripted tests of the controllers and the judge.
